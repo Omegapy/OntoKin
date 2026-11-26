@@ -6,6 +6,15 @@ OntoKin (pronounced **ON-toh-kin**) gives an agent editable `.ok` source that na
 
 For example, an agent can change one component in a reusable assembly, reject a value with the wrong unit, preserve an unchanged sibling and retrieve an artifact tied to the accepted source. Engines and specialist tools provide rendering, general simulation and gameplay.
 
+## Licensing and attribution
+
+Original OntoKin code, scripts, tests, configuration and code examples are licensed
+under the **Apache License 2.0** ([LICENSE](LICENSE), [LICENSE-CODE](LICENSE-CODE)).
+Original explanatory documentation is licensed under **CC BY 4.0**
+([LICENSE-DOCS](LICENSE-DOCS)). Copyright 2026 **Alexander Samuel Ricciardi**
+(GitHub: **Omegapy**). [NOTICE](NOTICE) records attribution; [LICENSING.md](LICENSING.md)
+explains the scope and third-party license exceptions.
+
 ## How the pieces fit
 
 | Stage | Responsibility |
@@ -27,7 +36,7 @@ The [November 16 review decision](docs/engineering/review-integration-c252/DECIS
 
 ## Try an agent edit
 
-Use **Python 3.11 or later**, from this repository's root. The reference uses the standard library; this checkout workflow needs no package installation.
+Use **Python 3.11 or later**, from this repository's root. The reference uses the standard library; this checkout workflow needs no package installation. The complete test suite needs the environment of the [local setup guide](docs/development/LOCAL-SETUP.md).
 
 ```sh
 python3 tools/build_agent_demo.py --output-dir /tmp/ontokin-first-model
@@ -50,9 +59,13 @@ See [core commands and failure results](docs/user-guide/core-and-cli.md) for eva
 
 <a id="continue-from-current-checkpoint"></a>
 
-## Continue development in a browser chat
+## Develop OntoKin
 
-Use [CHATGPT-START-HERE.md](CHATGPT-START-HERE.md) and the [continuation/recovery prompts](docs/workflow/BROWSER-PROMPTS.md). The [workflow guide](docs/workflow/README.md) explains how requirements, plans, roles, skills, project memory and evidence stay in GitHub. Each bounded browser development or recovery scope also delivers a verified session ZIP under the [handoff contract](docs/workflow/HANDOFF.md). Read the supplied ZIP, [current checkpoint](docs/workflow/CURRENT.json) and [STATUS](STATUS.md) before selecting work; reconcile saved observations with live GitHub.
+**Ordinary development is local.** Start from [LOCAL-START-HERE.md](LOCAL-START-HERE.md) in the local clone, normally from the Code tab of the Claude desktop application. The [local setup guide](docs/development/LOCAL-SETUP.md) prepares and checks the environment, and [short prompts](docs/workflow/LOCAL-PROMPTS.md) start, continue, recover or checkpoint a session. The [workflow guide](docs/workflow/README.md) explains how requirements, plans, roles, skills, project memory and evidence stay in the repository; the [current checkpoint](docs/workflow/CURRENT.json) and [STATUS](STATUS.md) name the selected work.
+
+<a id="continue-development-in-a-browser-chat"></a>
+
+**ChatGPT browser threads** start from [CHATGPT-START-HERE.md](CHATGPT-START-HERE.md) and the [continuation/recovery prompts](docs/workflow/BROWSER-PROMPTS.md). Each bounded browser development or recovery scope also delivers a verified session ZIP under the [handoff contract](docs/workflow/HANDOFF.md). Read the supplied ZIP, [current checkpoint](docs/workflow/CURRENT.json) and [STATUS](STATUS.md) before selecting work; reconcile saved observations with live GitHub.
 
 The workflow checks what the current session can actually do. Repository instructions do not install browser tools or guarantee automatic loading. Agents explicitly read the required files, use available subagents, verify the actual change, integrate completed work and resolve its branch.
 

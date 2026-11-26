@@ -1,0 +1,226 @@
+{
+  "schema": "ontokin.local-migration.package-smoke/1",
+  "task": "LOCAL-MIGRATION-20261124",
+  "step": "TASK-014",
+  "observed_at": "2026-11-25T07:16Z to 07:18Z",
+  "note": "<work> is a new directory beside the clone and outside every checkout. No conclusion here comes from an editable install.",
+  "source": {
+    "revision": "3fd7b922dd88432aca9148063ecf08adb60b5e7a",
+    "tree": "b8cb14460533bacf82c56ad0f2cfeb200b3e7f2c",
+    "form": "git archive of the revision, extracted into <work>/source; the worktree itself was not used as a build directory",
+    "worktree_status": "clean"
+  },
+  "build_environment": {
+    "created_by": "tools/bootstrap_local.py --profile package-smoke --work-dir <work>",
+    "interpreter": "CPython 3.12.13 (Homebrew python@3.12), macOS 26.6.2 arm64",
+    "packages": {
+      "pip": "26.0",
+      "setuptools": "84.2.1"
+    },
+    "build_requirement": "setuptools>=77 from pyproject.toml, a lower bound; 84.2.1 was the version the index provided",
+    "source_date_epoch": 1795590961,
+    "commands": [
+      "<work>/build-env/bin/python -I -m pip --isolated --disable-pip-version-check install --only-binary=:all: --no-input 'setuptools>=77'",
+      "<work>/build-env/bin/python -I -m pip --isolated --disable-pip-version-check wheel --no-build-isolation --no-deps --no-input --no-cache-dir --wheel-dir dist ./source"
+    ],
+    "result": "passed"
+  },
+  "wheel": {
+    "filename": "ontokin_reference-0.4.0-py3-none-any.whl",
+    "bytes": 1194203,
+    "sha256": "b6a4baf9c6f394de3f4be3b3198c94f262927ddf34a7d5d62112ab439438ff04",
+    "members": 219
+  },
+  "reproduction": {
+    "method": "A second clean build environment with setuptools 84.2.1 and pip 26.0 built the same revision from a second extraction with the same SOURCE_DATE_EPOCH.",
+    "sha256": "b6a4baf9c6f394de3f4be3b3198c94f262927ddf34a7d5d62112ab439438ff04",
+    "result": "byte-identical",
+    "consequence": "The build is reproducible from the recorded tool versions, so no build-tool constraints file is added (DEC-008)."
+  },
+  "installation_environment": {
+    "interpreter": "CPython 3.12.13 (Homebrew python@3.12)",
+    "packages": {
+      "pip": "26.0",
+      "ontokin-reference": "0.4.0"
+    },
+    "command": "<work>/install-env/bin/python -I -m pip --isolated --disable-pip-version-check install --no-index --no-deps --no-input dist/ontokin_reference-0.4.0-py3-none-any.whl",
+    "pip_check": "No broken requirements found.",
+    "editable": false,
+    "path_files": []
+  },
+  "runs": [
+    {
+      "command": "env -i HOME=... PATH=/usr/bin:/bin <work>/install-env/bin/ontokin capabilities",
+      "working_directory": "<work>/run, new and empty",
+      "exit_status": 0,
+      "observed": "ontokin-reference 0.4.0",
+      "result": "passed"
+    },
+    {
+      "command": "env -i HOME=... PATH=/usr/bin:/bin <work>/install-env/bin/ontokin check <absolute path>/docs/language-design/core-v0.1/01-independent-parts.ok",
+      "working_directory": "<work>/run",
+      "exit_status": 0,
+      "observed": {
+        "outcome": "valid",
+        "level": "evaluated",
+        "source_revision": "sha256:557c6ef369911fcd4e9ebd57398534f40afb5815dad5e305ef20dd8709b46be3",
+        "objects": 4,
+        "joints": 3,
+        "actions": 3
+      },
+      "result": "passed"
+    },
+    {
+      "command": "env -i HOME=... PATH=/usr/bin:/bin <work>/install-env/bin/ontokin evaluate <absolute path>/docs/language-design/core-v0.1/01-independent-parts.ok",
+      "working_directory": "<work>/run",
+      "exit_status": 0,
+      "observed": "outcome valid, level evaluated",
+      "result": "passed"
+    }
+  ],
+  "environment_of_runs": "PYTHONPATH and PYTHONHOME removed; the environment held only HOME and PATH. The working directory held no file before or after.",
+  "import_locations": {
+    "site_packages": "<work>/install-env/lib/python3.12/site-packages",
+    "modules": {
+      "ontokin": {
+        "file": "ontokin/__init__.py",
+        "in_site_packages": true
+      },
+      "ontokin.cli": {
+        "file": "_ontokin_reference_payload/ontokin/cli.py",
+        "in_site_packages": true
+      },
+      "_ontokin_reference_payload": {
+        "file": "_ontokin_reference_payload",
+        "in_site_packages": true
+      },
+      "_ontokin_reference_payload.ontokin": {
+        "file": "_ontokin_reference_payload/ontokin/__init__.py",
+        "in_site_packages": true
+      },
+      "_ontokin_reference_payload.ontokin.cli": {
+        "file": "_ontokin_reference_payload/ontokin/cli.py",
+        "in_site_packages": true
+      }
+    },
+    "isolated_mode": "python -I imports ontokin and _ontokin_reference_payload.ontokin from <work>/install-env/lib/python3.12/site-packages"
+  },
+  "packaged_resources": {
+    "listed_in": "pyproject.toml [tool.setuptools.package-data]",
+    "count": 16,
+    "present": 16,
+    "equal_to_source": 16,
+    "items": [
+      {
+        "path": "docs/engineering/reach-carrier-rotation-cursors.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/engineering/reach-coaxial-phase-bounds.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/engineering/reach-deferred-phase-locations.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/engineering/reach-destination-numerics.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/engineering/reach-numeric-kernel.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/engineering/reach-planning-reuse.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/engineering/reach-recording-certified-planar.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/engineering/reach-release-cell-envelope.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/engineering/reach-source-kernel.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/language-design/torque-amendments/c092-canonical-spin-selection/AMENDMENT.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/language-design/torque-amendments/c092-canonical-spin-selection/COMPATIBILITY.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/language-design/torque-amendments/c092-canonical-spin-selection/NUMERICAL-PROOF.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/language-design/torque-v0.1/RECORDING.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "docs/language-design/torque-v0.1/SPECIFICATION.md",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "tools/reach_destination.mjs",
+        "present": true,
+        "equal_to_source": true
+      },
+      {
+        "path": "tools/torque_destination.mjs",
+        "present": true,
+        "equal_to_source": true
+      }
+    ]
+  },
+  "local_evidence": [
+    {
+      "sha256": "sha256:7ecd276d359626ae9610b27ff920b908841d0ce467ed360fc12c0296dac0a923",
+      "name": "capabilities.json"
+    },
+    {
+      "sha256": "sha256:dafd6062b6937ba6c6a3f62a43d9579d6f4f6c83397f074ae22633900e48156a",
+      "name": "check.json"
+    },
+    {
+      "sha256": "sha256:b13c077cfdda48cb9ca730edfdc511df090f9f7ab19890df4510af6d7e666f0c",
+      "name": "evaluate.json"
+    },
+    {
+      "sha256": "sha256:fb9a19c3f6aeb72767f9a75e0cc365038d779dfd36479658f0c3c8bd60ca0480",
+      "name": "imports.json"
+    },
+    {
+      "sha256": "sha256:5084694d141240e6b5431a4bf05897db36d800759e1a1c318a72e3d938f9b782",
+      "name": "build.log"
+    },
+    {
+      "sha256": "sha256:f792f86ff8566ec30a1cd3a7219e5b7f172b81ede88ef88b8bf9ca8d2f9e873d",
+      "name": "repro/build.log"
+    }
+  ],
+  "limits": [
+    "One interpreter, platform and source revision. This is not a release check.",
+    "The wheel is not published or retained in Git; its identity and the commands above reproduce it."
+  ]
+}

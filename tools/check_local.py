@@ -35,9 +35,10 @@ from tools.storage_identity import prepare_offline_workspace
 READBACK_CONFIG_ENV = "ONTOKIN_CURRENT_HOST_READBACK_CONFIG"
 READBACK_DIGEST_ENV = "ONTOKIN_CURRENT_HOST_READBACK_CONFIG_SHA256"
 
-SOURCE_DIRS = ("ontokin", "tests", "tools", "docs", "examples", "fixtures", "schemas", "prototypes", "packaging", ".github", ".agents")
-ROOT_FILES = ("pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "CHATGPT-START-HERE.md", "ROLE.md", "LICENSE", "LICENSE-CODE",
-              "LICENSE-DOCS", ".gitignore", ".gitattributes", ".lfsconfig")
+SOURCE_DIRS = ("ontokin", "tests", "tools", "docs", "examples", "fixtures", "schemas", "prototypes", "packaging", ".github", ".agents", "TRDs")
+ROOT_FILES = ("pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "CHATGPT-START-HERE.md", "ROLE.md",
+              "LOCAL-START-HERE.md", "CLAUDE.md", "LICENSE", "LICENSE-CODE", "LICENSE-DOCS", "LICENSING.md", "NOTICE",
+              ".gitignore", ".gitattributes", ".lfsconfig")
 IGNORED = {".git", "node_modules", "__pycache__", ".venv", "venv", ".tox", ".cache",
            ".pytest_cache", ".mypy_cache", ".ruff_cache", "build", "dist", "_build"}
 GENERATED_EXAMPLES = {

@@ -1,0 +1,399 @@
+{
+ "schema": "ontokin.local-migration.r06-verification/1",
+ "task": "LOCAL-MIGRATION-20261124",
+ "step": "TASK-006",
+ "purpose": "Verification of the R06 handoff and its delivery receipt before anything is imported (REQ-031, REQ-032), and the restore check of one representative unique artifact (REQ-038).",
+ "retrieval": {
+  "from": "The owner's ChatGPT Library, the two file links recorded in RECONCILIATION.md",
+  "by": "The owner, with a browser, on 2026-11-25 between 16:54Z and 16:56Z; the pages had been opened for the owner, who downloaded both files",
+  "to": "The owner's downloads folder; a local copy beside the clone has the same identities",
+  "note": "A local agent has no access to the Library."
+ },
+ "files": {
+  "archive": {
+   "name": "OntoKin_C271_P29_R06_Transfer_Capability_Handoff_2026-11-24.zip",
+   "bytes": 41730084,
+   "sha256": "4b8fae8b846c6f2b27ed5e2630c71240739786791cf39f043e787c55ad727bc9",
+   "git_blob": "3dcaf04ff3d6405869669a586e1f99c42dc0915c",
+   "equals_recorded_identity": true
+  },
+  "receipt": {
+   "name": "OntoKin_C271_P29_R06_Delivery_Receipt_2026-11-24.json",
+   "bytes": 149563,
+   "sha256": "24aa014cb430d9b7269ee2e39ff08e7005d3630e8dd41c109f824e80039909d8",
+   "equals_recorded_identity": true
+  }
+ },
+ "recorded_identities_from": [
+  "TRDs/trd_ontokin-local-development-migration_2026-11-24.md",
+  "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7136207682"
+ ],
+ "method": "One script read the archive in memory with python3.12 -I, hashed every member of it and of the 19 archives nested in it, and compared Git objects with git rev-parse and git cat-file. Nothing was executed, extracted or written to a Git repository before these results existed. The evidence member was also piped to git hash-object --stdin, which writes no object.",
+ "executed_at": "2026-11-25T16:56:08Z",
+ "checks": [
+  {
+   "check": "outer archive identity",
+   "result": "passed"
+  },
+  {
+   "check": "outer receipt identity",
+   "result": "passed"
+  },
+  {
+   "check": "safe member names, no link, no encryption, no duplicate, every member readable (CRC), in all archives",
+   "result": "passed"
+  },
+  {
+   "check": "outer member count",
+   "result": "passed"
+  },
+  {
+   "check": "outer manifest entries",
+   "result": "passed"
+  },
+  {
+   "check": "outer manifest lists every member except itself",
+   "result": "passed"
+  },
+  {
+   "check": "manifests of nested archives",
+   "result": "passed"
+  },
+  {
+   "check": "source bindings: archived bytes, and the same path in the named commit of the local clone",
+   "result": "passed"
+  },
+  {
+   "check": "nested archive identities are recorded by a document of the package or by the receipt",
+   "result": "passed"
+  },
+  {
+   "check": "evidence member: size, SHA-256 and Git blob identity",
+   "result": "passed"
+  },
+  {
+   "check": "accepted payload inventory of the recovery review: path, size, SHA-256 and Git blob of every row",
+   "result": "passed"
+  },
+  {
+   "check": "accepted payload inventory: every one of the accepted payloads is present with its digest",
+   "result": "passed"
+  },
+  {
+   "check": "receipt: embedded proof files match their recorded digests and lengths",
+   "result": "passed"
+  },
+  {
+   "check": "receipt names the outer archive's identity",
+   "result": "passed"
+  },
+  {
+   "check": "receipt: saved artifact record of the archive",
+   "result": "passed"
+  },
+  {
+   "check": "receipt: both saved prompts equal members of the archive",
+   "result": "passed"
+  }
+ ],
+ "summary": {
+  "passed": 16,
+  "failed": 0,
+  "not_checked": 0
+ },
+ "first_run": {
+  "executed_at": "2026-11-25T16:55:24Z",
+  "summary": {
+   "passed": 11,
+   "failed": 1,
+   "not_checked": 2
+  },
+  "note": "The same data. One check failed and two were not checked because the script expected other field names than this source manifest and receipt use (package_path, revision, utf8_content). The script was corrected; no input changed."
+ },
+ "outer_archive": {
+  "members": 132,
+  "manifest_payloads": 131,
+  "unlisted_members": [
+   "MANIFEST-SHA256.json"
+  ],
+  "unsafe_names": 0,
+  "links": 0,
+  "encrypted": 0,
+  "duplicates": 0,
+  "unreadable": 0
+ },
+ "nested_archives": [
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip",
+   "bytes": 40934668,
+   "sha256": "406b86f0fe9787ce0b1ead460f8391d3aaf2f79345e852c0ea3107b6469b9182",
+   "git_blob": "ff8eb91565e14a519b3dfd9cad75fa2dbd0b0b65",
+   "files": 85,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip",
+   "bytes": 39644692,
+   "sha256": "d1d099eff1ccbec55ea01ac61d65fc1d698466cde65fd8142c8b480fdd68f19e",
+   "git_blob": "134aa3f9c776014b0b7eff7097e9bd6a33b93b16",
+   "files": 157,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip",
+   "bytes": 38143260,
+   "sha256": "84b4c7781779a108bf7f6f991bafdcc06632289e4031135c6484c373e6ed114f",
+   "git_blob": "5b14676d53c0fea1c0378230655e15f649b24af6",
+   "files": 247,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip > files/docs/engineering/localized-repair-c271/required-images-p29/control-attempts/implementation-focused-001.zip",
+   "bytes": 851096,
+   "sha256": "480ff695897ee58017860f2d368f4d1ff61156a5b279dd3e4f4fa4ed326718f0",
+   "git_blob": "5eff6c7381861e38735f921123cf6acb0e414da0",
+   "files": 514,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip > files/docs/engineering/localized-repair-c271/required-images-p29/evidence/VERIFICATION-EVIDENCE.zip",
+   "bytes": 25817783,
+   "sha256": "bae1b62fd3cc78e8cb886e08c4c2f7d76eaaf765e7f6374a394d5f0aa980d038",
+   "git_blob": "9facb186ec11523163520323d83dc58fd68e829c",
+   "files": 33404,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip > files/docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE001.zip",
+   "bytes": 364122,
+   "sha256": "801b4700361f9347ade3409ff9562bfa3783fdbd9858359cd4f5a3eee71c1073",
+   "git_blob": "e81d71196e9069a98c640590e814271c2e0c1066",
+   "files": 114,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip > files/docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE002.zip",
+   "bytes": 1434172,
+   "sha256": "5db85af0b84fb4712dffe94c69297a9bfe459614e3312b7c27f41c32ec119cf6",
+   "git_blob": "5823fa33e5ffa5b42979b4fb4110d6fb48825044",
+   "files": 140,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip > files/docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE002.zip > docs/engineering/localized-repair-c271/libc-flags-p17/design/CANDIDATE001.zip",
+   "bytes": 166919,
+   "sha256": "d59d4d71a9f73065a000ae3de8233beb82ad5a33a3b526de93debb845f0d86c4",
+   "git_blob": "87f2a721fc47febbdf4a343b999a6d6c9331a691",
+   "files": 92,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip > files/docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE002.zip > docs/engineering/localized-repair-c271/libc-tags-p16/design/CANDIDATE001.zip",
+   "bytes": 264916,
+   "sha256": "05d1cbe971678b8f505795e436f2bd096b81848f68b4f9da6adc64392f6fb5af",
+   "git_blob": "0fe282adf1a4bb95ccd8e863379b48347f0d3bf6",
+   "files": 170,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip > files/docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE003.zip",
+   "bytes": 1437202,
+   "sha256": "56f59a7cab4d8d552a9ccd3ea763e4dad9c187f9a263e2b68e746be0ff6801f1",
+   "git_blob": "60de25dc9fe18d64948a2d9d323e9b9f501d7364",
+   "files": 140,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip > files/docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE003.zip > docs/engineering/localized-repair-c271/libc-flags-p17/design/CANDIDATE001.zip",
+   "bytes": 166919,
+   "sha256": "d59d4d71a9f73065a000ae3de8233beb82ad5a33a3b526de93debb845f0d86c4",
+   "git_blob": "87f2a721fc47febbdf4a343b999a6d6c9331a691",
+   "files": 92,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip > files/docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE003.zip > docs/engineering/localized-repair-c271/libc-tags-p16/design/CANDIDATE001.zip",
+   "bytes": 264916,
+   "sha256": "05d1cbe971678b8f505795e436f2bd096b81848f68b4f9da6adc64392f6fb5af",
+   "git_blob": "0fe282adf1a4bb95ccd8e863379b48347f0d3bf6",
+   "files": 170,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > previous-recovery/branch-state/docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DOCUMENTARY-CHECKS.zip",
+   "bytes": 26598,
+   "sha256": "85730e7c4019730badebf42ef2af1675eaa06d352b42c8b4aab2399e131bcd71",
+   "git_blob": "20f96cd37d9a921b8c6a871d4a2718a3b6647b13",
+   "files": 26,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > previous-recovery/branch-state/docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DOCUMENTARY-REVIEW.zip",
+   "bytes": 21437,
+   "sha256": "9ad773e74eb35e43ded4b2d24c34e06528eaccd8a8a58e36c71290d8814498b2",
+   "git_blob": "926f6a9b9afcba0ea31065006ce52768e76113fc",
+   "files": 6,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > previous-recovery/branch-state/docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/REVIEWS.zip",
+   "bytes": 557547,
+   "sha256": "23a44c3b7c325339e08f0c28527120218c96eb349656079acba1d74be8e391e6",
+   "git_blob": "87cb36178c2097d7df129342751225697d6d5d9a",
+   "files": 43,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R04_Early_Recovery_2026-11-23.zip",
+   "bytes": 223424,
+   "sha256": "29e1a0bd49098c34508352bdff1f55c6d5a547535209c4bb5e6bca6a67715f64",
+   "git_blob": "cb6c0c05a181721b37614d6c9d1323fc1b517349",
+   "files": 32,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R05_Early_Recovery_2026-11-23.zip",
+   "bytes": 526959,
+   "sha256": "35ac562406c975b3134fd3d20158c73a325fed3055a65304a77c809ad4b731db",
+   "git_blob": "4e2e0886817de9e593fcd35091fe665a37871989",
+   "files": 44,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R05_Early_Recovery_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R04_Early_Recovery_2026-11-23.zip",
+   "bytes": 223424,
+   "sha256": "29e1a0bd49098c34508352bdff1f55c6d5a547535209c4bb5e6bca6a67715f64",
+   "git_blob": "cb6c0c05a181721b37614d6c9d1323fc1b517349",
+   "files": 32,
+   "identity_recorded_in_package_or_receipt": true
+  },
+  {
+   "place": "previous-recovery/OntoKin_C271_P29_R06_Early_Recovery_2026-11-24.zip",
+   "bytes": 239991,
+   "sha256": "b6137d9468375d270be51d3f32310f548f58d4632475cbc51309185c2edb4bd6",
+   "git_blob": "a04d35443b46ed49288ce543244da31f4d64821e",
+   "files": 41,
+   "identity_recorded_in_package_or_receipt": true
+  }
+ ],
+ "nested_note": "The R05 handoff in the chain is version 1 (40,934,668 bytes), not version 0 of the R05 comment on pull request 274 (40,867,796 bytes). The embedded R05 correction receipt names both and explains the replacement.",
+ "source_bindings": {
+  "rows": 27,
+  "result": "Every archived file equals the blob at its path in the named commit of the local clone.",
+  "revisions": {
+   "e43cc6c5777874101a40559e4058ad6826b07e51": 23,
+   "bef6790291d0cddc8c6d7de9dc0a92fb5a98c448": 4
+  }
+ },
+ "accepted_payload_inventory": {
+  "inventory": "evidence/reviews/recovery-review.json, candidate_rows",
+  "rows": 245,
+  "result": "Every row is present with its size, SHA-256 and Git blob identity.",
+  "distinct_contents": 213,
+  "total_bytes": 35793027,
+  "groups": {
+   "docs/engineering/localized-repair-c271/required-images-p29/": {
+    "files": 239,
+    "bytes": 34722710
+   },
+   "docs/workflow/CURRENT.json": {
+    "files": 1,
+    "bytes": 188560
+   },
+   "docs/workflow/tasks/C271/PLAN.md": {
+    "files": 1,
+    "bytes": 87930
+   },
+   "docs/workflow/tasks/C271/REQUIREMENTS.md": {
+    "files": 1,
+    "bytes": 86812
+   },
+   "docs/workflow/tasks/C271/task.json": {
+    "files": 1,
+    "bytes": 407441
+   },
+   "prototypes/static_tray_v01/current_host_inspection_v01.py": {
+    "files": 1,
+    "bytes": 249393
+   },
+   "tests/test_current_host_required_images_v01.py": {
+    "files": 1,
+    "bytes": 50181
+   }
+  },
+  "held_in": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip"
+ },
+ "evidence_member": {
+  "path": "docs/engineering/localized-repair-c271/required-images-p29/evidence/VERIFICATION-EVIDENCE.zip",
+  "place": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip > previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip > pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip > files/docs/engineering/localized-repair-c271/required-images-p29/evidence/VERIFICATION-EVIDENCE.zip",
+  "bytes": 25817783,
+  "sha256": "bae1b62fd3cc78e8cb886e08c4c2f7d76eaaf765e7f6374a394d5f0aa980d038",
+  "git_blob": "9facb186ec11523163520323d83dc58fd68e829c",
+  "git_hash_object": "9facb186ec11523163520323d83dc58fd68e829c",
+  "equals_recorded_identity": true,
+  "not_done": "Not extracted, not recompressed, not added to any Git repository."
+ },
+ "receipt": {
+  "states_outer_identity": true,
+  "embedded_proof_files": {
+   "recorded": 11,
+   "matching": 11
+  },
+  "saved_prompts_equal_members": true
+ },
+ "restore_check": {
+  "artifact": "The R06 archive, which holds the only known complete copy chain of the accepted C271 P29 candidate",
+  "durable_location": "The owner's ChatGPT Library",
+  "result": "passed",
+  "evidence": "It was retrieved from that location and its identity equals the recorded one."
+ },
+ "clone": {
+  "before": "main at 6b346b1e4126332fe3c98a4a98f3e0b0e2f63774; untracked Implementation_Plans/ and TRDs/; 471 loose objects",
+  "after": "the same head, the same untracked directories, the same number of loose objects",
+  "migration_worktree": "clean before and after"
+ },
+ "limits": [
+  "The contents of the nested archives were hashed and compared with their inventories; no C271 test, tool or native program was run, and no C271 gate is judged.",
+  "The Library versions of the files inside the chain were not retrieved separately. The separately saved VERIFICATION-EVIDENCE.zip was not retrieved either; its recorded identity equals the member verified here.",
+  "Historical statements inside the handoff are data; none was followed as an instruction."
+ ],
+ "local_evidence": {
+  "directory": "evidence/r06 in the local evidence directory beside the clone",
+  "files": [
+   {
+    "name": "verify_r06.py",
+    "bytes": 14614,
+    "sha256": "2c038c53be8c33b82d955dbe845c967d8b45601b2d385ac4ea2709434f58a3d5"
+   },
+   {
+    "name": "verify_r06_final.py",
+    "bytes": 18006,
+    "sha256": "6c791e74bb1f8b9c10d0468fb9cb0e23925386fe5f4ce9c63675af85ba2aa2ab"
+   },
+   {
+    "name": "extract_needed.py",
+    "bytes": 1846,
+    "sha256": "833718c776c96f8b984869ea670a6a4b5c404db848256618dd50145be61c11aa"
+   },
+   {
+    "name": "compare_records.py",
+    "bytes": 2362,
+    "sha256": "be8c20ff9a0253d8ae9cf8757f15de513489f073a314388385f962245308016d"
+   },
+   {
+    "name": "R06-raw.json",
+    "bytes": 96069,
+    "sha256": "06d992c82fa3e3c9396d4162e98a4e18be670896202e9b4814d37bb35d05ca1a"
+   },
+   {
+    "name": "R06-raw2.json",
+    "bytes": 317258,
+    "sha256": "858ff9ec88554cdab40279ca17abd24e3b05b4fd8e3a8728b97d1bb5b9d61b12"
+   }
+  ]
+ },
+ "recorded_before_extraction": {
+  "results_recorded_at": "2026-11-25T16:56:08Z",
+  "first_extraction": "After the results were written: 34 small text and JSON records, 1.3 MB, into a new staging directory beside the clone (TASK-007). The evidence archive and the other payloads were not extracted."
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "schema": "ontokin.local-migration.main-environment/1",
+ "task": "LOCAL-MIGRATION-20261124",
+ "step": "TASK-035",
+ "observed_at": "2026-11-25T21:10:18+00:00",
+ "note": "Machine paths are replaced by labels. The unedited record stays in the ignored .venv of the main checkout.",
+ "source": {
+  "head": "8e847c15e41c7e5970581993c465690526cd43d2",
+  "tree": "77694a3bcaf531619d6807aa0ee4a46986f4e27c",
+  "branch": "main",
+  "tracked_modifications": []
+ },
+ "before": "The main checkout had no environment.",
+ "setup": {
+  "command": "python3.12 -B tools/bootstrap_local.py",
+  "outcome": "changed",
+  "actions": [
+   {
+    "action": "create-environment",
+    "code": 0
+   },
+   {
+    "action": "install-packages",
+    "code": 0
+   }
+  ],
+  "repeat": "unchanged"
+ },
+ "interpreter": {
+  "implementation": "CPython",
+  "version": "3.12.13",
+  "distribution": {
+   "name": "Homebrew",
+   "formula": "python@3.12"
+  },
+  "specified": "3.12.13"
+ },
+ "platform": {
+  "key": "macos-arm64",
+  "system": "Darwin",
+  "machine": "arm64",
+  "os_version": "26.6.2",
+  "platform_tag": "macosx-26.0-arm64"
+ },
+ "installation_tools": {
+  "pip": "26.0"
+ },
+ "build_tools": "None: binary wheels only.",
+ "packages": {
+  "attrs": "26.1.0",
+  "jsonschema": "4.26.0",
+  "jsonschema-specifications": "2025.9.1",
+  "pillow": "13.0.0",
+  "pip": "26.0",
+  "referencing": "0.37.0",
+  "rpds-py": "2026.5.1",
+  "typing_extensions": "4.16.0"
+ },
+ "lock": {
+  "path": "tools/native-reader-verification-macos-arm64-cp312.lock",
+  "state": "ready"
+ },
+ "digests": {
+  "pyproject.toml": "sha256:171347b6cdceb3850d53a82f9dd8a344c231f42e5c06db1aaaa0df7b2687032e",
+  "tools/check_native_reader_setup.py": "sha256:585fac8ff9074c88a9bde9bc88054ca72fed5364b02c475910881800014268c3",
+  "tools/force-agent-verification-requirements.txt": "sha256:6d5fefcbd7ccced7d39bf8d20e87ec1c4401fc6b252aea41677d41d9124555d1",
+  "tools/local-environment.json": "sha256:c70b9d43634f9a35170e4ac633a6e352e7a986a6fb8ab10639fa60a9c776f9b4",
+  "tools/native-reader-verification-linux-cp312.lock": "sha256:a7f17491000c2e139ccc5d213ca0e8a6f917e5befb4b878fef29f5ff72ae780f",
+  "tools/native-reader-verification-macos-arm64-cp312.lock": "sha256:b1e3e86668421539c6817faefe7f126b4dbf25153fcbb2fab6325e080cf7a81c",
+  "tools/native-reader-verification-macos-arm64-cp312.provenance.json": "sha256:cbcc1b27797ab4a8742ad8b0360a25164e1dadb61f8da12d54e930c317355415",
+  "tools/package-lock.json": "sha256:f1351b945f847f937dcacc9736fea07a710f1c066dbc9d7a5e19e89a858d635a",
+  "tools/package.json": "sha256:ce695b672904c8c01d699c06b0ed16f97e34e6e34115b65fb192e25d70dee4cb"
+ },
+ "readiness": {
+  "core": "ready",
+  "python-verification": "ready",
+  "visual-verification": "mismatch",
+  "package-smoke": "not_checked",
+  "historical-native": "not_checked",
+  "linux-container": "unsupported"
+ },
+ "checks": [
+  {
+   "command": ".venv/bin/python -m pip check",
+   "result": "passed",
+   "observed": "No broken requirements found."
+  },
+  {
+   "command": ".venv/bin/python -B -m ontokin capabilities",
+   "result": "passed",
+   "observed": "ontokin-reference 0.4.0"
+  },
+  {
+   "command": ".venv/bin/python -B tools/doctor_local.py --json",
+   "result": "passed",
+   "observed": "exit status 0, python-verification ready"
+  },
+  {
+   "command": "git status --porcelain --ignored",
+   "result": "passed",
+   "observed": "the environment and build directories are ignored; only Implementation_Plans/ is untracked"
+  }
+ ]
+}

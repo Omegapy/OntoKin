@@ -1,18 +1,37 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "repository": "Omegapy/OntoKin",
-  "entrypoint": "CHATGPT-START-HERE.md",
-  "required_reads": [
-    "CHATGPT-START-HERE.md",
-    "AGENTS.md",
-    "GOAL.md",
-    "STATUS.md",
-    "ROLE.md",
-    "docs/workflow/registry.json",
-    "docs/workflow/CURRENT.json",
-    "docs/workflow/PROTOCOL.md",
-    "docs/workflow/HANDOFF.md"
-  ],
+  "modes": {
+    "local": {
+      "entrypoint": "LOCAL-START-HERE.md",
+      "declared_by": "The session starts from this entry document; or, with no entry document named, Go or Continue resumes a task that is recorded as local, in a session that is local.",
+      "required_reads": [
+        "LOCAL-START-HERE.md",
+        "AGENTS.md",
+        "GOAL.md",
+        "STATUS.md",
+        "ROLE.md",
+        "docs/workflow/registry.json",
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/PROTOCOL.md"
+      ]
+    },
+    "browser": {
+      "entrypoint": "CHATGPT-START-HERE.md",
+      "declared_by": "A ChatGPT browser thread starts from this entry document; or, with no entry document named, Go or Continue resumes a task that is recorded as browser, in a browser thread.",
+      "required_reads": [
+        "CHATGPT-START-HERE.md",
+        "AGENTS.md",
+        "GOAL.md",
+        "STATUS.md",
+        "ROLE.md",
+        "docs/workflow/registry.json",
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/PROTOCOL.md",
+        "docs/workflow/HANDOFF.md"
+      ]
+    }
+  },
   "skills": [
     {
       "id": "ontokin-session",

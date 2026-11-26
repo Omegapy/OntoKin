@@ -215,6 +215,20 @@
       "scope": "C271 P15's bound amd64 loader and libc under unchanged reader SHA256 a8274d56076562a91d26b3cdd2f614fce6fd509733e4939b225dff2ddca09db4. No signature/reproduced-build proof, general source-completeness rule, H0/H1 qualification, operational-plan approval or permission to loosen admitted tags.",
       "recorded_at": "2026-11-21",
       "supersedes": null
+    },
+    {
+      "id": "memory-local-state-in-checkpoint",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "Keep current task state in the session checkpoint, not in an agent's private memory. The Claude application loads private memory into every later session of the project, also in linked worktrees; a note saved shortly before the fresh-session demonstration reached that session and the run could not count.",
+      "sources": [
+        "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION-1.md",
+        "docs/workflow/PROTOCOL.md"
+      ],
+      "scope": "Local Claude sessions and demonstrations of resumption from the repository; observed once, with one application version.",
+      "recorded_at": "2026-11-25",
+      "supersedes": null
     }
   ]
 }

@@ -2,11 +2,13 @@
 project: OntoKin
 document_id: OK-ENG-006
 title: Local Validation and Hosted CI Policy
-version: 0.1
+version: 0.2
 date: 2026-10-19
+amended: 2026-11-24
 status: adopted-operational-policy
 document_type: engineering-validation-policy
 authority: project-owner-direction-2026-10-19
+amendment_authority: project-owner-direction-2026-11-24
 ---
 
 # OK-ENG-006: Local validation and hosted CI
@@ -18,6 +20,15 @@ On October 19, 2026, the project owner directed OntoKin to avoid paid GitHub Act
 This changes the execution location and integration procedure. All language semantics, predetermined expectations, numerical limits, source identities, independent verification requirements and the full [GOAL](../../GOAL.md) remain in force. A milestone with unfinished release requirements remains unfinished after its implementation is integrated.
 
 The policy applies to current operational references to mandatory CI in GOAL and [AGENTS](../../AGENTS.md), including routine integration of the next Agent/force work. It does not convert a failed, blocked, skipped or unexecuted GitHub job into a passing result. Account budgets, payment settings, repository visibility and historical evidence are unchanged by this decision.
+
+**November 24, 2026 amendment.** Under the owner's [local-development direction](local-migration-20261124/DECISION.md), checks run on the **explicitly selected executor** of the session's [execution mode](../../AGENTS.md#execution-modes):
+
+| Mode | Executor |
+| --- | --- |
+| Local | The prepared environment of the owner's checkout or worktree, run as `.venv/bin/python`, or another local or dedicated verification machine that the check names. |
+| Browser | The assistant's hosted workspace for that thread, prepared in fresh directories of its current host. |
+
+The amendment is prospective. It changes where checks run and how the environment is prepared. The October 19 decision, the required evidence, the no-payment direction and the hosted-workflow rules are unchanged.
 
 ## 2. Required checks and the meaning of a result
 
@@ -36,7 +47,7 @@ Keep execution status separate from release status. Some conformance runners suc
 
 ## 3. Run checks locally
 
-Run these commands from the repository root using an installed Python 3.11, 3.12 or 3.13. Ordinary reference execution uses the Python standard library. The runner does not install dependencies, start GitHub jobs, publish results or change billing settings.
+Run these commands from the repository root using an installed Python 3.11, 3.12 or 3.13. Ordinary reference execution uses the Python standard library. The runner does not install dependencies, start GitHub jobs, publish results or change billing settings. In local mode use the environment's own interpreter, `.venv/bin/python`, in place of `python3`.
 
 List the planned checks without executing them:
 
@@ -49,6 +60,8 @@ Prepare the native-reader environment below before running the routine Python an
 ```bash
 python3 tools/check_local.py
 ```
+
+The output directory must be new or empty, and under `build/` or outside the checkout. In local mode write it outside the checkout with `--output-dir`: the documentation verifier scans every non-dot directory of a checkout, including `build/`, so a retained workspace under `build/` would be read as documentation. `--timeout` is the limit for each command; state it explicitly for long runs, and report a timeout as a timeout. Local instructions do not depend on an outer shell `timeout`, which macOS does not provide.
 
 For Agent/0.5 integration, prepare the separate pinned packages in
 [`tools/force-agent-verification-requirements.txt`](../../tools/force-agent-verification-requirements.txt)
@@ -68,19 +81,28 @@ The source checkout's metadata is not used as the workspace's writable index.
 
 ### Prepare the native-reader verification environment
 
-The C093 native reader uses Pillow to decode embedded PNG textures. Unit-test discovery includes its controls. Before running the complete suite or the combined full driver on this candidate, prepare a clean verification environment outside the checkout. The [seven-package lock](../../tools/native-reader-verification-linux-cp312.lock) includes the six historical Agent/0.5 pins and Pillow 13.0.0. The recorded binary-wheel hashes cover CPython 3.12 on Linux x86-64 with compatible manylinux wheels. Additional platforms require their own wheel identities. OntoKin runtime installation uses its existing package metadata.
+The C093 native reader uses Pillow to decode embedded PNG textures. Unit-test discovery includes its controls. Before running the complete suite or the combined full driver on this candidate, prepare the verification environment. Two locks pin the same seven packages, the six historical Agent/0.5 pins and Pillow 13.0.0, each for one platform: [CPython 3.12 on Linux x86-64](../../tools/native-reader-verification-linux-cp312.lock) with compatible manylinux wheels, and [CPython 3.12 on macOS arm64](../../tools/native-reader-verification-macos-arm64-cp312.lock). A lock is used only on its own platform, and hash enforcement is never removed to make one install elsewhere. Additional platforms require their own wheel identities. OntoKin runtime installation uses its existing package metadata.
+
+**Local mode.** The environment is the persistent, ignored `.venv` of the checkout or worktree. The [setup tool](../../tools/bootstrap_local.py) creates it from the [tracked specification](../../tools/local-environment.json), selects the platform's lock, and changes nothing when it is already healthy. The [doctor](../../tools/doctor_local.py) reports readiness without changing anything.
 
 ```bash
-python3.12 -m venv /tmp/ontokin-native-venv
-source /tmp/ontokin-native-venv/bin/activate
-python -I -m pip install --only-binary=:all: --require-hashes -r tools/native-reader-verification-linux-cp312.lock
-python -I -B tools/check_native_reader_setup.py && python -m unittest discover -s tests -p 'test_torque_native_joint_parent_site_c093.py' -v
+python3.12 tools/bootstrap_local.py --profile python-verification
+.venv/bin/python tools/doctor_local.py
+.venv/bin/python -I -B tools/check_native_reader_setup.py && .venv/bin/python -m unittest discover -s tests -p 'test_torque_native_joint_parent_site_c093.py' -v
 ```
 
-The [preflight](../../tools/check_native_reader_setup.py) imports `PIL.Image` and checks the Pillow version before test discovery. The focused class contains 11 methods and 47 subtests. To install offline, add `--no-index` and `--find-links` for each directory containing the seven locked wheels. For the full invocation, prepare the Node and Chromium dependencies below, then run the following command from the same environment.
+**Browser mode.** A disposable host prepares the Linux lock in a new directory of that host, outside the checkout; the directory is not a resource of any later thread.
 
 ```bash
-python -I -B tools/check_native_reader_setup.py && timeout 7200 python tools/check_local.py --full --force-agent --timeout 3600
+python3.12 -m venv NEW_DIRECTORY
+NEW_DIRECTORY/bin/python -I -m pip install --only-binary=:all: --require-hashes -r tools/native-reader-verification-linux-cp312.lock
+NEW_DIRECTORY/bin/python -I -B tools/check_native_reader_setup.py && NEW_DIRECTORY/bin/python -m unittest discover -s tests -p 'test_torque_native_joint_parent_site_c093.py' -v
+```
+
+The [preflight](../../tools/check_native_reader_setup.py) imports `PIL.Image` and checks the Pillow version before test discovery. The focused class contains 11 methods and 47 subtests. To install offline, add `--no-index` and `--find-links` for each directory containing the seven locked wheels, or give the setup tool `--find-links`. For the full invocation, prepare the Node and Chromium dependencies below, then run the following command with the same environment's interpreter: `.venv/bin/python` in local mode, `NEW_DIRECTORY/bin/python` in browser mode. A browser host that has the command may put the earlier form's outer `timeout 7200` before the second part.
+
+```bash
+PYTHON -I -B tools/check_native_reader_setup.py && PYTHON tools/check_local.py --full --force-agent --timeout 3600 --output-dir NEW_OUTPUT_DIRECTORY
 ```
 
 ### Independent geometry and browser checks
@@ -94,7 +116,7 @@ Use Node.js 22 with npm for the existing verifier toolchain. The committed [pack
 | Playwright | 1.56.1 |
 | Three.js | 0.180.0 |
 
-Install them explicitly when preparing the machine, then install Playwright's matching Chromium headless shell. These preparation steps use the network. They are not performed automatically by the checker.
+Install them explicitly when preparing the machine, then install Playwright's matching Chromium headless shell. These preparation steps use the network. They are not performed automatically by the checker. `npm ci` replaces an existing `tools/node_modules`, so use it only for first preparation or deliberate repair, and never while a validator or another agent uses that directory. In local mode the setup tool performs both steps for the selected `visual-verification` profile and leaves healthy dependencies alone.
 
 ```bash
 npm ci --prefix tools --ignore-scripts
@@ -121,7 +143,7 @@ Before integration, retain a reviewable record containing:
 - For delivery work, matching source/program/GLB identities and the independent numerical and visual observations required by that scope.
 - The relevant GitHub job state, if any, labeled as hosted execution rather than reused as evidence for changed bytes.
 
-Retain durable evidence in GitHub through an identified repository record or another durable linked result; a temporary local path is not a completed handoff. Keep source and verification inputs stable during execution. Reconcile any change before attributing results to a later revision.
+Retain durable evidence in GitHub through an identified repository record or another durable linked result; a temporary local path is not a completed handoff, and an ignored directory on one disk is not a backup. Keep source and verification inputs stable during execution. Reconcile any change before attributing results to a later revision.
 
 Follow the integration lease and conditional-update rules in AGENTS. Review the actual branch and current main, resolve conflicts, and validate the resulting integration. Local success supports only the checked scope and environments. Pending GLB/0.5, force-release or other requirements remain visible in [STATUS](../../STATUS.md). This policy alone does not authorize claiming PR #14 or any release validated.
 
@@ -146,6 +168,11 @@ The no-payment direction remains in effect. Do not increase an Actions budget or
 ## 7. Source and decision record
 
 Official GitHub documentation checked October 19, 2026. Provider pricing and settings can change; verify them again before deliberately enabling hosted execution. The owner direction authorizes this local-validation policy, not a purchase or a visibility change.
+
+| Version | Date | Authority | Change |
+| --- | --- | --- | --- |
+| 0.1 | October 19, 2026 | Owner direction of that date | Adopted. |
+| 0.2 | November 24, 2026 | [Owner's local-development direction](local-migration-20261124/DECISION.md) | Names the executor of each execution mode, adds the macOS arm64 lock, the setup tool and the doctor, replaces the temporary-environment example with the persistent one, and makes the outer `timeout` of the full invocation optional. No required check, result meaning, hosted-workflow rule or release contract changed. |
 
 [billing]: https://docs.github.com/en/billing/concepts/product-billing/github-actions
 [budgets]: https://docs.github.com/en/billing/how-tos/set-up-budgets

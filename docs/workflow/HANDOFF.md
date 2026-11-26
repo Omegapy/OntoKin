@@ -1,9 +1,15 @@
-# Required browser-session handoff
+# Session handoff and closing
 
+**Browser sessions** deliver the saved handoff that this contract requires.
 [C264](tasks/C264/REQUIREMENTS.md): verified ZIP saved in ChatGPT Library.
 [Conversation-length repair](tasks/CHAT-LENGTH-20261118/REQUIREMENTS.md): delivery for
 every declared phase, including partial handoffs. GitHub remains current operational
 state. Use complete [continuation/recovery prompts](BROWSER-PROMPTS.md).
+
+**Local sessions** follow only [Local sessions](#local-sessions) and the definitions in
+[Integrated, delivered and complete](#integrated-delivered-and-complete). Every other rule
+here binds browser sessions. A selected task that explicitly requires a ZIP adds only the
+package, verification and save rules to a local session.
 
 ## Preserve progress before the thread ends
 
@@ -25,8 +31,18 @@ README/checkpoint must identify **browser-session handoff for online GitHub cont
 usable without preceding conversation; declare external inputs/limits. No full offline
 restoration claim.
 
+**New-host continuity:** Every fresh browser thread has a different,
+disposable execution host. Do not present previous `/workspace` or `/tmp`
+paths, installed environments, running processes or old host profiles as
+resources available to the next thread. Save durable byte-verified artifacts
+and portable reconstruction instructions, not promises of host persistence.
+See [EPHEMERAL-HOST](EPHEMERAL-HOST.md). For packages created after this
+clarification, include `HOST-ENVIRONMENT.md` and repeat the essential rule
+in README and both prompts. Older immutable archives remain valid history.
+
 C262: preserve unchanged; record stable Library identity/link, bytes, SHA-256 from
-[CURRENT](CURRENT.json) in `HISTORICAL-DEPENDENCIES.json`. Historical restoration may
+the retained history that [CURRENT](CURRENT.json) links in
+`HISTORICAL-DEPENDENCIES.json`. Historical restoration may
 require C262; ordinary continuation need not reconstruct/embed it. Preserve
 [C263 migration boundary](../engineering/browser-workflow-c263/MIGRATION.md). Links
 do not prove complete backup. Separately requested full offline successor: original
@@ -48,6 +64,7 @@ Exact root filenames and required contents:
 | `PROMPT-2-RECOVER.md` | Complete reusable interruption-recovery prompt, including delivery-only recovery. |
 | `HISTORICAL-DEPENDENCIES.json` | Exact known archive/dependency identities/purposes; online continuation versus historical offline restoration. |
 | `MANIFEST-SHA256.json` | Every payload path, byte count, SHA-256; exclude manifest itself. |
+| `HOST-ENVIRONMENT.md` (new handoffs) | Current-host-only execution rule; portable input identities, reconstruction plan, historical-path boundary. |
 
 `repository/`: preserve relative paths for frozen START, AGENTS, GOAL, STATUS, ROLE,
 registry, CURRENT, PROTOCOL, HANDOFF, reusable prompts, active/latest task with
@@ -81,16 +98,48 @@ work; record delivery blocked/pending; claim no availability/task completion.
 ## Integrated, delivered and complete
 
 **Integrated**: reviewed change on actual main with applicable verification.
-**Delivered**: verified ZIP, confirmed Library save. **Complete**: both, all task
+**Delivered**: browser, verified ZIP, confirmed Library save; local, the closing state
+under [Local sessions](#local-sessions). **Complete**: both, all task
 acceptance/branch-lifecycle obligations. Partial handoff delivers only session;
 parent stays `in_progress`/`review`, with open issue, recoverable branch, remaining
 gates. Planned pause is not blocker. Completed branches: mandatory PROTOCOL section 7,
 including exact `deletion_pending` instructions when tools absent.
 
-ZIP cannot contain future save receipt; checkpoint may say `save_pending` and point
+**Browser:** ZIP cannot contain future save receipt; checkpoint may say `save_pending` and point
 to external delivery record. After confirmed save: publish receipt; update actual
 phase/gates; release ownership appropriately. Close only after all parent gates pass.
 Receipt/closure commit needs no rebuild; reconcile boundary through live GitHub.
 Material packaged-work/recovery-instruction change: newly verified package/updated receipt.
 
-After delivery: report phase result; stop. Resume unfinished work in fresh parent chat.
+**Browser:** after delivery, report phase result; stop. Resume unfinished work in fresh
+parent chat.
+
+## Local sessions
+
+A local session or scope closes on durable state that a fresh session can read without
+the previous conversation and without ChatGPT Library:
+
+1. **Source checkpoint.** A commit on the scope's branch. Every uncommitted or untracked
+   input that stays behind is named and preserved.
+2. **Truthful records.** `task.json` agrees with actual acceptance; the session checkpoint
+   follows [SESSION](templates/SESSION.md); CURRENT points to both.
+3. **Push state.** Read from the remote when online. Offline: recorded as unconfirmed.
+4. **Durable evidence.** Exact bytes, identities and a durable location; failures and
+   not-run checks included.
+
+A ZIP export is optional unless the selected task explicitly requires one. A Library save
+is no closing condition, so a session closes normally while the Library is unavailable.
+
+Create no receipt of the receipt: record the code checkpoint and its evidence, let Git
+reveal the later checkpoint commit, and keep a later push observation, when needed, as a
+separate small record. Do not rebuild frozen evidence for it.
+
+**Local scope completion** needs all task acceptance, verified integration and resulting
+main, observed branch and worktree disposition, and a closing report. Session boundaries
+before that leave the task `in_progress`, `blocked` or `review`, with its recoverable
+branch and one exact next action.
+
+Legacy handoff archives and receipts stay unchanged. Before importing anything from one,
+check its outer identity, manifest, nested identities and payload inventory against the
+recorded values; extract only needed data into a new staging location and never over a
+checkout. A historical ZIP, receipt or release gate that was not met stays unmet.

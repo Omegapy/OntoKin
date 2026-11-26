@@ -4,7 +4,7 @@ Use this page to find OntoKin's governing sources and bounded capability
 records. [knowledge.json](knowledge.json) contains terms, relationships and
 capability entries; [memory.json](memory.json) contains source-backed decisions,
 constraints, lessons and open questions. These records support explicit recall
-across browser chats when the agent reads them.
+across sessions when the agent reads them.
 
 This knowledge map provides navigation. It changes no adopted language
 semantics, proves no new release or comparative result, and implements no
@@ -23,7 +23,8 @@ be checked against those sources before it is applied.
 | Localized-repair qualification | [C253 protocol](../engineering/localized-repair-c253/README.md) | A public qualification family does not demonstrate a general authoring advantage. |
 | Hinge declarations and observation boundaries | [C260 contract](../engineering/localized-repair-c260/CONTRACT.md), [C261 reader](../engineering/localized-repair-c261/README.md) and [C265 source observer](../engineering/localized-repair-c265/README.md) | Raw metadata claims, independent source facts, comparison and historical admission are separate. |
 | Verification and integration | [AGENTS](../../AGENTS.md), [OK-ENG-006](../engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md), and [OK-ENG-009](../engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) | Applicable checks and resulting-main evidence govern an increment; a merge alone is not a full release. |
-| Browser-chat operation | [Entry point](../../CHATGPT-START-HERE.md), [Director role](../../ROLE.md), and [protocol](PROTOCOL.md) | Repository instructions do not create execution tools or platform permissions. |
+| Session operation | Entry point of the [execution mode](../../AGENTS.md#execution-modes), [local](../../LOCAL-START-HERE.md) or [browser](../../CHATGPT-START-HERE.md), [Director role](../../ROLE.md), and [protocol](PROTOCOL.md) | Repository instructions do not create execution tools or platform permissions. |
+| Local environment | [Setup guide](../development/LOCAL-SETUP.md) and `tools/doctor_local.py` | A ready environment is not task completion or product qualification. |
 
 ## Read the records
 
