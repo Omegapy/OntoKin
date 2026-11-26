@@ -1,0 +1,89 @@
+{
+  "schema": "ontokin.current-host-readback-amendment/0.2.0",
+  "amendment": "P33-AMENDMENT-001",
+  "contract": "ontokin.current-host-readback/0.2.0",
+  "profile": "darwin-arm64-v1",
+  "design_revision": 4,
+  "status": "proposed",
+  "proposed_by": "C271-P33 Director c271-p33-a99647756bed",
+  "adoption": "a separate adoption record after an independent review; design only",
+  "contract_version_and_schemas": "unchanged (0.2.0): nothing has been implemented, prepared or executed under 0.2.0; every 0.2.0 result names the design revision it follows",
+  "adopted_files_unchanged": [
+    "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
+    "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.json"
+  ],
+  "finding": {
+    "id": "P33-SUPERVISOR-001",
+    "host": {
+      "product_version": "26.6.2",
+      "build": "25G83",
+      "kernel_release": "25.6.0",
+      "machine": "arm64",
+      "python": "3.12.13"
+    },
+    "observed_on": "2026-11-26",
+    "probe": "os.killpg(pgid, 0)",
+    "answers": {
+      "a member alive": "returns",
+      "every remaining member exited, none reaped": "PermissionError (EPERM)",
+      "after reaping": "ProcessLookupError (ESRCH)"
+    },
+    "evidence": [
+      "docs/engineering/localized-repair-c271/macos-implementation-p33/evidence/zombie_group_probe.py",
+      "docs/engineering/localized-repair-c271/macos-implementation-p33/evidence/zombie_group_probe.out.json",
+      "tests/test_supervisor_darwin_v01.py at a23761919e92c41489f26a57d02fa1d5dc9d8e19 (observation test and the MC12/MC13 development cases)",
+      "W1's 12 runs: MC12 failed 10, MC13 timeout 3, MC13 cancellation 1, positive 0, every failure PermissionError"
+    ],
+    "effect_on_adopted_S4": "the imported group_exists treats only ESRCH as an answer, so EPERM escapes as PermissionError through terminate_group; terminate_group's three killpg signal sends catch only ProcessLookupError; the caller receives PermissionError instead of the original Stop, the cleanup receipt stays empty, and the direct child can remain unreaped"
+  },
+  "decision": {
+    "imported_unchanged": [
+      "Clock",
+      "Stop",
+      "LIMITS",
+      "inventory",
+      "json_bytes",
+      "_reap"
+    ],
+    "reimplemented": {
+      "run_process": "as adopted: only the precondition differs; its body's names group_exists and terminate_group resolve to the Darwin re-implementations",
+      "group_exists": "the same probe os.killpg(pid, 0); True when it returns or fails with PermissionError (EPERM); False only on ProcessLookupError (ESRCH); any other error propagates unchanged",
+      "terminate_group": "the original logic, limits, order and receipt; in each of its three os.killpg(..., SIGTERM|SIGKILL) sends a PermissionError is treated like ProcessLookupError (the send is passed over); its polling uses the Darwin group_exists"
+    },
+    "rule": "the group counts as absent only when the probe reports ESRCH; the rule holds whichever answer a group of unreaped members gives",
+    "fail_closed": "a genuine permission refusal also answers EPERM, counts as present, and a group that never empties fails at the cleanup ceiling with the original Stop; a send failing with EPERM is never taken as proof of absence",
+    "original_supervisor": "byte-identical; stays the Linux contract's supervisor"
+  },
+  "replaces": {
+    "CONTRACT.md section 1 row S4": "a Darwin variant whose only changes are the precondition and the counting of an EPERM group answer as a present group",
+    "CONTRACT.md section 5 imports and re-implementation": "imports Clock, Stop, LIMITS, inventory, json_bytes and _reap unchanged; re-implements run_process, group_exists and terminate_group",
+    "CONTRACT.md section 5 token comparison": "a reviewed token-level comparison of the three re-implemented functions with the originals shows only the precondition block of run_process, the PermissionError clause of group_exists and the PermissionError additions to the three except clauses of terminate_group",
+    "CONTRACT.md section 5 process_group_absent": "the same probe failed with ESRCH; a group of only unreaped members answers EPERM on this host and counts as present; absent means no member, live or unreaped, remains; a genuine permission refusal also counts as present and fails closed at the cleanup ceiling",
+    "CONTRACT.md section 5 cleanup.passed": "the group became absent (ESRCH) within the cleanup ceiling, with the meanings of reaped and process_group_absent above",
+    "CONTRACT.md section 9 MC14": {
+      "case": "token-level comparison of run_process, group_exists and terminate_group with the originals",
+      "expected": "only the precondition and the three EPERM handlings of P33-AMENDMENT-001 differ"
+    },
+    "CONTRACT.md section 12 Zombies": "on this host and OS build a group of unreaped members answers EPERM (P33-SUPERVISOR-001); the amended rule does not rely on it; other OS builds are not observed",
+    "CONTRACT.json supervisor.imported": [
+      "Clock",
+      "Stop",
+      "LIMITS",
+      "inventory",
+      "json_bytes",
+      "_reap"
+    ],
+    "CONTRACT.json supervisor.reimplemented": "run_process, group_exists and terminate_group, with the original signatures and receipt fields",
+    "CONTRACT.json supervisor.only_change": "the precondition (sys.platform == 'darwin', machine arm64, sysctl.proc_translated == 0 through sysctlbyname; failure raises the same kind of Stop) and the counting of EPERM from killpg as a present group (P33-AMENDMENT-001)",
+    "CONTRACT.json supervisor.assertion_meanings.process_group_absent": "killpg(pid, 0) failed with ESRCH; EPERM, which Darwin answers for a group of only unreaped members, counts as present",
+    "CONTRACT.json trust_assumptions[2]": "on this host and OS build a group of unreaped members answers EPERM (P33-SUPERVISOR-001); the amended rule does not rely on it"
+  },
+  "unchanged": [
+    "every other clause",
+    "MC12, MC13 and MC17 and their expected outcomes",
+    "reaped and handles_closed meanings",
+    "labels and never-supported claims, including no enforcement against descendants",
+    "supervisor.py and the Linux contract"
+  ],
+  "effect_on_meaning": "absence becomes stricter (no live or unreaped member); the one ambiguous answer, EPERM, counts as present and can only delay or fail a cleanup, never pass it"
+}
