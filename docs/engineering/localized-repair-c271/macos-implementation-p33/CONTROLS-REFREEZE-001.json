@@ -1,0 +1,679 @@
+{
+ "schema": "ontokin.c271.p33-controls-refreeze/1",
+ "task": "C271",
+ "phase": "C271-P33-macos-implementation-mi",
+ "gate": "MI",
+ "refreeze": "REFREEZE-001",
+ "status": "REFROZEN_NOT_RUN",
+ "author": "W6, the independent control author; it wrote none of the implementation",
+ "requested_by": "the Director c271-p33-a99647756bed, refreeze request 001, after DIRECTOR-DECISIONS.md D-19",
+ "refrozen_at_utc": "2026-11-26T18:40:25Z",
+ "executed_by_author": false,
+ "author_checks": [
+  "ast.parse syntax check of the module with .venv/bin/python -I -S -B",
+  "this generator's ast comparison of the two modules: exactly the six refrozen test methods and the listed helper units differ; every other test method is byte-identical; nothing was imported or run"
+ ],
+ "rules": [
+  "plan section 6: a defect in a frozen control is recorded and refrozen by the independent author, and the original stays retained",
+  "AGENTS.md: expectations are never changed to pass tests; no expected outcome changes here"
+ ],
+ "retained_original": {
+  "path": "docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-FROZEN.json",
+  "sha256": "cd7ae80f93cc28b0a9fa69994a77672611eee2c3127b460a595d745c13230594",
+  "state": "byte-identical, as committed in 65c54179",
+  "module_sha256": "731d5f29aaf7b9ddb0f724ef4a2bcfa7a95384954c57241ae332ff44644bf78f"
+ },
+ "execution_that_found_the_defects": {
+  "by": "the Director",
+  "revision": "65c54179",
+  "outcome": "149 tests, 3 errors and 1 failure, no skip",
+  "errors": [
+   "HostObservationControls.test_mc10_mocked_m1_answering_v24_22_1_reaches_host_baseline",
+   "HostObservationControls.test_mc10_mocked_m1_version_differs_fails_preparation_without_host (two subtests)"
+  ],
+  "failure": "DriverControls.test_mc21_driver_malformed_selection_fails_preparation, subtest 'a digest that is not lowercase hexadecimal'",
+  "log": "retained by the Director as local evidence outside the repository"
+ },
+ "checkout": {
+  "branch": "work/c271-missing-import-digest-control",
+  "head_at_refreeze": "ad244277c995bb0b731e2c150afb1e970aef994b",
+  "implementation_digests": "unchanged since the freeze; every digest that CONTROLS-FROZEN.json records under checkout.implementation_read_at_freeze matches",
+  "implementation_read_at_freeze": {
+   "prototypes/static_tray_v01/supervisor.py": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+   "prototypes/static_tray_v01/supervisor_darwin_v01.py": "bd4a5e3fcdfb5367994bfeeb93d211dd627b830017b17f607cd94d71ade2bd2b",
+   "tools/prepare_current_host_readback.py": "dbb8cdec7bf43ec3618af17c7b322d5cc85a21d7375233959441f2e6f92ad46c",
+   "prototypes/static_tray_v01/current_host_observation_v02.py": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+   "prototypes/static_tray_v01/current_host_readback_v01.py": "6f04e2d21602b25f4dc55366e9048e2395c5b8e2fe8f9e40f92a104d3d1b3d8d",
+   "prototypes/static_tray_v01/current_host_readback_v02.py": "30b8e5d81fe29801207fb37b42fcc8d9f80161e1b221a0090735803e360d0b40",
+   "prototypes/static_tray_v01/current_host_readback_v02.mjs": "bca11b2ab3acfb818fd6b43636a51056a60b4af888d77fefa0b1214fec4054cd",
+   "tools/check_local.py": "4c55033d51bdd33700f6d8a847b3ed44e6b4f7f6489bf11b5f497279a5a4cb70",
+   "tools/storage_identity.py": "c8a88e9ead1e52f6e1b5d545fc3950cab14100f04366604a9ebee6ee215fe93c",
+   "prototypes/static_tray_v01/format_check.py": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447"
+  }
+ },
+ "defects": [
+  {
+   "id": "C-01",
+   "controls": [
+    "MC10"
+   ],
+   "disposition": "confirmed: a defect in the frozen control",
+   "methods": [
+    "HostObservationControls.test_mc10_mocked_m1_answering_v24_22_1_reaches_host_baseline",
+    "HostObservationControls.test_mc10_mocked_m1_version_differs_fails_preparation_without_host"
+   ],
+   "reading": "The MC10 cases substitute M0's static facts. Their python.inventory held only a selection record, the shape that HOST derives from the facts, where the observer's own facts hold the full inventory document that python_inventory returns (schema, framework {root, entries}, venv, selection, closure). After importing the supervisor, observe_host checks the loaded modules against that document and read its framework root: KeyError 'framework', which real facts cannot produce. The implementation is consistent with itself: _python_static produces the document that observe_host consumes. The expected outcomes are unchanged.",
+   "refreeze": "The facts' Python inventory is now the observer's own python_inventory document of a synthetic installation at the plan's venv and framework, and its digest the document's digest, which the plan freezes as M0's _python_static requires. Every key that observe_host and host_document read from the facts was traced statically: python.inventory (framework root and entries, selection), python.inventory_sha256, packages, records and the ten launcher keys; platform; os (for the labels); source inventory (the lock's binding) and head; the nine runtime keys, its binding and the signature status; dependencies; git path and digest. The other synthetic facts are copied whole into HOST or into the fingerprint and keep their simplified content, labelled mocked.",
+   "sources": [
+    "CONTRACT.md section 9 row MC10",
+    "CONTRACT.md section 7, M1",
+    "prototypes/static_tray_v01/current_host_observation_v02.py: _python_static returns the full inventory document as python.inventory; observe_host passes facts['python']['inventory'] to check_loaded_modules after importing the supervisor, which reads its framework root and entries; host_document records its selection",
+    "DIRECTOR-DECISIONS.md D-19 (C-01)"
+   ]
+  },
+  {
+   "id": "C-02",
+   "controls": [
+    "MC21"
+   ],
+   "disposition": "confirmed: a defect in the frozen control",
+   "methods": [
+    "DriverControls.test_mc21_driver_missing_selection_file_fails_preparation",
+    "DriverControls.test_mc21_driver_partial_selection_fails_preparation",
+    "DriverControls.test_mc21_driver_malformed_selection_fails_preparation",
+    "DriverControls.test_mc21_driver_mismatched_selection_digest_fails_preparation"
+   ],
+   "reading": "The MC21 driver cases asserted that check_local.run starts no process at all before the preparation fails. The run recorded uname -p and file -b on the interpreter's executable, started by platform.platform() in the driver's environment record, which runs before the selection is prepared and was already in the 0.1.0 driver. Python caches that answer, so only the first driver run of a process starts them: the outcome depended on the order of the tests, and each of the four MC21 driver cases would fail alone, not only the subtest that failed. These are metadata leaves, neither Git nor stage starts; the contract's columns count Node and other bounded starts, and P05's CH13 counts checker starts. The assertion was stricter than the contract and order-dependent. The expected outcomes are unchanged.",
+   "refreeze": "The four MC21 driver cases run the driver with platform.platform mocked, as the project's driver tests do (113e1b85; P29's INHERITED-METADATA-STUB.json), and keep the assertion that no process starts before the preparation fails: no Git start, no stage start and no other start. Whether a qualifying run may start uname and file through PATH stays with MR, as D-19 records; the refreeze makes no claim on it.",
+   "sources": [
+    "CONTRACT.md section 9: the start columns count Node starts and other bounded starts",
+    "P05's CH13: expected_checker_starts 0",
+    "tools/check_local.py run(): the environment record calls platform.platform() before the selection is prepared; Python caches its answer, so only the first call of a process starts uname -p and file -b",
+    "DIRECTOR-DECISIONS.md D-19 (C-02)"
+   ]
+  }
+ ],
+ "changed_cases": [
+  {
+   "method": "HostObservationControls.test_mc10_mocked_m1_answering_v24_22_1_reaches_host_baseline",
+   "control": "MC10",
+   "defect": "C-01",
+   "original": {
+    "case_record": {
+     "method": "HostObservationControls.test_mc10_mocked_m1_answering_v24_22_1_reaches_host_baseline",
+     "case": "baseline: M1 answers v24.22.1\\n",
+     "label": {
+      "kind": "mocked",
+      "boundary": "the M0 and M1 command boundary (CommandBoundary) and M0's static facts"
+     },
+     "inputs": "PlanWorld: a resolved temporary world in which an observation-plan/0.2.0 is shape-valid (canonical JSON, P07 section 2 rules, the observer's own expected_commands and output_paths); synthetic source root without source trees, synthetic SystemVersion.plist, absent cryptex copy; ControlHost (a Host subclass labelled mocked) answers uname, translation, boot and environment; observation.static_observation and observation.static_after_start substituted by PlanWorld.facts() (labelled mocked; the static bindings need MP's inputs); the host's supervisor is CommandBoundary: no process starts, git_version answers 'git version 2.39.5 (synthetic control)\\n', node_version answers the case's output; evidence publication is real (renamex_np in the attempt); node_version answers 'v24.22.1\\n'",
+     "entry_point": "observation.observe_host(plan_path, plan_sha256, host=ControlHost)",
+     "expected": {
+      "outcome": "accepted",
+      "detail": "state OBSERVED_UNAPPROVED; HOST.json published with labels.boundary 'mocked' and runtime.version v24.22.1",
+      "side_effects": [
+       "the attempt's evidence files"
+      ]
+     },
+     "starts": {
+      "node": 0,
+      "other": 0,
+      "harness_process_starts": "none real; two starts at the mocked command boundary"
+     },
+     "post_test_checks": [
+      "the guard recorded no real process start"
+     ],
+     "sources": [
+      "CONTRACT.md section 7: 'M1 ... expecting v24.22.1\\n'"
+     ]
+    },
+    "method_source_sha256": "1b49c80efeff4253a34690e584360245b9675d7ec4e906ba733169d73a5103aa"
+   },
+   "refrozen": {
+    "case": "baseline: M1 answers v24.22.1\\n",
+    "label": {
+     "kind": "mocked",
+     "boundary": "the M0 and M1 command boundary (CommandBoundary) and M0's static facts (static_observation and static_after_start substituted); the facts' Python inventory is the observer's own python_inventory document of a synthetic installation at the plan's paths"
+    },
+    "inputs": "PlanWorld: a resolved temporary world in which an observation-plan/0.2.0 is shape-valid; ControlHost (labelled mocked) answers uname, translation, boot, environment and an empty list of loaded modules; install_synthetic_python places a synthetic Python installation at the plan's own venv and framework (framework: bin/python3.12, Resources/Python.app/Contents/MacOS/Python and lib/python3.12/os.py; venv: bin/python, a link to the framework launcher, and pyvenv.cfg with home, include-system-site-packages = false and version 3.12.13; PythonWorld's layout without its Mach-O images; nothing is executed); the plan then freezes the canonical bytes of that installation's inventory document and is rebuilt; PlanWorld.facts() holds the observer's own python_inventory document as python.inventory and its digest as python.inventory_sha256 (premise asserted: equal to the plan's frozen digest); every other synthetic fact is unchanged; observation.static_observation and observation.static_after_start return those facts; the host's supervisor is CommandBoundary: no process starts, git_version answers 'git version 2.39.5 (synthetic control)\\n'; evidence publication is real (renamex_np in the attempt); node_version answers 'v24.22.1\\n'",
+    "entry_point": "observation.observe_host(plan_path, plan_sha256, host=ControlHost)",
+    "expected": {
+     "outcome": "accepted",
+     "detail": "state OBSERVED_UNAPPROVED; HOST.json published with labels.boundary 'mocked' and runtime.version v24.22.1",
+     "side_effects": [
+      "the attempt's evidence files"
+     ]
+    },
+    "expected_changed": false,
+    "starts": {
+     "node": 0,
+     "other": 0,
+     "harness_process_starts": "none real; two starts at the mocked command boundary"
+    },
+    "post_test_checks": [
+     "the guard recorded no real process start",
+     "premise: facts.python.inventory_sha256 equals the plan's frozen python.inventory digest"
+    ],
+    "sources": [
+     "CONTRACT.md section 7: 'M1 ... expecting v24.22.1\\n'",
+     "prototypes/static_tray_v01/current_host_observation_v02.py: _python_static returns the full inventory document as python.inventory; observe_host passes facts['python']['inventory'] to check_loaded_modules after importing the supervisor, which reads its framework root and entries; host_document records its selection",
+     "DIRECTOR-DECISIONS.md D-19 (C-01)"
+    ],
+    "method_source_sha256": "063f58155e40789f5837f404b7d6cf58380661fa75a0856a473eda84aa5ec116"
+   }
+  },
+  {
+   "method": "HostObservationControls.test_mc10_mocked_m1_version_differs_fails_preparation_without_host",
+   "control": "MC10",
+   "defect": "C-01",
+   "original": {
+    "case_record": {
+     "method": "HostObservationControls.test_mc10_mocked_m1_version_differs_fails_preparation_without_host",
+     "case": "the observed Node version differs",
+     "label": {
+      "kind": "mocked",
+      "boundary": "the Node --version output is simulated at the command boundary (CommandBoundary); M0's static facts substituted"
+     },
+     "inputs": "PlanWorld: a resolved temporary world in which an observation-plan/0.2.0 is shape-valid (canonical JSON, P07 section 2 rules, the observer's own expected_commands and output_paths); synthetic source root without source trees, synthetic SystemVersion.plist, absent cryptex copy; ControlHost (a Host subclass labelled mocked) answers uname, translation, boot and environment; observation.static_observation and observation.static_after_start substituted by PlanWorld.facts() (labelled mocked; the static bindings need MP's inputs); the host's supervisor is CommandBoundary: no process starts, git_version answers 'git version 2.39.5 (synthetic control)\\n', node_version answers the case's output; evidence publication is real (renamex_np in the attempt); subtests: node_version answers 'v24.22.0\\n'; 'v24.22.1' without the newline",
+     "entry_point": "observation.observe_host(plan_path, plan_sha256, host=ControlHost)",
+     "expected": {
+      "outcome": "refused",
+      "refusal_category": "ObservationError category OUTPUT; result.host null, state not OBSERVED_UNAPPROVED, evidence_finalized false, labels.boundary 'mocked'",
+      "side_effects": [
+       "no HOST.json and no completion.json: no qualification"
+      ]
+     },
+     "starts": {
+      "node": 0,
+      "other": 0,
+      "harness_process_starts": "none real; two starts at the mocked command boundary"
+     },
+     "post_test_checks": [
+      "the guard recorded no real process start"
+     ],
+     "sources": [
+      "CONTRACT.md section 9 row MC10: 'failed preparation; no qualification'"
+     ]
+    },
+    "method_source_sha256": "9155d59261b419e6025c31c63c93e841e83766c569b3aa38614dee450da61872"
+   },
+   "refrozen": {
+    "case": "the observed Node version differs",
+    "label": {
+     "kind": "mocked",
+     "boundary": "the M0 and M1 command boundary (CommandBoundary) and M0's static facts (static_observation and static_after_start substituted); the facts' Python inventory is the observer's own python_inventory document of a synthetic installation at the plan's paths"
+    },
+    "inputs": "PlanWorld: a resolved temporary world in which an observation-plan/0.2.0 is shape-valid; ControlHost (labelled mocked) answers uname, translation, boot, environment and an empty list of loaded modules; install_synthetic_python places a synthetic Python installation at the plan's own venv and framework (framework: bin/python3.12, Resources/Python.app/Contents/MacOS/Python and lib/python3.12/os.py; venv: bin/python, a link to the framework launcher, and pyvenv.cfg with home, include-system-site-packages = false and version 3.12.13; PythonWorld's layout without its Mach-O images; nothing is executed); the plan then freezes the canonical bytes of that installation's inventory document and is rebuilt; PlanWorld.facts() holds the observer's own python_inventory document as python.inventory and its digest as python.inventory_sha256 (premise asserted: equal to the plan's frozen digest); every other synthetic fact is unchanged; observation.static_observation and observation.static_after_start return those facts; the host's supervisor is CommandBoundary: no process starts, git_version answers 'git version 2.39.5 (synthetic control)\\n'; evidence publication is real (renamex_np in the attempt); node_version answers, per subtest, 'v24.22.0\\n' and 'v24.22.1' without the newline",
+    "entry_point": "observation.observe_host(plan_path, plan_sha256, host=ControlHost)",
+    "expected": {
+     "outcome": "refused",
+     "refusal_category": "ObservationError category OUTPUT; result.host null, state not OBSERVED_UNAPPROVED, evidence_finalized false, labels.boundary 'mocked'",
+     "side_effects": [
+      "no HOST.json and no completion.json: no qualification"
+     ]
+    },
+    "expected_changed": false,
+    "starts": {
+     "node": 0,
+     "other": 0,
+     "harness_process_starts": "none real; two starts at the mocked command boundary"
+    },
+    "post_test_checks": [
+     "the guard recorded no real process start",
+     "premise: facts.python.inventory_sha256 equals the plan's frozen python.inventory digest"
+    ],
+    "sources": [
+     "CONTRACT.md section 9 row MC10: 'failed preparation; no qualification'",
+     "prototypes/static_tray_v01/current_host_observation_v02.py: _python_static returns the full inventory document as python.inventory; observe_host passes facts['python']['inventory'] to check_loaded_modules after importing the supervisor, which reads its framework root and entries; host_document records its selection",
+     "DIRECTOR-DECISIONS.md D-19 (C-01)"
+    ],
+    "method_source_sha256": "015a088642f2d4296bba03dd336c3bea1d0aa0651deb6a9bc6ac8324a2fcf487"
+   }
+  },
+  {
+   "method": "DriverControls.test_mc21_driver_missing_selection_file_fails_preparation",
+   "control": "MC21",
+   "defect": "C-02",
+   "original": {
+    "case_record": {
+     "method": "DriverControls.test_mc21_driver_missing_selection_file_fails_preparation",
+     "case": "driver: the configuration file is absent",
+     "label": {
+      "kind": "real",
+      "boundary": "the driver's plan is substituted by one stage"
+     },
+     "inputs": "tools.check_local.run(root, output, False, 300, readback_config=..., readback_config_sha256=...) with build_plan substituted by one unit stage (sys.executable -I -S -B -c <a passing three-method cohort>); root is a synthetic directory with README.md; output a fresh absent directory; subprocess.Popen wrapped to record every start; check_local._GIT_STATE isolated; readback_config an absent absolute path, a well-formed digest",
+     "entry_point": "tools.check_local.run",
+     "expected": {
+      "outcome": "refused",
+      "refusal_category": "failed preparation; run_kind qualifying",
+      "side_effects": [
+       "no stage starts"
+      ]
+     },
+     "starts": {
+      "node": 0,
+      "other": 0,
+      "harness_process_starts": "none expected"
+     },
+     "post_test_checks": [
+      "exit code 1; summary status failed; summary steps empty",
+      "no process started (no Git, no stage)",
+      "readback_selection status preparation_pending with preparation_or_execution_error"
+     ],
+     "sources": [
+      "CONTRACT.md section 8, Qualifying run"
+     ]
+    },
+    "method_source_sha256": "21292b131743118e1385b53901c80291ef7b37e4efd3e8cad88291dd92e61224"
+   },
+   "refrozen": {
+    "case": "driver: the configuration file is absent",
+    "label": {
+     "kind": "mocked",
+     "boundary": "platform.platform, the metadata leaf of the driver's environment record, answers 'mocked platform metadata leaf', as the project's driver tests do (113e1b85) and as P29's INHERITED-METADATA-STUB.json records; the driver's plan is one synthetic unit stage; the selection handling, the summary and every other start are the driver's own"
+    },
+    "inputs": "tools.check_local.run(root, output, False, 300, readback_config=..., readback_config_sha256=...) with build_plan substituted by one unit stage (sys.executable -I -S -B -c <a passing three-method cohort>); root is a synthetic directory with README.md; output a fresh absent directory; subprocess.Popen wrapped to record every start; check_local._GIT_STATE isolated; readback_config an absent absolute path, a well-formed digest; through DriverControls.preparation_run, which wraps driver_run with platform.platform mocked",
+    "entry_point": "tools.check_local.run (through DriverControls.preparation_run)",
+    "expected": {
+     "outcome": "refused",
+     "refusal_category": "failed preparation; run_kind qualifying",
+     "side_effects": [
+      "no stage starts"
+     ]
+    },
+    "expected_changed": false,
+    "starts": {
+     "node": 0,
+     "other": 0,
+     "harness_process_starts": "none: with the metadata leaf mocked, no process starts before the preparation fails, whatever the order of the tests"
+    },
+    "post_test_checks": [
+     "exit code 1; summary status failed; summary steps empty",
+     "the recorded start list is empty: no Git start, no stage start and no other start",
+     "readback_selection status preparation_pending with preparation_or_execution_error",
+     "a CONTROL-EVIDENCE line records the mocked leaf's call count and the platform value the summary recorded"
+    ],
+    "sources": [
+     "CONTRACT.md section 8, Qualifying run",
+     "CONTRACT.md section 9: the start columns count Node starts and other bounded starts",
+     "P05's CH13: expected_checker_starts 0",
+     "tools/check_local.py run(): the environment record calls platform.platform() before the selection is prepared; Python caches its answer, so only the first call of a process starts uname -p and file -b",
+     "DIRECTOR-DECISIONS.md D-19 (C-02)"
+    ],
+    "method_source_sha256": "bf1d1e24f5208e4eeab242789cc2017d71434b0eb6010c47f386cf469e5997f3"
+   }
+  },
+  {
+   "method": "DriverControls.test_mc21_driver_partial_selection_fails_preparation",
+   "control": "MC21",
+   "defect": "C-02",
+   "original": {
+    "case_record": {
+     "method": "DriverControls.test_mc21_driver_partial_selection_fails_preparation",
+     "case": "driver: exactly one selection argument",
+     "label": {
+      "kind": "real",
+      "boundary": "the driver's plan is substituted"
+     },
+     "inputs": "tools.check_local.run(root, output, False, 300, readback_config=..., readback_config_sha256=...) with build_plan substituted by one unit stage (sys.executable -I -S -B -c <a passing three-method cohort>); root is a synthetic directory with README.md; output a fresh absent directory; subprocess.Popen wrapped to record every start; check_local._GIT_STATE isolated; subtests: only readback_config; only readback_config_sha256",
+     "entry_point": "tools.check_local.run",
+     "expected": {
+      "outcome": "refused",
+      "refusal_category": "failed preparation; no run_kind recorded",
+      "side_effects": [
+       "no stage starts"
+      ]
+     },
+     "starts": {
+      "node": 0,
+      "other": 0,
+      "harness_process_starts": "none expected"
+     },
+     "post_test_checks": [
+      "exit code 1; summary status failed; summary steps empty",
+      "no process started (no Git, no stage)",
+      "readback_selection status preparation_pending with preparation_or_execution_error"
+     ],
+     "sources": [
+      "CONTRACT.md section 8, Partial selection"
+     ]
+    },
+    "method_source_sha256": "d86020a6fb26d28e60098d1bb84e31cbab10cf645f4139048548cc4d421382aa"
+   },
+   "refrozen": {
+    "case": "driver: exactly one selection argument",
+    "label": {
+     "kind": "mocked",
+     "boundary": "platform.platform, the metadata leaf of the driver's environment record, answers 'mocked platform metadata leaf', as the project's driver tests do (113e1b85) and as P29's INHERITED-METADATA-STUB.json records; the driver's plan is one synthetic unit stage; the selection handling, the summary and every other start are the driver's own"
+    },
+    "inputs": "tools.check_local.run(root, output, False, 300, readback_config=..., readback_config_sha256=...) with build_plan substituted by one unit stage (sys.executable -I -S -B -c <a passing three-method cohort>); root is a synthetic directory with README.md; output a fresh absent directory; subprocess.Popen wrapped to record every start; check_local._GIT_STATE isolated; subtests: only readback_config; only readback_config_sha256; through DriverControls.preparation_run, which wraps driver_run with platform.platform mocked",
+    "entry_point": "tools.check_local.run (through DriverControls.preparation_run)",
+    "expected": {
+     "outcome": "refused",
+     "refusal_category": "failed preparation; no run_kind recorded",
+     "side_effects": [
+      "no stage starts"
+     ]
+    },
+    "expected_changed": false,
+    "starts": {
+     "node": 0,
+     "other": 0,
+     "harness_process_starts": "none: with the metadata leaf mocked, no process starts before the preparation fails, whatever the order of the tests"
+    },
+    "post_test_checks": [
+     "exit code 1; summary status failed; summary steps empty",
+     "the recorded start list is empty: no Git start, no stage start and no other start",
+     "readback_selection status preparation_pending with preparation_or_execution_error",
+     "a CONTROL-EVIDENCE line records the mocked leaf's call count and the platform value the summary recorded"
+    ],
+    "sources": [
+     "CONTRACT.md section 8, Partial selection",
+     "CONTRACT.md section 9: the start columns count Node starts and other bounded starts",
+     "P05's CH13: expected_checker_starts 0",
+     "tools/check_local.py run(): the environment record calls platform.platform() before the selection is prepared; Python caches its answer, so only the first call of a process starts uname -p and file -b",
+     "DIRECTOR-DECISIONS.md D-19 (C-02)"
+    ],
+    "method_source_sha256": "291ac90b9a26da63567f3808f3bd8dd1ae30f9615d79a81a14656a4ce0b638c3"
+   }
+  },
+  {
+   "method": "DriverControls.test_mc21_driver_malformed_selection_fails_preparation",
+   "control": "MC21",
+   "defect": "C-02",
+   "original": {
+    "case_record": {
+     "method": "DriverControls.test_mc21_driver_malformed_selection_fails_preparation",
+     "case": "driver: a malformed selection",
+     "label": {
+      "kind": "real",
+      "boundary": "the driver's plan is substituted"
+     },
+     "inputs": "tools.check_local.run(root, output, False, 300, readback_config=..., readback_config_sha256=...) with build_plan substituted by one unit stage (sys.executable -I -S -B -c <a passing three-method cohort>); root is a synthetic directory with README.md; output a fresh absent directory; subprocess.Popen wrapped to record every start; check_local._GIT_STATE isolated; subtests: digest 'ABC'; a relative configuration path; a configuration that is not JSON (matching digest); a configuration of schema config/9.9.9 (matching digest)",
+     "entry_point": "tools.check_local.run",
+     "expected": {
+      "outcome": "refused",
+      "refusal_category": "failed preparation; run_kind qualifying",
+      "side_effects": [
+       "no stage starts; no Git start (the Git binding fails first)"
+      ]
+     },
+     "starts": {
+      "node": 0,
+      "other": 0,
+      "harness_process_starts": "none expected"
+     },
+     "post_test_checks": [
+      "exit code 1; summary status failed; summary steps empty",
+      "no process started (no Git, no stage)",
+      "readback_selection status preparation_pending with preparation_or_execution_error"
+     ],
+     "sources": [
+      "CONTRACT.md section 8, Qualifying run",
+      "IMPLEMENTATION-PLAN.md section 4.5"
+     ]
+    },
+    "method_source_sha256": "ad2f0d0c575d8d4c7ca99c2c86f65b02bddc4bd89ddb31ef512bdaa5c999c072"
+   },
+   "refrozen": {
+    "case": "driver: a malformed selection",
+    "label": {
+     "kind": "mocked",
+     "boundary": "platform.platform, the metadata leaf of the driver's environment record, answers 'mocked platform metadata leaf', as the project's driver tests do (113e1b85) and as P29's INHERITED-METADATA-STUB.json records; the driver's plan is one synthetic unit stage; the selection handling, the summary and every other start are the driver's own"
+    },
+    "inputs": "tools.check_local.run(root, output, False, 300, readback_config=..., readback_config_sha256=...) with build_plan substituted by one unit stage (sys.executable -I -S -B -c <a passing three-method cohort>); root is a synthetic directory with README.md; output a fresh absent directory; subprocess.Popen wrapped to record every start; check_local._GIT_STATE isolated; subtests: digest 'ABC'; a relative configuration path; a configuration that is not JSON (matching digest); a configuration of schema config/9.9.9 (matching digest); through DriverControls.preparation_run, which wraps driver_run with platform.platform mocked",
+    "entry_point": "tools.check_local.run (through DriverControls.preparation_run)",
+    "expected": {
+     "outcome": "refused",
+     "refusal_category": "failed preparation; run_kind qualifying",
+     "side_effects": [
+      "no stage starts; no Git start (the Git binding fails first)"
+     ]
+    },
+    "expected_changed": false,
+    "starts": {
+     "node": 0,
+     "other": 0,
+     "harness_process_starts": "none: with the metadata leaf mocked, no process starts before the preparation fails, whatever the order of the tests"
+    },
+    "post_test_checks": [
+     "exit code 1; summary status failed; summary steps empty",
+     "the recorded start list is empty: no Git start, no stage start and no other start",
+     "readback_selection status preparation_pending with preparation_or_execution_error",
+     "a CONTROL-EVIDENCE line records the mocked leaf's call count and the platform value the summary recorded"
+    ],
+    "sources": [
+     "CONTRACT.md section 8, Qualifying run",
+     "IMPLEMENTATION-PLAN.md section 4.5",
+     "CONTRACT.md section 9: the start columns count Node starts and other bounded starts",
+     "P05's CH13: expected_checker_starts 0",
+     "tools/check_local.py run(): the environment record calls platform.platform() before the selection is prepared; Python caches its answer, so only the first call of a process starts uname -p and file -b",
+     "DIRECTOR-DECISIONS.md D-19 (C-02)"
+    ],
+    "method_source_sha256": "bb687faa203f893f7f11c369dc1c7753f4e691e2a80d191da04df74166ef7689"
+   }
+  },
+  {
+   "method": "DriverControls.test_mc21_driver_mismatched_selection_digest_fails_preparation",
+   "control": "MC21",
+   "defect": "C-02",
+   "original": {
+    "case_record": {
+     "method": "DriverControls.test_mc21_driver_mismatched_selection_digest_fails_preparation",
+     "case": "driver: a mismatched digest",
+     "label": {
+      "kind": "real",
+      "boundary": "the driver's plan is substituted"
+     },
+     "inputs": "tools.check_local.run(root, output, False, 300, readback_config=..., readback_config_sha256=...) with build_plan substituted by one unit stage (sys.executable -I -S -B -c <a passing three-method cohort>); root is a synthetic directory with README.md; output a fresh absent directory; subprocess.Popen wrapped to record every start; check_local._GIT_STATE isolated; the supplied digest is another file's",
+     "entry_point": "tools.check_local.run",
+     "expected": {
+      "outcome": "refused",
+      "refusal_category": "failed preparation; run_kind qualifying",
+      "side_effects": [
+       "no stage starts"
+      ]
+     },
+     "starts": {
+      "node": 0,
+      "other": 0,
+      "harness_process_starts": "none expected"
+     },
+     "post_test_checks": [
+      "exit code 1; summary status failed; summary steps empty",
+      "no process started (no Git, no stage)",
+      "readback_selection status preparation_pending with preparation_or_execution_error"
+     ],
+     "sources": [
+      "CONTRACT.md section 8, Qualifying run"
+     ]
+    },
+    "method_source_sha256": "47153a4dbb981f6c74c3ed2ad7d3c0b6fa6f23348f04012f25cad8dc47513b7b"
+   },
+   "refrozen": {
+    "case": "driver: a mismatched digest",
+    "label": {
+     "kind": "mocked",
+     "boundary": "platform.platform, the metadata leaf of the driver's environment record, answers 'mocked platform metadata leaf', as the project's driver tests do (113e1b85) and as P29's INHERITED-METADATA-STUB.json records; the driver's plan is one synthetic unit stage; the selection handling, the summary and every other start are the driver's own"
+    },
+    "inputs": "tools.check_local.run(root, output, False, 300, readback_config=..., readback_config_sha256=...) with build_plan substituted by one unit stage (sys.executable -I -S -B -c <a passing three-method cohort>); root is a synthetic directory with README.md; output a fresh absent directory; subprocess.Popen wrapped to record every start; check_local._GIT_STATE isolated; the supplied digest is another file's; through DriverControls.preparation_run, which wraps driver_run with platform.platform mocked",
+    "entry_point": "tools.check_local.run (through DriverControls.preparation_run)",
+    "expected": {
+     "outcome": "refused",
+     "refusal_category": "failed preparation; run_kind qualifying",
+     "side_effects": [
+      "no stage starts"
+     ]
+    },
+    "expected_changed": false,
+    "starts": {
+     "node": 0,
+     "other": 0,
+     "harness_process_starts": "none: with the metadata leaf mocked, no process starts before the preparation fails, whatever the order of the tests"
+    },
+    "post_test_checks": [
+     "exit code 1; summary status failed; summary steps empty",
+     "the recorded start list is empty: no Git start, no stage start and no other start",
+     "readback_selection status preparation_pending with preparation_or_execution_error",
+     "a CONTROL-EVIDENCE line records the mocked leaf's call count and the platform value the summary recorded"
+    ],
+    "sources": [
+     "CONTRACT.md section 8, Qualifying run",
+     "CONTRACT.md section 9: the start columns count Node starts and other bounded starts",
+     "P05's CH13: expected_checker_starts 0",
+     "tools/check_local.py run(): the environment record calls platform.platform() before the selection is prepared; Python caches its answer, so only the first call of a process starts uname -p and file -b",
+     "DIRECTOR-DECISIONS.md D-19 (C-02)"
+    ],
+    "method_source_sha256": "ec76742ac1228c1e6ca18554418c9fa3004c894c64ccf08ba22a31bea0eb7d90"
+   }
+  }
+ ],
+ "changed_helpers": [
+  {
+   "unit": "DriverControls.preparation_run",
+   "change": "added",
+   "original_source_sha256": null,
+   "refrozen_source_sha256": "133a6a67e1f71c68b05977c3e206e06d86bb687441b5f6b8e76057be8e7b097f",
+   "used_by": "MC21's four driver methods only"
+  },
+  {
+   "unit": "HostObservationControls.observe_with_version",
+   "change": "changed",
+   "original_source_sha256": "1f6ad4ceb35956789987d1202a8592ce7ff699ebf0506532ff30caebaf1b58b0",
+   "refrozen_source_sha256": "05415d9f7dfa62a330f5f657f061e5e7fb4d931821c2db7a023d6f79f8df23cb",
+   "used_by": "MC10's two methods only"
+  },
+  {
+   "unit": "PLATFORM_METADATA_LEAF",
+   "change": "added",
+   "original_source_sha256": null,
+   "refrozen_source_sha256": "b8717f4dc9ddcfa5ae9d5141767204e1cdea448200740d0aa9ce8ce65255f9a0",
+   "used_by": "MC21's four driver methods only"
+  },
+  {
+   "unit": "PlanWorld.facts",
+   "change": "changed",
+   "original_source_sha256": "a59f4ba002be419e9e0b24816d2c0d5e9f68c9cfa9543de04a2543f0b1d4787d",
+   "refrozen_source_sha256": "612482c3c8dede00ad2edefa311b3d32e4593da2ab5aae69c7698ff989487870",
+   "used_by": "MC10's two methods only"
+  },
+  {
+   "unit": "install_synthetic_python",
+   "change": "added",
+   "original_source_sha256": null,
+   "refrozen_source_sha256": "357cc575215f146d4eab936ef1f08edf6394e13f0b5ed6d6e53f659887b0c000",
+   "used_by": "MC10's two methods only"
+  },
+  {
+   "unit": "module docstring",
+   "change": "changed",
+   "original_source_sha256": "3c1105738b5d2d8f18f0dddeb57bcbb4127a4271ecc2d9faa2eaa6f5fc406ebb",
+   "refrozen_source_sha256": "b33536cf03c39b91aa864149a1404694fc80601f205f82803552e9f63a8da65b",
+   "used_by": "the module documentation"
+  }
+ ],
+ "examined_unchanged": [
+  {
+   "class": "synthetic data that stands for implementation output",
+   "cases": [
+    "HostObservationControls.test_mc07_m0_entry_refuses_a_dyld_variable_before_any_start",
+    "HostObservationControls.test_mc08_* (3)",
+    "HostObservationControls.test_mc30_m0_entry_*",
+    "HostObservationControls.test_mc31_m0_entry_*"
+   ],
+   "reason": "the real static_check consumes ControlHost's answers in the real Host's shapes; each baseline reaches category SOURCE, past the environment, platform and OS checks, and nothing later is reached"
+  },
+  {
+   "class": "synthetic data that stands for implementation output",
+   "cases": [
+    "HostObservationControls.test_mc33_m0_plan_declaring_another_node_version_is_refused_before_any_start"
+   ],
+   "reason": "refused at plan validation; the host is never consulted"
+  },
+  {
+   "class": "synthetic data that stands for implementation output",
+   "cases": [
+    "ProviderControls.test_mc09_* (7)",
+    "ProviderControls.test_mc29_* (6)",
+    "ProviderControls.test_mc21_provider_* (5)",
+    "ProviderControls.test_mc31_provider_launch_environment_other_than_the_declared_one_refuses_with_zero_starts",
+    "ProviderControls.test_mc33_provider_configuration_declaring_another_node_version_is_refused_before_any_start"
+   ],
+   "reason": "ProviderWorld's synthetic HOST, source, dependency and method results are consumed by the provider's own code in the MC09 baseline, which completes with one mocked start; each refusal case changes one value of the same shapes, or refuses at the selection before HOST is read"
+  },
+  {
+   "class": "synthetic data that stands for implementation output",
+   "cases": [
+    "ProviderControls.test_mc30_provider_host_comparison_*",
+    "ProviderControls.test_mc31_provider_host_comparison_*",
+    "ProviderControls.test_mc18_* (6)",
+    "SourceControls.test_mc19_* (7)",
+    "the preparer cases of MC01 to MC05, MC15, MC16, MC20, MC34 and MC35",
+    "HostObservationControls.test_mc32_* (9)"
+   ],
+   "reason": "each accepting baseline consumes the same synthetic shapes (HOST environment records, reader pins, source inventory, install plans and archives), or the data is the observer's own (MC32)"
+  },
+  {
+   "class": "process-start counts",
+   "cases": [
+    "DriverControls.test_mc22_ordinary_run_proceeds_and_the_readback_setup_fails_visibly_without_a_skip"
+   ],
+   "reason": "it counts only the unit child (argv prefix sys.executable -I -S -B -c) and Node starts; the metadata leaf may start when MC22 is the first driver run of a process and is not counted. Its frozen record's description of harness starts omits the leaf; no assertion depends on it"
+  },
+  {
+   "class": "process-start counts",
+   "cases": [
+    "DriverControls.test_mc07_driver_removes_the_names_from_a_qualifying_unit_process",
+    "DriverControls.test_mc23_* (10)"
+   ],
+   "reason": "execute_step reads no platform metadata; MC07 counts the one unit start, and MC23 counts no start"
+  },
+  {
+   "class": "process-start counts",
+   "cases": [
+    "SupervisorProcessControls.test_mc12_*",
+    "SupervisorProcessControls.test_mc13_* (2)",
+    "SupervisorProcessControls.test_mc37_*",
+    "SupervisorProcessControls.test_mc38_*",
+    "SupervisorProcessControls.test_mc39a_*",
+    "SupervisorProcessControls.test_mc39b_*"
+   ],
+   "reason": "they count only the supervisor's own Popen during run_process; the precondition reads through ctypes"
+  },
+  {
+   "class": "process-start counts",
+   "cases": [
+    "SourceControls.test_mc19_* (7)"
+   ],
+   "reason": "they count subprocess.check_output calls of _verify_source against the stand-in's log, with the driver's Git state isolated per call; nothing on that path reads platform metadata"
+  },
+  {
+   "class": "process-start counts",
+   "cases": [
+    "every case of the guarded classes: PreparationControls, HostObservationControls, PathControls, SupervisorStaticControls, ProviderControls and StaticScanControls"
+   ],
+   "reason": "the guard fails any start in any order; the implementation calls only platform.system, release, machine, libc_ver and python_version on those paths, which start no process, and platform.platform only in check_local.run"
+  }
+ ],
+ "unchanged_test_methods": 143,
+ "module": {
+  "path": "tests/test_current_host_readback_controls_v02.py",
+  "sha256": "17a137e3c19e8502c0ca7696a89b45bc4299538ffc432a11b8feae18e54b10cc",
+  "size_bytes": 195602,
+  "test_methods": 149,
+  "labels": {
+   "real": 60,
+   "simulated": 67,
+   "mocked": 22
+  }
+ },
+ "execution": {
+  "by": "the Director",
+  "command": "TMPDIR=\"$(cd \"$TMPDIR\" && pwd -P)/\" .venv/bin/python -B -m unittest tests.test_current_host_readback_controls_v02 -v",
+  "notes": [
+   "the MC10 cases now reach M1 through real evidence publication; the baseline publishes HOST",
+   "the MC21 driver cases no longer depend on the order of the tests"
+  ]
+ }
+}

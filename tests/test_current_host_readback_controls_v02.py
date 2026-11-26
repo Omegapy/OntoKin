@@ -5,7 +5,8 @@ expected outcome comes from the adopted contract (docs/engineering/localized-rep
 macos-contract-design-p31/CONTRACT.md and CONTRACT.json) as amended by P33-AMENDMENT-001 (design
 revision 4), from the implementation plan's control assignment and from the Director's decisions.
 docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-FROZEN.json records each
-case's exact inputs, label, entry point, expected outcome, start counts, post-test checks and sources.
+case's exact inputs, label, entry point, expected outcome, start counts, post-test checks and sources;
+CONTROLS-REFREEZE-001.json beside it records the cases refrozen since, and why.
 One test method is one case, named test_mcNN_<case>; its docstring starts with its label.
 
 Labels. "Real": the code under test runs with no boundary substituted; the inputs may be synthetic,
@@ -20,7 +21,9 @@ process it started, escaped descendants included. Their post-test checks apply t
 group probe that answers EPERM means present. MC19 starts Git through a logging stand-in executable on
 a synthetic repository. The driver controls start the driver's own unit-stage children (Python, -I -S
 -B -c) and, in an ordinary run, the driver's read-only Git metadata reads of a temporary directory.
-Every other test starts nothing, and a guard fails it if it tries.
+The driver's environment record reads platform.platform(), which starts uname -p and file -b on its
+first call in a process only: MC21's driver cases mock that metadata leaf (refreeze 001), and MC22
+counts only its unit and Node starts. Every other test starts nothing, and a guard fails it if it tries.
 
 Temporary directories are resolved (realpath). No machine path is hard-coded.
 """
@@ -83,6 +86,9 @@ DECLARED_ENVIRONMENT = {"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8", "LC_ALL": "C
 CF_NAME = "__CF_USER_TEXT_ENCODING"
 CF_VALUE = "0x1F5:0x0:0x0"
 ORDINARY_REASON = "No approved current-host readback selection: ordinary run, not a qualification"
+# The driver's environment record reads platform.platform(); MC21's driver cases mock that metadata leaf with
+# the value the project's driver tests give it (113e1b85). Refreeze 001, C-02.
+PLATFORM_METADATA_LEAF = "mocked platform metadata leaf"
 DESCENDANT_REASON = "Child exited while an owned descendant remained"
 CEILING_REASON = "Owned process group cleanup exceeded stage or transaction ceiling"
 CLEANUP_CEILING_MS = 2000
@@ -1489,9 +1495,15 @@ class PlanWorld:
         return str(path), sha256(raw)
 
     def facts(self):
-        """Synthetic static M0 facts, standing for the bindings that exist only after MP (labelled mocked)."""
+        """Synthetic static M0 facts, standing for the bindings that exist only after MP (labelled mocked).
+
+        Refreeze 001, C-01: the Python part has the observer's own shape. Its inventory is the full document
+        that python_inventory computes, here of the synthetic installation that install_synthetic_python
+        places at the plan's venv and framework, and its digest is that document's digest.
+        """
         plan = self.plan
         framework, venv = plan["python"]["framework"], plan["python"]["venv"]
+        inventory = observation.python_inventory(venv, framework)
         return {
             "boundary": "mocked", "cf": None,
             "platform": {"system": "Darwin", "release": self.RELEASE, "version": self.KERNEL, "machine": "arm64",
@@ -1504,8 +1516,7 @@ class PlanWorld:
                        "head": {"gitdir": str(self.root) + "/.git", "common_dir": str(self.root) + "/.git",
                                 "ref": "refs/heads/control", "commit": plan["source"]["commit"], "files": {}},
                        "pins": dict(observation.PYTHON_PINS)},
-            "python": {"inventory": {"selection": {"launcher": venv + "/bin/python", "version_directory": "3.12"}},
-                       "inventory_sha256": plan["python"]["inventory"]["sha256"],
+            "python": {"inventory": inventory, "inventory_sha256": observation.python_inventory_digest(inventory),
                        "launcher": {"implementation": "cpython", "version": "3.12.13", "build_string": "synthetic build",
                                     "flags": {}, "executable": venv + "/bin/python",
                                     "base_executable": framework + "/bin/python3.12", "prefix": framework,
@@ -1639,6 +1650,25 @@ class PythonWorld:
 
     def inventory(self):
         return observation.python_inventory(str(self.venv), str(self.framework))
+
+
+def install_synthetic_python(world):
+    """MC10, refreeze 001 (C-01): a synthetic Python installation at the plan's own venv and framework.
+
+    Nothing in it is executed. Its layout is PythonWorld's, without the Mach-O images. The plan then
+    freezes the canonical bytes of its inventory document, as M0's _python_static requires of a real
+    installation, so that the facts PlanWorld.facts builds from it agree with the plan.
+    """
+    framework, venv = Path(world.plan["python"]["framework"]), Path(world.plan["python"]["venv"])
+    write(framework / "bin/python3.12", b"#!synthetic framework launcher; never executed\n", 0o755)
+    write(framework / "Resources/Python.app/Contents/MacOS/Python", b"synthetic process image; never executed\n", 0o755)
+    write(framework / "lib/python3.12/os.py", b"# synthetic standard library module\n")
+    (venv / "bin").mkdir()
+    os.symlink(str(framework / "bin/python3.12"), str(venv / "bin/python"))
+    write(venv / "pyvenv.cfg", ("home = %s\ninclude-system-site-packages = false\nversion = %s\n"
+                                % (framework / "bin", world.plan["python"]["version"])).encode("ascii"))
+    write(world.python_inventory, canonical(observation.python_inventory(str(venv), str(framework))))
+    world.plan = world.build_plan()
 
 
 class HostObservationControls(ControlCase):
@@ -1778,11 +1808,14 @@ class HostObservationControls(ControlCase):
 
     def observe_with_version(self, node_stdout):
         world = self.plan_world()
+        install_synthetic_python(world)
         boundary = CommandBoundary({observation.LABELS["git_version"]: b"git version 2.39.5 (synthetic control)\n",
                                     observation.LABELS["node_version"]: node_stdout})
         host = ControlHost(world, supervisor=boundary)
         path, digest = world.write_plan(world.plan)
         facts = world.facts()
+        self.assertEqual(facts["python"]["inventory_sha256"], world.plan["python"]["inventory"]["sha256"],
+                         "premise: the synthetic facts' Python inventory is the plan's frozen inventory")
         with mock.patch.object(observation, "static_observation", return_value=facts), \
                 mock.patch.object(observation, "static_after_start", return_value=facts):
             try:
@@ -1791,7 +1824,11 @@ class HostObservationControls(ControlCase):
                 return world, boundary, None, exc
 
     def test_mc10_mocked_m1_answering_v24_22_1_reaches_host_baseline(self):
-        """Label: mocked (command boundary: CommandBoundary; M0's static bindings: synthetic facts). The baseline."""
+        """Label: mocked (command boundary: CommandBoundary; M0's static bindings: synthetic facts). The baseline.
+
+        Refreeze 001, C-01: the facts' Python inventory is the observer's own inventory document of a synthetic
+        installation at the plan's paths, as real facts hold it.
+        """
         world, boundary, result, error = self.observe_with_version(b"v24.22.1\n")
         self.assertIsNone(error, error.as_dict() if error is not None else None)
         self.assertEqual(result["state"], "OBSERVED_UNAPPROVED")
@@ -1801,7 +1838,11 @@ class HostObservationControls(ControlCase):
         self.assertEqual(boundary.calls, [observation.LABELS["git_version"], observation.LABELS["node_version"]])
 
     def test_mc10_mocked_m1_version_differs_fails_preparation_without_host(self):
-        """Label: mocked (command boundary: the Node --version output is simulated; static facts synthetic)."""
+        """Label: mocked (command boundary: the Node --version output is simulated; static facts synthetic).
+
+        Refreeze 001, C-01: the facts' Python inventory is the observer's own inventory document of a synthetic
+        installation at the plan's paths, as real facts hold it.
+        """
         for stdout in (b"v24.22.0\n", b"v24.22.1"):
             with self.subTest(stdout=stdout):
                 world, boundary, result, error = self.observe_with_version(stdout)
@@ -3093,6 +3134,20 @@ class DriverControls(ControlCase):
         summary = json.loads((output / "summary.json").read_text(encoding="utf-8"))
         return code, summary, starts, output
 
+    def preparation_run(self, step, **selection):
+        """driver_run with the platform.platform() metadata leaf of the environment record mocked.
+
+        Refreeze 001, C-02: the leaf starts uname -p and file -b on its first call in a process only, so a
+        count that included it depended on the order of the tests. It is neither a Git start nor a stage
+        start. The project's driver tests mock it the same way (113e1b85), as P29's
+        INHERITED-METADATA-STUB.json does.
+        """
+        with mock.patch.object(check_local.platform, "platform", return_value=PLATFORM_METADATA_LEAF) as leaf:
+            outcome = self.driver_run(step, **selection)
+        evidence("MC21-driver", platform_metadata_leaf_calls=leaf.call_count,
+                 recorded_platform=outcome[1].get("environment", {}).get("platform"))
+        return outcome
+
     # MC07 (driver part) ----------------------------------------------------
 
     def test_mc07_driver_removal_list_removes_the_contracts_names_and_every_dyld_name(self):
@@ -3147,21 +3202,34 @@ class DriverControls(ControlCase):
         return check_local.Step("unit-tests", tuple(PYTHON_CHILD) + (UNIT_RUNNER % cohort(),))
 
     def test_mc21_driver_missing_selection_file_fails_preparation(self):
-        """Label: real (the driver's run with a one-stage plan; the plan is substituted). The configuration file is absent."""
-        outcome = self.driver_run(self.ordinary_step(), readback_config=self.base / "absent-config.json",
-                                  readback_config_sha256=sha256(b"absent"))
+        """Label: mocked (platform.platform metadata leaf; one-stage plan). The configuration file is absent.
+
+        Refreeze 001, C-02: the environment record's platform.platform() metadata leaf is mocked, so that
+        zero starts means no Git, stage or other start, whatever the order of the tests.
+        """
+        outcome = self.preparation_run(self.ordinary_step(), readback_config=self.base / "absent-config.json",
+                                       readback_config_sha256=sha256(b"absent"))
         self.assert_failed_preparation(outcome, qualifying=True)
 
     def test_mc21_driver_partial_selection_fails_preparation(self):
-        """Label: real (one-stage plan substituted). Exactly one selection argument."""
+        """Label: mocked (platform.platform metadata leaf; one-stage plan). Exactly one selection argument.
+
+        Refreeze 001, C-02: the environment record's platform.platform() metadata leaf is mocked, so that
+        zero starts means no Git, stage or other start, whatever the order of the tests.
+        """
         config = write(self.directory("selection") / "config.json", b"{}\n", 0o600)
         for label, selection in (("only the configuration", {"readback_config": config}),
                                  ("only the digest", {"readback_config_sha256": sha256(config.read_bytes())})):
             with self.subTest(label):
-                self.assert_failed_preparation(self.driver_run(self.ordinary_step(), **selection), qualifying=False)
+                self.assert_failed_preparation(self.preparation_run(self.ordinary_step(), **selection),
+                                               qualifying=False)
 
     def test_mc21_driver_malformed_selection_fails_preparation(self):
-        """Label: real (one-stage plan substituted). A malformed digest, a relative path, non-JSON or another schema."""
+        """Label: mocked (platform.platform metadata leaf; one-stage plan). A malformed digest, a relative path, non-JSON or another schema.
+
+        Refreeze 001, C-02: the environment record's platform.platform() metadata leaf is mocked, so that
+        zero starts means no Git, stage or other start, whatever the order of the tests.
+        """
         folder = self.directory("selection")
         not_json = write(folder / "not-json.json", b"not json\n", 0o600)
         other = write(folder / "other-schema.json", canonical({"schema": "ontokin.current-host-readback-config/9.9.9"}), 0o600)
@@ -3175,13 +3243,18 @@ class DriverControls(ControlCase):
                                                           "readback_config_sha256": sha256(other.read_bytes())}}
         for label, selection in variants.items():
             with self.subTest(label):
-                self.assert_failed_preparation(self.driver_run(self.ordinary_step(), **selection), qualifying=True)
+                self.assert_failed_preparation(self.preparation_run(self.ordinary_step(), **selection),
+                                               qualifying=True)
 
     def test_mc21_driver_mismatched_selection_digest_fails_preparation(self):
-        """Label: real (one-stage plan substituted). The supplied digest is another file's."""
+        """Label: mocked (platform.platform metadata leaf; one-stage plan). The supplied digest is another file's.
+
+        Refreeze 001, C-02: the environment record's platform.platform() metadata leaf is mocked, so that
+        zero starts means no Git, stage or other start, whatever the order of the tests.
+        """
         config = write(self.directory("selection") / "config.json", b"{}\n", 0o600)
-        outcome = self.driver_run(self.ordinary_step(), readback_config=config,
-                                  readback_config_sha256=sha256(b"another configuration"))
+        outcome = self.preparation_run(self.ordinary_step(), readback_config=config,
+                                       readback_config_sha256=sha256(b"another configuration"))
         self.assert_failed_preparation(outcome, qualifying=True)
 
     # MC22 at the driver ----------------------------------------------------
