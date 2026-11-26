@@ -1,0 +1,115 @@
+{
+  "schema": "ontokin.c271.p30-executor-inventory/1",
+  "task": "C271",
+  "phase": "C271-P30-operational-plan-review",
+  "owner": "c271-p30-55a168e30426",
+  "reviewed_revision": "7a4ab16248ed071a211ded3e24e1558ec064f0b1",
+  "inputs_identical_to": "4ee55b037b909b36cb8a6330aa07ccc78071af88",
+  "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "observed_at_utc": "2026-11-26T03:20:05Z",
+  "method": "Read-only: uname, sw_vers, sysctl, the shell's command -v for each tool name, the presence of application bundles and of ELF loader paths, and file(1) on interpreter and Node executables. Nothing was launched except these inspection commands; no Node, ldd, loader, container or test.",
+  "raw_output": {
+    "location": "../OntoKin-local/c271-p30/inventory/EXECUTORS.txt beside the clone",
+    "sha256": "74ee47e5105c2047fc04ad8a5d74134ece5a76157ddbbdf4bd624478f36b62b4"
+  },
+  "host": {
+    "kernel": "Darwin 25.6.0",
+    "os": "macOS 26.6.2 (build 25G83)",
+    "machine": "arm64",
+    "cpu": "Apple M3 Ultra",
+    "translated": false,
+    "rosetta_runtime_directory_present": true,
+    "python": "CPython 3.12.13 (Homebrew), Mach-O 64-bit arm64; the main checkout's and this worktree's .venv use it",
+    "node": "Homebrew Node.js, Mach-O 64-bit arm64; v25.9.0 by main's startup doctor",
+    "absent_paths": [
+      "/usr/bin/ldd",
+      "/lib64",
+      "/usr/lib/x86_64-linux-gnu",
+      "/etc/ld.so.cache"
+    ],
+    "absent_tools": [
+      "ldd",
+      "ld.so",
+      "docker",
+      "podman",
+      "nerdctl",
+      "colima",
+      "limactl",
+      "lima",
+      "orb",
+      "orbctl",
+      "multipass",
+      "vagrant",
+      "qemu-system-x86_64",
+      "qemu-x86_64",
+      "utmctl",
+      "prlctl",
+      "VBoxManage",
+      "vmrun",
+      "container"
+    ],
+    "absent_applications": [
+      "Docker",
+      "OrbStack",
+      "UTM",
+      "Parallels Desktop",
+      "VMware Fusion",
+      "VirtualBox",
+      "Lima",
+      "Podman Desktop",
+      "Rancher Desktop"
+    ]
+  },
+  "executors": [
+    {
+      "id": "X1",
+      "executor": "the owner's persistent local environment (the main checkout's and this worktree's .venv)",
+      "verdict": "does_not_meet",
+      "unmet": [
+        "E1",
+        "E2",
+        "E4",
+        "E5",
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "reason": "Darwin arm64 without glibc, an ELF loader or ldd; the inspector's first host check would refuse it (source inference); the E2 build is a Linux x86-64 executable."
+    },
+    {
+      "id": "X2",
+      "executor": "a container or virtual machine on this host",
+      "verdict": "none_exists",
+      "reason": "No container or virtualization tool is installed; main's linux-container profile is unconfigured and states that an emulated amd64 container is never native Linux qualification; an amd64 guest on this arm64 host would be emulated."
+    },
+    {
+      "id": "X3",
+      "executor": "GitHub's hosted runners",
+      "verdict": "does_not_meet",
+      "unmet": [
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "reason": "Hosted jobs are optional, manual-only and default-false under OK-ENG-006 and the no-payment direction; the local-mode executor is the owner's prepared environment or a named dedicated machine; GitHub's Linux runners are Ubuntu images, not the Debian glibc 2.41-12+deb13u4 build whose bytes are pinned, and lack the Codex runtime's Python image."
+    },
+    {
+      "id": "X4",
+      "executor": "a disposable ChatGPT browser-thread host",
+      "verdict": "not_an_executor_of_this_local_session",
+      "reason": "The class of host on which the pins were observed (P23: all three matched). Using one means running that phase in browser mode on explicit owner direction under the ephemeral-host rule; every pin must be observed afresh there."
+    },
+    {
+      "id": "X5",
+      "executor": "another machine of the owner",
+      "verdict": "none_named",
+      "reason": "The startup report asked whether a Linux x86-64 machine or VM should be considered; the owner's reply selected the phase and named none."
+    }
+  ],
+  "conclusion": "No existing executor available to this local session meets the adopted contract (P30-EXECUTOR-001).",
+  "related_source_facts": [
+    "Main's tests/test_static_tray_readback_v01.py keeps skipUnless(NODE.is_file() and DEPS.is_dir() and HOST.is_file(), 'Retained exact Node/readback dependencies are unavailable'); main's local runs skipped the three CPU methods (docs/engineering/local-migration-20261124/BASELINE-CHECKS.json and CANDIDATE-CHECKS.json).",
+    "This branch's tools/check_local.py prepare_readback_selection raises 'The unit stage requires --readback-config ABSOLUTE_FILE and --readback-config-sha256 EXPECTED_DIGEST from the reviewed execution plan.'; its ReadbackCPUControls.setUpClass reports missing prerequisites as setup errors, never skips (source inference; not executed)."
+  ],
+  "limits": "Covers platform identity and the presence of common container and virtualization tools; no network or remote host was probed and no SSH configuration was read."
+}

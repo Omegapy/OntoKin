@@ -1,0 +1,128 @@
+{
+  "schema": "ontokin.c271.p30-outcome/1",
+  "task": "C271",
+  "phase": "C271-P30-operational-plan-review",
+  "owner": "c271-p30-55a168e30426",
+  "reviewed_revision": "7a4ab16248ed071a211ded3e24e1558ec064f0b1",
+  "inputs_identical_to": "4ee55b037b909b36cb8a6330aa07ccc78071af88",
+  "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "recorded_at_utc": "2026-11-26T03:40Z",
+  "status": "review_outcome_blocker_pending_independent_review",
+  "outcome": "No existing executor available to this local session meets the adopted contract; the /0.1.5 operational plan can be neither prepared nor executed here.",
+  "blocker": {
+    "id": "P30-EXECUTOR-001",
+    "kind": "no eligible executor in local mode",
+    "evidence": [
+      "EXECUTOR-INVENTORY.json",
+      "CONTRACT-REQUIREMENTS.json",
+      "REVIEW-OUTCOME.md"
+    ],
+    "scope": "Where the plan can run. It finds no defect in the published P29 candidate, changes no adopted design and qualifies no host.",
+    "resolution": "An owner decision among the routes in REVIEW-OUTCOME.md section 6."
+  },
+  "answers": {
+    "existing_executor_meets_contract": false,
+    "remaining_h0_constraint": "Reconciled field by field in H0-CONSTRAINT-RECONCILIATION.json; P26's record unchanged.",
+    "executable_inspection_plan_in_scope_now": false,
+    "further_preparation_selected": []
+  },
+  "preparation_dispositions": [
+    {
+      "item": "executable /0.1.5 inspection plan",
+      "selected": false,
+      "reason": "Host fields E1-E9 can be filled only on an eligible executor; inventing them is forbidden (P07 section 2)."
+    },
+    {
+      "item": "retrieve the P05 Node archive or P09's Python snapshot to this host",
+      "selected": false,
+      "reason": "Linux x86-64 executables that cannot run here; P09's snapshot lacks its ../lib closure."
+    },
+    {
+      "item": "prepare the 24 C195 reader files on this host",
+      "selected": false,
+      "reason": "No executor that meets the contract would use them."
+    },
+    {
+      "item": "configure linux-container or install virtualization",
+      "selected": false,
+      "reason": "New host tooling; an amd64 guest here is emulated and never native Linux qualification."
+    },
+    {
+      "item": "prepare main's visual-verification profile",
+      "selected": false,
+      "reason": "Different Node build and Three.js 0.180.0; P05 section 5 rules out the general tools lock."
+    },
+    {
+      "item": "macOS host tooling",
+      "selected": false,
+      "reason": "Justified only if the owner selects route C, and then design first."
+    },
+    {
+      "item": "H0 on a disposable browser-thread host",
+      "selected": false,
+      "reason": "A mode change needs explicit owner direction (route A)."
+    }
+  ],
+  "routes_for_owner": [
+    {
+      "id": "A",
+      "route": "unchanged contract in browser mode on a disposable ChatGPT host",
+      "substitutes": "execution mode of those phases only"
+    },
+    {
+      "id": "B",
+      "route": "an owner-supplied native Linux x86-64 machine",
+      "substitutes": "the host; in practice also the author-Python pin (E4) and any differing RTLD path (E7), each by versioned amendment"
+    },
+    {
+      "id": "C",
+      "route": "explicit substitution to the owner's macOS arm64 environment through a new reviewed versioned contract",
+      "substitutes": "Node build (v24.22.1 kept, darwin-arm64 build pinned), qualification Python (3.12.13), the host inspection (Linux ELF closure stages replaced by a new reviewed observation)"
+    },
+    {
+      "id": "D",
+      "route": "retain the refusal",
+      "substitutes": "nothing; H0, H1 and R03 stay unmet"
+    }
+  ],
+  "recommendation": "If C271 is to reach R03 and R04 in local mode, route C, starting with a design-only phase for an independently reviewed versioned contract; otherwise route D. The owner decides; this phase adopts no route.",
+  "never_supported_by_a_substitution": [
+    "Linux x86-64 qualification",
+    "historical C199/C225 replay",
+    "P05 Gate H for the Codex Node build",
+    "exercise of the /0.1.1-/0.1.5 ELF policies on a real host",
+    "N34 for the Linux loader"
+  ],
+  "gates": {
+    "H0": "open; blocked in local mode by P30-EXECUTOR-001",
+    "H1": "open",
+    "N34": "open",
+    "N57": "open, external review only",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "plan": {
+    "P01": "done",
+    "P02": "in_progress"
+  },
+  "executed_in_phase": {
+    "H0": 0,
+    "H1": 0,
+    "node": 0,
+    "ldd": 0,
+    "direct_loader": 0,
+    "routine_driver": 0,
+    "unit_or_behavioural_tests": 0,
+    "installations": 0,
+    "read_only_inspection_commands": "platform identification, command -v, file(1), ls, cmp and shasum as recorded"
+  },
+  "independent_review": "pending"
+}

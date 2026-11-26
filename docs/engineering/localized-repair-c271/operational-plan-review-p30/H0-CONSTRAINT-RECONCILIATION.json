@@ -1,0 +1,74 @@
+{
+  "schema": "ontokin.c271.p30-h0-constraint-reconciliation/1",
+  "task": "C271",
+  "phase": "C271-P30-operational-plan-review",
+  "owner": "c271-p30-55a168e30426",
+  "reviewed_revision": "7a4ab16248ed071a211ded3e24e1558ec064f0b1",
+  "inputs_identical_to": "4ee55b037b909b36cb8a6330aa07ccc78071af88",
+  "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "recorded_at_utc": "2026-11-26T03:40Z",
+  "subject": "docs/workflow/tasks/C271/task.json remaining_h0_constraint (P26's record), which stays unchanged",
+  "candidate": {
+    "commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
+    "published_merge": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+    "inspector_bytes": 249393,
+    "inspector_sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758"
+  },
+  "fields": [
+    {
+      "field": "status, classification",
+      "p26": "P26-LIBDL-NONLIBC-PLT, source_deduced_required_image_policy_incompatibility",
+      "now": "Addressed by design (P27) and implementation (P29) on inert unit evidence only; not observed on a host under /0.1.5."
+    },
+    {
+      "field": "selected_implementation",
+      "p26": "prototypes/static_tray_v01/current_host_inspection_v01.py, 233,502 bytes, eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+      "now": "Superseded in code by the P29 inspector (249,393 bytes, 71e837c3...). P29's corrected baseline ran on exactly the P25 bytes (required-images-p29/VERIFICATION.json baseline.production_sha256), so the lineage is direct."
+    },
+    {
+      "field": "source_commit",
+      "p26": "ed2fc453042a9f0bc4808c2aea7f015baf1ff73e",
+      "now": "Superseded: an H0 plan must bind a clean commit and tree that contain the P29 inspector, for example a descendant of 4a9585a0."
+    },
+    {
+      "field": "source_inventory",
+      "p26": "93,409 bytes, sha256 87aa2c337ff76e5b3e718d6d7b322d9ae6a3affe5e1bff57a543b61963e5382f, on a disposable host",
+      "now": "Not available; history only. A fresh complete inventory is required (E9)."
+    },
+    {
+      "field": "necessary_counterexample",
+      "p26": "libdl.so.2.inert, 14,408 bytes, 295fa521...",
+      "now": "Retained in the repository (h0-plan-p26/libdl.so.2.inert; required-image-design-p27/design/sources/package-images/); a frozen input of P29's controls."
+    },
+    {
+      "field": "additional_observed_limits_to_preserve",
+      "p26": "libpthread and libutil tag trios; libm DT_FLAGS 24; librt DT_FLAGS_1 9",
+      "now": "Covered by P27's finite rules for the five bound images as implemented in P29; unchanged for any other image."
+    },
+    {
+      "field": "predicted_source_diagnostic",
+      "p26": "CHI-UNSUPPORTED at the ordinary dynamic-tag predicate",
+      "now": "Still the prediction under plan versions /0.1.4 and earlier; under /0.1.5 the five bound images take the private route when their pins match. No product refusal or admission is observed."
+    },
+    {
+      "field": "external_gate, whole_N34_accepted",
+      "p26": "N34, false",
+      "now": "Unchanged and open."
+    },
+    {
+      "field": "historical_N57_unchanged",
+      "p26": "true",
+      "now": "Unchanged."
+    },
+    {
+      "field": "remaining_gates",
+      "p26": "complete closure; N34; N57; independent H0 plan acceptance and execution; H1 and parent gates",
+      "now": "All open. P30-EXECUTOR-001 is a further precondition in local mode."
+    },
+    {
+      "field": "next_phase_action",
+      "p26": "compatibility decision for non-libc x86-64 PLT tags and the libm/librt flags",
+      "now": "Fulfilled by P27 (decision) and P29 (implementation); superseded by this review's outcome."
+    }
+  ]
+}
