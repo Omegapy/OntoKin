@@ -1,0 +1,105 @@
+{
+ "schema": "ontokin.c271.p29-r07-push-observation/1",
+ "task": "C271",
+ "phase": "C271-P29-R07-local-publication",
+ "plan_task": "TASK-021",
+ "records_commit": "12d7e55472f8b1d2b67414857ec310b288025244",
+ "records_commit_parent": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+ "push": {
+  "command": "git push --porcelain origin refs/heads/work/c271-missing-import-digest-control:refs/heads/work/c271-missing-import-digest-control",
+  "started_at_utc": "2026-11-26T01:54:50Z",
+  "finished_at_utc": "2026-11-26T01:54:52Z",
+  "exit_status": 0,
+  "porcelain_result": "refs/heads/work/c271-missing-import-digest-control:refs/heads/work/c271-missing-import-digest-control\t4a9585a0..12d7e554",
+  "force_option": "none",
+  "remote_head_before": "4a9585a0ce66b1ff0b407e41824d68b2417c2686"
+ },
+ "remote_read": {
+  "command": "git ls-remote --heads origin",
+  "observed_at_utc": "2026-11-26T01:54:52Z",
+  "result": {
+   "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+   "refs/heads/work/c271-missing-import-digest-control": "12d7e55472f8b1d2b67414857ec310b288025244"
+  }
+ },
+ "readback_repository_update": {
+  "command": "git fetch --filter=blob:none --no-tags origin +refs/heads/work/c271-missing-import-digest-control:refs/remotes/origin/work/c271-missing-import-digest-control (in the separate readback repository)",
+  "observed_at_utc": "2026-11-26T01:56:16Z",
+  "result": "12d7e55472f8b1d2b67414857ec310b288025244"
+ },
+ "note": "This record observes the pushes of the records commit and of the three correction commits. The push of the commit that carries this record is reported in the final report and in the checkpoint comments on PR274 and issue273, not in a further commit.",
+ "correction_commits": [
+  {
+   "commit": "bb75b1c5f83da34e8cc653b536e635d2e89a62d2",
+   "parent": "12d7e55472f8b1d2b67414857ec310b288025244",
+   "reason": "records-only correction after the fresh-context resumability check (RESUMABILITY.md)",
+   "push": {
+    "command": "git push --porcelain origin refs/heads/work/c271-missing-import-digest-control:refs/heads/work/c271-missing-import-digest-control",
+    "started_at_utc": "2026-11-26T02:12:24Z",
+    "finished_at_utc": "2026-11-26T02:12:27Z",
+    "exit_status": 0,
+    "porcelain_result": "refs/heads/work/c271-missing-import-digest-control:refs/heads/work/c271-missing-import-digest-control\t12d7e554..bb75b1c5",
+    "force_option": "none",
+    "remote_head_before": "12d7e55472f8b1d2b67414857ec310b288025244"
+   },
+   "remote_read": {
+    "command": "git ls-remote --heads origin",
+    "observed_at_utc": "2026-11-26T02:12:27Z",
+    "result": {
+     "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+     "refs/heads/work/c271-missing-import-digest-control": "bb75b1c5f83da34e8cc653b536e635d2e89a62d2"
+    }
+   },
+   "readback_repository_update": {
+    "observed_at_utc": "2026-11-26T02:12:28Z",
+    "result": "bb75b1c5f83da34e8cc653b536e635d2e89a62d2"
+   }
+  },
+  {
+   "commit": "cda16e6dbc5c1aac328396858e2021e972f08b82",
+   "parent": "bb75b1c5f83da34e8cc653b536e635d2e89a62d2",
+   "push": {
+    "started_at_utc": "2026-11-26T02:19:38Z",
+    "finished_at_utc": "2026-11-26T02:19:40Z",
+    "exit_status": 0,
+    "porcelain_result": "refs/heads/work/c271-missing-import-digest-control:refs/heads/work/c271-missing-import-digest-control\tbb75b1c5..cda16e6d",
+    "force_option": "none",
+    "remote_head_before": "bb75b1c5f83da34e8cc653b536e635d2e89a62d2"
+   },
+   "remote_read": {
+    "command": "git ls-remote --heads origin",
+    "observed_at_utc": "2026-11-26T02:19:40Z",
+    "result": {
+     "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+     "refs/heads/work/c271-missing-import-digest-control": "cda16e6dbc5c1aac328396858e2021e972f08b82"
+    }
+   },
+   "reason": "records-only correction after the first re-read"
+  },
+  {
+   "commit": "5c74f49e04da9977f7c8da80515414dbe8e89549",
+   "parent": "cda16e6dbc5c1aac328396858e2021e972f08b82",
+   "push": {
+    "started_at_utc": "2026-11-26T02:23:32Z",
+    "finished_at_utc": "2026-11-26T02:23:35Z",
+    "exit_status": 0,
+    "porcelain_result": "refs/heads/work/c271-missing-import-digest-control:refs/heads/work/c271-missing-import-digest-control\tcda16e6d..5c74f49e",
+    "force_option": "none",
+    "remote_head_before": "cda16e6dbc5c1aac328396858e2021e972f08b82"
+   },
+   "remote_read": {
+    "command": "git ls-remote --heads origin",
+    "observed_at_utc": "2026-11-26T02:23:35Z",
+    "result": {
+     "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+     "refs/heads/work/c271-missing-import-digest-control": "5c74f49e04da9977f7c8da80515414dbe8e89549"
+    }
+   },
+   "reason": "records-only correction after the second re-read"
+  }
+ ],
+ "readback_repository_last_update": {
+  "observed_at_utc": "2026-11-26T02:23:37Z",
+  "result": "5c74f49e04da9977f7c8da80515414dbe8e89549"
+ }
+}
