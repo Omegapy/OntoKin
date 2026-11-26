@@ -200,3 +200,62 @@ D-17 therefore replaces D-01:
 - MP's independent review checks the receipt's `preparer_source` against that commit's files.
 
 The final independent review of MI is asked to assess this.
+
+## D-18: the driver test file stays P29's frozen companion
+
+The first final verification, on `65c54179`, found one regression in an existing module. When
+P29's frozen required-images controls load, they authenticate 24 inherited companions by size
+and SHA-256 (`required-images-p29/controls/COMPANIONS.json`). One of them is
+`tests/test_current_host_readback_driver.py`, frozen at its phase-start bytes `cb103f55…`. W4
+wrote its S8 and S9 tests into that file, as plan section 3 assigned. P29's module then refused
+to load ("Frozen inherited companion differs"), so none of its 116 tests ran. At the phase start
+it ran them all, with two errors that need Linux.
+
+Neither the contract nor the plan foresaw this. MI excludes changes to adopted 0.1.0 documents and
+controls, and P29's controls are among them, so their freeze is kept:
+- **Restored:** `tests/test_current_host_readback_driver.py` has its phase-start bytes again.
+- **Moved:** W4's tests move, unchanged, to `tests/test_current_host_readback_driver_v02.py`. That
+  module holds W4's new classes and its S8 versions of two tests of the 0.1.0 class, which keep
+  their names in a class of the same name. A script copied each method's exact source and checked
+  it against W4's.
+- **Consequence:** run against the S8 driver, those two 0.1.0 tests fail. One fails; the other
+  fails and has one subtest error. Both assert the ordinary-run refusal that S8 removes, so this
+  is the behaviour S8 amends, not a defect to correct. The tests keep their expectations and fail
+  visibly. R04 classifies this change together with the readback module's (contract section 8,
+  R04 obligation) and the 22 tests that the new module adds.
+- **Records:** plan section 3 is superseded for W4's test file. W4's interface note keeps its
+  record of where W4 first wrote the tests.
+- **P29's module:** it runs its 116 tests again, with its two phase-start errors. Its frozen bytes
+  are not touched.
+
+The alternative was to keep W4's file and leave P29's module unable to load. That would remove all
+of P29's controls from every run. The final independent review is asked to assess this choice.
+
+## D-19: two control defects, returned to W6 for a refreeze
+
+The frozen controls ran once, as frozen, on `65c54179`: 149 tests, 3 errors and 1 failure, no
+skip. The Director reads two defects in the controls, not in the implementation:
+- **C-01, MC10 (two methods).** The cases replace M0's static facts with synthetic ones, whose
+  `python.inventory` holds only the inventory's selection record. The observer's facts hold the
+  full observed inventory document there; it is HOST that holds the plan's descriptor. After it
+  imports the Darwin supervisor, `observe_host` checks the loaded modules against the facts'
+  inventory. It raises `KeyError: 'framework'`, which real facts cannot produce.
+- **C-02, MC21 at the driver (one case).** The case counts every process start of
+  `check_local.run` and expects none. It saw two, `uname -p` and `file -b` on the interpreter.
+  Both come from `platform.platform()` in the driver's environment record, which runs before the
+  selection is prepared and was already in the 0.1.0 driver. Python caches the answer, so only the
+  first driver run of a test process starts them: each MC21 driver case would fail the same way
+  if run alone. They are metadata leaves, neither a Git nor a stage start. Contract section 9
+  counts "other bounded starts", and P05's CH13 counts checker starts. The project already treats
+  this call as a metadata leaf: the existing driver tests stub it (`113e1b85`), and so does P29
+  (`INHERITED-METADATA-STUB.json`).
+
+Under plan section 6, W6 confirms or disputes each defect and refreezes the cases it confirms.
+`CONTROLS-FROZEN.json` stays byte-identical as the retained original, and the refreeze is
+recorded beside it.
+
+**A note for MR.** The driver's environment record starts `uname` and `file` by name, through
+`PATH`, in every run, qualifying runs included. Their answers only describe the platform in the
+summary. The contract binds Git by absolute path and says nothing about these two. MR's execution
+plan decides whether a qualifying run may start them, or whether the record is read without a
+start.
