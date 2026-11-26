@@ -358,6 +358,11 @@ def install_plan(plan, *, apply=False):
 SCHEMA_V02 = "ontokin.current-host-readback-install/0.2.0"
 RESULT_SCHEMA_V02 = "ontokin.current-host-readback-install-result/0.2.0"
 CONTRACT_V02 = "ontokin.current-host-readback/0.2.0"
+PROFILE_V02 = "darwin-arm64-v1"
+# Design revision 4: the contract as amended by P33-AMENDMENT-001 (adopted;
+# ADOPTION-AMENDMENT-001.json, decisions D-03 and D-12). S6 is unchanged by it.
+DESIGN_REVISION_V02 = 4
+AMENDMENTS_V02 = ("P33-AMENDMENT-001",)
 EXECUTOR_V02 = "macos-arm64-local"
 PURPOSES_V02 = ("selected-node", "retained-dependencies")
 PLAN_KEYS_V02 = ("schema", "contract", "purpose", "source_root", "archive", "destination", "root_mode",
@@ -382,9 +387,13 @@ DEPENDENCY_MEMBER_KEYS_V02 = ("kind", "size_bytes", "sha256", "mode", "target")
 MEMBER_MODES_V02 = frozenset(oct(number) for number in range(0o10000))
 SIGNATURE_STATES_V02 = ("not_performed", "verified", "failed")
 MAX_DETAIL_CHARS_V02 = 4096
+# The OS identity of a result is read through the observer's exported reader
+# (decision D-04); the observer is imported only when the 0.2.0 route runs.
+OBSERVER_V02 = "prototypes/static_tray_v01/current_host_observation_v02.py"
 PREPARER_FILES_V02 = ("tools/prepare_current_host_readback.py",
                       "prototypes/static_tray_v01/current_host_readback_v01.py",
-                      "prototypes/static_tray_v01/canonical.py")
+                      "prototypes/static_tray_v01/canonical.py", OBSERVER_V02)
+OS_LABEL_FIELDS_V02 = ("product_version", "product_build_version", "product_version_extra")
 # Minimal Mach-O header predicate (MC05); the observer owns the load commands.
 MH_MAGIC_64 = 0xFEEDFACF
 CPU_TYPE_ARM64 = 0x0100000C
@@ -791,22 +800,44 @@ def _publication_failure_v02(report, exc, staged, staged_identity, destination, 
     return failure, present
 
 
-def _labels_v02(plan):
-    node = plan is not None and plan["purpose"] == "selected-node"
-    unknown = "not established" if plan is None else "not applicable: retained-dependencies"
-    return {"executor": EXECUTOR_V02,
-            "node_archive_sha256": plan["archive"]["sha256"] if node else unknown,
-            "node_executable": dict(plan["files"][NODE_EXECUTABLE_V02]) if node else unknown,
-            "os_identity": "not observed by the preparer",
-            "python_inventory": "not observed by the preparer",
-            "git_binding": "not used: the preparer starts no process",
-            "run_kind": "not applicable: installation preparation"}
+def _os_label_v02():
+    """D-04: OS product version, build and cryptex version, through the observer's exported reader.
+
+    The shape is HOST's labels.os. An unreadable identity refuses the call,
+    since no 0.2.0 result is written without it.
+    """
+    try:
+        from prototypes.static_tray_v01 import current_host_observation_v02 as observation
+        identity = observation.read_os_identity()
+        system, cryptex = identity["system_version"], identity["cryptex"]
+        label = {key: system[key] for key in OS_LABEL_FIELDS_V02}
+        label["cryptex"] = ({"state": "absent"} if cryptex["state"] == "absent" else
+                            {"state": "present", **{key: cryptex[key] for key in OS_LABEL_FIELDS_V02}})
+    except Exception as exc:
+        raise provider.CurrentHostBindingError(
+            "INSTALL", "The OS identity is unreadable through the observer's read_os_identity", cause=exc) from exc
+    return label
+
+
+def _bound_pins_v02(plan, pins):
+    """D-04: the pins that this plan binds, with the origin of the pin values."""
+    if plan["purpose"] == "selected-node":
+        return {"origin": pins["origin"], "node_archive_sha256": plan["archive"]["sha256"],
+                "node_executable": {key: plan["files"][NODE_EXECUTABLE_V02][key] for key in ("sha256", "size_bytes", "mode")}}
+    return {"origin": pins["origin"], "dependency_archive_sha256": plan["archive"]["sha256"]}
+
+
+def _labels_v02(*, pins=None, os_label=None):
+    """D-04: the labels a preparation result can observe; no Python inventory and no Git binding (M0's)."""
+    return {"executor": EXECUTOR_V02, "contract": CONTRACT_V02, "profile": PROFILE_V02,
+            "design_revision": DESIGN_REVISION_V02, "amendments": list(AMENDMENTS_V02), "pins": pins, "os": os_label}
 
 
 def _report_v02(apply):
-    return {"schema": RESULT_SCHEMA_V02, "contract": CONTRACT_V02, "purpose": None, "passed": False,
+    return {"schema": RESULT_SCHEMA_V02, "contract": CONTRACT_V02, "design_revision": DESIGN_REVISION_V02,
+            "amendments": list(AMENDMENTS_V02), "purpose": None, "passed": False,
             "apply_requested": apply, "execution_counts": {"node": 0, "ldd": 0, "checkers": 0},
-            "operations": [], "state": "REJECTED", "pins": None, "labels": _labels_v02(None),
+            "operations": [], "state": "REJECTED", "pins": None, "labels": _labels_v02(),
             "preparer_source": None}
 
 
@@ -823,8 +854,10 @@ def install_plan_v02(plan, *, apply=False, synthetic_pins=None):
         report["pins"] = {key: pins[key] for key in ("origin", "node_archive_sha256", "dependency_archive_sha256")}
         report["preparer_source"] = {"root": str(ROOT), "files_at_start": {
             name: provider.file_binding(ROOT / name, category="INSTALL") for name in PREPARER_FILES_V02}}
+        os_label = _os_label_v02()
+        report["labels"] = _labels_v02(os_label=os_label)
         _plan_shape_v02(plan, pins)
-        report.update(purpose=plan["purpose"], labels=_labels_v02(plan))
+        report.update(purpose=plan["purpose"], labels=_labels_v02(pins=_bound_pins_v02(plan, pins), os_label=os_label))
         node = plan["purpose"] == "selected-node"
         destination = provider._absolute(plan["destination"], category="INSTALL")
         candidate = provider._absolute(plan["report"], category="INSTALL")
@@ -836,7 +869,9 @@ def install_plan_v02(plan, *, apply=False, synthetic_pins=None):
         ancestors = _parent_identity(destination.parent)
         report["archive"] = _verify_node_archive_v02(plan) if node else _verify_dependency_archive_v02(plan)
         report["before"] = existing_tree(destination, plan)
-        provider._write_new(report_path.with_name(report_path.name + ".preflight.json"), report)
+        # The preflight copy is marked as such; it is neither a receipt nor a refusal.
+        provider._write_new(report_path.with_name(report_path.name + ".preflight.json"),
+                            {**report, "state": "PREFLIGHT_RECORDED"})
         if report["before"]["state"] == "complete_exact":
             report.update(passed=True, state="ALREADY_PRESENT_EXACT")
         elif not apply:
@@ -865,9 +900,10 @@ def install_plan_v02(plan, *, apply=False, synthetic_pins=None):
             # Preserve intended source and target before a potentially uncertain
             # call. A retry is never automatic.
             provider._write_new(report_path.with_name(report_path.name + ".publication.json"),
-                                {"contract": CONTRACT_V02, "source": str(staged), "destination": str(destination),
-                                 "owned_stage": staged_identity, "call": "renamex_np", "mode": "RENAME_EXCL",
-                                 "state": "INTENT_RECORDED"})
+                                {"contract": CONTRACT_V02, "design_revision": DESIGN_REVISION_V02,
+                                 "amendments": list(AMENDMENTS_V02), "source": str(staged),
+                                 "destination": str(destination), "owned_stage": staged_identity,
+                                 "call": "renamex_np", "mode": "RENAME_EXCL", "state": "INTENT_RECORDED"})
             try:
                 rename_exclusive(staged, destination)
             except OSError as exc:
@@ -904,7 +940,10 @@ def install_plan_v02(plan, *, apply=False, synthetic_pins=None):
                 provider._write_new(report_path, report)
             except BaseException as exc:
                 failure = provider.CurrentHostBindingError("EVIDENCE", "Preparation report write failed", cause=exc, state="UNKNOWN")
-                failure.refusal_record = report
+                # The in-memory record must not keep a passed receipt state once
+                # its report is unwritten or uncertain.
+                report.update(passed=False, state="UNKNOWN", report_error=provider._failure(exc))
+                report.setdefault("error", failure.as_dict())
     if failure:
         failure.refusal_record = report
         raise failure

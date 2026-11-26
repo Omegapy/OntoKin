@@ -119,3 +119,17 @@ The amendment is adopted ([ADOPTION-AMENDMENT-001](ADOPTION-AMENDMENT-001.json))
   stay as written:
   - PHASE.json's acceptance A2, which says that only the precondition differs;
   - plan section 4.1, which imports `group_exists` and `terminate_group` unchanged.
+
+## D-13: the documents that carry the design revision (W2's follow-up)
+
+D-12's "every document that a 0.2.0 component writes" means these documents:
+- the result, receipt, refusal, setup, attempt and cohort documents;
+- HOST, and the observer's inspection receipts;
+- the publication intent records.
+
+It does not reach `NODE-SOURCE.json`. Contract section 3 lists that provenance record's content,
+and plan section 4.2 fixes its keys. The install result that publishes it carries the design
+revision and the amendments.
+- **M0's receipt check** admits the install result's two new fields (W3's follow-up).
+- **Concurrency:** W2's follow-up runs imported the 0.1.0 provider while W5 was editing it. The
+  Director's final verification runs every test on the committed tree.

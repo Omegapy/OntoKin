@@ -14,6 +14,11 @@ SyntheticPins seam of install_plan_v02; the adopted pin stays a constant.
 Labels: "real" marks a call of libSystem's renamex_np, "simulated" a patched
 boundary. On a non-Darwin host, a test that needs renamex_np asserts the
 route's documented refusal instead; nothing is skipped.
+
+Every 0.2.0 call reads the OS identity through the observer's exported
+read_os_identity (decision D-04). On Darwin that is the real reader, which only
+reads the two SystemVersion.plist files. On another host the tests replace it
+with a simulated identity, so the other predicates stay testable there.
 """
 from __future__ import annotations
 
@@ -25,6 +30,7 @@ import io
 import json
 import os
 from pathlib import Path
+import plistlib
 import shutil
 import stat
 import struct
@@ -37,6 +43,7 @@ import unittest
 from unittest.mock import patch
 import uuid
 
+from prototypes.static_tray_v01 import current_host_observation_v02 as observation
 from tools import prepare_current_host_readback as preparer
 
 provider = preparer.provider
@@ -44,6 +51,33 @@ DARWIN = sys.platform == "darwin"
 SCHEMA = "ontokin.current-host-readback-install/0.2.0"
 RESULT = "ontokin.current-host-readback-install-result/0.2.0"
 CONTRACT = "ontokin.current-host-readback/0.2.0"
+PROFILE = "darwin-arm64-v1"
+DESIGN_REVISION = 4
+AMENDMENTS = ["P33-AMENDMENT-001"]
+# The confirmed shapes (decision D-11). W3's receipt rule lists the plan keys and
+# the receipt keys below; D-12 adds design_revision and amendments to results.
+PLAN_KEYS = {"schema", "contract", "purpose", "source_root", "archive", "destination", "root_mode", "files",
+             "directories", "members", "node_source", "report"}
+W3_RESULT_KEYS = {"schema", "contract", "purpose", "passed", "state", "apply_requested", "execution_counts",
+                  "operations", "pins", "labels", "preparer_source", "archive", "before"}
+RESULT_BASE = {"schema", "contract", "design_revision", "amendments", "purpose", "passed", "state",
+               "apply_requested", "execution_counts", "operations", "pins", "labels", "preparer_source"}
+RECEIPT_KEYS = RESULT_BASE | {"archive", "before"}
+INSTALLED_KEYS = RECEIPT_KEYS | {"after", "publication"}
+PUBLICATION_FAILURE_KEYS = RECEIPT_KEYS | {"error", "publication_error", "destination_after_error", "stage_after_error"}
+LABEL_KEYS = {"executor", "contract", "profile", "design_revision", "amendments", "pins", "os"}
+ARCHIVE_KEYS = {"sha256", "size_bytes", "members", "expanded_bytes", "symlinks", "member_inventory_sha256",
+                "extracted_members"}
+NODE_SOURCE_KEYS = {"schema", "contract", "archive", "checksum_file", "signature_check", "member_inventory_sha256",
+                    "extracted"}
+PREPARER_FILES = {"tools/prepare_current_host_readback.py", "prototypes/static_tray_v01/current_host_readback_v01.py",
+                  "prototypes/static_tray_v01/canonical.py", "prototypes/static_tray_v01/current_host_observation_v02.py"}
+# Used only on a non-Darwin host, in place of the real reader (simulated).
+SIMULATED_IDENTITY = {
+    "system_version": {"state": "present", "path": "/simulated/SystemVersion.plist", "sha256": "0" * 64,
+                       "size_bytes": 0, "mode": "0o644", "product_name": "Simulated", "product_version": "0.0",
+                       "product_build_version": "SIMULATED", "product_version_extra": None},
+    "cryptex": {"state": "absent", "path": "/simulated/cryptex/SystemVersion.plist", "hops": []}}
 RELEASE = "node-v24.22.1-darwin-arm64"
 NODE_MEMBER = RELEASE + "/bin/node"
 ADOPTED_PIN = "89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7"
@@ -152,8 +186,32 @@ def snapshot(root):
     return sorted(rows)
 
 
+def expected_os_label():
+    """HOST's labels.os shape, read here with plistlib, independently of the observer's reader.
+
+    On a non-Darwin host it is the label of the simulated identity.
+    """
+    if not DARWIN:
+        system = SIMULATED_IDENTITY["system_version"]
+        return {"product_version": system["product_version"], "product_build_version": system["product_build_version"],
+                "product_version_extra": system["product_version_extra"], "cryptex": {"state": "absent"}}
+    def fields(path):
+        with open(path, "rb") as stream:
+            value = plistlib.load(stream)
+        return {"product_version": value["ProductVersion"], "product_build_version": value["ProductBuildVersion"],
+                "product_version_extra": value.get("ProductVersionExtra")}
+    label = fields(observation.SYSTEM_VERSION_PATH)
+    cryptex = observation.CRYPTEX_SYSTEM_VERSION_PATH
+    label["cryptex"] = {"state": "present", **fields(cryptex)} if os.path.exists(cryptex) else {"state": "absent"}
+    return label
+
+
 class PreparerCase(unittest.TestCase):
     """Resolved temporary directory, process guard and fixture builders."""
+
+    PAYLOADS = {"validator/package/package.json": b'{"version":"synthetic-validator"}\n',
+                "indexer-view/three/package.json": b'{"version":"synthetic-three"}\n'}
+    PREFIX = "c195/receiving/"
 
     def setUp(self):
         self.stack = contextlib.ExitStack()
@@ -170,6 +228,9 @@ class PreparerCase(unittest.TestCase):
             if hasattr(os, name):
                 self.process_guards.append(self.stack.enter_context(
                     patch.object(os, name, side_effect=AssertionError("process start forbidden: " + name))))
+        if not DARWIN:
+            # Simulated: no SystemVersion.plist exists off Darwin.
+            self.stack.enter_context(patch.object(observation, "read_os_identity", return_value=SIMULATED_IDENTITY))
 
     def tearDown(self):
         for guard in self.process_guards:
@@ -199,6 +260,60 @@ class PreparerCase(unittest.TestCase):
         return SimpleNamespace(plan=plan, pins=self.pins(node=archive["sha256"]), raw=raw, inventory=inventory,
                                executable=executable, destination=Path(plan["destination"]),
                                report=Path(plan["report"]), archive=archive_path)
+
+    def dependency_entries(self, mutation=None):
+        items = [entry("directory", "c195", 0o755), entry("directory", "c195/receiving", 0o755)]
+        for index, (name, data) in enumerate(self.PAYLOADS.items()):
+            item = entry("file", self.PREFIX + name, 0o644, data)
+            if index == 0:
+                if mutation == "absolute":
+                    item["name"] = "/outside"
+                elif mutation == "traversal":
+                    item["name"] = "c195/../outside"
+                elif mutation in ("symlink", "hardlink"):
+                    item.update(kind=mutation, data=b"", target="../outside" if mutation == "symlink" else "c195/other.txt")
+                elif mutation in ("fifo", "character-device"):
+                    item.update(kind=mutation, data=b"")
+                elif mutation == "mode":
+                    item["mode"] = 0o777
+            items.append(item)
+            if index == 0 and mutation == "duplicate":
+                items.append(dict(item))
+        items.append(entry("file", "c195/other.txt", 0o644, b"not a target\n"))
+        return items
+
+    def dependency_fixture(self, mutation=None):
+        archive_path = self.path("c195", ".tar.gz")
+        with tarfile.open(archive_path, "w:gz", format=tarfile.PAX_FORMAT) as archive:
+            for item in self.dependency_entries(mutation):
+                info = tarfile.TarInfo(item["name"])
+                info.type, info.mode, info.mtime = TAR_TYPES[item["kind"]], item["mode"], 0
+                if item["kind"] in ("symlink", "hardlink"):
+                    info.linkname = item["target"]
+                if item["kind"] == "file":
+                    info.size = len(item["data"])
+                    archive.addfile(info, io.BytesIO(item["data"]))
+                else:
+                    archive.addfile(info)
+        archive_path.chmod(0o600)
+        files = {name: {"sha256": sha256(data), "size_bytes": len(data), "mode": "0o644"} for name, data in self.PAYLOADS.items()}
+        members = {}
+        for item in self.dependency_entries():
+            if item["kind"] == "directory":
+                members[item["name"]] = {"kind": "directory", "size_bytes": 0, "sha256": None, "mode": "0o755", "target": None}
+            else:
+                target = item["name"][len(self.PREFIX):] if item["name"].startswith(self.PREFIX) else None
+                members[item["name"]] = {"kind": "file", "size_bytes": len(item["data"]), "sha256": sha256(item["data"]),
+                                         "mode": "0o644", "target": target}
+        archive = {"path": str(archive_path), **binding(archive_path)}
+        plan = {"schema": SCHEMA, "contract": CONTRACT, "purpose": "retained-dependencies", "source_root": str(preparer.ROOT),
+                "archive": archive, "destination": str(self.path("dependencies")), "root_mode": "0o755", "files": files,
+                "directories": {"validator": "0o755", "validator/package": "0o755", "indexer-view": "0o755",
+                                "indexer-view/three": "0o755"},
+                "members": members, "node_source": None, "report": str(self.path("report", ".json"))}
+        pins = self.pins(dependencies=archive["sha256"],
+                         files={name: {"sha256": row["sha256"], "size_bytes": row["size_bytes"]} for name, row in files.items()})
+        return SimpleNamespace(plan=plan, pins=pins, destination=Path(plan["destination"]), report=Path(plan["report"]))
 
     def refreeze(self, fixture):
         """Freeze NODE-SOURCE.json again after a plan edit, so that only the edited rule can refuse."""
@@ -841,64 +956,6 @@ class ExistingDestination(PreparerCase):
 class RetainedDependencies(PreparerCase):
     """The C195 reader archive under P05 section 5's rules (MC34)."""
 
-    PAYLOADS = {"validator/package/package.json": b'{"version":"synthetic-validator"}\n',
-                "indexer-view/three/package.json": b'{"version":"synthetic-three"}\n'}
-    PREFIX = "c195/receiving/"
-
-    def dependency_entries(self, mutation=None):
-        items = [entry("directory", "c195", 0o755), entry("directory", "c195/receiving", 0o755)]
-        for index, (name, data) in enumerate(self.PAYLOADS.items()):
-            item = entry("file", self.PREFIX + name, 0o644, data)
-            if index == 0:
-                if mutation == "absolute":
-                    item["name"] = "/outside"
-                elif mutation == "traversal":
-                    item["name"] = "c195/../outside"
-                elif mutation in ("symlink", "hardlink"):
-                    item.update(kind=mutation, data=b"", target="../outside" if mutation == "symlink" else "c195/other.txt")
-                elif mutation in ("fifo", "character-device"):
-                    item.update(kind=mutation, data=b"")
-                elif mutation == "mode":
-                    item["mode"] = 0o777
-            items.append(item)
-            if index == 0 and mutation == "duplicate":
-                items.append(dict(item))
-        items.append(entry("file", "c195/other.txt", 0o644, b"not a target\n"))
-        return items
-
-    def dependency_fixture(self, mutation=None):
-        archive_path = self.path("c195", ".tar.gz")
-        with tarfile.open(archive_path, "w:gz", format=tarfile.PAX_FORMAT) as archive:
-            for item in self.dependency_entries(mutation):
-                info = tarfile.TarInfo(item["name"])
-                info.type, info.mode, info.mtime = TAR_TYPES[item["kind"]], item["mode"], 0
-                if item["kind"] in ("symlink", "hardlink"):
-                    info.linkname = item["target"]
-                if item["kind"] == "file":
-                    info.size = len(item["data"])
-                    archive.addfile(info, io.BytesIO(item["data"]))
-                else:
-                    archive.addfile(info)
-        archive_path.chmod(0o600)
-        files = {name: {"sha256": sha256(data), "size_bytes": len(data), "mode": "0o644"} for name, data in self.PAYLOADS.items()}
-        members = {}
-        for item in self.dependency_entries():
-            if item["kind"] == "directory":
-                members[item["name"]] = {"kind": "directory", "size_bytes": 0, "sha256": None, "mode": "0o755", "target": None}
-            else:
-                target = item["name"][len(self.PREFIX):] if item["name"].startswith(self.PREFIX) else None
-                members[item["name"]] = {"kind": "file", "size_bytes": len(item["data"]), "sha256": sha256(item["data"]),
-                                         "mode": "0o644", "target": target}
-        archive = {"path": str(archive_path), **binding(archive_path)}
-        plan = {"schema": SCHEMA, "contract": CONTRACT, "purpose": "retained-dependencies", "source_root": str(preparer.ROOT),
-                "archive": archive, "destination": str(self.path("dependencies")), "root_mode": "0o755", "files": files,
-                "directories": {"validator": "0o755", "validator/package": "0o755", "indexer-view": "0o755",
-                                "indexer-view/three": "0o755"},
-                "members": members, "node_source": None, "report": str(self.path("report", ".json"))}
-        pins = self.pins(dependencies=archive["sha256"],
-                         files={name: {"sha256": row["sha256"], "size_bytes": row["size_bytes"]} for name, row in files.items()})
-        return SimpleNamespace(plan=plan, pins=pins, destination=Path(plan["destination"]), report=Path(plan["report"]))
-
     def test_MC34_unsafe_entries_refuse_before_extraction(self):
         for mutation in ("absolute", "traversal", "duplicate", "symlink", "hardlink", "fifo", "character-device", "mode"):
             with self.subTest(mutation=mutation):
@@ -1092,6 +1149,194 @@ class VersionSeparation(PreparerCase):
             with self.subTest(value=type(value).__name__):
                 self.refuses(lambda: preparer.install_plan_v02(fixture.plan, apply=False, synthetic_pins=value),
                              reason="only SyntheticPins")
+
+
+class ResultShapes(PreparerCase):
+    """Decisions D-11, D-03, D-12, D-04 and D-02: closed shapes, revision, amendments and labels."""
+
+    def assert_shape(self, record, keys):
+        self.assertEqual(set(record), keys)
+        self.assertEqual((record["schema"], record["contract"], record["design_revision"], record["amendments"]),
+                         (RESULT, CONTRACT, DESIGN_REVISION, AMENDMENTS))
+        self.assertEqual(record["execution_counts"], ZERO_STARTS)
+        self.assertIsInstance(record["operations"], list)
+        labels = record["labels"]
+        self.assertEqual(set(labels), LABEL_KEYS)
+        self.assertEqual({key: labels[key] for key in ("executor", "contract", "profile", "design_revision", "amendments")},
+                         {"executor": "macos-arm64-local", "contract": CONTRACT, "profile": PROFILE,
+                          "design_revision": DESIGN_REVISION, "amendments": AMENDMENTS})
+        if record["pins"] is not None:
+            self.assertEqual(set(record["pins"]), {"origin", "node_archive_sha256", "dependency_archive_sha256"})
+        if record["preparer_source"] is not None:
+            self.assertEqual(set(record["preparer_source"]), {"root", "files_at_start"})
+            self.assertEqual(set(record["preparer_source"]["files_at_start"]), PREPARER_FILES)
+        if "error" in record:
+            self.assertEqual(set(record["error"]), {"code", "reason", "state", "cause"})
+        return record
+
+    def preflight(self, fixture):
+        return json.loads(fixture.report.with_name(fixture.report.name + ".preflight.json").read_bytes())
+
+    def test_D11_plan_keys_are_closed_and_equal_the_receipt_rule(self):
+        self.assertEqual(set(preparer.PLAN_KEYS_V02), PLAN_KEYS)
+        self.assertEqual(set(observation.INSTALL_PLAN_KEYS), PLAN_KEYS)
+        for label, mutate in (("extra key", lambda plan: plan.update(extra=None)),
+                              ("missing key", lambda plan: plan.pop("node_source"))):
+            with self.subTest(case=label):
+                fixture = self.node_fixture()
+                mutate(fixture.plan)
+                self.refuses(lambda: self.install(fixture, apply=False), reason="missing or unknown members")
+
+    def test_D11_result_keys_are_closed_by_state_without_publication(self):
+        """Dry run, reuse, and refusals before and after the report path is bound; no renamex_np."""
+        self.assertEqual(RECEIPT_KEYS, W3_RESULT_KEYS | {"design_revision", "amendments"})
+        self.assertTrue(W3_RESULT_KEYS <= set(observation.INSTALL_RESULT_KEYS) <= RECEIPT_KEYS)
+        with self.subTest(state="DRY_RUN_READY"):
+            fixture = self.node_fixture()
+            dry = self.assert_shape(self.install(fixture, apply=False), RECEIPT_KEYS)
+            self.assertEqual((dry["state"], dry["passed"], dry["before"]), ("DRY_RUN_READY", True, {"state": "absent"}))
+            self.assertEqual(set(dry["archive"]), ARCHIVE_KEYS | {"executable"})
+            self.assertEqual(set(dry["archive"]["executable"]), {"member", "path", "sha256", "size_bytes", "mode", "macho"})
+            self.assertEqual(set(dry["archive"]["executable"]["macho"]), {"magic", "cputype", "cpusubtype", "filetype"})
+            self.assertEqual(self.preflight(fixture), {**dry, "state": "PREFLIGHT_RECORDED", "passed": False})
+        with self.subTest(state="ALREADY_PRESENT_EXACT"):
+            fixture = self.node_fixture()
+            self.exact_tree(fixture)
+            reused = self.assert_shape(self.install(fixture), RECEIPT_KEYS)
+            self.assertEqual((reused["state"], reused["before"]), ("ALREADY_PRESENT_EXACT",
+                                                                    {"state": "complete_exact", "files": 2, "directories": 1}))
+            self.assertEqual(json.loads(fixture.report.read_bytes()), reused)
+        with self.subTest(state="DRY_RUN_READY, retained-dependencies"):
+            fixture = self.dependency_fixture()
+            dry = self.assert_shape(self.install(fixture, apply=False), RECEIPT_KEYS)
+            self.assertEqual(set(dry["archive"]), ARCHIVE_KEYS)
+        with self.subTest(state="REJECTED before the report path"):
+            fixture = self.node_fixture()
+            fixture.plan["contract"] = "ontokin.current-host-readback/0.1.0"
+            record = self.assert_shape(self.refuses(lambda: self.install(fixture)).refusal_record, RESULT_BASE | {"error"})
+            self.assertEqual((record["purpose"], record["labels"]["pins"]), (None, None))
+            self.assertFalse(fixture.report.exists())
+        with self.subTest(state="REJECTED after the archive pass"):
+            fixture = self.node_fixture()
+            self.exact_tree(fixture)
+            (fixture.destination / "bin/node").write_bytes(MACHO + b"changed")
+            record = self.assert_shape(self.refuses(lambda: self.install(fixture)).refusal_record,
+                                       RESULT_BASE | {"archive", "error"})
+            self.assertEqual(json.loads(fixture.report.read_bytes()), record)
+        with self.subTest(state="REJECTED by the seam"):
+            fixture = self.node_fixture()
+            record = self.refuses(lambda: preparer.install_plan_v02(fixture.plan, synthetic_pins="pins")).refusal_record
+            self.assert_shape(record, RESULT_BASE | {"error"})
+            self.assertEqual((record["pins"], record["preparer_source"], record["labels"]["os"]), (None, None, None))
+
+    def test_D11_result_keys_are_closed_by_state_with_publication(self):
+        """Real on Darwin: an install, a conflict (EEXIST), and a simulated lost reply after a real call."""
+        if not DARWIN:
+            return self.assert_platform_refusal(self.node_fixture())
+        with self.subTest(state="INSTALLED_EXACT"):
+            fixture = self.node_fixture()
+            installed = self.assert_shape(self.install(fixture), INSTALLED_KEYS)
+            self.assertEqual(set(installed["after"]), {"state", "files", "directories"})
+            self.assertEqual(set(installed["publication"]), {"call", "library", "flag", "flag_value"})
+            self.assertEqual(json.loads(fixture.report.read_bytes()), installed)
+            preflight = self.preflight(fixture)
+            self.assertEqual((set(preflight), preflight["state"], preflight["passed"]),
+                             (RECEIPT_KEYS, "PREFLIGHT_RECORDED", False))
+            intent = json.loads(fixture.report.with_name(fixture.report.name + ".publication.json").read_bytes())
+            self.assertEqual(set(intent), {"contract", "design_revision", "amendments", "source", "destination",
+                                           "owned_stage", "call", "mode", "state"})
+            self.assertEqual((intent["contract"], intent["design_revision"], intent["amendments"], intent["state"]),
+                             (CONTRACT, DESIGN_REVISION, AMENDMENTS, "INTENT_RECORDED"))
+        real = preparer.rename_exclusive
+        def conflict(source, target):
+            target.mkdir()
+            (target / "other-writer").write_bytes(b"another writer")
+            return real(source, target)
+        def lost_reply(source, target):
+            real(source, target)
+            raise OSError(errno.EIO, "simulated lost reply")
+        for state, publish, after in (("REJECTED", conflict, "REFUSED"), ("UNKNOWN", lost_reply, "complete_exact")):
+            with self.subTest(state=state + " at publication"):
+                fixture = self.node_fixture()
+                with patch.object(preparer, "rename_exclusive", side_effect=publish):
+                    record = self.refuses(lambda: self.install(fixture), state=state).refusal_record
+                self.assert_shape(record, PUBLICATION_FAILURE_KEYS)
+                self.assertEqual(set(record["publication_error"]), {"errno", "name", "reason"})
+                self.assertEqual(record["destination_after_error"]["state"], after)
+                self.assertEqual(set(record["stage_after_error"]), {"state"})
+                self.assertEqual(json.loads(fixture.report.read_bytes()), record)
+
+    def test_D12_every_written_result_carries_the_revision_and_amendments(self):
+        """The CLI's digest-mismatch record too; it reads no OS identity."""
+        fixture = self.node_fixture()
+        path = self.path("plan", ".json")
+        path.write_bytes(canonical(fixture.plan))
+        path.chmod(0o600)
+        stderr = io.StringIO()
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(stderr):
+            self.assertEqual(preparer.main(["--plan", str(path), "--plan-sha256", "5" * 64]), 1)
+        record = self.assert_shape(json.loads(stderr.getvalue())["refusal_record"], RESULT_BASE | {"error"})
+        self.assertIsNone(record["labels"]["os"])
+
+    def test_D12_node_source_keeps_the_plan_4_2_keys(self):
+        """NODE-SOURCE.json is not a result: its keys stay those of plan section 4.2, as the observer checks them."""
+        fixture = self.node_fixture()
+        self.assertEqual(set(json.loads(preparer.node_source_bytes_v02(fixture.plan))), NODE_SOURCE_KEYS)
+        self.assertEqual(set(observation.NODE_SOURCE_KEYS), NODE_SOURCE_KEYS)
+
+    def test_D04_labels_carry_identity_pins_and_os_identity_only(self):
+        """The real reader on Darwin, checked against an independent plistlib read; no Python or Git label."""
+        node = self.node_fixture()
+        labels = self.install(node, apply=False)["labels"]
+        self.assertEqual(labels["pins"], {"origin": "synthetic-test-seam", "node_archive_sha256": node.plan["archive"]["sha256"],
+                                          "node_executable": node.plan["files"]["bin/node"]})
+        self.assertEqual(labels["os"], expected_os_label())
+        self.assertEqual(set(labels["os"]), {"product_version", "product_build_version", "product_version_extra", "cryptex"})
+        self.assertEqual([key for key in labels if "python" in key or "git" in key or "inventory" in key], [])
+        dependencies = self.dependency_fixture()
+        labels = self.install(dependencies, apply=False)["labels"]
+        self.assertEqual(labels["pins"], {"origin": "synthetic-test-seam",
+                                          "dependency_archive_sha256": dependencies.plan["archive"]["sha256"]})
+        self.assertEqual(labels["os"], expected_os_label())
+
+    def test_D04_unreadable_os_identity_refuses_before_the_archive_is_read(self):
+        """Simulated: the observer's read_os_identity raises its own refusal."""
+        fixture = self.node_fixture()
+        def unreadable(**options):
+            raise observation.ObservationError("OS", "simulated unreadable OS identity")
+        with patch.object(observation, "read_os_identity", side_effect=unreadable), self.spies() as spy:
+            error = self.refuses(lambda: self.install(fixture), reason="The OS identity is unreadable")
+        self.assertEqual(error.cause["code"], "CHO-OS")
+        self.assertIsNone(error.refusal_record["labels"]["os"])
+        spy.opened.assert_not_called()
+        spy.staged.assert_not_called()
+        self.assert_nothing_staged(fixture)
+
+    def test_D02_failed_signature_check_is_recorded_not_refused(self):
+        """Real on Darwin: the install publishes NODE-SOURCE.json with the recorded failed status."""
+        signature = {"status": "failed", "detail": "Synthetic development record: the release-key check failed."}
+        fixture = self.node_fixture(signature=signature)
+        self.assertEqual(self.install(fixture, apply=False)["state"], "DRY_RUN_READY")
+        self.assertEqual(json.loads(preparer.node_source_bytes_v02(fixture.plan))["signature_check"], signature)
+        if DARWIN:
+            self.assertEqual(preparer.install_plan_v02(self.renew(fixture), apply=True,
+                                                       synthetic_pins=fixture.pins)["state"], "INSTALLED_EXACT")
+            self.assertEqual(json.loads((fixture.destination / "NODE-SOURCE.json").read_bytes())["signature_check"],
+                             signature)
+
+    def test_report_write_failure_is_unknown_and_never_passed(self):
+        """Simulated: the final report write fails after a passing dry run."""
+        fixture = self.node_fixture()
+        real = provider._write_new
+        def failing(path, value):
+            if Path(path) == fixture.report:
+                raise provider.CurrentHostBindingError("EVIDENCE", "simulated report write failure", state="UNKNOWN")
+            return real(path, value)
+        with patch.object(provider, "_write_new", side_effect=failing):
+            error = self.refuses(lambda: self.install(fixture, apply=False), code="CH-EVIDENCE", state="UNKNOWN")
+        record = self.assert_shape(error.refusal_record, RECEIPT_KEYS | {"error", "report_error"})
+        self.assertEqual((record["passed"], record["state"], record["error"]["code"]), (False, "UNKNOWN", "CH-EVIDENCE"))
+        self.assertFalse(fixture.report.exists())
 
 
 if __name__ == "__main__":
