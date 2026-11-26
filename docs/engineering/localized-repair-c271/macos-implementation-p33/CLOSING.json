@@ -1,0 +1,65 @@
+{
+  "schema": "ontokin.c271.p33-closing/1",
+  "task": "C271",
+  "phase": "C271-P33-macos-implementation-mi",
+  "owner": "c271-p33-a99647756bed",
+  "purpose": "The phase's closing record: the push of its outcome records commit, the checks of that commit's tree, the checkpoint comments and the release of ownership. It completes acceptance A9. Git reveals the commit that carries this record; its own push is observed in the final report.",
+  "outcome_records_commit": {
+    "commit": "fee65946e8e8f98290065640d3d5536650f5def4",
+    "tree": "4a1884de46e6ccb0dab258651cbb049d4a84a742",
+    "parent": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0"
+  },
+  "reviewed_candidate": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0",
+  "push_observation": {
+    "command": "git push origin work/c271-missing-import-digest-control (no force), then git ls-remote --heads origin",
+    "observed_at_utc": "2026-11-26T20:04:05Z",
+    "update": "c534e7b7..fee65946, fast-forward",
+    "remote_heads": {
+      "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "refs/heads/work/c271-missing-import-digest-control": "fee65946e8e8f98290065640d3d5536650f5def4",
+      "refs/heads/work/c271-p29-trd-record": "880933a40aac70f583c97373133e43a4e8244491 (not created or touched by this phase)"
+    }
+  },
+  "checks_of_final_tree": {
+    "started_at_utc": "2026-11-26T20:04:51Z",
+    "ended_at_utc": "2026-11-26T20:04:53Z",
+    "tree": "the clean checkout at fee65946",
+    "workflow": {
+      "result": "passed",
+      "observed": "Workflow structure passed (13 tasks).",
+      "output_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+    },
+    "documentation": {
+      "result": "passed",
+      "documents": 1720,
+      "local_links": 6871,
+      "failures": 0,
+      "output_sha256": "e7ddde756254e9bce310caa8a88db1bca57e0ae33385e158ddaceafd10915295"
+    },
+    "whitespace": "passed (git diff --check 1c2f25ba HEAD)",
+    "outcome_record_present": "OUTCOME.json is in the committed tree, with the obligations for later gates (review 002, I-09)"
+  },
+  "checkpoint_comments": {
+    "pull_request_274": {
+      "id": 7202266182,
+      "created_at_utc": "2026-11-26T20:04:32Z",
+      "url": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7202266182"
+    },
+    "issue_273": {
+      "id": 7202266578,
+      "created_at_utc": "2026-11-26T20:04:33Z",
+      "url": "https://github.com/Omegapy/OntoKin/issues/273#issuecomment-7202266578"
+    },
+    "body_sha256": "54dbbbc66d4941e3d9e2c3ba49da38255a03e8c5884a3249aa4cf54d8536db84",
+    "readback": "both posted bodies read back byte-identical to the body"
+  },
+  "github_state_after": {
+    "pull_request_274": "open, draft, head fee65946",
+    "issue_273": "open",
+    "observed_at_utc": "2026-11-26T20:04:51Z"
+  },
+  "processes": "no process started by the phase remains; the last listing found no Python child",
+  "ownership": "Owner c271-p33-a99647756bed is released with the push of this record. It makes no further write. The next phase declares its own owner.",
+  "unknown_operations": [],
+  "next_action": "Gate MP of the adopted contract: the reviewed preparation of the Node runtime, the Python verification packages and the reader tree. It is a separate phase that needs the owner's selection, and the owner's explicit approval of the download of node-v24.22.1-darwin-arm64.tar.gz (about 53 MB) from nodejs.org."
+}
