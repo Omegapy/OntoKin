@@ -4,6 +4,8 @@
 The default profile runs the seven Python reference checks. --full also builds
 and verifies the visual examples with already installed Node tools and Chromium.
 --force-agent adds the pinned Agent/0.5 tests and independent source workflow audit.
+Without a readback selection a run is ordinary: every stage runs and no readback method is
+qualified. A qualifying run gives both selection arguments and binds its Git executable.
 Reports certify only the checks executed here, not a complete release gate.
 """
 from __future__ import annotations
@@ -11,6 +13,7 @@ from __future__ import annotations
 import argparse
 from dataclasses import dataclass
 from datetime import datetime, timezone
+import errno
 import hashlib
 import importlib
 from importlib import metadata
@@ -34,6 +37,12 @@ from tools.storage_identity import prepare_offline_workspace
 
 READBACK_CONFIG_ENV = "ONTOKIN_CURRENT_HOST_READBACK_CONFIG"
 READBACK_DIGEST_ENV = "ONTOKIN_CURRENT_HOST_READBACK_CONFIG_SHA256"
+# Names removed from a qualifying run's unit process (S9); "DYLD_*" stands for every name with that prefix.
+UNIT_REMOVED_ENVIRONMENT = ("PYTHONPATH", "PYTHONHOME", "PYTHONSTARTUP", "PYTHONINSPECT", "PYTHONBREAKPOINT",
+                            "PYTHONUSERBASE", "PYTHONPYCACHEPREFIX", "LD_PRELOAD", "LD_LIBRARY_PATH",
+                            "NODE_OPTIONS", "NODE_PATH", "DYLD_*", "__PYVENV_LAUNCHER__", "PYTHONEXECUTABLE")
+# On macOS this path is a dispatcher to another Git, so it is never bound (S9).
+GIT_DISPATCHER = "/usr/bin/git"
 
 SOURCE_DIRS = ("ontokin", "tests", "tools", "docs", "examples", "fixtures", "schemas", "prototypes", "packaging", ".github", ".agents", "TRDs")
 ROOT_FILES = ("pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "CHATGPT-START-HERE.md", "ROLE.md",
@@ -133,8 +142,134 @@ def git_environment(root: Path) -> dict[str, str]:
     return environment
 
 
+class GitBindingError(ValueError):
+    """A Git executable that the driver refuses to bind, or no longer matches its binding."""
+
+
+# This process's one Git executable: set by bind_git, or else resolved once on PATH.
+_GIT_STATE: dict | None = None
+
+
+def _checked_git_path(path) -> tuple[str, os.stat_result]:
+    """An absolute canonical regular file other than the dispatcher's path, not followed if linked."""
+    text = os.fspath(path) if isinstance(path, (str, os.PathLike)) else None
+    if type(text) is not str or not os.path.isabs(text):
+        raise GitBindingError(f"A bound Git executable needs an absolute path: {path!r}")
+    if text == GIT_DISPATCHER:
+        raise GitBindingError(GIT_DISPATCHER + " is the macOS dispatcher, never the bound Git implementation.")
+    try:
+        info = os.lstat(text)
+    except OSError as error:
+        raise GitBindingError("Cannot read the bound Git executable: " + text) from error
+    if stat.S_ISLNK(info.st_mode):
+        raise GitBindingError("The bound Git path is a symbolic link: " + text)
+    if not stat.S_ISREG(info.st_mode):
+        raise GitBindingError("The bound Git path is not a regular file: " + text)
+    if os.path.normpath(text) != text or os.path.realpath(text) != text:
+        raise GitBindingError("The bound Git path is not canonical: " + text)
+    return text, info
+
+
+def _bound_git_sha256(path: str) -> str:
+    """Hash the named regular file without following a final link; refuse a change during the read."""
+    try:
+        descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0))
+    except OSError as error:
+        raise GitBindingError("Cannot read the bound Git executable: " + path) from error
+    try:
+        before = os.fstat(descriptor)
+        if not stat.S_ISREG(before.st_mode):
+            raise GitBindingError("The bound Git path is not a regular file: " + path)
+        digest = hashlib.sha256()
+        while block := os.read(descriptor, 1024 * 1024):
+            digest.update(block)
+        after, named = os.fstat(descriptor), os.lstat(path)
+        fields = ("st_dev", "st_ino", "st_size", "st_mtime_ns")
+        if any(getattr(before, key) != getattr(after, key) or getattr(after, key) != getattr(named, key)
+               for key in fields):
+            raise GitBindingError("The bound Git executable changed while it was read: " + path)
+        return digest.hexdigest()
+    except OSError as error:
+        raise GitBindingError("Cannot read the bound Git executable: " + path) from error
+    finally:
+        os.close(descriptor)
+
+
+def bind_git(path, sha256: str) -> dict:
+    """Bind the Git executable that every later driver Git start in this process uses (S9).
+
+    The path must be an absolute canonical regular file, not a symbolic link and not the
+    /usr/bin/git dispatcher: neither its path, nor its file under another name, nor a copy of
+    its bytes. sha256 is the lowercase hexadecimal digest it must match. A second binding to
+    another executable is refused; binding the same executable again changes nothing.
+    """
+    global _GIT_STATE
+    if type(sha256) is not str or re.fullmatch(r"[0-9a-f]{64}", sha256) is None:
+        raise GitBindingError("A Git binding needs a lowercase SHA-256 digest.")
+    text, info = _checked_git_path(path)
+    try:
+        dispatcher = os.stat(GIT_DISPATCHER)
+    except OSError:
+        dispatcher = None
+    if dispatcher is not None and (dispatcher.st_dev, dispatcher.st_ino) == (info.st_dev, info.st_ino):
+        raise GitBindingError("The bound Git path names the " + GIT_DISPATCHER + " dispatcher's file: " + text)
+    if _bound_git_sha256(text) != sha256:
+        raise GitBindingError("The Git executable differs from its approved SHA-256: " + text)
+    if dispatcher is not None:
+        try:
+            dispatcher_sha256 = file_identity(Path(GIT_DISPATCHER))["sha256"].removeprefix("sha256:")
+        except OSError:
+            dispatcher_sha256 = None
+        if dispatcher_sha256 == sha256:
+            raise GitBindingError("The bound Git executable has the " + GIT_DISPATCHER + " dispatcher's bytes: " + text)
+    if _GIT_STATE is not None and _GIT_STATE["bound"] and (_GIT_STATE["path"], _GIT_STATE["sha256"]) != (text, sha256):
+        raise GitBindingError("This process already bound another Git executable: " + _GIT_STATE["path"])
+    _GIT_STATE = {"path": text, "sha256": sha256, "bound": True, "source": "selection"}
+    return dict(_GIT_STATE)
+
+
+def _resolve_path_git() -> dict:
+    """An unbound run's Git: the PATH search that a start by name would make, as an absolute path."""
+    found = shutil.which("git")
+    if found is None:
+        raise FileNotFoundError(errno.ENOENT, "No git executable was found on PATH", "git")
+    path = os.path.abspath(found)
+    try:
+        sha256 = file_identity(Path(path))["sha256"].removeprefix("sha256:")
+    except OSError:
+        sha256 = None
+    return {"path": path, "sha256": sha256, "bound": False, "source": "PATH"}
+
+
+def git_executable() -> str:
+    """The absolute Git executable for a driver Git start (S9).
+
+    A bound executable is checked again, path and SHA-256, at every call; a failed check raises
+    GitBindingError and never falls back to PATH. Without a binding, git is resolved once on
+    PATH to an absolute path, which the run summary records as unbound.
+    """
+    global _GIT_STATE
+    state = _GIT_STATE
+    if state is None:
+        state = _GIT_STATE = _resolve_path_git()
+    if state["bound"]:
+        text, _ = _checked_git_path(state["path"])
+        if _bound_git_sha256(text) != state["sha256"]:
+            raise GitBindingError("The bound Git executable no longer matches its approved SHA-256: " + text)
+    return state["path"]
+
+
+def _git_binding_record() -> dict:
+    """The run's Git executable as the summary records it; starts no process."""
+    try:
+        git_executable()
+    except FileNotFoundError as error:
+        return {"path": None, "sha256": None, "bound": False, "source": "PATH", "reason": str(error)}
+    return dict(_GIT_STATE)
+
+
 def git_read(root: Path, *args: str, timeout: float = 10) -> str:
-    return subprocess.check_output(["git", "-c", "core.fsmonitor=false", "-C", str(root), *args],
+    return subprocess.check_output([git_executable(), "-c", "core.fsmonitor=false", "-C", str(root), *args],
                                    stderr=subprocess.PIPE, text=True, timeout=timeout,
                                    env=git_environment(root)).rstrip("\n")
 
@@ -421,12 +556,32 @@ def readback_config_identity(path: Path) -> dict:
         os.close(descriptor)
 
 
+def bind_selection_git(config_path: Path, config_sha256: str) -> dict | None:
+    """Bind a qualifying run's Git from its digest-checked selection, before any Git start (S9).
+
+    The facade reads the configuration and its HOST document and starts no Git. It returns
+    {"path", "sha256"} for a 0.2.0 selection, which is bound here, and None for a 0.1.0
+    selection, whose Git stays the PATH Git resolved once. Any failure fails the run closed.
+    """
+    try:
+        from prototypes.static_tray_v01.current_host_readback_v01 import git_binding_from_selection
+        binding = git_binding_from_selection(config_path, config_sha256)
+    except Exception as error:
+        raise GitBindingError("Cannot read the selection's Git binding: " + str(error)) from error
+    if binding is None:
+        return None
+    if type(binding) is not dict or set(binding) != {"path", "sha256"}:
+        raise GitBindingError("The selection's Git binding must hold exactly path and sha256.")
+    return bind_git(binding["path"], binding["sha256"])
+
+
 def prepare_readback_selection(config_path: Path | None, config_sha256: str | None, *,
                                root: Path, output: Path, observation: dict | None = None) -> dict:
-    """Require the caller's independently approved selection before isolation."""
+    """Require a qualifying run's independently approved selection, and bind its Git, before isolation."""
     if config_path is None or config_sha256 is None:
-        raise ValueError("The unit stage requires --readback-config ABSOLUTE_FILE and "
-                         "--readback-config-sha256 EXPECTED_DIGEST from the reviewed execution plan.")
+        raise ValueError("Partial readback selection: a qualifying run requires --readback-config ABSOLUTE_FILE and "
+                         "--readback-config-sha256 EXPECTED_DIGEST from the reviewed execution plan, "
+                         "and an ordinary run gives neither.")
     if not config_path.is_absolute() or re.fullmatch(r"[0-9a-f]{64}", config_sha256) is None:
         raise ValueError("Readback selection requires an absolute configuration path and a lowercase SHA-256 digest.")
     actual = readback_config_identity(config_path)
@@ -434,6 +589,8 @@ def prepare_readback_selection(config_path: Path | None, config_sha256: str | No
         observation["observed_identity"] = actual
     if actual["sha256"] != "sha256:" + config_sha256:
         raise ValueError("Readback configuration differs from the independently supplied expected digest.")
+    # S9: bind Git before the provider's validation, which makes the run's first Git start.
+    bind_selection_git(config_path, config_sha256)
     from prototypes.static_tray_v01.current_host_readback_v01 import validate_selection
     config = validate_selection(config_path, config_sha256, root)
     parent = Path(config["evidence_root"])
@@ -455,6 +612,17 @@ def bind_readback_workspace(selection: dict, *, root: Path, workspace: Path, out
     if readback_config_identity(Path(derived["config_path"]))["sha256"] != "sha256:" + derived["config_sha256"]:
         raise ValueError("The derived readback configuration no longer matches its recorded identity.")
     return derived
+
+
+def unit_environment_removals(environment: dict[str, str]) -> list[str]:
+    """The names of UNIT_REMOVED_ENVIRONMENT present in environment, in the list's order (S9)."""
+    removed = []
+    for entry in UNIT_REMOVED_ENVIRONMENT:
+        if entry.endswith("*"):
+            removed.extend(sorted(name for name in environment if name.startswith(entry[:-1])))
+        elif entry in environment:
+            removed.append(entry)
+    return removed
 
 
 def execute_step(step: Step, workspace: Path, output: Path, previous: dict, timeout: float,
@@ -486,13 +654,9 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
                         raise ValueError("Derived readback configuration changed before the unit process.")
                     environment[READBACK_CONFIG_ENV] = str(config)
                     environment[READBACK_DIGEST_ENV] = expected
-                    removed = []
-                    for name in ("PYTHONPATH", "PYTHONHOME", "PYTHONSTARTUP", "PYTHONINSPECT",
-                                 "PYTHONBREAKPOINT", "PYTHONUSERBASE", "PYTHONPYCACHEPREFIX",
-                                 "LD_PRELOAD", "LD_LIBRARY_PATH", "NODE_OPTIONS", "NODE_PATH"):
-                        if name in environment:
-                            removed.append(name)
-                            environment.pop(name)
+                    removed = unit_environment_removals(environment)
+                    for name in removed:
+                        environment.pop(name)
                     environment["PYTHONNOUSERSITE"] = "1"
                     record["removed_injection_environment_names"] = removed
                     record["environment_overrides"].update({READBACK_CONFIG_ENV: str(config),
@@ -562,7 +726,8 @@ def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bo
                "started_at": utc_now(), "status": "running", "source_root": str(root),
                "environment": {"python": sys.version, "python_executable": sys.executable,
                                "platform": platform.platform(), "architecture": platform.machine()},
-               "git": git_metadata(root), "steps": [], "release_certified": False,
+               # Read only after any Git binding of a qualifying selection (S9).
+               "git": None, "steps": [], "release_certified": False,
                "full_product_conformance_certified": False, "remote_checks_executed": False,
                "limits": ["This run checks one installed Python version; it is not the three-version matrix.",
                           "Pending external conformance attestations remain pending, including after full visual checks.",
@@ -574,14 +739,23 @@ def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bo
         plan = build_plan(output / "workspace", output, full, force_agent=force_agent)
         summary["planned_steps"] = [step.id for step in plan]
         selection, derived = None, None
-        if any(step.id == "unit-tests" for step in plan) or readback_config is not None or readback_config_sha256 is not None:
+        if readback_config is None and readback_config_sha256 is None:
+            # S8: an ordinary run proceeds with every stage and passes no selection, so the readback
+            # class fails visibly at setup. It is never evidence for the readback methods.
+            summary["readback_selection"] = {"status": "absent", "run_kind": "ordinary"}
+        else:
+            # Both arguments make a qualifying run; exactly one fails preparation.
+            qualifying = readback_config is not None and readback_config_sha256 is not None
             summary["readback_selection"] = {"status": "preparation_pending",
+                **({"run_kind": "qualifying"} if qualifying else {}),
                 "config_path": str(readback_config) if readback_config is not None else None,
                 "expected_config_sha256": readback_config_sha256,
                 "approval_source": "explicit caller argument from independently reviewed execution plan"}
             selection = prepare_readback_selection(readback_config, readback_config_sha256, root=root, output=output,
                                                    observation=summary["readback_selection"])
             summary["readback_selection"].update(status="original_verified", **selection)
+        summary["git_binding"] = _git_binding_record()
+        summary["git"] = git_metadata(root)
         before = inventory(root)
         write_json(output / "source-before.json", before)
         summary["source_inventory"] = {"path": "source-before.json", **file_identity(output / "source-before.json"),
@@ -640,7 +814,7 @@ def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bo
         exit_code = 130
     except (OSError, ValueError, RuntimeError, ImportError, subprocess.SubprocessError) as error:
         summary.update(status="failed", error=str(error))
-        if "readback_selection" in summary:
+        if summary.get("readback_selection", {}).get("status", "absent") != "absent":
             summary["readback_selection"]["preparation_or_execution_error"] = str(error)
     finally:
         summary.setdefault("not_executed_steps", [name for name in summary.get("planned_steps", [])
@@ -662,7 +836,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--list", "--dry-run", dest="list_only", action="store_true", help="Print commands without running checks or writing files")
     parser.add_argument("--timeout", type=float, default=900, help="Maximum seconds per command (default: 900)")
     parser.add_argument("--readback-config", type=Path,
-                        help="Absolute current-host readback configuration from the reviewed execution plan")
+                        help="Absolute current-host readback configuration from the reviewed execution plan; "
+                             "a qualifying run gives both selection arguments, an ordinary run neither")
     parser.add_argument("--readback-config-sha256",
                         help="Independently approved SHA-256 of the selected readback configuration")
     args = parser.parse_args(argv)

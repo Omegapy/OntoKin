@@ -1,8 +1,10 @@
 """Three synthetic Node readback controls; these are not native qualification.
 
 The complete cohort starts three read-only Node checkers plus two dependency
-inspection commands (Node --version and ldd). It starts no Blender, exporter,
-receiving Blender process, lifecycle stub, browser or renderer.
+inspection commands, which depend on the selected contract: Node --version and
+ldd under 0.1.0 on Linux x86-64, and Node --version and Git --version under
+0.2.0 on macOS arm64. It starts no Blender, exporter, receiving Blender process,
+lifecycle stub, browser or renderer.
 """
 from __future__ import annotations
 
