@@ -203,6 +203,11 @@ def descriptor(path):
 
 
 REMOVED = object()
+REMOVED_VALUE = object()
+REVISION = {"contract": observation.CONTRACT, "design_revision": 4, "amendments": ["P33-AMENDMENT-001"]}
+OS_LABEL = {"product_version": "26.6.2", "product_build_version": "25G83", "product_version_extra": None,
+            "cryptex": {"state": "present", "product_version": "26.6.2", "product_build_version": "25G83",
+                        "product_version_extra": None}}
 PACKAGES = (("attrs", "26.1.0", "attrs", "attr"), ("jsonschema", "4.26.0", "jsonschema", "jsonschema"),
             ("jsonschema-specifications", "2025.9.1", "jsonschema_specifications", "jsonschema_specifications"),
             ("referencing", "0.37.0", "referencing", "referencing"), ("rpds-py", "2026.5.1", "rpds_py", "rpds"),
@@ -518,19 +523,32 @@ class Workspace:
                 "node_source": node_source, "report": result_path, **(plan_changes or {})}
         plan_path = write("%s/%02d-%s-install-plan.json" % (self.receipts, self.counter, name), canonical(plan))
         member_bytes = json.dumps(members, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
-        result = {"schema": observation.INSTALL_RESULT_SCHEMA, "contract": observation.CONTRACT, "purpose": purpose,
+        revision = {"contract": observation.CONTRACT, "design_revision": 4, "amendments": ["P33-AMENDMENT-001"]}
+        pins = ({"origin": "adopted-contract", "node_archive_sha256": observation.NODE_ARCHIVE_SHA256,
+                 "node_executable": files["bin/node"]} if purpose == "selected-node" else
+                {"origin": "adopted-contract", "dependency_archive_sha256": observation.DEPENDENCY_ARCHIVE_SHA256})
+        summary = {"sha256": binding(archive_file)["sha256"], "size_bytes": binding(archive_file)["size_bytes"],
+                   "members": len(members), "expanded_bytes": sum(row["size_bytes"] for row in members.values()),
+                   "symlinks": sum(row["kind"] == "symlink" for row in members.values()),
+                   "member_inventory_sha256": hashlib.sha256(member_bytes).hexdigest(), "extracted_members": 1}
+        if purpose == "selected-node":
+            summary["executable"] = {"member": observation.NODE_MEMBER, "path": "bin/node", **files["bin/node"],
+                                     "macho": {"magic": "0xfeedfacf", "cputype": "0x0100000c", "cpusubtype": "0x00000000",
+                                               "filetype": "MH_EXECUTE"}}
+        result = {"schema": observation.INSTALL_RESULT_SCHEMA, **revision, "purpose": purpose,
                   "passed": True, "state": "INSTALLED_EXACT", "apply_requested": True,
-                  "execution_counts": {"node": 0, "ldd": 0, "checkers": 0}, "operations": [],
+                  "execution_counts": {"node": 0, "ldd": 0, "checkers": 0},
+                  "operations": [{"operation": "created_owned_stage", "path": destination + ".stage", "device": 1,
+                                  "inode": 2}, {"operation": "removed_owned_stage", "path": destination + ".stage"}],
                   "pins": {"origin": "adopted-contract", "node_archive_sha256": observation.NODE_ARCHIVE_SHA256,
                            "dependency_archive_sha256": observation.DEPENDENCY_ARCHIVE_SHA256},
-                  "labels": {"executor": "macos-arm64-local"}, "preparer_source": {"root": self.source},
-                  "archive": {"sha256": binding(archive_file)["sha256"], "size_bytes": binding(archive_file)["size_bytes"],
-                              "members": len(members), "expanded_bytes": sum(row["size_bytes"] for row in members.values()),
-                              "symlinks": sum(row["kind"] == "symlink" for row in members.values()),
-                              "member_inventory_sha256": hashlib.sha256(member_bytes).hexdigest(),
-                              "extracted_members": 1},
-                  "before": {"state": "absent"}, "after": {"state": "complete_exact"},
-                  "publication": {"call": "renamex_np", "flag": "RENAME_EXCL", "flag_value": 4}}
+                  "labels": {"executor": "macos-arm64-local", **revision, "profile": "darwin-arm64-v1", "pins": pins,
+                             "os": dict(OS_LABEL)},
+                  "preparer_source": {"root": self.source, "files_at_start": {}}, "archive": summary,
+                  "before": {"state": "absent"},
+                  "after": {"state": "complete_exact", "files": files, "directories": directories},
+                  "publication": {"call": "renamex_np", "library": "/usr/lib/libSystem.B.dylib", "flag": "RENAME_EXCL",
+                                  "flag_value": 4}}
         result.update(result_changes)
         result = {key: value for key, value in result.items() if value is not REMOVED}
         write(result_path, canonical(result))
@@ -559,8 +577,14 @@ class Workspace:
         inventory = self.dependency_inventory()
         members = {"receiving/" + name: {"kind": "file", "size_bytes": row["size_bytes"], "sha256": row["sha256"],
                                          "mode": "0o644", "target": name} for name, row in inventory["files"].items()}
+        self.dependency_members = members
+        self.refresh_dependencies()
+
+    def refresh_dependencies(self, plan_changes=None, **result_changes):
+        inventory = self.dependency_inventory()
         self.dependency_install = self.install(self.dependencies, "reader", "retained-dependencies", self.archive,
-                                               inventory["files"], inventory["directories"], members, None)
+                                               inventory["files"], inventory["directories"], self.dependency_members,
+                                               None, plan_changes, **result_changes)
 
     def build_host_files(self):
         write(self.git, "#!/bin/sh\necho 'git version 2.0.0 (synthetic)'\n", 0o755)
@@ -989,6 +1013,21 @@ class OSIdentityTests(RefusalMixin, unittest.TestCase):
                                                 cryptex_path=self.base + "/alias/SystemVersion.plist")
         self.assertEqual(identity["cryptex"]["hops"], [{"path": self.base + "/alias", "target": self.base + "/real"}])
 
+    def test_os_label_state_matches_the_code_and_the_preparer(self):
+        """Correction W3-C3: a present cryptex label carries state "present" beside the three fields."""
+        write(self.cryptex, plistlib.dumps(self.values))
+        label = observation._os_label(observation.read_os_identity(system_path=self.system, cryptex_path=self.cryptex))
+        self.assertEqual(label["cryptex"], {"state": "present", "product_version": "26.6.2",
+                                            "product_build_version": "25G83", "product_version_extra": None})
+        self.assertTrue(observation.check_os_label(label))
+        self.assertTrue(observation.check_os_label(dict(label, cryptex={"state": "absent"})))
+        without_state = {key: value for key, value in label["cryptex"].items() if key != "state"}
+        for value in (dict(label, cryptex=without_state), dict(label, cryptex={"state": "absent", "product_version": "x"}),
+                      dict(label, cryptex={"state": "unknown"}), dict(label, extra=1), None,
+                      dict(label, product_version="")):
+            with self.subTest(value=value):
+                self.assertFalse(observation.check_os_label(value))
+
     def test_identity_refusals(self):
         os.symlink(self.system, self.base + "/linked.plist")
         self.refused("OS", "OS-PATH", observation.read_os_identity, system_path=self.base + "/linked.plist",
@@ -1320,6 +1359,65 @@ class RuntimeTests(RefusalMixin, unittest.TestCase):
         self.ws.write_node_source(value)
         self.refused("RUNTIME", "NODE-SOURCE", self.check, plan)
 
+    def test_receipt_follows_w2_confirmed_shapes(self):
+        """Decisions D-11 to D-13: the result's revision fields, labels, pins, preparer and readbacks."""
+        labels = dict(json.loads(Path(self.ws.runtime_install["result"]["path"]).read_bytes())["labels"])
+        without_state = dict(OS_LABEL, cryptex={key: value for key, value in OS_LABEL["cryptex"].items() if key != "state"})
+        dependency_pins = {"origin": "adopted-contract", "dependency_archive_sha256": observation.DEPENDENCY_ARCHIVE_SHA256}
+        cases = (({"design_revision": REMOVED}, "the closed set lacks design_revision"),
+                 ({"amendments": REMOVED}, "the closed set lacks amendments"),
+                 ({"design_revision": 3}, "another design revision"),
+                 ({"amendments": []}, "no amendment"),
+                 ({"state": "UNKNOWN", "passed": False, "report_error": {"reason": "write failed"},
+                   "error": {"code": "CH-EVIDENCE"}}, "a failed report write (correction C4)"),
+                 ({"passed": False}, "a receipt state without passed true"),
+                 ({"labels": dict(labels, os=REMOVED_VALUE)}, "labels without os"),
+                 ({"labels": dict(labels, os=without_state)}, "an OS label whose cryptex lacks state"),
+                 ({"labels": dict(labels, os=None)}, "an unread OS label"),
+                 ({"labels": dict(labels, pins=dependency_pins)}, "the pins of the other purpose"),
+                 ({"labels": dict(labels, pins=dict(labels["pins"], node_executable={"sha256": "ab" * 32,
+                   "size_bytes": 1, "mode": "0o755"}))}, "another executable pin"),
+                 ({"labels": dict(labels, design_revision=3)}, "labels of another revision"),
+                 ({"labels": dict(labels, run_kind="not applicable")}, "a withdrawn placeholder label"),
+                 ({"preparer_source": None}, "no preparer record"),
+                 ({"preparer_source": {"root": "/elsewhere", "files_at_start": {}}}, "another checkout's preparer"),
+                 ({"publication": {"call": "renamex_np", "library": "/usr/lib/libSystem.B.dylib",
+                                   "flag": "RENAME_SWAP", "flag_value": 2}}, "another publication call"),
+                 ({"before": {"state": "complete_exact", "files": {}, "directories": {}}}, "installed over a tree"),
+                 ({"after": {"state": "complete_exact"}}, "an after readback without its tree"),
+                 ({"operations": [{"operation": "replaced_destination"}]}, "an unknown operation"),
+                 ({"pins": {"origin": "adopted-contract", "node_archive_sha256": observation.NODE_ARCHIVE_SHA256}},
+                  "pins without the dependency pin"))
+        for changes, label in cases:
+            with self.subTest(case=label):
+                changes = {key: (REMOVED if value is REMOVED_VALUE else value) for key, value in changes.items()}
+                if "labels" in changes and isinstance(changes["labels"], dict):
+                    changes["labels"] = {key: value for key, value in changes["labels"].items() if value is not REMOVED_VALUE}
+                self.ws.refresh_runtime(**changes)
+                self.refused("RUNTIME", "INSTALL-RESULT", self.check)
+        result = json.loads(Path(self.ws.runtime_install["result"]["path"]).read_bytes())
+        summary = dict(result["archive"])
+        del summary["executable"]
+        self.ws.refresh_runtime(archive=summary)
+        self.refused("RUNTIME", "INSTALL-RESULT", self.check)
+        executable = dict(result["archive"]["executable"], macho={"magic": "0xfeedfacf"})
+        self.ws.refresh_runtime(archive=dict(result["archive"], executable=executable))
+        self.refused("RUNTIME", "INSTALL-RESULT", self.check)
+        self.ws.refresh_runtime()
+        self.assertEqual(self.check()["install"]["state"], "INSTALLED_EXACT")
+
+    def test_reader_tree_receipt_carries_its_own_pins(self):
+        plan = self.ws.plan()
+        self.assertEqual(observation.check_dependencies(plan)["install"]["state"], "INSTALLED_EXACT")
+        labels = json.loads(Path(self.ws.dependency_install["result"]["path"]).read_bytes())["labels"]
+        node_pins = {"origin": "adopted-contract", "node_archive_sha256": observation.NODE_ARCHIVE_SHA256,
+                     "node_executable": binding(self.ws.runtime + "/bin/node")}
+        self.ws.refresh_dependencies(labels=dict(labels, pins=node_pins))
+        self.refused("DEPENDENCY", "INSTALL-RESULT", observation.check_dependencies, self.ws.plan())
+        result = json.loads(Path(self.ws.dependency_install["result"]["path"]).read_bytes())
+        self.ws.refresh_dependencies(archive=dict(result["archive"], executable={}))
+        self.refused("DEPENDENCY", "INSTALL-RESULT", observation.check_dependencies, self.ws.plan())
+
     def test_failed_signature_check_is_recorded_not_refused(self):
         """Decision D-02: the pin is the trust anchor; a failed check is recorded (and resolved at MP)."""
         self.ws.refresh_runtime(signature="failed")
@@ -1347,8 +1445,10 @@ class RuntimeTests(RefusalMixin, unittest.TestCase):
             with self.subTest(rule=rule, result=sorted(result_changes), plan=sorted(plan_changes or {})):
                 self.ws.refresh_runtime(plan_changes=plan_changes, **result_changes)
                 self.refused("RUNTIME", rule, self.check)
+        files = {"bin/node": binding(self.ws.runtime + "/bin/node"),
+                 observation.NODE_SOURCE_NAME: binding(self.ws.runtime + "/" + observation.NODE_SOURCE_NAME)}
         self.ws.refresh_runtime(state="ALREADY_PRESENT_EXACT", after=REMOVED, publication=REMOVED,
-                                before={"state": "complete_exact"})
+                                before={"state": "complete_exact", "files": files, "directories": {"bin": "0o755"}})
         self.assertEqual(self.check()["install"]["state"], "ALREADY_PRESENT_EXACT")
         self.ws.refresh_runtime()
         plan = self.ws.plan()
@@ -1491,7 +1591,8 @@ class ObservationTests(RefusalMixin, unittest.TestCase):
         self.assertEqual(self.supervisor.calls[1]["env"], dict(observation.ENVIRONMENT))
         self.assertEqual(self.supervisor.calls[0]["env"], dict(observation.GIT_ENVIRONMENT))
         host = self.document(result["host"]["path"])
-        self.assertEqual(set(host), {"schema", "contract", "profile", "executor", "observed_at_utc", "plan", "observer",
+        self.assertEqual(set(host), {"schema", "contract", "design_revision", "amendments", "profile", "executor",
+                                     "observed_at_utc", "plan", "observer",
                                      "platform", "os", "environment", "python", "runtime", "git", "dependencies",
                                      "source", "inspections", "starts", "labels", "claims"})
         self.assertEqual((host["schema"], host["executor"]), (observation.HOST_SCHEMA, "macos-arm64-local"))
@@ -1528,6 +1629,43 @@ class ObservationTests(RefusalMixin, unittest.TestCase):
         self.assertEqual(stat.S_IMODE(os.lstat(self.ws.attempt).st_mode), 0o700)
         leftovers = [name for _, _, names in os.walk(self.ws.attempt) for name in names if name.endswith(".tmp")]
         self.assertEqual(leftovers, [])
+
+    def assert_revision(self, document, where):
+        self.assertEqual({key: document.get(key) for key in REVISION}, REVISION, where)
+
+    def observer_documents(self):
+        """Every JSON document in the attempt except the supervisor's own unchanged receipt."""
+        for root, _, names in os.walk(self.ws.attempt):
+            for name in sorted(names):
+                if name.endswith(".json") and not name.endswith(".process.json"):
+                    yield os.path.join(root, name), self.document(os.path.join(root, name))
+
+    def test_every_observer_document_carries_the_design_revision(self):
+        """Decisions D-12 and D-13: contract, design_revision 4 and amendments, also in HOST's labels."""
+        result = self.observe()
+        documents = dict(self.observer_documents())
+        top = {"reserved", "preflight", "HOST", "result", "completion"}
+        stage = {"intent", "started", "inspection", "postflight"}
+        self.assertEqual(set(documents), {self.ws.attempt + "/" + name + ".json" for name in top}
+                         | {self.ws.attempt + "/" + command + "/" + name + ".json" for command in observation.COMMAND_IDS
+                            for name in stage})
+        for where, document in documents.items():
+            self.assert_revision(document, where)
+        host = documents[self.ws.attempt + "/HOST.json"]
+        self.assert_revision(host["labels"], "HOST labels")
+        self.assert_revision(result, "returned result")
+        self.assert_revision(documents[self.ws.attempt + "/node_version/inspection.json"], "inspection receipt")
+        self.assertNotIn("design_revision", json.loads(Path(self.ws.runtime + "/NODE-SOURCE.json").read_bytes()))
+        raw = Path(self.ws.attempt + "/node_version/host-node-version.process.json").read_bytes()
+        self.assertNotIn(b"design_revision", raw)
+
+    def test_refusal_documents_carry_the_design_revision(self):
+        self.supervisor.outputs["node"] = (b"v24.22.0\n", b"", 0, None)
+        error = self.refused("OUTPUT", "OUTPUT-NODE-VERSION", self.observe)
+        self.assert_revision(error.result, "refusal result")
+        for where, document in self.observer_documents():
+            self.assert_revision(document, where)
+        self.assertTrue(os.path.lexists(self.ws.attempt + "/node_version/failure.json"))
 
     def test_mc30_observe_without_cf_records_null(self):
         """Simulated boundary: the observing process has no __CF_USER_TEXT_ENCODING (labelled mocked)."""
@@ -1587,6 +1725,8 @@ class ObservationTests(RefusalMixin, unittest.TestCase):
 
     def test_static_check_starts_and_writes_nothing(self):
         result = observation.static_check(self.path, self.digest, host=self.ws.host)
+        self.assertEqual({key: result[key] for key in REVISION}, REVISION)
+        self.assertEqual({key: result["labels"][key] for key in REVISION}, REVISION)
         self.assertEqual((result["state"], result["starts"]["node"]["exact"], result["starts"]["other"]["exact"]),
                          ("STATIC_READY", 0, 0))
         self.assertEqual(self.supervisor.calls, [])
@@ -1806,6 +1946,7 @@ class CommandLineTests(unittest.TestCase):
         self.assertEqual((code, stdout), (1, b""))
         self.assertEqual((refusal["schema"], refusal["passed"], refusal["evidence_finalized"]),
                          (observation.REFUSAL_SCHEMA, False, False))
+        self.assertEqual({key: refusal[key] for key in REVISION}, REVISION)
         self.assertEqual(refusal["error"]["code"], "CHO-PATH")
 
     def test_launch_without_no_site_is_refused(self):
@@ -1823,6 +1964,8 @@ class CommandLineTests(unittest.TestCase):
                                                   "--output", output)
         self.assertEqual((code, refusal), (0, None), refusal)
         self.assertEqual(json.loads(stdout)["output"], descriptor(output))
+        self.assertEqual({key: json.loads(stdout)[key] for key in REVISION}, REVISION)
+        self.assertNotIn("design_revision", json.loads(Path(output).read_bytes()))
         self.assertEqual(Path(output).read_bytes(), canonical(observation.python_inventory(ws.venv, ws.framework)))
         code, _, refusal = self.run_observer("python-inventory", "--venv", ws.venv, "--framework", ws.framework,
                                              "--output", output)

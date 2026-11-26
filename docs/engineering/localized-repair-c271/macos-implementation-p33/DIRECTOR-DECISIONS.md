@@ -142,3 +142,13 @@ is the original process receipt. The contract keeps its fields unchanged (CONTRA
 precondition (section 3.2). It therefore carries no labels and no design revision. The documents
 that contain such a receipt carry them: the inspection receipts of M0 and M1, and the provider's
 attempt and result documents.
+
+## D-15: plans and the receipt's OS label (W3's follow-up, Q14 and Q15)
+
+- **Plans:** the observation plan and the preparation and execution plans carry no
+  design-revision field. They are frozen inputs. A reviewed execution plan binds them by digest,
+  and that plan's review names the design revision it follows.
+- **The receipt's OS label:** M0 checks the install receipt's OS label for shape only. That label
+  records the OS at preparation. M0 binds the current OS itself in HOST, and the provider checks
+  HOST against the host at every start. An OS update between MP and MH therefore shows in HOST
+  and in the provider's checks, not as a receipt refusal.

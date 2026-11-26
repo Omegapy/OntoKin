@@ -55,6 +55,10 @@ from types import MappingProxyType
 # ---------------------------------------------------------------------------
 
 CONTRACT = "ontokin.current-host-readback/0.2.0"
+# From design revision 4 on, the contract is CONTRACT.md and CONTRACT.json as amended by
+# P33-AMENDMENT-001 (ADOPTION-AMENDMENT-001.json; decisions D-12 and D-13).
+DESIGN_REVISION = 4
+AMENDMENTS = ("P33-AMENDMENT-001",)
 PROFILE = "darwin-arm64-v1"
 EXECUTOR = "macos-arm64-local"
 PREFIX = "ontokin.current-host-readback-"
@@ -320,6 +324,17 @@ def _decode(raw, category):
 
 def _sha256(raw):
     return hashlib.sha256(raw).hexdigest()
+
+
+def _revision():
+    """The contract, its design revision and its adopted amendments (decisions D-12 and D-13).
+
+    Every document the observer writes carries these beside its schema: HOST and its labels, the
+    inspection receipts, attempts, start and failure records, the reservation, preflight, result,
+    completion and refusal documents, and the inventory commands' printed results. The frozen
+    input documents (the Python and source inventories) keep their content, as NODE-SOURCE.json does.
+    """
+    return {"contract": CONTRACT, "design_revision": DESIGN_REVISION, "amendments": list(AMENDMENTS)}
 
 
 def _digest(value, category):
@@ -1634,22 +1649,52 @@ def _historical_dependencies(source_root):
 
 INSTALL_PLAN_KEYS = ("schema", "contract", "purpose", "source_root", "archive", "destination", "root_mode", "files",
                      "directories", "members", "node_source", "report")
-INSTALL_RESULT_KEYS = ("schema", "contract", "purpose", "passed", "state", "apply_requested", "execution_counts",
-                       "operations", "pins", "labels", "preparer_source", "archive", "before")
+INSTALL_RESULT_BASE_KEYS = ("schema", "contract", "design_revision", "amendments", "purpose", "passed", "state",
+                            "apply_requested", "execution_counts", "operations", "pins", "labels", "preparer_source")
+INSTALL_RECEIPT_KEYS = MappingProxyType({
+    "ALREADY_PRESENT_EXACT": frozenset(INSTALL_RESULT_BASE_KEYS + ("archive", "before")),
+    "INSTALLED_EXACT": frozenset(INSTALL_RESULT_BASE_KEYS + ("archive", "before", "after", "publication"))})
+INSTALL_PUBLICATION = MappingProxyType({"call": "renamex_np", "library": LIBSYSTEM, "flag": "RENAME_EXCL",
+                                        "flag_value": RENAME_EXCL})
+ARCHIVE_SUMMARY_KEYS = ("sha256", "size_bytes", "members", "expanded_bytes", "symlinks", "member_inventory_sha256",
+                        "extracted_members")
+OS_LABEL_FIELDS = ("product_version", "product_build_version", "product_version_extra")
 
 
-def _install_receipts(install, *, source_root, destination, purpose, archive, files, directories, root_mode, category):
-    """The 0.1.0 receipt rule of _check_installation, adapted to install/0.2.0 (decision D-05).
+def check_os_label(value):
+    """True for HOST's labels.os shape: three fields and a cryptex {state: present, the three} or {state: absent}."""
+    def fields(row):
+        return (type(row.get("product_version")) is str and row["product_version"]
+                and type(row.get("product_build_version")) is str and row["product_build_version"]
+                and (row.get("product_version_extra") is None or type(row["product_version_extra"]) is str))
+    if type(value) is not dict or set(value) != set(OS_LABEL_FIELDS) | {"cryptex"} or not fields(value):
+        return False
+    cryptex = value["cryptex"]
+    return cryptex == {"state": "absent"} or (type(cryptex) is dict and cryptex.get("state") == "present"
+                                              and set(cryptex) == set(OS_LABEL_FIELDS) | {"state"} and fields(cryptex))
 
-    It compares the 0.1.0 rule's fields, in the shapes of W2's interface note:
-    - the plan's closed keys, schema, contract, purpose, source_root, destination,
-      root mode, files, directories, retained archive and report path;
-    - the result's closed keys by state, schema, contract, purpose, the two receipt
-      states (INSTALLED_EXACT applied with an exact after-readback,
-      ALREADY_PRESENT_EXACT with an exact before-readback), zero starts, and the
-      adopted pins (a receipt made through the synthetic test seam refuses);
-    - the archive summary (digest, size, member count, expanded bytes and member
-      inventory digest) against the plan, and the retained archive's bytes.
+
+def _readback(value, state):
+    return type(value) is dict and value.get("state") == state and set(value) == (
+        {"state"} if state == "absent" else {"state", "files", "directories"})
+
+
+def _install_receipts(install, *, source_root, destination, purpose, archive, files, directories, root_mode,
+                      executable, category):
+    """The 0.1.0 receipt rule of _check_installation, adapted to install/0.2.0 (decisions D-05 and D-11).
+
+    It compares the 0.1.0 rule's fields in the shapes that W2 confirmed (W2-PREPARER.md section 7):
+    - the plan's 12 closed keys: purpose, source_root, destination, root mode, files, directories,
+      the retained archive and the report path (INSTALL-PLAN);
+    - the result's closed keys for its receipt state: ``base``, ``archive`` and ``before``, plus
+      ``after`` and ``publication`` for INSTALLED_EXACT. Any other outcome refuses, among them
+      DRY_RUN_READY and a failed report write (UNKNOWN with passed false). Its contract, design
+      revision and amendments; zero starts; the adopted pins (a receipt made through the synthetic
+      test seam refuses); labels {executor, contract, profile, design_revision, amendments, pins,
+      os} with the pins of its purpose and HOST's OS-label shape; preparer_source naming this
+      source root; the before, after and publication records (INSTALL-RESULT);
+    - the archive summary's keys and values against the plan, the executable for selected-node,
+      and the retained archive's bytes (INSTALL-ARCHIVE).
     Returns the record HOST keeps, and the plan's members digest and node_source.
     """
     _keys(install, ("plan", "result"), category)
@@ -1669,32 +1714,61 @@ def _install_receipts(install, *, source_root, destination, purpose, archive, fi
              details=rule)
     rule = {"rule": "INSTALL-RESULT"}
     state = result.get("state") if type(result) is dict else None
-    _require(state in ("INSTALLED_EXACT", "ALREADY_PRESENT_EXACT"), category,
-             "Installation result is not a receipt state", details=rule)
-    expected = set(INSTALL_RESULT_KEYS) | ({"after", "publication"} if state == "INSTALLED_EXACT" else set())
-    _require(set(result) == expected, category, "Installation result members differ for its state", details=rule)
-    pins = result["pins"]
+    _require(state in INSTALL_RECEIPT_KEYS and result.get("passed") is True, category,
+             "Installation result is not a receipt: only INSTALLED_EXACT and ALREADY_PRESENT_EXACT with passed true",
+             details=rule)
+    _require(set(result) == INSTALL_RECEIPT_KEYS[state], category,
+             "Installation result members differ from the closed set of its outcome", details=rule)
+    pins, labels = result["pins"], result["labels"]
     _require(result["schema"] == INSTALL_RESULT_SCHEMA and result["contract"] == CONTRACT
-             and result["purpose"] == purpose and result["passed"] is True
+             and result["design_revision"] == DESIGN_REVISION and result["amendments"] == list(AMENDMENTS)
+             and result["purpose"] == purpose and type(result["apply_requested"]) is bool
              and result["execution_counts"] == {"node": 0, "ldd": 0, "checkers": 0}
-             and type(result["operations"]) is list and type(pins) is dict
-             and pins.get("origin") == "adopted-contract" and pins.get("node_archive_sha256") == NODE_ARCHIVE_SHA256
-             and pins.get("dependency_archive_sha256") == DEPENDENCY_ARCHIVE_SHA256, category,
-             "Installation result is not an exact receipt with zero starts and the adopted pins", details=rule)
+             and type(result["operations"]) is list
+             and all(type(row) is dict and row.get("operation") in ("created_owned_stage", "removed_owned_stage")
+                     for row in result["operations"])
+             and pins == {"origin": "adopted-contract", "node_archive_sha256": NODE_ARCHIVE_SHA256,
+                          "dependency_archive_sha256": DEPENDENCY_ARCHIVE_SHA256}, category,
+             "Installation result is not an exact receipt of this contract with zero starts and the adopted pins",
+             details=rule)
+    expected_pins = ({"origin": "adopted-contract", "node_archive_sha256": NODE_ARCHIVE_SHA256,
+                      "node_executable": executable} if purpose == "selected-node" else
+                     {"origin": "adopted-contract", "dependency_archive_sha256": DEPENDENCY_ARCHIVE_SHA256})
+    _require(type(labels) is dict and set(labels) == {"executor", "contract", "profile", "design_revision",
+                                                      "amendments", "pins", "os"}
+             and labels["executor"] == EXECUTOR and labels["contract"] == CONTRACT and labels["profile"] == PROFILE
+             and labels["design_revision"] == DESIGN_REVISION and labels["amendments"] == list(AMENDMENTS)
+             and labels["pins"] == expected_pins and check_os_label(labels["os"]), category,
+             "Installation result labels differ from {executor, contract, profile, design_revision, amendments, "
+             "pins, os}", details=rule)
+    source = result["preparer_source"]
+    _require(type(source) is dict and set(source) == {"root", "files_at_start"} and source["root"] == source_root
+             and type(source["files_at_start"]) is dict, category,
+             "Installation result does not record this checkout's preparer", details=rule)
     if state == "INSTALLED_EXACT":
-        _require(result["apply_requested"] is True and type(result["after"]) is dict
-                 and result["after"].get("state") == "complete_exact", category,
-                 "Installation was not applied and read back exact", details=rule)
+        _require(result["apply_requested"] is True and _readback(result["before"], "absent")
+                 and _readback(result["after"], "complete_exact")
+                 and result["publication"] == dict(INSTALL_PUBLICATION), category,
+                 "Installation was not applied to an absent destination and read back exact", details=rule)
     else:
-        _require(type(result["before"]) is dict and result["before"].get("state") == "complete_exact", category,
+        _require(_readback(result["before"], "complete_exact"), category,
                  "The existing installation was not read back exact", details=rule)
     summary = result["archive"]
     members_sha256 = _sha256(_canonical_ascii(members))
-    _require(type(summary) is dict and summary.get("sha256") == archive["sha256"]
-             and summary.get("size_bytes") == archive["size_bytes"] and summary.get("members") == len(members)
-             and summary.get("expanded_bytes") == sum(row["size_bytes"] for row in members.values())
-             and summary.get("member_inventory_sha256") == members_sha256, category,
+    summary_keys = set(ARCHIVE_SUMMARY_KEYS) | ({"executable"} if purpose == "selected-node" else set())
+    _require(type(summary) is dict and set(summary) == summary_keys and summary["sha256"] == archive["sha256"]
+             and summary["size_bytes"] == archive["size_bytes"] and summary["members"] == len(members)
+             and summary["expanded_bytes"] == sum(row["size_bytes"] for row in members.values())
+             and summary["member_inventory_sha256"] == members_sha256, category,
              "Installation result's archive summary differs from the plan", details=rule)
+    if purpose == "selected-node":
+        extracted = summary["executable"]
+        _require(type(extracted) is dict and set(extracted) == {"member", "path", "sha256", "size_bytes", "mode",
+                                                                "macho"}
+                 and extracted["member"] == NODE_MEMBER and extracted["path"] == "bin/node"
+                 and _binding(extracted) == executable and type(extracted["macho"]) is dict
+                 and set(extracted["macho"]) == {"magic", "cputype", "cpusubtype", "filetype"}, category,
+                 "Installation result's extracted executable differs from the pin", details=rule)
     _bound(archive["path"], archive, category=category, rule="INSTALL-ARCHIVE")
     return {"plan": dict(install["plan"]), "result": dict(install["result"]), "purpose": purpose, "state": state,
             "member_inventory_sha256": members_sha256, "node_source": plan["node_source"]}
@@ -1737,7 +1811,7 @@ def check_dependencies(plan, *, check=_no_check):
                                  purpose="retained-dependencies", archive=inventory["archive"],
                                  files={name: _binding(row) for name, row in inventory["files"].items()},
                                  directories=inventory["directories"], root_mode=_mode(os.lstat(root)),
-                                 category="DEPENDENCY")
+                                 executable=None, category="DEPENDENCY")
     planned_source, _ = receipts.pop("node_source"), receipts.pop("member_inventory_sha256")
     _require(planned_source is None, "DEPENDENCY", "A reader-tree plan carries node_source",
              details={"rule": "INSTALL-PLAN"})
@@ -1802,7 +1876,7 @@ def check_runtime(plan, *, check=_no_check):
                                  files={"bin/node": _binding(runtime["executable"]),
                                         NODE_SOURCE_NAME: _binding(runtime["node_source"])},
                                  directories={"bin": runtime["bin_mode"]}, root_mode=runtime["root_mode"],
-                                 category="RUNTIME")
+                                 executable=_binding(runtime["executable"]), category="RUNTIME")
     planned_source, members_sha256 = receipts.pop("node_source"), receipts.pop("member_inventory_sha256")
     _require(planned_source == {"signature_check": content["signature_check"]}
              and members_sha256 == content["member_inventory_sha256"]
@@ -2419,7 +2493,8 @@ def _predicate(command, stdout, stderr):
 def _run_start(context, command):
     paths = context.plan["evidence"]["outputs"][command["id"]]
     store, supervisor = context.evidence, context.supervisor
-    record = {"schema": ATTEMPT_SCHEMA, "plan": context.descriptor, "command_id": command["id"], "kind": command["kind"],
+    record = {"schema": ATTEMPT_SCHEMA, **_revision(), "plan": context.descriptor, "command_id": command["id"],
+              "kind": command["kind"],
               "argv": command["argv"], "expected_direct_starts": 1, "actual_direct_starts": None,
               "observed_direct_starts": 0, "start_count_state": "UNKNOWN", "state": "UNKNOWN", "start": None,
               "process": None, "supervisor_failure": None, "artifacts": {}, "preflight": None, "postflight": None,
@@ -2448,7 +2523,7 @@ def _run_start(context, command):
                          "Invalid or repeated start callback")
                 clock.check(stage_end)
                 record["start"] = store.publish(paths["started"], {
-                    "schema": START_SCHEMA, "plan": context.descriptor, "command_id": command["id"],
+                    "schema": START_SCHEMA, **_revision(), "plan": context.descriptor, "command_id": command["id"],
                     "process": callback["record"], "observed_at_utc": _utc(), "boundary": context.boundary})
             except BaseException as exc:
                 callback["error"] = exc
@@ -2485,7 +2560,8 @@ def _run_start(context, command):
         _require(streams.get("process") is not None and _loads(streams["process"], "PROCESS") == record["process"],
                  "PROCESS", "The supervisor's raw receipt disagrees with its returned record")
         _predicate(command, stdout, stderr)
-        receipt = {"schema": INSPECTION_SCHEMA, "argv": command["argv"], "environment": command["environment"],
+        receipt = {"schema": INSPECTION_SCHEMA, **_revision(), "argv": command["argv"],
+                   "environment": command["environment"],
                    "timeout_ms": LIMITS["command_ms"], "started_at_utc": started_at, "finished_at_utc": finished_at,
                    "process": record["process"], "stdout": stdout.decode("ascii"), "stderr": stderr.decode("ascii")}
         inspection = store.publish(paths["inspection"], receipt, maximum=LIMITS["inspection_bytes"])
@@ -2510,7 +2586,7 @@ def _run_start(context, command):
             except BaseException as post:
                 record["postflight"] = {"passed": False, "failure": _failure(post)}
         try:
-            store.publish(paths["failure"], {"schema": FAILURE_SCHEMA, "plan": context.descriptor,
+            store.publish(paths["failure"], {"schema": FAILURE_SCHEMA, **_revision(), "plan": context.descriptor,
                                              "command_id": command["id"], "failure": error.as_dict(),
                                              "process": record["process"], "boundary": context.boundary})
             record["attempt_descriptor"] = store.publish(paths["postflight"], record)
@@ -2532,7 +2608,7 @@ def _starts(records):
 
 def _labels(facts, boundary):
     runtime = facts["runtime"]
-    return {"executor": EXECUTOR, "contract": CONTRACT, "profile": PROFILE, "os": _os_label(facts["os"]),
+    return {"executor": EXECUTOR, **_revision(), "profile": PROFILE, "os": _os_label(facts["os"]),
             "node": {"archive": NODE_ARCHIVE, "archive_sha256": NODE_ARCHIVE_SHA256,
                      "executable": _binding(runtime["binding"]),
                      "signature_check": runtime["node_source"]["content"]["signature_check"]["status"]},
@@ -2545,7 +2621,7 @@ def host_document(context, git_result, node_result):
     facts, plan = context.facts, context.plan
     python, runtime, source = facts["python"], facts["runtime"], facts["source"]
     host = {
-        "schema": HOST_SCHEMA, "contract": CONTRACT, "profile": PROFILE, "executor": EXECUTOR,
+        "schema": HOST_SCHEMA, **_revision(), "profile": PROFILE, "executor": EXECUTOR,
         "observed_at_utc": _utc(), "plan": context.descriptor, "observer": dict(plan["observer"]),
         "platform": facts["platform"], "os": facts["os"],
         "environment": {"declared": dict(plan["environment"]), "cf_user_text_encoding": facts["cf"]},
@@ -2581,7 +2657,8 @@ def static_check(plan_path, plan_sha256, *, host=None):
     facts = static_observation(validated, host)
     load = host.supervisor(validated.plan["source"]["root"], facts["source"]["inventory"])
     _require(load is not None, "SOURCE", "The Darwin supervisor is unavailable")
-    return {"schema": RESULT_SCHEMA, "plan": validated.descriptor, "mode": "static", "state": "STATIC_READY",
+    return {"schema": RESULT_SCHEMA, **_revision(), "plan": validated.descriptor, "mode": "static",
+            "state": "STATIC_READY",
             "starts": {"node": {"exact": 0, "observed_lower_bound": 0}, "other": {"exact": 0, "observed_lower_bound": 0}},
             "attempts": [], "host": None, "evidence_finalized": False, "failures": [],
             "labels": _labels(facts, facts["boundary"]), "facts_sha256": _sha256(_fingerprint(facts))}
@@ -2599,7 +2676,8 @@ def observe_host(plan_path, plan_sha256, *, host=None, rename=rename_exclusive):
     check_loaded_modules(host.loaded_modules(), facts["python"]["inventory"], validated.plan["source"]["root"],
                          facts["source"]["inventory"]["files"])
     outputs = validated.plan["evidence"]["outputs"]
-    result = {"schema": RESULT_SCHEMA, "plan": validated.descriptor, "mode": "observe", "state": "UNKNOWN",
+    result = {"schema": RESULT_SCHEMA, **_revision(), "plan": validated.descriptor, "mode": "observe",
+              "state": "UNKNOWN",
               "starts": _starts([]), "attempts": [], "host": None, "evidence_finalized": False, "failures": [],
               "labels": _labels(facts, context.boundary)}
     records, store = [], _Evidence(validated.plan, rename=rename)
@@ -2607,11 +2685,12 @@ def observe_host(plan_path, plan_sha256, *, host=None, rename=rename_exclusive):
     try:
         store.create()
         result["reserved"] = store.publish(outputs["reserved"], {
-            "schema": RESERVATION_SCHEMA, "plan": validated.descriptor, "attempt": store.root,
+            "schema": RESERVATION_SCHEMA, **_revision(), "plan": validated.descriptor, "attempt": store.root,
             "owned_directories": sorted(store.owned), "expected_starts": {"node": 1, "other": 1},
             "boundary": context.boundary})
         result["preflight"] = store.publish(outputs["preflight"], {
-            "schema": PREFLIGHT_SCHEMA, "plan": validated.descriptor, "facts_sha256": _sha256(context.fingerprint),
+            "schema": PREFLIGHT_SCHEMA, **_revision(), "plan": validated.descriptor,
+            "facts_sha256": _sha256(context.fingerprint),
             "python_inventory_sha256": facts["python"]["inventory_sha256"], "boundary": context.boundary})
         results = {}
         for command in validated.plan["commands"]:
@@ -2637,7 +2716,7 @@ def observe_host(plan_path, plan_sha256, *, host=None, rename=rename_exclusive):
         descriptor = store.publish(outputs["result"], result)
         store.check_tree()
         completion = store.publish(outputs["completion"], {
-            "schema": COMPLETION_SCHEMA, "plan": validated.descriptor, "state": "OBSERVED_UNAPPROVED",
+            "schema": COMPLETION_SCHEMA, **_revision(), "plan": validated.descriptor, "state": "OBSERVED_UNAPPROVED",
             "result": descriptor, "host": result["host"], "starts": result["starts"], "evidence_finalized": True,
             "boundary": context.boundary})
         result.update(state="OBSERVED_UNAPPROVED", evidence_finalized=True, result=descriptor, completion=completion)
@@ -2651,7 +2730,7 @@ def observe_host(plan_path, plan_sha256, *, host=None, rename=rename_exclusive):
         if store.owned and not os.path.lexists(outputs["result"]) and \
                 not any(row["destination"] == outputs["result"] for row in store.publications):
             try:
-                store.publish(outputs["failure"], {"schema": FAILURE_SCHEMA, "plan": validated.descriptor,
+                store.publish(outputs["failure"], {"schema": FAILURE_SCHEMA, **_revision(), "plan": validated.descriptor,
                                                    "failure": error.as_dict(), "boundary": context.boundary})
                 store.publish(outputs["result"], result)
             except BaseException as final:
@@ -2721,20 +2800,21 @@ def main(argv=None):
             result = observe_host(args.plan, args.plan_sha256)
         elif args.command == "python-inventory":
             inventory = python_inventory(args.venv, args.framework, check=_Deadline(LIMITS["static_ms"]))
-            result = {"schema": PYTHON_INVENTORY_SCHEMA, "output": write_new(args.output, inventory),
+            result = {"schema": PYTHON_INVENTORY_SCHEMA, **_revision(), "output": write_new(args.output, inventory),
                       "starts": {"node": 0, "other": 0}}
         else:
-            result = {"schema": SOURCE_SCHEMA, "output": write_new(args.output, source_inventory(args.root)),
+            result = {"schema": SOURCE_SCHEMA, **_revision(),
+                      "output": write_new(args.output, source_inventory(args.root)),
                       "starts": {"node": 0, "other": 0}}
         sys.stdout.write(_canonical(result).decode("ascii") + "\n")
         return 0
     except ObservationError as exc:
-        refusal = {"schema": REFUSAL_SCHEMA, "passed": False, "error": exc.as_dict(),
+        refusal = {"schema": REFUSAL_SCHEMA, **_revision(), "passed": False, "error": exc.as_dict(),
                    "evidence_finalized": bool(exc.result and exc.result.get("evidence_finalized")),
                    "result": exc.result}
         raw = _canonical(refusal)
         if len(raw) > LIMITS["document_bytes"]:
-            raw = _canonical({"schema": REFUSAL_SCHEMA, "passed": False, "error": {"code": exc.code,
+            raw = _canonical({"schema": REFUSAL_SCHEMA, **_revision(), "passed": False, "error": {"code": exc.code,
                               "reason": exc.reason, "state": exc.state}, "evidence_finalized": False,
                               "detail": "The refusal exceeded its capture bound"})
         sys.stderr.write(raw.decode("ascii") + "\n")
