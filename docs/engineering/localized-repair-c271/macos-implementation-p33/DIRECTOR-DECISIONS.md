@@ -63,3 +63,24 @@ checkout included. MI keeps 0.1.0 behaviour unchanged, so this stays as it is. I
 as a finding for any later work under the Linux contract. The 0.2.0 route does not have it.
 During development an early 0.2.0 draft wrote one synthetic report to the checkout root. W2
 preserved it in its evidence and removed it; the checkout holds no such file.
+
+## D-08: the missing-method rule of a qualifying run (W4 F1)
+
+Contract section 8 says that, in a qualifying run, "any skip, error, expected failure or missing
+method of the readback cohort fails the run". The shared driver fails a stage on any skip, error
+or failure. It has no rule of its own for a method that is missing without an error. In 0.1.0
+that case is caught by the provider, through the original-body and discovery checks, and by
+the discovery control. Under 0.2.0:
+- **Provider (W5):** the cohort accounting of `finish_cpu_cohort` must fail the run when one of
+  the three CPU methods did not run, as the 0.1.0 accounting does. If the 0.1.0 accounting
+  does not, W5 reports that instead of inventing a rule.
+- **Discovery:** MC28, at MH and MR, checks the complete default inventory.
+
+The driver does not change for this.
+
+## D-09: Git starts of `tools/storage_identity.py` (W4 F2)
+
+The driver's workspace preparation reaches `tools/storage_identity.py`, which starts `git` by
+name from `PATH`: four starts per run. Plan section 4.5 requires every Git start that the
+driver reaches to go through `git_executable()`. W4 routes them, as a follow-up within its
+ownership. The other callers of `storage_identity` keep their behaviour unless they bind Git.
