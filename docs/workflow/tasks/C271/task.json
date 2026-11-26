@@ -92,7 +92,9 @@
         "docs/engineering/localized-repair-c271/h0-plan-p26/FINAL-DIAGNOSIS.json",
         "docs/engineering/localized-repair-c271/h0-plan-p26/SOURCE-OBJECT.json",
         "docs/engineering/localized-repair-c271/h0-plan-p26/EVIDENCE.zip",
-        "docs/engineering/localized-repair-c271/h0-plan-p26/EVIDENCE-MANIFEST.json"
+        "docs/engineering/localized-repair-c271/h0-plan-p26/EVIDENCE-MANIFEST.json",
+        "docs/engineering/localized-repair-c271/operational-plan-review-p30/OUTCOME.json",
+        "docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md"
       ]
     },
     {
@@ -1241,6 +1243,38 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/p29-local-publication-r07/PUBLICATION.json"
       ]
+    },
+    {
+      "name": "P30 workflow check of this branch",
+      "command": ".venv/bin/python tools/chat_workflow.py check",
+      "result": "passed",
+      "required": true,
+      "scope": "Structure of the workflow records at each P30 commit; not the truth of cited evidence.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/operational-plan-review-p30/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P30 documentation verifier of this branch",
+      "command": ".venv/bin/python docs/maintenance/reorganization-2026-10-17/verify_reorganization.py --json-output <working evidence directory>",
+      "result": "passed",
+      "required": true,
+      "scope": "Links, anchors and sections of the documentation at each P30 commit.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/operational-plan-review-p30/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P30 independent review of the operational-plan review outcome",
+      "command": "Fresh-context subagent review with recomputed read-set identities and source checks; re-review of the corrected candidate",
+      "result": "passed",
+      "required": true,
+      "scope": "The first review rejected 8aa4a800 on F-01; the re-review of 96847fae gave ACCEPT_WITH_NONMANDATORY_FINDINGS. Not an integration approval.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/operational-plan-review-p30/INDEPENDENT-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/operational-plan-review-p30/INDEPENDENT-REVIEW-002.md",
+        "docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-DISPOSITION.json"
+      ]
     }
   ],
   "completion": {
@@ -1365,7 +1399,7 @@
       }
     }
   },
-  "next_action": "C271-P30-operational-plan-review is declared and in progress: review the /0.1.5 operational plan against the published P29 candidate and current host facts; require a concrete reason for any further preparation work, assess whether an existing executor meets the adopted contract before more host tooling is built, make any executor substitution explicit and keep the original test meaning; read the original qualification plan and its later adopted supplements before any execution. Stop at the independently reviewed outcome or the first concrete blocker. H0, H1, the required regression (R03), reviewed integration with actual-main verification (R04) and parent completion with final delivery (R05) follow as further separate phases.",
+  "next_action": "C271's next phase is route C's first phase, selected by the owner on 2026-11-25 (America/Denver): design only. Write a new, versioned contract for the owner's macOS arm64 executor that substitutes, explicitly, the Node build (v24.22.1 kept, a darwin-arm64 build pinned by its own bytes), the qualification Python, the host inspection, the process supervisor and the provider's and probe's host bindings, as REVIEW-OUTCOME.md section 6 of C271-P30 describes; keep the original test meaning (the seven method bodies, the reader bytes, thresholds, limits, three real checker starts, the no-skip rule and the numerical audit); label every result with that executor; keep the unmet Linux-contract gates unmet; obtain independent review and adoption before any implementation. It installs no host tooling and implements nothing. Declare it in C271's records before its substantive work. H0 and H1 (or their reviewed replacements), R03, R04 and R05 follow as separate phases.",
   "session_phase": {
     "schema": "ontokin.c271.p30-operational-plan-review/1",
     "task": "C271",
@@ -1381,7 +1415,9 @@
     "scope_issue": 273,
     "record": "docs/engineering/localized-repair-c271/operational-plan-review-p30/PHASE.json",
     "session_checkpoint": "docs/workflow/tasks/C271/P30-SESSION.md",
-    "status": "declared_review_pending"
+    "status": "review_complete_route_c_selected",
+    "completed_at_utc": "2026-11-26T04:20:00Z",
+    "outcome": "docs/engineering/localized-repair-c271/operational-plan-review-p30/OUTCOME.json"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -7545,7 +7581,7 @@
     "record": "docs/engineering/localized-repair-c271/operational-plan-review-p30/PHASE.json",
     "session_checkpoint": "docs/workflow/tasks/C271/P30-SESSION.md",
     "declared_at_utc": "2026-11-26T03:20:00Z",
-    "status": "declared_review_pending",
+    "status": "review_complete_route_c_selected",
     "owner_direction": {
       "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
       "question": "Should I start the /0.1.5 operational-plan review as C271's next phase?",
@@ -7556,16 +7592,58 @@
     "excluded": "H0, H1, Node, ldd, direct loader starts, the routine driver, unit and behavioural tests, installation or host tooling, an executable inspection plan, operational-plan adoption, writes to main, PR state changes, R03 to R05.",
     "parent_complete": false,
     "gates_still_open": [
-      "/0.1.5 operational-plan review (this phase, in progress)",
-      "H0",
-      "H1",
+      "route C design (next, selected)",
+      "H0 and H1, or their reviewed replacements",
+      "N34 and N57",
       "required regression (R03)",
       "reviewed integration and actual-main verification (R04)",
       "parent completion and final delivery (R05)"
     ],
     "dated_notes": [
       "2026-11-26 (UTC): the R06 archive and its receipt in the owner's downloads folder are byte-identical to the copies that R07 used beside the clone (cmp exit 0 for both; recorded sizes and SHA-256). R07's records call them not observed, which held for the R07 session. The match was found after R07 by the session that started this one and observed again in this phase. R07's records stay unchanged; R07's working evidence is in ../OntoKin-local/c271-p29-r07/ beside the clone. Record: docs/engineering/localized-repair-c271/operational-plan-review-p30/R06-DOWNLOADS-COPIES.json."
-    ]
+    ],
+    "completed_at_utc": "2026-11-26T04:20:00Z",
+    "outcome": "No existing executor available to a local session meets the adopted contract; no further preparation is selected.",
+    "blocker": {
+      "id": "P30-EXECUTOR-001",
+      "scope": "the adopted Linux x86-64 contract in local mode; it stays unresolved for that contract's H0 and H1",
+      "record": "docs/engineering/localized-repair-c271/operational-plan-review-p30/EXECUTOR-INVENTORY.json"
+    },
+    "independent_review": {
+      "first": {
+        "record": "docs/engineering/localized-repair-c271/operational-plan-review-p30/INDEPENDENT-REVIEW-001.md",
+        "candidate": "8aa4a80012a14a521a441b306635c4fad68ca573",
+        "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+        "mandatory": [
+          "F-01"
+        ]
+      },
+      "second": {
+        "record": "docs/engineering/localized-repair-c271/operational-plan-review-p30/INDEPENDENT-REVIEW-002.md",
+        "candidate": "96847fae5c3f0a6d9e9d6da3095b056a8b929b62",
+        "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS"
+      }
+    },
+    "records": [
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/PHASE.json",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/READ-SET.json",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/READ-SET-ADDITIONS.json",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/CONTRACT-REQUIREMENTS.json",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/EXECUTOR-INVENTORY.json",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/H0-CONSTRAINT-RECONCILIATION.json",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/OUTCOME.json",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-DISPOSITION.json",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/CHECKS.json",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/LEARNING-DECISION.md"
+    ],
+    "owner_decision_after_outcome": {
+      "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+      "question": "Which route should C271 take next?",
+      "reply": "Design macOS contract (C)",
+      "how_received": "Typed by the owner in the Claude Code session that started this phase's session and relayed to it word for word.",
+      "effect": "Route C of REVIEW-OUTCOME.md section 6 is selected. Its first phase is design only: a new, versioned contract for the owner's macOS arm64 executor, independently reviewed and adopted before any implementation. It keeps the original test meaning, labels results with that executor, keeps the unmet Linux-contract gates unmet, installs no host tooling and implements nothing."
+    }
   },
   "p30_fields_index": {
     "recorded_at_utc": "2026-11-26T03:20:00Z",

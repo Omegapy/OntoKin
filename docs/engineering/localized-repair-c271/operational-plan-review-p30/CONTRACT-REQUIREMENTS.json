@@ -141,9 +141,11 @@
     },
     {
       "id": "E16",
-      "requirement": "The existing preparer's installation receipts, INSTALLED_EXACT or ALREADY_PRESENT_EXACT, with zero Node, ldd and checker starts.",
+      "requirement": "The existing preparer tools/prepare_current_host_readback.py and its installation receipts, INSTALLED_EXACT or ALREADY_PRESENT_EXACT, with zero Node, ldd and checker starts. The preparer is Linux-only: it publishes with renameat2 and installs only when sys.platform == 'linux'.",
       "sources": [
         "prototypes/static_tray_v01/current_host_inspection_v01.py _check_installation (line 2862)",
+        "tools/prepare_current_host_readback.py lines 215 and 274",
+        "docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.md section 5",
         "docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md section 2"
       ]
     },
@@ -165,17 +167,23 @@
       "id": "E19",
       "requirement": "The provider's and probe's host bindings: Linux platform, glibc, the procfs boot identity, the /usr/bin/ldd role, an ELF interpreter for Node, the Linux Node pin and the linux-cp312 lock.",
       "sources": [
-        "prototypes/static_tray_v01/current_host_readback_v01.py _verify_host and _python_pins (lines 441-488)",
+        "prototypes/static_tray_v01/current_host_readback_v01.py _verify_host and _python_pins (lines 441-520, including the ELF-interpreter binding at 511 and the ldd checks at 513-520)",
         "prototypes/static_tray_v01/current_host_readback_v01.mjs lines 54 and 451-461"
       ]
     }
   ],
-  "host_class": "E1 to E8, E13, E14 and E19 describe one class of host: the disposable Linux x86-64 hosts of the ChatGPT browser threads, whose Codex runtime supplied the Node build and the author Python. P23 observed all three Python, libc and loader pins matching on such a host.",
+  "host_class": "E1 to E8, E13, E16 and E19 describe one class of host: the disposable Linux x86-64 hosts of the ChatGPT browser threads, whose Codex runtime supplied the Node build and the author Python. P23 observed all three Python, libc and loader pins matching on such a host.",
   "corrections": [
     {
-      "corrected_at_utc": "2026-11-26T04:10Z",
+      "corrected_at_utc": "2026-11-26T04:04Z",
       "found_by": "INDEPENDENT-REVIEW-001 F-01, F-08, F-09 and F-10",
       "change": "E1's line range is 1202-1221; E13 to E19 added; recorded_at_utc is the first version's commit time (03:28:47Z), not 03:40Z; inputs_identical_to restated. The first version is retrievable from commit 8aa4a800."
+    },
+    {
+      "corrected_at_utc": "2026-11-26T04:20Z",
+      "found_by": "INDEPENDENT-REVIEW-002 F-12, F-17 and F-18",
+      "reviewed": false,
+      "change": "E16 names the Linux-only preparer; E19's line range is 441-520; the host-class list counts E16, not E14; the first correction's time is 04:04Z."
     }
   ]
 }

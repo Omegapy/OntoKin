@@ -1,0 +1,72 @@
+{
+  "schema": "ontokin.c271.p30-independent-review/1",
+  "candidate_commit": "96847fae5c3f0a6d9e9d6da3095b056a8b929b62",
+  "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+  "findings": [
+    {
+      "id": "F-12",
+      "severity": "nonmandatory",
+      "location": "REVIEW-OUTCOME.md sections 2 (host class), 3 (X1) and 6 (route C); EXECUTOR-INVENTORY.json X1.unmet; OUTCOME.json routes_for_owner[C]; CONTRACT-REQUIREMENTS.json host_class",
+      "summary": "Route C still omits one Linux-only tool: the existing preparer (tools/prepare_current_host_readback.py). It publishes with renameat2 (lines 213-221) and applies only when sys.platform == 'linux' (line 274), which is how E16 and P05 section 5's no-replace installation are met; X1 does not list E16. X1 lists E14 as unmet and the host-class list counts E14, but main's .venv holds exactly the seven pinned versions, and E14 compares only names and versions. Only the worktree's empty .venv fails E14."
+    },
+    {
+      "id": "F-13",
+      "severity": "nonmandatory",
+      "location": "REVIEW-OUTCOME.md section 3 X4; EXECUTOR-INVENTORY.json X4",
+      "summary": "X4 now includes other remote agent sandboxes, yet still calls itself the class on which every pin was observed, and says using one means browser mode. Pins were observed only on the ChatGPT/Codex hosts, and AGENTS.md defines browser mode as ChatGPT threads; other sandboxes are not local and have no defined mode."
+    },
+    {
+      "id": "F-14",
+      "severity": "nonmandatory",
+      "location": "REVIEW-OUTCOME.md section 3 X6; EXECUTOR-INVENTORY.json X6",
+      "summary": "X6's attribution to the reviewer is too broad. Only the three bundled Node builds were observed as Mach-O arm64; Electron's architecture was not observed. Python 3.9.6 comes from main's HOST-INVENTORY.md (a universal binary). Two Node versions were not read. The verdict holds on file format and size."
+    },
+    {
+      "id": "F-15",
+      "severity": "nonmandatory",
+      "location": "REVIEW-OUTCOME.md section 6 route E and claims list; OUTCOME.json routes_for_owner[E], never_supported_by_a_substitution",
+      "summary": "Route E has no explicit list of how the seven methods' test meaning is kept (method bodies, reader files, thresholds, three checker starts through the original supervisor, no-skip rule, audit). The claims list dropped /0.1.1, whose origin rule binds the x86-64 Python pin (lines 142-143, 1611-1615), so routes C and E cannot exercise it either."
+    },
+    {
+      "id": "F-16",
+      "severity": "nonmandatory",
+      "location": "REVIEW-OUTCOME.md section 6 recommendation and section 7 R04; OUTCOME.json gates.R04, recommendation",
+      "summary": "The selection binds one exact clean HEAD commit and tree (_verify_source, lines 326-367) and the current boot (_verify_host, lines 474-478). After R04, every main routine run, including on uncommitted changes, would need a new approved selection whatever executor is qualified, and under route E the selection would exist only in the guest. A selection-rule decision is therefore needed alongside route C or E, not as an alternative. This corrects my own wording in F-04."
+    },
+    {
+      "id": "F-17",
+      "severity": "nonmandatory",
+      "location": "corrected_at_utc in CONTRACT-REQUIREMENTS.json, EXECUTOR-INVENTORY.json, H0-CONSTRAINT-RECONCILIATION.json and OUTCOME.json; recorded_at_utc in REVIEW-DISPOSITION.json",
+      "summary": "These five times state 2026-11-26T04:10Z, after commit 96847fae (04:04:02Z) and its record checks (04:03:48Z); the same kind of error as F-08."
+    },
+    {
+      "id": "F-18",
+      "severity": "nonmandatory",
+      "location": "CONTRACT-REQUIREMENTS.json E19; REVIEW-OUTCOME.md section 3 X1 and section 8; docs/workflow/tasks/C271/P30-SESSION.md",
+      "summary": "Three minor points. E19's range 441-488 leaves out the ELF-interpreter binding (line 511) and the ldd checks (lines 513-520). 'The original supervisor cannot run on Darwin' is a source inference but is not in section 8's list, and on Darwin the failure would come from the prctl ctypes lookup, before the quoted Stop. The two lines added to the declaration-version checkpoint are not marked as later additions."
+    }
+  ],
+  "read_set_recomputed": {
+    "read_set_json_entries": 61,
+    "read_set_json_matched": 61,
+    "read_set_json_mismatched": 0,
+    "read_set_additions_entries": 15,
+    "read_set_additions_matched": 15,
+    "read_set_additions_mismatched": 0,
+    "matched": 76,
+    "mismatched": 0,
+    "unreadable": 0
+  },
+  "checks": [
+    "Read the full git diff 8aa4a800..96847fae: 11 record files, no source change; the inspector is still 71e837c3.",
+    "F-01 (mandatory) is resolved. Route C now substitutes the supervisor (E13, reaping guarantee not kept) and the host bindings (E19). Its unchanged list reads 'exactly three real checker starts, now through the substituted supervisor'. The claims list and the recommendation are restated, and OUTCOME.json agrees.",
+    "F-02 to F-11 are resolved as REVIEW-DISPOSITION.json states; residual precision points are recorded as F-12 to F-18.",
+    "Recomputed the 61 READ-SET.json entries (61 matched) and the 15 READ-SET-ADDITIONS identities (12 files, 3 trees; 15 matched). PHASE, READ-SET, CHECKS-BASELINE and R06 records are unchanged.",
+    "The supplement EXECUTORS-SUPPLEMENT.txt hash b9c92d64 matches and supports the cited facts; record-check evidence exists for the interim and corrected states.",
+    "Verified the new E13-E19 sources and line anchors in the supervisor, provider, probe, inspector and preparer at 96847fae.",
+    "Redaction: the repository copies differ from the originals only in application and cloud-service names and their bundle-internal path components (8 replacements in the Markdown, 1 in the JSON). The originals are unchanged and match the recorded hashes.",
+    "No relabelled gate, no adoption, recommendation left to the owner, no claimed execution beyond read-only inspection and record checks."
+  ],
+  "executed_commands_policy_respected": true,
+  "reviewed_at_utc": "2026-11-26T04:14:01Z"
+}

@@ -1,0 +1,128 @@
+{
+  "schema": "ontokin.c271.p30-checks/1",
+  "task": "C271",
+  "phase": "C271-P30-operational-plan-review",
+  "owner": "c271-p30-55a168e30426",
+  "checkout": "the C271 worktree ../OntoKin-worktrees/c271",
+  "executor": "the worktree's own .venv/bin/python (CPython 3.12.13, Homebrew python@3.12, macOS 26.6.2 arm64), created with venv --without-pip, holding no package",
+  "commands": {
+    "workflow": ".venv/bin/python tools/chat_workflow.py check",
+    "documentation": ".venv/bin/python docs/maintenance/reorganization-2026-10-17/verify_reorganization.py --json-output <working evidence directory>/checks/<run>/docs",
+    "whitespace": "git diff --cached --check on the staged files of each commit"
+  },
+  "output_location": "../OntoKin-local/c271-p30/checks/<run>/ beside the clone",
+  "runs": [
+    {
+      "run": "baseline",
+      "tree_checked": "before the declaration",
+      "commit": "4ee55b037b909b36cb8a6330aa07ccc78071af88",
+      "workflow": {
+        "result": "passed",
+        "observed": "Workflow structure passed (12 tasks).",
+        "output_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+      },
+      "documentation": {
+        "result": "passed",
+        "documents": 1668,
+        "local_links": 6399,
+        "failures": 0,
+        "output_sha256": "ffe456cfbb85e7f8bfae530fc2ed1d5b279e99980226e570a0c01060c6eac45e"
+      }
+    },
+    {
+      "run": "declaration",
+      "tree_checked": "the staged declaration, before its commit",
+      "commit": "7a4ab16248ed071a211ded3e24e1558ec064f0b1",
+      "workflow": {
+        "result": "passed",
+        "observed": "Workflow structure passed (12 tasks).",
+        "output_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+      },
+      "documentation": {
+        "result": "passed",
+        "documents": 1669,
+        "local_links": 6413,
+        "failures": 0,
+        "output_sha256": "e437bcef0d59226c48e528233dc366ca82dce584944635ea41c3f565c2429079"
+      },
+      "whitespace": "passed"
+    },
+    {
+      "run": "candidate",
+      "tree_checked": "the staged candidate, before its commit",
+      "commit": "8aa4a80012a14a521a441b306635c4fad68ca573",
+      "workflow": {
+        "result": "passed",
+        "observed": "Workflow structure passed (12 tasks).",
+        "output_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+      },
+      "documentation": {
+        "result": "passed",
+        "documents": 1670,
+        "local_links": 6429,
+        "failures": 0,
+        "output_sha256": "9c8e401426373c0b5e8550e7b25beb33a18f446a91c109dbe368ebfdb8274e57"
+      },
+      "whitespace": "passed"
+    },
+    {
+      "run": "interim",
+      "tree_checked": "the staged review record, before its commit",
+      "commit": "b17963d4d4bc57183a494341176b7edacc9987d5",
+      "workflow": {
+        "result": "passed",
+        "observed": "Workflow structure passed (12 tasks).",
+        "output_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+      },
+      "documentation": {
+        "result": "passed",
+        "documents": 1671,
+        "local_links": 6429,
+        "failures": 0,
+        "output_sha256": "281c9e06084a72defb0c0fb199aa2bcde82bc6f4c5c3d2d7c1d6e342596be3fa"
+      },
+      "whitespace": "passed"
+    },
+    {
+      "run": "corrected",
+      "tree_checked": "the staged corrected candidate, before its commit",
+      "commit": "96847fae5c3f0a6d9e9d6da3095b056a8b929b62",
+      "workflow": {
+        "result": "passed",
+        "observed": "Workflow structure passed (12 tasks).",
+        "output_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+      },
+      "documentation": {
+        "result": "passed",
+        "documents": 1671,
+        "local_links": 6434,
+        "failures": 0,
+        "output_sha256": "8a65ef07de16e35fab8029758f2668261f9b31801153dac403c9aad9177ea33e"
+      },
+      "whitespace": "passed"
+    },
+    {
+      "run": "final",
+      "tree_checked": "the final records before CHECKS.json existed",
+      "commit": null,
+      "workflow": {
+        "result": "failed",
+        "observed": "Workflow check failed:",
+        "output_sha256": "5ac9d4c177b22c4de0daaba24c5a4078dada53658de20546ec6a2fb47218668e",
+        "detail": "check P30 workflow check of this branch.evidence[0]: missing file docs/engineering/localized-repair-c271/operational-plan-review-p30/CHECKS.json"
+      },
+      "documentation": {
+        "result": "failed",
+        "documents": 1673,
+        "local_links": 6454,
+        "failures": 1,
+        "output_sha256": "99d34b27b22b17373706547a158ac7ebc948824914353a0347869e1949765153",
+        "detail": "P30-SESSION.md line 137: local target ../../../engineering/localized-repair-c271/operational-plan-review-p30/CHECKS.json does not exist"
+      },
+      "whitespace": "not run before the failure",
+      "cause": "Both checks failed on one cause: CHECKS.json, cited by task.json's new check entries and by P30-SESSION.md, did not exist yet. Recorded as a failure; the checks were run again after this file was written."
+    }
+  ],
+  "final_tree_run": "The run of the records commit that carries this file is recorded in the phase's closing record (CLOSING.json), because this file cannot record checks of its own final tree.",
+  "not_run": "No routine driver, unit test or behavioural test; they are excluded from this phase."
+}

@@ -4,15 +4,15 @@
   "latest_task": "C271",
   "active_task": "C271",
   "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-  "snapshot_date": "2026-11-26T03:20:00Z",
+  "snapshot_date": "2026-11-26T04:20:00Z",
   "next_action": {
     "status": "ready",
-    "summary": "C271-P30-operational-plan-review is declared and in progress: review the /0.1.5 operational plan against the published P29 candidate and current host facts; require a concrete reason for any further preparation work, assess whether an existing executor meets the adopted contract before more host tooling is built, make any executor substitution explicit and keep the original test meaning; read the original qualification plan and its later adopted supplements before any execution. Stop at the independently reviewed outcome or the first concrete blocker. H0, H1, the required regression (R03), reviewed integration with actual-main verification (R04) and parent completion with final delivery (R05) follow as further separate phases.",
+    "summary": "C271's next phase is route C's first phase, selected by the owner on 2026-11-25 (America/Denver): design only. Write a new, versioned contract for the owner's macOS arm64 executor that substitutes, explicitly, the Node build (v24.22.1 kept, a darwin-arm64 build pinned by its own bytes), the qualification Python, the host inspection, the process supervisor and the provider's and probe's host bindings, as REVIEW-OUTCOME.md section 6 of C271-P30 describes; keep the original test meaning (the seven method bodies, the reader bytes, thresholds, limits, three real checker starts, the no-skip rule and the numerical audit); label every result with that executor; keep the unmet Linux-contract gates unmet; obtain independent review and adoption before any implementation. It installs no host tooling and implements nothing. Declare it in C271's records before its substantive work. H0 and H1 (or their reviewed replacements), R03, R04 and R05 follow as separate phases.",
     "suggested_task": "C271",
     "sources": [
       "docs/workflow/tasks/C271/task.json",
       "docs/workflow/tasks/C271/P30-SESSION.md",
-      "docs/engineering/localized-repair-c271/operational-plan-review-p30/PHASE.json"
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md"
     ]
   },
   "historical_handoff": {
@@ -3282,7 +3282,7 @@
     "record": "docs/engineering/localized-repair-c271/operational-plan-review-p30/PHASE.json",
     "session_checkpoint": "docs/workflow/tasks/C271/P30-SESSION.md",
     "declared_at_utc": "2026-11-26T03:20:00Z",
-    "status": "declared_review_pending",
+    "status": "review_complete_route_c_selected",
     "owner_direction": {
       "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
       "question": "Should I start the /0.1.5 operational-plan review as C271's next phase?",
@@ -3290,15 +3290,23 @@
       "how_received": "Typed by the owner in the Claude Code session that started this phase's session and relayed to this session word for word as the owner's selection of this phase."
     },
     "gates_still_open": [
-      "/0.1.5 operational-plan review (this phase, in progress)",
-      "H0",
-      "H1",
+      "route C design (next, selected)",
+      "H0 and H1, or their reviewed replacements",
+      "N34 and N57",
       "required regression (R03)",
       "reviewed integration and actual-main verification (R04)",
       "parent completion and final delivery (R05)"
     ],
     "dated_notes": [
       "2026-11-26 (UTC): the R06 archive and its receipt in the owner's downloads folder are byte-identical to the copies that R07 used beside the clone (cmp exit 0 for both; recorded sizes and SHA-256). R07's records call them not observed, which held for the R07 session. The match was found after R07 by the session that started this one and observed again in this phase. R07's records stay unchanged; R07's working evidence is in ../OntoKin-local/c271-p29-r07/ beside the clone. Record: docs/engineering/localized-repair-c271/operational-plan-review-p30/R06-DOWNLOADS-COPIES.json."
-    ]
+    ],
+    "completed_at_utc": "2026-11-26T04:20:00Z",
+    "owner_decision_after_outcome": {
+      "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+      "question": "Which route should C271 take next?",
+      "reply": "Design macOS contract (C)",
+      "how_received": "Typed by the owner in the Claude Code session that started this phase's session and relayed to it word for word.",
+      "effect": "Route C of REVIEW-OUTCOME.md section 6 is selected. Its first phase is design only: a new, versioned contract for the owner's macOS arm64 executor, independently reviewed and adopted before any implementation. It keeps the original test meaning, labels results with that executor, keeps the unmet Linux-contract gates unmet, installs no host tooling and implements nothing."
+    }
   }
 }

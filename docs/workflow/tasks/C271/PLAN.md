@@ -520,3 +520,14 @@ Local mode, on the owner's selection of November 25, 2026 ([phase declaration](.
 Ordered steps: declare the phase and push this recoverable checkpoint; read the inputs that R07's Continuation names, at the published head, with their identities ([read set](../../../engineering/localized-repair-c271/operational-plan-review-p30/READ-SET.json)); tabulate what the adopted contract, as supplemented through `/0.1.5` and implemented by P29, requires of the executor and its inputs; gather current host facts read-only and compare each existing executor with those requirements; relate P26's `remaining_h0_constraint` to the published candidate in a new record; give each candidate preparation item a concrete reason or record it as not selected; state every executor substitution explicitly with its effect on the original test meaning; obtain a fresh-context independent review and resolve its mandatory findings; record the outcome; run this branch's workflow check, documentation verifier and a whitespace check scoped to this phase's files; push without force and read the push back; comment once on PR274 and issue273; and stop.
 
 A failed check leaves the phase partial with the one remaining action recorded; a failed method is not retried unchanged. Not part of this phase: H0, H1 and later qualification stages, Node, `ldd` and direct loader starts, the routine driver and behavioural tests, installation and host tooling, an executable inspection plan, operational-plan adoption, the required regression, main integration, branch deletion and parent closure.
+
+### P30 review outcome (2026-11-26, UTC)
+
+Every step ran as planned, with one review cycle more than planned:
+- declaration `7a4ab16248ed071a211ded3e24e1558ec064f0b1`;
+- candidate `8aa4a80012a14a521a441b306635c4fad68ca573`, rejected on F-01;
+- review record `b17963d4d4bc57183a494341176b7edacc9987d5`;
+- corrected candidate `96847fae5c3f0a6d9e9d6da3095b056a8b929b62`, accepted on re-review with nonmandatory findings;
+- the final records, with those findings resolved.
+
+Each push was without force and read back from the remote. The outcome is P30-EXECUTOR-001 ([review outcome](../../../engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md)). The owner then chose route C. The next phase, not begun here, is route C's design-only phase: a new versioned contract for the owner's macOS arm64 executor, declared in C271's records before its substantive work. H0 and H1 (or their reviewed replacements on the substituted executor), R03, R04 and R05 follow as separate phases.

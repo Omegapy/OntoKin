@@ -5,7 +5,7 @@
   "owner": "c271-p30-55a168e30426",
   "review": "INDEPENDENT-REVIEW-001",
   "candidate_commit": "8aa4a80012a14a521a441b306635c4fad68ca573",
-  "recorded_at_utc": "2026-11-26T04:10Z",
+  "recorded_at_utc": "2026-11-26T04:04Z",
   "dispositions": [
     {
       "id": "F-01",
@@ -77,6 +77,58 @@
       "severity": "nonmandatory",
       "disposition": "resolved",
       "change": "Route A attributes a runtime change to E4 and a host-image change to E5 to E7; E2 comes from the retained archive."
+    },
+    {
+      "id": "F-12",
+      "severity": "nonmandatory",
+      "disposition": "resolved_after_re_review",
+      "verified_by_director": "tools/prepare_current_host_readback.py lines 215 (renameat2) and 274 (sys.platform == 'linux')",
+      "change": "E16 names the Linux-only preparer; route C substitutes it; X1 lists E16 instead of E14, with E14's state stated; the host-class list counts E16."
+    },
+    {
+      "id": "F-13",
+      "severity": "nonmandatory",
+      "disposition": "resolved_after_re_review",
+      "change": "X4 separates the ChatGPT hosts, on which pins were observed and which mean browser mode, from other remote sandboxes, which have no defined mode."
+    },
+    {
+      "id": "F-14",
+      "severity": "nonmandatory",
+      "disposition": "resolved_after_re_review",
+      "change": "X6 attributes only what the reviewer observed: three Mach-O arm64 bundled builds and their sizes, manifest versions for two, Electron's architecture not observed, Python 3.9.6 from main's HOST-INVENTORY."
+    },
+    {
+      "id": "F-15",
+      "severity": "nonmandatory",
+      "disposition": "resolved_after_re_review",
+      "change": "Route E has an explicit unchanged list; the claims list covers /0.1.1 to /0.1.5."
+    },
+    {
+      "id": "F-16",
+      "severity": "nonmandatory",
+      "disposition": "resolved_after_re_review",
+      "verified_by_director": "provider _verify_source (line 326) and the boot identity in _verify_host (lines 474-476)",
+      "change": "R04 needs a reviewed selection-rule decision alongside route C or E; the recommendation includes that decision."
+    },
+    {
+      "id": "F-17",
+      "severity": "nonmandatory",
+      "disposition": "resolved_after_re_review",
+      "change": "The corrections' time is 04:04Z, the commit time of 96847fae."
+    },
+    {
+      "id": "F-18",
+      "severity": "nonmandatory",
+      "disposition": "resolved_after_re_review",
+      "change": "E19's range is 441-520; the supervisor's Darwin failure is listed as a source inference; the outcome checkpoint marks the two lines added to the declaration version at 96847fae."
     }
-  ]
+  ],
+  "second_review": {
+    "review": "INDEPENDENT-REVIEW-002",
+    "candidate_commit": "96847fae5c3f0a6d9e9d6da3095b056a8b929b62",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "f01_to_f11": "resolved, as the re-review confirms",
+    "recorded_at_utc": "2026-11-26T04:20Z",
+    "note": "F-12 to F-18 are resolved after the re-review, without a further review."
+  }
 }

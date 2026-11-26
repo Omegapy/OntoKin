@@ -13,8 +13,11 @@ this host are left out.
 **Corrected version.** The first version, commit `8aa4a80012a14a521a441b306635c4fad68ca573`, was
 rejected by the [independent review](INDEPENDENT-REVIEW-001.md) on one mandatory finding, F-01:
 route C omitted the Linux-only original supervisor and the provider's and probe's Linux host
-bindings. This version resolves F-01 and the ten nonmandatory findings
-([dispositions](REVIEW-DISPOSITION.json)).
+bindings. The corrected version, commit `96847fae5c3f0a6d9e9d6da3095b056a8b929b62`, resolves F-01
+and the ten nonmandatory findings. The [re-review](INDEPENDENT-REVIEW-002.md) accepted it with
+seven nonmandatory findings, F-12 to F-18. This final version resolves those after the re-review,
+without a further review. [REVIEW-DISPOSITION](REVIEW-DISPOSITION.json) maps every finding to its
+change.
 
 Nothing in this review ran H0, H1, Node, `ldd`, a loader, the routine driver, the unit suite or a
 behavioural test. Host facts were gathered read-only (platform identification and tool presence).
@@ -87,12 +90,12 @@ gives each with its source and lines.
 | E13 | The original supervisor `prototypes/static_tray_v01/supervisor.py` for H1's commands and for the three CPU checkers, called once per checker through the provider. It is Linux-only: it sets `prctl(PR_SET_CHILD_SUBREAPER)` and otherwise stops with "Cannot establish Linux descendant reaping". | P05 contract sections 3 and 7; P07 section 1 (H1); supervisor lines 171–173; inspector `_load_helpers`, `_run_command` |
 | E14 | The seven package metadata pins of `tools/native-reader-verification-linux-cp312.lock` | inspector `_check_metadata`; provider `_python_pins` |
 | E15 | The exact launcher `-I -S -B`, whose environment equals the declared one | inspector `_check_launcher` |
-| E16 | The existing preparer's installation receipts (`INSTALLED_EXACT` or `ALREADY_PRESENT_EXACT`, with zero Node, `ldd` and checker starts) | inspector `_check_installation`; P07 section 2 |
+| E16 | The existing preparer `tools/prepare_current_host_readback.py` and its installation receipts (`INSTALLED_EXACT` or `ALREADY_PRESENT_EXACT`, with zero Node, `ldd` and checker starts). The preparer is Linux-only: it publishes with `renameat2` and installs only when `sys.platform == "linux"`. | inspector `_check_installation`; preparer lines 215 and 274; P05 contract section 5; P07 section 2 |
 | E17 | The outer capture's authority and log descriptors: an existing external evidence parent, absent per-attempt output paths and an approved failure capture | P07 section 2 |
 | E18 | The admitted Git closure of the source commands | inspector `_check_git` |
-| E19 | The provider's and probe's host bindings: Linux platform, glibc, the procfs boot identity, the `ldd` role, an ELF interpreter for Node, the Linux Node pin and the linux-cp312 lock | provider `_verify_host`, `_python_pins` (lines 441–488); probe lines 54 and 451–461 |
+| E19 | The provider's and probe's host bindings: Linux platform, glibc, the procfs boot identity, the `ldd` role, an ELF interpreter for Node, the Linux Node pin and the linux-cp312 lock | provider `_verify_host`, `_python_pins` (lines 441–520); probe lines 54 and 451–461 |
 
-E1 to E8, E13, E14 and E19 are properties of one class of host: the disposable Linux x86-64 hosts
+E1 to E8, E13, E16 and E19 are properties of one class of host: the disposable Linux x86-64 hosts
 of the ChatGPT browser threads, whose Codex runtime supplied the Node build and the author Python.
 P23 observed all three Python, libc and loader pins matching on such a host
 (`h0-plan-p23/readiness/run001.stdout.json`). P26's observations ran on the same kind of host:
@@ -105,12 +108,12 @@ with a supplement at 04:01:12Z.
 
 | ID | Executor | Observed or recorded | Verdict |
 | --- | --- | --- | --- |
-| X1 | The owner's persistent local environment: the main checkout's and this worktree's `.venv` | Darwin 25.6.0, macOS 26.6.2 (25G83), arm64 (Apple M3 Ultra), native; CPython 3.12.13 (Homebrew), Mach-O arm64; Homebrew Node.js, Mach-O arm64 (v25.9.0 by main's doctor); no `/usr/bin/ldd`, `/lib64`, `/lib/x86_64-linux-gnu`, `/usr/lib/x86_64-linux-gnu` or `/etc/ld.so.cache` | **Does not meet** E1, E2, E4 to E7, E13, E14 and E19. For `/0.1.1` and later plans, the inspector's author-runtime check (E4) runs before its static host check (E1); either refuses this host (*source inference*). The E2 build is a Linux x86-64 executable, and the original supervisor cannot run on Darwin. |
+| X1 | The owner's persistent local environment: the main checkout's and this worktree's `.venv` | Darwin 25.6.0, macOS 26.6.2 (25G83), arm64 (Apple M3 Ultra), native; CPython 3.12.13 (Homebrew), Mach-O arm64; Homebrew Node.js, Mach-O arm64 (v25.9.0 by main's doctor); no `/usr/bin/ldd`, `/lib64`, `/lib/x86_64-linux-gnu`, `/usr/lib/x86_64-linux-gnu` or `/etc/ld.so.cache` | **Does not meet** E1, E2, E4 to E7, E13, E16 and E19. For `/0.1.1` and later plans, the inspector's author-runtime check (E4) runs before its static host check (E1); either refuses this host (*source inference*). The E2 build is a Linux x86-64 executable. The original supervisor cannot run on Darwin: its `prctl` lookup through `ctypes` fails there (*source inference*). E14 compares package names and versions; main's `.venv` holds the seven pinned versions, and only the worktree's empty `.venv` fails it. |
 | X2 | A container or virtual machine on this host | None installed: Docker, Podman, nerdctl, Colima, Lima, OrbStack, Multipass, Vagrant, QEMU, UTM, Parallels, VMware Fusion, VirtualBox and Apple's `container` are all absent. The OS supports hardware virtualization (`kern.hv_support` 1), and Rosetta for Linux is present. Main's `linux-container` profile is unconfigured and records that "an emulated amd64 container is never native Linux qualification". | **None exists.** An amd64 guest here would be emulated. Rosetta for Linux translates x86-64 code inside an arm64 guest, which is translation, not native execution: the main rule applies by inference. An arm64 Linux guest would run natively but fails the x86-64 pins (route E). Either needs new host tooling. |
 | X3 | GitHub's hosted runners | Hosted jobs are optional, manual-only and default-false under the owner's no-payment direction (OK-ENG-006). In local mode, checks run on the owner's prepared environment or a dedicated machine that the check names. Not observed in this phase, but general knowledge: GitHub's Linux runners are Ubuntu images, while the pinned libc and loader bytes are those of Debian's glibc `2.41-12+deb13u4`, and they lack the Codex runtime's Python image. | **Does not meet** E4 to E6 (*inference*; E7 not established), and is outside the local-mode executor rule without a separate owner decision |
-| X4 | A disposable ChatGPT browser-thread host, or another remote agent sandbox | The class of host on which every pin was first observed and on which P23 observed them matching | **Not an executor of this local session.** Using one means running that phase in browser mode, on explicit owner direction, under the ephemeral-host rule. Each pin must be observed afresh there, because a match on an earlier host does not carry over. |
+| X4 | A disposable ChatGPT browser-thread host, or another remote agent sandbox | The ChatGPT hosts are the class on which every pin was first observed and on which P23 observed them matching. Other remote agent sandboxes are not local, have no defined execution mode in this project, and have had no pin observed. | **Not an executor of this local session.** Using a ChatGPT host means running that phase in browser mode, on explicit owner direction, under the ephemeral-host rule. Each pin must be observed afresh there, because a match on an earlier host does not carry over. |
 | X5 | Another machine of the owner | None named. This session's startup report asked whether a Linux x86-64 machine or VM should be considered, as the [session checkpoint](../../../workflow/tasks/C271/P30-SESSION.md) records; the owner's reply selected the phase and named none. | Nothing to compare |
-| X6 | Other Node and Python executables on this host | Observed by the independent reviewer (F-02), not re-observed by the Director: Node builds bundled inside three installed applications (24.14.0, 24.22.3 and one whose version was not read) and Node embedded through Electron, all Mach-O arm64; uv-managed CPython 3.12.11 and 3.11.14 and the system Python 3.9.6 | **Does not meet** E2 or E4. None is `v24.22.1` or 126,951,512 bytes, and none is the pinned Linux image. |
+| X6 | Other Node and Python executables on this host | Observed by the independent reviewer (F-02), not re-observed by the Director. Node builds are bundled inside three installed applications: Mach-O arm64, 119,131,584, 116,285,408 and 122,545,856 bytes. Their applications' manifests state 24.14.0 and 24.22.3 for two of them; no version was read from a binary. Several applications also embed Node through Electron (architecture not observed). The Python interpreters are uv-managed CPython 3.12.11 and 3.11.14, and the system `/usr/bin/python3`, a universal binary that main's HOST-INVENTORY gives as CPython 3.9.6. | **Does not meet** E2 or E4. No bundled build has 126,951,512 bytes or the Linux file format, and none of the interpreters is the pinned Linux image. |
 
 Two further host facts bear on later gates:
 
@@ -201,6 +204,8 @@ requires for another build.
   - the host bindings (E19): the provider's host verification and its HOST, lock and
     configuration schemas, and the probe's bootstrap bindings (Linux platform, glibc, boot
     identity, ELF interpreter, `ldd` role, Node pin and linux-cp312 lock).
+  - the existing preparer (E16), which publishes with `renameat2` and installs only on Linux. P05
+    section 5's atomic no-replace installation needs a reviewed macOS equivalent.
 - *Unchanged:*
   - the seven method bodies, `check_case` and the seam bodies;
   - the synthetic GLBs and the independent geometry oracle;
@@ -226,9 +231,16 @@ valid on this unqualified host".
 **E: A native arm64 Linux guest on this host.** It runs under the host's hardware
 virtualization, which is not emulation.
 
-- *Unchanged:* Linux and glibc, the original supervisor and its child-subreaper reaping (E13), the
-  procfs and `ldd` bindings, and the ELF closure model. The inspector's platform check already
-  accepts `aarch64`.
+- *Unchanged:*
+  - Linux and glibc, the procfs and `ldd` bindings, and the ELF closure model. The inspector's
+    platform check already accepts `aarch64`.
+  - the original supervisor and its child-subreaper reaping (E13), and the Linux preparer (E16);
+  - the seven method bodies, `check_case` and the seam bodies;
+  - the synthetic GLBs and the independent geometry oracle;
+  - the 24 reader files, byte for byte;
+  - the probe's scientific body, the thresholds and limits;
+  - exactly three real checker starts through the original supervisor;
+  - the no-skip rule and the independent numerical audit.
 - *Substitutes, by versioned amendment:*
   - every architecture-bound pin: the Node build (linux-arm64), the author Python, the libc,
     loader and catalog images, the RTLD path list, the `ldd` script and the linux-cp312 lock
@@ -245,8 +257,8 @@ virtualization, which is not emulation.
 - a Linux x86-64 qualification;
 - the historical C199/C225 replay;
 - a P05 Gate H for the Codex Node build;
-- any statement that the x86-64 ELF policies of `/0.1.2` to `/0.1.5` were exercised on a real
-  host;
+- any statement that the ELF policies of `/0.1.1` to `/0.1.5`, all bound to the x86-64 Codex
+  images, were exercised on a real host;
 - N34 for the Linux x86-64 loader.
 
 Route C cannot support the original supervisor's Linux descendant-reaping guarantees either.
@@ -255,8 +267,8 @@ the unmet Linux-contract gates, which stay recorded as unmet.
 
 **Recommendation (for the owner to decide).** If C271 is to reach R03 and R04 in local mode, the
 next phase should be design only: an independently reviewed decision between route C and route E,
-made before any host tooling is built. Another reviewed amendment of the driver's selection rule
-would also be a candidate.
+made before any host tooling is built. It should also decide the driver's selection rule for
+main's ordinary local routine (section 7).
 
 - Route E keeps more of the original test meaning: Linux, glibc, the original supervisor and the
   ELF closure model. It needs a virtualization tool, an arm64 guest and new arm64 pins and image
@@ -274,8 +286,13 @@ Linux x86-64 form, but they depend on a disposable host or on a machine that has
 - **R04:** integration brings this branch's driver and test into main ([MAIN-CONFLICTS](../p29-local-publication-r07/MAIN-CONFLICTS.md)
   keeps C271's readback bindings). Without a qualified selection, main's default local routine on
   the owner's executor would then refuse to start, where it now skips three methods (*source
-  inference*). R04 therefore needs a reviewed resolution: route C, route E, or another reviewed
-  amendment of the selection rule.
+  inference*).
+  - The selection binds one exact clean commit and tree (provider `_verify_source`) and the current
+    boot (`_verify_host`). So after integration, every routine run on main, including a run on
+    uncommitted changes, would need a new approved selection, whichever executor is qualified.
+  - Under route E, the selection would exist only inside the guest.
+  - R04 therefore needs a reviewed decision on the selection rule alongside route C or E, not
+    instead of them.
 - **N34 and N57:** open in every route.
 - **R05:** follows R03 and R04, unchanged.
 
@@ -284,8 +301,13 @@ Linux x86-64 form, but they depend on a disposable host or on a machine that has
 - The executor inventory covers platform identity, the presence of common container and
   virtualization tools, and (through the reviewer) other Node and Python executables. No network or
   remote host was probed, and no SSH configuration was read. The owner named no other machine.
-- The inspector's refusal of this host and the driver's refusal to start are source inferences.
-  Neither was executed. So are the statements about Rosetta for Linux and about an arm64 guest.
+- The following are source inferences, none of them executed:
+  - the inspector's refusal of this host;
+  - the driver's refusal to start;
+  - the original supervisor's failure on Darwin, where its `prctl` lookup through `ctypes` fails
+    before the quoted `Stop`;
+  - the preparer's Linux-only installation;
+  - the statements about Rosetta for Linux and about an arm64 guest.
 - No statement is made about the current contents of the Codex runtime.
 - Main's doctor ran before the declaration, as step 5 of LOCAL-START-HERE requires. It started
   Homebrew's Node.js once with `--version` and read npm's version from npm's own manifest; npm was
@@ -293,4 +315,5 @@ Linux x86-64 form, but they depend on a disposable host or on a machine that has
   in this phase.
 - The declaration states `declared_at_utc` 03:20Z, but its commit time, 2026-11-26T03:19:02Z, is
   the correct one. The first version of these records stated 03:40Z, but their commit time,
-  03:28:47Z, is the correct one.
+  03:28:47Z, is the correct one. The corrected version stated 04:10Z for its corrections, but its
+  commit time, 04:04:02Z, is the correct one; the records now say 04:04Z.

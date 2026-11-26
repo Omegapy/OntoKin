@@ -79,10 +79,10 @@
         "E6",
         "E7",
         "E13",
-        "E14",
+        "E16",
         "E19"
       ],
-      "reason": "Darwin arm64 without glibc, an ELF loader or ldd. For /0.1.1 and later plans the inspector's author-runtime check (E4, line 3011) runs before its static host check (E1, line 3013); either refuses this host (source inference). The E2 build is a Linux x86-64 executable, and the original supervisor (E13) cannot run on Darwin."
+      "reason": "Darwin arm64 without glibc, an ELF loader or ldd. For /0.1.1 and later plans the inspector's author-runtime check (E4, line 3011) runs before its static host check (E1, line 3013); either refuses this host (source inference). The E2 build is a Linux x86-64 executable. The original supervisor (E13) cannot run on Darwin: its prctl lookup through ctypes fails there (source inference). The preparer (E16) installs only on Linux. E14 compares package names and versions: main's .venv holds the seven pinned versions; only the worktree's empty .venv fails it."
     },
     {
       "id": "X2",
@@ -106,7 +106,7 @@
       "id": "X4",
       "executor": "a disposable ChatGPT browser-thread host, or another remote agent sandbox",
       "verdict": "not_an_executor_of_this_local_session",
-      "reason": "The class of host on which the pins were observed (P23: all three matched). Using one means running that phase in browser mode on explicit owner direction under the ephemeral-host rule; every pin must be observed afresh there."
+      "reason": "The ChatGPT/Codex hosts are the class on which the pins were observed (P23: all three matched). Using one means running that phase in browser mode on explicit owner direction under the ephemeral-host rule; every pin must be observed afresh there. Other remote agent sandboxes are not local, have no defined execution mode in this project, and have had no pin observed."
     },
     {
       "id": "X5",
@@ -123,7 +123,7 @@
         "E4"
       ],
       "observed_by": "the independent reviewer (INDEPENDENT-REVIEW-001, F-02); not re-observed by the Director",
-      "reason": "Node builds bundled inside three installed applications (24.14.0, 24.22.3 and one whose version was not read) and Node embedded through Electron, all Mach-O arm64; uv-managed CPython 3.12.11 and 3.11.14 and the system Python 3.9.6. None is v24.22.1 or 126,951,512 bytes, and none is the pinned Linux image."
+      "reason": "Node builds bundled inside three installed applications: Mach-O arm64, 119,131,584, 116,285,408 and 122,545,856 bytes; their applications' manifests state 24.14.0 and 24.22.3 for two of them, and no version was read from a binary. Several applications embed Node through Electron (architecture not observed). uv-managed CPython 3.12.11 and 3.11.14, and the system /usr/bin/python3, a universal binary that main's HOST-INVENTORY gives as CPython 3.9.6. No bundled build has 126,951,512 bytes or the Linux file format, and none of the interpreters is the pinned Linux image."
     }
   ],
   "conclusion": "No existing executor available to this local session meets the adopted contract (P30-EXECUTOR-001).",
@@ -146,9 +146,15 @@
   },
   "corrections": [
     {
-      "corrected_at_utc": "2026-11-26T04:10Z",
+      "corrected_at_utc": "2026-11-26T04:04Z",
       "found_by": "INDEPENDENT-REVIEW-001 F-01 to F-07 and F-09",
       "change": "X1's unmet list and refusal order; X2's virtualization facts and the arm64 guest; X3 labelled as not observed and E7 not established; X5's source; X6 added; absent paths as the raw output shows, with a supplement; the driver fact restated; the doctor's Node start stated exactly. The first version is retrievable from commit 8aa4a800."
+    },
+    {
+      "corrected_at_utc": "2026-11-26T04:20Z",
+      "found_by": "INDEPENDENT-REVIEW-002 F-12, F-13, F-14 and F-17",
+      "reviewed": false,
+      "change": "X1 lists E16 instead of E14, with the reasons; X4 separates the ChatGPT hosts from other sandboxes; X6's attribution is exact; the first correction's time is 04:04Z."
     }
   ]
 }

@@ -7,7 +7,7 @@
   "inputs_identical_to": "Every input is byte-identical to 4ee55b03 except the four workflow records that the declaration updated; in those, the parts this review relies on are unchanged.",
   "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
   "recorded_at_utc": "2026-11-26T03:28Z",
-  "status": "corrected_candidate_pending_re_review",
+  "status": "review_complete_route_c_selected",
   "outcome": "No existing executor available to this local session meets the adopted contract; the /0.1.5 operational plan can be neither prepared nor executed here.",
   "blocker": {
     "id": "P30-EXECUTOR-001",
@@ -77,7 +77,7 @@
     {
       "id": "C",
       "route": "explicit substitution to the owner's macOS arm64 environment through a new reviewed versioned contract",
-      "substitutes": "Node build (v24.22.1 kept, darwin-arm64 build pinned); qualification Python (3.12.13); the host inspection (Linux ELF closure stages replaced by a new reviewed observation); the process supervisor for the CPU checkers and any H1 replacement (Darwin has no child-subreaper equivalent, so the Linux descendant-reaping guarantee is not kept); the provider's host verification with its HOST, lock and configuration schemas and the probe's bootstrap bindings",
+      "substitutes": "Node build (v24.22.1 kept, darwin-arm64 build pinned); qualification Python (3.12.13); the host inspection (Linux ELF closure stages replaced by a new reviewed observation); the process supervisor for the CPU checkers and any H1 replacement (Darwin has no child-subreaper equivalent, so the Linux descendant-reaping guarantee is not kept); the provider's host verification with its HOST, lock and configuration schemas and the probe's bootstrap bindings; the existing preparer, which publishes with renameat2 and installs only on Linux",
       "unchanged": "the seven method bodies, check_case and seam bodies, the synthetic GLBs and geometry oracle, the 24 reader files byte for byte, the probe's scientific body, thresholds and limits, exactly three real checker starts through the substituted supervisor, the no-skip rule and the numerical audit"
     },
     {
@@ -89,15 +89,15 @@
       "id": "E",
       "route": "a native arm64 Linux guest under this host's hardware virtualization",
       "substitutes": "every architecture-bound pin (Node linux-arm64 build, author Python, libc, loader, catalog images, RTLD path list, ldd script, linux-cp312 lock) and P16, P17 and P27's x86-64 image rules, each by versioned amendment; needs a virtualization tool, a guest image and a profile decision",
-      "unchanged": "Linux and glibc, the original supervisor and its child-subreaper reaping, the procfs and ldd bindings, the ELF closure model"
+      "unchanged": "Linux and glibc, the procfs and ldd bindings, the ELF closure model, the original supervisor and its child-subreaper reaping, the Linux preparer; the seven method bodies, check_case and seam bodies, the synthetic GLBs and geometry oracle, the 24 reader files byte for byte, the probe's scientific body, thresholds and limits, exactly three real checker starts through the original supervisor, the no-skip rule and the numerical audit"
     }
   ],
-  "recommendation": "If C271 is to reach R03 and R04 in local mode, the next phase should be design only: an independently reviewed decision between route C and route E (or another reviewed amendment of the driver's selection rule), made before any host tooling is built. Route E keeps more of the original test meaning; route C needs no virtualization tool but substitutes the supervisor's lifecycle mechanism and the host bindings. Otherwise route D. The owner decides; this phase adopts no route.",
+  "recommendation": "If C271 is to reach R03 and R04 in local mode, the next phase should be design only: an independently reviewed decision between route C and route E, made before any host tooling is built, that also decides the driver's selection rule for main's ordinary local routine. Route E keeps more of the original test meaning; route C needs no virtualization tool but substitutes the supervisor's lifecycle mechanism, the preparer and the host bindings. Otherwise route D. The owner decides; this phase adopts no route.",
   "never_supported_by_a_substitution": [
     "Linux x86-64 qualification",
     "historical C199/C225 replay",
     "P05 Gate H for the Codex Node build",
-    "exercise of the x86-64 ELF policies of /0.1.2-/0.1.5 on a real host",
+    "exercise of the ELF policies of /0.1.1-/0.1.5, all bound to the x86-64 Codex images, on a real host",
     "N34 for the Linux x86-64 loader",
     "under route C, the original supervisor's Linux descendant-reaping guarantees"
   ],
@@ -107,7 +107,7 @@
     "N34": "open",
     "N57": "open, external review only",
     "R03": "not_done",
-    "R04": "not_done; after integration, main's default local routine would refuse to start without a qualified readback selection (source inference), so R04 needs a reviewed resolution (route C, route E or another reviewed amendment of the selection rule)",
+    "R04": "not_done; after integration, main's default local routine would refuse to start without a qualified readback selection (source inference). The selection binds one exact clean commit and tree and the current boot, so every main routine run would need a new approved selection whatever executor is qualified; R04 needs a reviewed selection-rule decision alongside route C or E, not instead of them",
     "R05": "not_done"
   },
   "requirements": {
@@ -142,13 +142,31 @@
     ],
     "record": "INDEPENDENT-REVIEW-001-PROVENANCE.json",
     "dispositions": "REVIEW-DISPOSITION.json",
-    "next": "re-review of the corrected candidate by the same reviewer"
+    "next": "none",
+    "second": {
+      "review": "INDEPENDENT-REVIEW-002",
+      "candidate": "96847fae5c3f0a6d9e9d6da3095b056a8b929b62",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS"
+    }
   },
   "corrections": [
     {
-      "corrected_at_utc": "2026-11-26T04:10Z",
+      "corrected_at_utc": "2026-11-26T04:04Z",
       "found_by": "INDEPENDENT-REVIEW-001",
       "change": "Routes C and E, the recommendation, the claims list, R04's consequence, executed_in_phase and recorded_at_utc corrected; the first version is retrievable from commit 8aa4a800."
+    },
+    {
+      "corrected_at_utc": "2026-11-26T04:20Z",
+      "found_by": "INDEPENDENT-REVIEW-002 F-12, F-15, F-16 and F-17",
+      "reviewed": false,
+      "change": "Route C adds the preparer; route E's unchanged list is explicit; /0.1.1 is back in the claims list; R04 and the recommendation add the selection-rule decision; the first correction's time is 04:04Z."
     }
-  ]
+  ],
+  "owner_decision_after_outcome": {
+    "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+    "question": "Which route should C271 take next?",
+    "reply": "Design macOS contract (C)",
+    "how_received": "Typed by the owner in the Claude Code session that started this phase's session and relayed to it word for word.",
+    "effect": "Route C of REVIEW-OUTCOME.md section 6 is selected. Its first phase is design only: a new, versioned contract for the owner's macOS arm64 executor, independently reviewed and adopted before any implementation. It keeps the original test meaning, labels results with that executor, keeps the unmet Linux-contract gates unmet, installs no host tooling and implements nothing."
+  }
 }
