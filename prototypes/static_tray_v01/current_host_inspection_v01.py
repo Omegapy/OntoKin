@@ -82,11 +82,32 @@ ORIGIN_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.1"
 LIBC_PLT_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.2"
 LIBC_STATIC_TLS_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.3"
 RTLD_PATHS_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.4"
+REQUIRED_IMAGES_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.5"
 CLOSURE_PROFILE = "linux-glibc-declared-closure-v1"
 ORIGIN_PROFILE = "linux-glibc-declared-python-origin-rpath-v1"
 LIBC_PLT_PROFILE = "linux-glibc-declared-python-origin-rpath-libc-plt-v1"
 LIBC_STATIC_TLS_PROFILE = "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-v1"
 RTLD_PATHS_PROFILE = "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-rtld-paths-v1"
+REQUIRED_IMAGES_PROFILE = "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-rtld-paths-required-images-v1"
+REQUIRED_IMAGES_SCHEMA = PREFIX + "required-images" + VERSION
+REQUIRED_IMAGES_CATALOG = "debian-glibc-2.41-12+deb13u4-amd64-required-images-v1"
+REQUIRED_IMAGE_TAGS = frozenset((0x70000000, 0x70000001, 0x70000003))
+REQUIRED_IMAGE_BINDINGS = MappingProxyType({
+    "libdl.so.2": MappingProxyType({
+        "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+        "size_bytes": 14408, "mode": "0o644"}),
+    "libm.so.6": MappingProxyType({
+        "sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3",
+        "size_bytes": 977112, "mode": "0o644"}),
+    "libpthread.so.0": MappingProxyType({
+        "sha256": "85e21f7dba0394411d00959176fd18b470e575b0b05f1f4f41e5636802ce0500",
+        "size_bytes": 14408, "mode": "0o644"}),
+    "librt.so.1": MappingProxyType({
+        "sha256": "7b7b84d1aedda0e0b2bdfc68844362782132180b8f02be1300e21e77572e514b",
+        "size_bytes": 14552, "mode": "0o644"}),
+    "libutil.so.1": MappingProxyType({
+        "sha256": "e3981d10efd152a53f083e38f5f9ddde7a049c85d0ab388a5eec91b52fc98a11",
+        "size_bytes": 14408, "mode": "0o644"})})
 RTLD_PATHS_SCHEMA = PREFIX + "rtld-paths" + VERSION
 RTLD_ALIAS = "/lib64/ld-linux-x86-64.so.2"
 RTLD_CANONICAL = "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
@@ -309,7 +330,7 @@ def _rtld_require(condition, rule_id, **kwargs):
 
 
 def _uses_rtld_paths(plan):
-    return plan.get("schema") == RTLD_PATHS_PLAN_SCHEMA
+    return plan.get("schema") in (RTLD_PATHS_PLAN_SCHEMA, REQUIRED_IMAGES_PLAN_SCHEMA)
 
 
 def _rtld_paths_shape(value):
@@ -738,7 +759,11 @@ def _check_rtld_operational_paths(plan, runtime=None, *, check=lambda: None):
     """The only operational entry: actual fixed pins and closure, then two passes."""
     host = plan["host_static"]
     resolution = host["resolution"]
-    libc = _select_rtld_paths_profile(plan["schema"], resolution)
+    if plan["schema"] == REQUIRED_IMAGES_PLAN_SCHEMA:
+        _select_required_images_profile(plan["schema"], resolution)
+        libc = resolution["libc_plt"]
+    else:
+        libc = _select_rtld_paths_profile(plan["schema"], resolution)
     inspector = resolution["inspector_commands"]
     _keys(inspector, "script interpreter commands rtld_candidates".split(), "INSPECTOR")
     _rtld_require(inspector["script"] == RTLD_SCRIPT and host["roles"]["inspector_interpreter"] == "/bin/bash",
@@ -940,7 +965,8 @@ def _strings(value, category, *, nonempty=False):
 
 def _plan_shape(plan):
     _keys(plan, PLAN_KEYS)
-    _require(plan["schema"] in (PLAN_SCHEMA, ORIGIN_PLAN_SCHEMA, LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA, RTLD_PATHS_PLAN_SCHEMA)
+    _require(plan["schema"] in (PLAN_SCHEMA, ORIGIN_PLAN_SCHEMA, LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA,
+                                RTLD_PATHS_PLAN_SCHEMA, REQUIRED_IMAGES_PLAN_SCHEMA)
              and plan["contract"] == CONTRACT, "PLAN", "Unsupported executable inspection plan")
     _require(plan["environment"] == ENVIRONMENT and _canonical(plan["limits"]) == _canonical(LIMITS), "PLAN", "Fixed environment or limits differ")
     _keys(plan["source"], "root commit tree inventory".split())
@@ -984,8 +1010,10 @@ def _plan_shape(plan):
     else:
         _select_origin_profile(plan["schema"], resolution)
         if _uses_rtld_paths(plan):
-            _rtld_require(set(resolution) == set(resolution_keys + ["origin_rpath", "libc_plt", "rtld_paths"]),
-                          "RP-SHAPE", operation="shape")
+            if plan["schema"] != REQUIRED_IMAGES_PLAN_SCHEMA:
+                _rtld_require(set(resolution) == set(resolution_keys + ["origin_rpath", "libc_plt", "rtld_paths"]),
+                              "RP-SHAPE", operation="shape")
+            # The /0.1.5 selector already checked its complete closed shape.
         else:
             _origin_keys(resolution, resolution_keys + ["origin_rpath"] + (["libc_plt"] if _uses_libc_profile(plan) else []))
     _keys(plan["evidence"], "parent attempt_root ancestor_identities outputs outer_capture".split(), "PATH")
@@ -1243,6 +1271,8 @@ def _check_plan_digest(actual_digest, expected_digest):
 
 def _select_origin_profile(schema, resolution):
     """Select a closed input version, never an approval or completeness verdict."""
+    if schema == REQUIRED_IMAGES_PLAN_SCHEMA:
+        _select_required_images_profile(schema, resolution)
     _origin_require(type(resolution) is dict, "PLAN", "profile_selection",
                     "LP-CLOSED-SHAPE", "Missing resolution object")
     profile = resolution.get("profile")
@@ -1256,7 +1286,7 @@ def _select_origin_profile(schema, resolution):
         _select_libc_static_tls_profile(schema, resolution)
     elif schema == RTLD_PATHS_PLAN_SCHEMA:
         _select_rtld_paths_profile(schema, resolution)
-    else:
+    elif schema != REQUIRED_IMAGES_PLAN_SCHEMA:
         _origin_require(schema == ORIGIN_PLAN_SCHEMA and profile == ORIGIN_PROFILE,
                         "PLAN", "profile_selection", "LP-SCHEMA-PROFILE", "Unsupported inspection schema/profile pair")
     origin = resolution.get("origin_rpath")
@@ -1284,7 +1314,8 @@ def _select_origin_profile(schema, resolution):
 
 
 def _uses_libc_profile(plan):
-    return plan.get("schema") in (LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA, RTLD_PATHS_PLAN_SCHEMA)
+    return plan.get("schema") in (LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA,
+                                  RTLD_PATHS_PLAN_SCHEMA, REQUIRED_IMAGES_PLAN_SCHEMA)
 
 
 def _uses_origin_profile(plan):
@@ -1358,9 +1389,13 @@ def _prepare_libc_plt_policy(plan, runtime, python_metadata, *, check=lambda: No
     """Bind the selected edge and actual files anew inside each resolution proof."""
     host, schema = plan["host_static"], plan["schema"]
     resolution = host["resolution"]
-    selector = (_select_rtld_paths_profile if schema == RTLD_PATHS_PLAN_SCHEMA else
-                _select_libc_static_tls_profile if schema == LIBC_STATIC_TLS_PLAN_SCHEMA else _select_libc_plt_profile)
-    value = selector(schema, resolution)
+    if schema == REQUIRED_IMAGES_PLAN_SCHEMA:
+        _select_required_images_profile(schema, resolution)
+        value = resolution["libc_plt"]
+    else:
+        selector = (_select_rtld_paths_profile if schema == RTLD_PATHS_PLAN_SCHEMA else
+                    _select_libc_static_tls_profile if schema == LIBC_STATIC_TLS_PLAN_SCHEMA else _select_libc_plt_profile)
+        value = selector(schema, resolution)
     def image(path):
         matches = []
         for row in resolution["images"]:
@@ -1392,6 +1427,152 @@ def _prepare_libc_plt_policy(plan, runtime, python_metadata, *, check=lambda: No
         descriptor = value[key]
         _bound(descriptor["path"], _binding(descriptor), category="INSPECTOR", private=False, check=check)
     return _freeze({"schema": schema, "subject": value["subject"], "loader": value["loader"]})
+
+
+_REQUIRED_IMAGE_FAILURES = {
+    "RI-PROFILE": ("PLAN", "Unsupported required-image schema/profile pair"),
+    "RI-SHAPE": ("PLAN", "Invalid required-image policy shape"),
+    "RI-CATALOG": ("PLAN", "Unsupported required-image catalog"),
+    "RI-PRIVATE": ("PLAN", "Unsupported private required-image metadata policy"),
+    "RI-SUBJECTS": ("INSPECTOR", "Required-image subjects are not distinct dependency files"),
+    "RI-ROLE": ("INSPECTOR", "Required image is not the bound author-Python dependency"),
+    "RI-DESCRIPTORS": ("INSPECTOR", "Required-image descriptors or aliases disagree"),
+    "RI-PIN": ("INSPECTOR", "Required image is not the selected catalog member"),
+    "RI-LOADER": ("INSPECTOR", "Required-image loader differs from the selected libc/loader pair"),
+    "RI-SONAME": ("INSPECTOR", "Required-image SONAME differs from catalog key"),
+    "RI-ARCH": ("UNSUPPORTED", "Required-image metadata requires x86-64 ET_DYN"),
+    "RI-TRIO": ("UNSUPPORTED", "Required-image metadata requires one complete tag trio")}
+
+
+def _required_image_require(condition, rule_id):
+    category, reason = _REQUIRED_IMAGE_FAILURES[rule_id]
+    _require(condition, category, reason, details={"stage": "required_images", "rule_id": rule_id})
+
+
+def _required_image_checkpoint(check, stage):
+    """Named private work boundary; only the zero-argument callback is invoked."""
+    check()
+
+
+def _select_required_images_profile(schema, resolution):
+    """Select the complete finite /0.1.5 shape without observing any file."""
+    _required_image_require(schema == REQUIRED_IMAGES_PLAN_SCHEMA and type(resolution) is dict
+                            and resolution.get("profile") == REQUIRED_IMAGES_PROFILE, "RI-PROFILE")
+    keys = "profile images needed_edges loader_inputs search_directories inspector_commands ignored_kernel_rows rationale origin_rpath libc_plt rtld_paths required_images".split()
+    _required_image_require(set(resolution) == set(keys), "RI-SHAPE")
+    value = resolution["required_images"]
+    _required_image_require(type(value) is dict and set(value) == {"schema", "catalog", "loader", "subjects"}, "RI-SHAPE")
+    _required_image_require(value["schema"] == REQUIRED_IMAGES_SCHEMA and type(value["subjects"]) is dict
+                            and set(value["subjects"]) == set(REQUIRED_IMAGE_BINDINGS), "RI-SHAPE")
+    for descriptor in (value["loader"], *value["subjects"].values()):
+        _required_image_require(type(descriptor) is dict
+                                and set(descriptor) == {"path", "sha256", "size_bytes", "mode"}, "RI-SHAPE")
+        _required_image_require(type(descriptor["path"]) is str and type(descriptor["sha256"]) is str
+                                and re.fullmatch(r"[0-9a-f]{64}", descriptor["sha256"]) is not None
+                                and type(descriptor["size_bytes"]) is int and descriptor["size_bytes"] >= 0
+                                and type(descriptor["mode"]) is str
+                                and re.fullmatch(r"0o[0-7]{3,4}", descriptor["mode"]) is not None, "RI-SHAPE")
+        try:
+            _absolute(descriptor["path"], links=True)
+        except HostInspectionError:
+            _required_image_require(False, "RI-SHAPE")
+    _required_image_require(value["catalog"] == REQUIRED_IMAGES_CATALOG, "RI-CATALOG")
+    # Keep the earlier selectors exact. The origin selector's common tail
+    # separately checks its unchanged origin object under the actual schema.
+    _libc_plt_shape(resolution["libc_plt"])
+    _rtld_paths_shape(resolution["rtld_paths"])
+    return value
+
+
+def _prepare_required_images_policy(plan, runtime, python_metadata, libc_policy, *, check=lambda: None):
+    """Prove all declared relations before six existing bound-file reads."""
+    _required_image_checkpoint(check, "required_policy_entry")
+    host, schema = plan["host_static"], plan["schema"]
+    resolution, author = host["resolution"], plan["author"]
+    value = _select_required_images_profile(schema, resolution)
+    subjects = {key: value["subjects"][key] for key in sorted(REQUIRED_IMAGE_BINDINGS)}
+    loader, libc = value["loader"], resolution["libc_plt"]
+    inspector = resolution["inspector_commands"]
+    _keys(inspector, "script interpreter commands rtld_candidates".split(), "INSPECTOR")
+    for descriptor in (author["python_descriptor"], author["git_descriptor"],
+                       inspector["script"], inspector["interpreter"]):
+        _binding_shape(descriptor, "INSPECTOR", descriptor=True)
+
+    def named_and_resolved(names):
+        result = set()
+        for name in names:
+            check()
+            _absolute(name, "INSPECTOR", links=True)
+            result.add(name)
+            for aliases in (host["aliases"], runtime["aliases"]):
+                if name in aliases:
+                    alias = aliases[name]
+                    _keys(alias, "resolved_path symlink link_target".split(), "INSPECTOR")
+                    _require(type(alias["symlink"]) is bool
+                             and (alias["link_target"] is None or type(alias["link_target"]) is str),
+                             "INSPECTOR", "Invalid alias shape")
+                    _absolute(alias["resolved_path"], "INSPECTOR", links=True)
+                    result.add(alias["resolved_path"])
+        return result
+
+    fixed = [host["roles"][key] for key in ROLE_SCALARS]
+    fixed += [author["python_descriptor"]["path"], author["git_descriptor"]["path"], author["entry_point"],
+              plan["runtime"]["executable"], runtime["interpreter"], inspector["script"]["path"],
+              inspector["interpreter"]["path"], libc["subject"]["path"], libc["loader"]["path"], loader["path"]]
+    paths = [descriptor["path"] for descriptor in subjects.values()]
+    _required_image_require(len(set(paths)) == len(paths) and set(paths).isdisjoint(named_and_resolved(fixed)),
+                            "RI-SUBJECTS")
+    _strings(runtime["extension_files"], "INSPECTOR")
+    _require(type(inspector["commands"]) is list and inspector["commands"], "INSPECTOR", "Missing reviewed inspector commands")
+    commands = []
+    for descriptor in inspector["commands"]:
+        check()
+        _binding_shape(descriptor, "INSPECTOR", descriptor=True)
+        commands.append(descriptor["path"])
+    _required_image_require(set(paths).isdisjoint(named_and_resolved(runtime["extension_files"] + commands)), "RI-ROLE")
+
+    rows = resolution["images"]
+    _require(type(rows) is list and 0 < len(rows) <= 512, "LOADER", "Missing/excessive ELF image inventory")
+    images = {}
+    for row in rows:
+        check()
+        _keys(row, ("file", "metadata", "resolved_needed"), "LOADER")
+        _binding_shape(row["file"], "LOADER", descriptor=True)
+        images.setdefault(row["file"]["path"], []).append(row)
+    interpreter = python_metadata["interpreter"]
+    loader_path = loader["path"]
+    _required_image_require(isinstance(libc_policy, Mapping) and libc_policy.get("schema") == schema
+                            and loader == libc["loader"] == libc_policy.get("loader")
+                            and libc["subject"] == libc_policy.get("subject")
+                            and type(interpreter) is str and interpreter == runtime["interpreter"]
+                            and interpreter in host["aliases"] and interpreter in runtime["aliases"]
+                            and host["aliases"][interpreter].get("resolved_path") == loader_path
+                            and runtime["aliases"][interpreter].get("resolved_path") == loader_path
+                            and host["aliases"][interpreter] == runtime["aliases"][interpreter]
+                            and [row["file"] for row in images.get(loader_path, [])] == [loader]
+                            and host["files"].get(loader_path) == runtime["files"].get(loader_path) == _binding(loader)
+                            and _binding(loader) == LIBC_LOADER, "RI-LOADER")
+    python_rows = images.get(author["python_descriptor"]["path"], [])
+    _required_image_require(len(python_rows) == 1 and python_rows[0]["file"] == author["python_descriptor"], "RI-ROLE")
+    needed = python_rows[0]["resolved_needed"]
+    roles = host["roles"]["inspector_runtime"] + host["roles"]["shared_libraries"]
+    for key, subject in subjects.items():
+        _required_image_checkpoint(check, "required_policy_each_subject")
+        named = needed.get(key) if isinstance(needed, Mapping) else None
+        path = subject["path"]
+        _required_image_require(key in python_metadata["needed"] and type(named) is str and named in roles
+                                and named in host["aliases"] and named in runtime["aliases"]
+                                and host["aliases"][named].get("resolved_path") == path
+                                and runtime["aliases"][named].get("resolved_path") == path, "RI-ROLE")
+        _required_image_require(host["aliases"][named] == runtime["aliases"][named]
+                                and [row["file"] for row in images.get(path, [])] == [subject]
+                                and host["files"].get(path) == runtime["files"].get(path) == _binding(subject), "RI-DESCRIPTORS")
+        _required_image_require(_binding(subject) == REQUIRED_IMAGE_BINDINGS[key], "RI-PIN")
+    # No partial proof grants metadata dispatch. These are already members of
+    # both complete file maps, so the unchanged snapshots cover every path.
+    for descriptor in (*subjects.values(), loader):
+        _bound(descriptor["path"], _binding(descriptor), category="INSPECTOR", private=False, check=check)
+    return _freeze({"schema": schema, "subjects": subjects, "loader": loader})
 
 
 def _check_origin_bounds(origin, suffixes=None, images=None, *, check=lambda: None):
@@ -1797,9 +1978,29 @@ def _read_libc_static_tls_elf_metadata(path, *, check=lambda: None, require_inte
                               libc_profile=LIBC_STATIC_TLS_PLAN_SCHEMA)
 
 
-def _read_plan_elf_metadata(path, policy, *, check=lambda: None, require_interpreter=False, libc_policy=None):
+def _read_required_image_elf_metadata(path, catalog_key, *, check=lambda: None, require_interpreter=False):
+    """Fixed catalog metadata only; operational admission belongs to the caller."""
+    _required_image_require(type(catalog_key) is str and catalog_key in REQUIRED_IMAGE_BINDINGS, "RI-PRIVATE")
+    return _read_elf_metadata(path, check=check, require_interpreter=require_interpreter,
+                              required_image=catalog_key)
+
+
+def _read_plan_elf_metadata(path, policy, *, check=lambda: None, require_interpreter=False,
+                            libc_policy=None, required_policy=None):
+    if required_policy is not None:
+        _required_image_require(isinstance(required_policy, Mapping)
+                                and required_policy.get("schema") == REQUIRED_IMAGES_PLAN_SCHEMA
+                                and set(required_policy) == {"schema", "subjects", "loader"}
+                                and isinstance(required_policy["subjects"], Mapping)
+                                and set(required_policy["subjects"]) == set(REQUIRED_IMAGE_BINDINGS), "RI-PRIVATE")
+        for key, descriptor in required_policy["subjects"].items():
+            if str(path) == descriptor["path"]:
+                result = _read_required_image_elf_metadata(path, key, check=check,
+                                                           require_interpreter=require_interpreter)
+                _required_image_require(result["soname"] == key, "RI-SONAME")
+                return result
     if libc_policy is not None and str(path) == libc_policy["subject"]["path"]:
-        if libc_policy["schema"] in (LIBC_STATIC_TLS_PLAN_SCHEMA, RTLD_PATHS_PLAN_SCHEMA):
+        if libc_policy["schema"] in (LIBC_STATIC_TLS_PLAN_SCHEMA, RTLD_PATHS_PLAN_SCHEMA, REQUIRED_IMAGES_PLAN_SCHEMA):
             return _read_libc_static_tls_elf_metadata(path, check=check, require_interpreter=require_interpreter)
         _require(libc_policy["schema"] == LIBC_PLT_PLAN_SCHEMA, "PLAN", "Unsupported private libc metadata policy")
         return _read_libc_plt_elf_metadata(path, check=check, require_interpreter=require_interpreter)
@@ -1826,9 +2027,24 @@ def _read_plan_elf_metadata(path, policy, *, check=lambda: None, require_interpr
         raise
 
 
-def _read_elf_metadata(path, *, check=lambda: None, require_interpreter=False, path_rule=None, libc_profile=None):
+def _read_elf_metadata(path, *, check=lambda: None, require_interpreter=False, path_rule=None,
+                       libc_profile=None, required_image=None):
+    if required_image is not None:
+        _required_image_require(type(required_image) is str and required_image in REQUIRED_IMAGE_BINDINGS
+                                and libc_profile is None and path_rule is None, "RI-PRIVATE")
     _require(libc_profile in (None, LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA)
              and (libc_profile is None or path_rule is None), "PLAN", "Unsupported private libc metadata policy")
+    callback_failure = None
+    if required_image is not None:
+        original_check = check
+        def checked():
+            nonlocal callback_failure
+            try:
+                original_check()
+            except BaseException as exc:
+                callback_failure = exc
+                raise
+        check = checked
     path = _absolute(path, "LOADER")
     fd = None
     try:
@@ -1890,12 +2106,23 @@ def _read_elf_metadata(path, *, check=lambda: None, require_interpreter=False, p
         # another image. Audit/filter/auxiliary and other unknown tags can.
         ordinary = set(range(1, 31)) | {32, 33, 34, 35, 36, 37, 0x6FFFFEF5, 0x6FFFFFF0,
                     0x6FFFFFF9, 0x6FFFFFFA, 0x6FFFFFFB, 0x6FFFFFFC, 0x6FFFFFFD, 0x6FFFFFFE, 0x6FFFFFFF}
+        if required_image is not None:
+            _required_image_checkpoint(check, "before_required_image_tag_policy")
+            _required_image_require(machine == 62 and elf_type == 3, "RI-ARCH")
+            ordinary |= REQUIRED_IMAGE_TAGS
         if libc_profile is not None:
             _libc_metadata_checkpoint(check, "before_libc_plt_tag_policy")
             _origin_require(machine == 62 and elf_type == 3, "UNSUPPORTED", "libc_plt_tags", "PLT-ARCH",
                             "Libc PLT metadata requires x86-64 ET_DYN")
             ordinary |= LIBC_PLT_TAGS
         _require(all(tag in ordinary for tag, _ in entries), "UNSUPPORTED", "Unreviewed ELF dynamic loader feature")
+        if required_image is not None:
+            counts = dict.fromkeys(REQUIRED_IMAGE_TAGS, 0)
+            for tag, _ in entries:
+                _required_image_checkpoint(check, "during_required_image_tag_scan")
+                if tag in counts:
+                    counts[tag] += 1
+            _required_image_require(all(count == 1 for count in counts.values()), "RI-TRIO")
         if libc_profile is not None:
             counts = dict.fromkeys(LIBC_PLT_TAGS, 0)
             for tag, _ in entries:
@@ -1905,7 +2132,20 @@ def _read_elf_metadata(path, *, check=lambda: None, require_interpreter=False, p
             _origin_require(all(count == 1 for count in counts.values()), "UNSUPPORTED", "libc_plt_tags", "PLT-TRIO",
                             "Libc PLT metadata requires one complete tag trio")
         # DT_FLAGS: ORIGIN and loader-side binding modes need separate review.
-        if libc_profile == LIBC_STATIC_TLS_PLAN_SCHEMA:
+        if required_image is not None:
+            _required_image_checkpoint(check, "before_required_image_flags")
+            flags, flags1 = [], []
+            for tag, value in entries:
+                _required_image_checkpoint(check, "during_required_image_flags")
+                if tag == 30:
+                    flags.append(value)
+                elif tag == 0x6FFFFFFB:
+                    flags1.append(value)
+            allowed_flags = (0, 8, 24) if required_image == "libm.so.6" else (0, 8)
+            allowed_flags1 = (0, 1, 9, 0x08000000, 0x08000001) if required_image == "librt.so.1" else (0, 1, 0x08000000, 0x08000001)
+            _require(len(flags) <= 1 and len(flags1) <= 1 and all(value in allowed_flags for value in flags)
+                     and all(value in allowed_flags1 for value in flags1), "UNSUPPORTED", "Unsupported dynamic flags")
+        elif libc_profile == LIBC_STATIC_TLS_PLAN_SCHEMA:
             _libc_metadata_checkpoint(check, "before_libc_static_tls_flags")
             flags, flags1 = [], []
             for tag, value in entries:
@@ -1976,12 +2216,16 @@ def _read_elf_metadata(path, *, check=lambda: None, require_interpreter=False, p
                   "soname": string(soname) if soname is not None else None, **paths}
         if libc_profile is not None:
             _libc_metadata_checkpoint(check, "before_final_elf_identity")
+        if required_image is not None:
+            _required_image_checkpoint(check, "before_required_image_final_identity")
         _require(_identity(before) == _identity(os.fstat(fd)) == _identity(path.lstat()), "LOADER", "ELF changed during inspection")
         check()
         return result
     except HostInspectionError:
         raise
     except (OSError, UnicodeError, struct.error, ValueError) as exc:
+        if exc is callback_failure:
+            raise
         raise HostInspectionError("UNSUPPORTED", "Cannot parse bounded ELF metadata", cause=exc) from exc
     finally:
         if fd is not None:
@@ -2106,7 +2350,7 @@ def _check_resolution(plan, author_runtime, *, check=lambda: None):
             declared[name] = row["metadata"]
         _check_origin_bounds(origin, images=declared, check=check)
         origin_images = {}
-        libc_policy = None
+        libc_policy, required_policy = None, None
         if _uses_libc_profile(plan):
             # Read the selected Python first, regardless of declared image order.
             # Its observed dependency and interpreter bind the private libc rule.
@@ -2119,6 +2363,8 @@ def _check_resolution(plan, author_runtime, *, check=lambda: None):
             actual_python = _read_plan_elf_metadata(python_name, policy, check=check)
             _require(python_row["metadata"] == actual_python, "LOADER", "Declared ELF metadata differs")
             libc_policy = _prepare_libc_plt_policy(plan, author_runtime, actual_python, check=check)
+            if plan["schema"] == REQUIRED_IMAGES_PLAN_SCHEMA:
+                required_policy = _prepare_required_images_policy(plan, author_runtime, actual_python, libc_policy, check=check)
             origin_images[python_name] = actual_python
         for row in resolution["images"]:
             check()
@@ -2127,6 +2373,9 @@ def _check_resolution(plan, author_runtime, *, check=lambda: None):
             _bound(name, _binding(descriptor), category="LOADER", private=False, check=check)
             if name in origin_images:
                 actual = origin_images[name]
+            elif required_policy is not None:
+                actual = _read_plan_elf_metadata(name, policy, check=check, libc_policy=libc_policy,
+                                                 required_policy=required_policy)
             elif libc_policy is None:
                 actual = _read_plan_elf_metadata(name, policy, check=check)
             else:

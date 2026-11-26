@@ -1,0 +1,2662 @@
+{
+  "schema": "ontokin.c271.p29-independent-freeze-acceptance/1",
+  "reviewer": "/root/scope_review",
+  "recorded_at_utc": "2026-11-23T23:01:36.736939+00:00",
+  "candidate": "candidate002",
+  "result": "accepted",
+  "blocking_findings": [],
+  "design_defect_found": false,
+  "accepted_freeze": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/docs/engineering/localized-repair-c271/required-images-p29/controls/FREEZE.json",
+    "size_bytes": 30577,
+    "sha256": "a705a493a37d907eb677bc3e207a99670ef2ca3d906ef82087a3a815f218bc09"
+  },
+  "accepted_adapter": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/tests/test_current_host_required_images_v01.py",
+    "size_bytes": 48369,
+    "sha256": "ca650e2b0d2557bb050dcfc5b5269ccc3519d0a357a1ff3a0c2f89d03f5bb717"
+  },
+  "accepted_fixture_manifest": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/docs/engineering/localized-repair-c271/required-images-p29/controls/FIXTURE-MANIFEST.json",
+    "size_bytes": 20972,
+    "sha256": "dd91f1d9d1a5b29b9b54c08eb1a6fca9c9a116274e7907f618280567392f0604"
+  },
+  "unmodified_preimplementation_production": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "size_bytes": 233502,
+    "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a"
+  },
+  "accepted_runner": {
+    "path": "/workspace/scratch/2eb33b59a678/scripts/run_verification.py",
+    "size_bytes": 6746,
+    "sha256": "d24bc4362c18388c37cb6bed7331b88b57976c71557b1cc8bc143c13fc0648ac"
+  },
+  "inherited_cohort": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/docs/engineering/localized-repair-c271/required-images-p29/INHERITED-COHORT.json",
+    "size_bytes": 49870,
+    "sha256": "dab30610b44cdb0596c395505a940722506e2c5535ed58b0984317f261de6efe"
+  },
+  "checks": [
+    {
+      "id": "FA-01",
+      "area": "Independent roles",
+      "result": "passed_static_review",
+      "rationale": "Fixture author /root/handoff_audit and implementer /root/implementation are distinct from reviewer /root/scope_review. Reviewer used standard-library static analysis only and did not author or alter frozen controls or production."
+    },
+    {
+      "id": "FA-02",
+      "area": "Adopted source",
+      "result": "passed_static_review",
+      "rationale": "P27 ADOPTION and all four design documents remain byte-identical at their adopted hashes; all 116 source case fields, not only expected diagnostics, match the crosswalk exactly."
+    },
+    {
+      "id": "FA-03",
+      "area": "Closed frozen bytes",
+      "result": "passed_static_review",
+      "rationale": "The candidate002 FREEZE, sole new adapter, fixture manifest, all 115 frozen payloads and 24 companions have their exact recorded lengths, modes and SHA256. Closed inventories contain no missing or extra file payloads."
+    },
+    {
+      "id": "FA-04",
+      "area": "Mutation preservation",
+      "result": "passed_static_review",
+      "rationale": "Compared with the preserved candidate001 ZIP, 110 original payloads are unchanged. Only README, manifest and adapter changed; MOCK-PRELAUNCH and REVISION are added. All 47 independently decoded inert ELF mutations, 56 reviewed contexts, original crosswalk and COMMANDS remain unchanged."
+    },
+    {
+      "id": "FA-05",
+      "area": "Positive and boundary controls",
+      "result": "passed_static_review",
+      "rationale": "Five actual retained package-image payloads are data only. Synthetic raw controls contain the exact tag/flag/OSABI/size boundary bytes. Read ranges, callback counts, output metadata keys and descriptor-close attempts are measured; opaque trio values do not supply reads or allocation bounds."
+    },
+    {
+      "id": "FA-06",
+      "area": "Shape and relation refusals",
+      "result": "passed_static_review",
+      "rationale": "All selectors, negative descriptor/alias/role/catalog controls and precedence cases have concrete nonempty mutations. Pure constructor refusals use the actual new helper and literal full error dictionaries, with no production-pin replacement or prebuilt refusal injection."
+    },
+    {
+      "id": "FA-07",
+      "area": "Caller controls",
+      "result": "passed_static_review",
+      "rationale": "C01/C02 use real early validation/resolution through the helper boundary. C03 calls two complete real rechecks and requires four fresh constructors/policies and four actual-Python observations. C04/C06 preserve real binding and wrapper paths with the precise scoped observed-SHA fault."
+    },
+    {
+      "id": "FA-08",
+      "area": "FR-001 resolved",
+      "result": "passed_static_review",
+      "rationale": "Actual _recheck and _check_resolution are wrapped by delegating observers. Separate _git_state/_check_git counters and later-stage events are asserted absent on every failed recheck. C06 distinguishes one stipulated initial preflight from two real failed postflight entries."
+    },
+    {
+      "id": "FA-09",
+      "area": "FR-002 resolved",
+      "result": "passed_static_review",
+      "rationale": "C05 now invokes real _run_command and real _launch_check on changed inert temporary-file identity. A counted fake process boundary must remain zero. One stipulated preflight, one real launch check, no later launch guards, literal drift diagnostic, PROVEN_ZERO and complete frozen failure publications are asserted."
+    },
+    {
+      "id": "FA-10",
+      "area": "FR-003 resolved",
+      "result": "passed_static_review",
+      "rationale": "The full thawed returned schema/subjects/loader policy is compared to independent frozen context descriptors. Top-level, nested subject and nested loader immutability and exact six bound-read order remain checked."
+    },
+    {
+      "id": "FA-11",
+      "area": "FR-004 resolved",
+      "result": "passed_static_review",
+      "rationale": "F05 records and guards os.open, requires zero opens/zero bound reads/no returned policy, preserves the exact callback exception object, and requires the sequence to end at exactly the third subject checkpoint."
+    },
+    {
+      "id": "FA-12",
+      "area": "Fault controls",
+      "result": "passed_static_review",
+      "rationale": "Raw callback identity, read-error wrapping, final close-error identity/no retry, and final identity drift use real data reads and descriptor ownership observations. The close-error probe closes its test resource once before raising, preserving the product fault without leaking a descriptor."
+    },
+    {
+      "id": "FA-13",
+      "area": "Frozen command evidence",
+      "result": "passed_static_review",
+      "rationale": "C06 retains the exact fake successful receipt for PID/process_group 12345 through real _run_command/_retain_outcome/on_started/_count_observed. Five C06 and three C05 complete publication payloads/descriptors independently hash correctly and bind the frozen plan; fake starts are clearly separate from actual target starts."
+    },
+    {
+      "id": "FA-14",
+      "area": "Inherited routes",
+      "result": "passed_static_review",
+      "rationale": "Old schema/default routes retain their exact prior errors and cannot invoke new checkpoints. L07/L08 authenticate and execute complete unchanged P16/P17 and P24/P25 corpora with exact method inventories. N34 and historical N57 remain external review obligations, never runtime passes or skips."
+    },
+    {
+      "id": "FA-15",
+      "area": "Inherited cohort",
+      "result": "passed_static_review",
+      "rationale": "The exact 372-ID cohort, all eight modules and five generated-inventory sources are bound. SafeArchiveInstallation uses inert temporary archive controls, not operational installation. The retained driver child is solely inline Python environment transport, with no OntoKin/native readback."
+    },
+    {
+      "id": "FA-16",
+      "area": "Orchestration",
+      "result": "passed_static_review",
+      "rationale": "The separately accepted runner requires this accepted FREEZE hash before command selection/Popen; verifies closed payloads, companions and inventory sources; creates fresh roots; preserves exact argv, source snapshots, raw logs, return codes and source-change observations."
+    },
+    {
+      "id": "FA-17",
+      "area": "Placement",
+      "result": "passed_static_review",
+      "rationale": "FUTURE-SURFACE permits the next implementation phase documentary area. The current Director decision identifies required-images-p29 as new reconstruction, consistent with the adopted scope and preservation of original P27/P28 history. No placement exception or new user permission is required."
+    },
+    {
+      "id": "FA-18",
+      "area": "Unperformed work",
+      "result": "passed_static_review",
+      "rationale": "No product import/test execution, host profiling, native target start, installation, H0/H1, original-seven/full routine, remote write, or claim of missing P28 recovery occurred in this review."
+    }
+  ],
+  "counts": {
+    "literal_adopted_cases": 116,
+    "frozen_payloads": 115,
+    "manifest_payloads": 113,
+    "companions": 24,
+    "synthetic_elf_files": 47,
+    "logical_contexts": 56,
+    "independent_hash_oracle_checks_candidate002": 1238,
+    "static_check_failures": 0,
+    "frozen_mock_publications": 8,
+    "inherited_selected_methods": 372,
+    "inherited_exclusions": 0,
+    "product_imports_or_execution_by_reviewer": 0
+  },
+  "closed_findings": [
+    {
+      "id": "FR-001",
+      "affected": [
+        "RI-C04",
+        "RI-C06"
+      ],
+      "result": "resolved",
+      "candidate001_finding": "The asserted git_reads counter observes _check_git, while _recheck uses the separately stubbed and unobserved _git_state. Other stipulated not-reached stages are unobserved lambdas."
+    },
+    {
+      "id": "FR-002",
+      "affected": [
+        "RI-C05"
+      ],
+      "result": "resolved",
+      "candidate001_finding": "Direct _launch_check refusal is real, but launch_boundary_entered=False is assigned without observing an enclosing command boundary."
+    },
+    {
+      "id": "FR-003",
+      "affected": [
+        "RI-P07"
+      ],
+      "result": "resolved",
+      "candidate001_finding": "Returned policy keys/order/schema/immutability are checked, but returned subject and loader descriptor values are not compared with the frozen coherent values. A corrupted returned policy after correct bound reads could pass."
+    },
+    {
+      "id": "FR-004",
+      "affected": [
+        "RI-F05"
+      ],
+      "result": "resolved",
+      "candidate001_finding": "Zero mocked binding reads does not observe the specified zero descriptor opens; the callback test also lacks an explicit check that the checkpoint sequence stops at the third subject."
+    }
+  ],
+  "case_review": [
+    {
+      "id": "RI-P01",
+      "route": "private_metadata_actual_inert",
+      "expected_sha256": "b18fae917b14d6a3be0cca4823ee255d05a1386a2dcd68df3cbf8df314890751",
+      "source_case_sha256": "b2852954628ade495a811073f22ddca4a409121a7f6601f35a21b30ba4dd6479",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/libdl.so.2.inert",
+        "scope": "repository",
+        "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+        "size_bytes": 14408
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-P02",
+      "route": "private_metadata_actual_inert",
+      "expected_sha256": "01d2dc288c7358d1ad8f83cc9a50cf00fa76eb8458fa269e8d6dd169a9ae1843",
+      "source_case_sha256": "6c8f6fcb76dbd24531995ddc4bb71bdf8ce17053ab59f892e0e8e6764ce5e387",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/libm.so.6.inert",
+        "scope": "repository",
+        "sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3",
+        "size_bytes": 977112
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-P03",
+      "route": "private_metadata_actual_inert",
+      "expected_sha256": "4a7acca5d1fb35bbee0a61c9527785debf6096cfa309fd140b4762ce221dfc98",
+      "source_case_sha256": "225b472e9c13e4dd62b2e50e9ceb1f5ec17776020f434d9f5963748219c574c1",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/libpthread.so.0.inert",
+        "scope": "repository",
+        "sha256": "85e21f7dba0394411d00959176fd18b470e575b0b05f1f4f41e5636802ce0500",
+        "size_bytes": 14408
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-P04",
+      "route": "private_metadata_actual_inert",
+      "expected_sha256": "8ad28637ca8ffdbe0c7b9575225c917ed75eb6e9ea1e469b2d43c9b427de759f",
+      "source_case_sha256": "fcebaab7718b08e2739420ea4e66d9bcb8076d2815aa2c212236bcc2183a49aa",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/librt.so.1.inert",
+        "scope": "repository",
+        "sha256": "7b7b84d1aedda0e0b2bdfc68844362782132180b8f02be1300e21e77572e514b",
+        "size_bytes": 14552
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-P05",
+      "route": "private_metadata_actual_inert",
+      "expected_sha256": "ddb24003bdca99fed9107a8f2faf176f67215079bee53bec19796dfcf5d7a3ca",
+      "source_case_sha256": "4b2950c3c896a73ef1070776f6c61471a7146362b5cf126f14a42c29b66a6f6c",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/libutil.so.1.inert",
+        "scope": "repository",
+        "sha256": "e3981d10efd152a53f083e38f5f9ddde7a049c85d0ab388a5eec91b52fc98a11",
+        "size_bytes": 14408
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-P06",
+      "route": "pure_selector",
+      "expected_sha256": "0bee336d7b413470dd1ce5d7f0335348a2c9e0c27ce1d93fe39e2c00bea267c0",
+      "source_case_sha256": "6e7150ee8e520e715d2056cfd5e76a298d1d18549f6c7c741b429168426cb3dc",
+      "fixture": null,
+      "context": "contexts/RI-P06.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-P07",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "b5a1fddb039b7d919163f713ab9cd39c2e0cf4fc2ab05fdd994866330a208d88",
+      "source_case_sha256": "98c8eced9a1fc92f30a4bbfb70c6b500bcf7be7d202170b991c5a93be7d713ab",
+      "fixture": null,
+      "context": "contexts/RI-P07.json",
+      "findings_closed_in_candidate002": [
+        "FR-003"
+      ]
+    },
+    {
+      "id": "RI-P08",
+      "route": "mocked_dispatch",
+      "expected_sha256": "cd455867d9b3736d144930b4e3cd8728c6e3e471ac7f548002ab1f3f238cc21c",
+      "source_case_sha256": "41fa650cc4f0ab066f3c6a887fc4785ebd6ac5672eee041bc411a1c793c8f3dc",
+      "fixture": null,
+      "context": "contexts/RI-P08.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B01",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "3e381b6eb6aa6b31a796c25811ee7f82e6d0a887070bb2f9687e825a27f86512",
+      "source_case_sha256": "5a451c859cb1e7b7f205c98c0edbc4c4ddbaa937695976b6938f31f5337ad05c",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B01.elf.inert",
+        "scope": "controls",
+        "sha256": "6e2d5812f026bb92559686778e426ddb3f90a76609aaf89269933c6884f46be5",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B02",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "3e381b6eb6aa6b31a796c25811ee7f82e6d0a887070bb2f9687e825a27f86512",
+      "source_case_sha256": "762ddb5d56ad4a5f48f44c006d0621ce2268888c08a45e2eec912fe62ede2923",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B02.elf.inert",
+        "scope": "controls",
+        "sha256": "d801c3d8df5bc8ba0cbbfd1363924a9254c085e152521f4456f3c4fb2ed88221",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B03",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "3e381b6eb6aa6b31a796c25811ee7f82e6d0a887070bb2f9687e825a27f86512",
+      "source_case_sha256": "3b8680ad0956aa810dc481c6e9eabe51a0538145a63779ce69657d04ec40897f",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B03.elf.inert",
+        "scope": "controls",
+        "sha256": "77344a8f1a5fcd3378505df3a32bc8ca96f771134948c19629606da5b08ff139",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B04",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "67ced70c13588e023b779802a84e109541525de909ae2a253a3387ba32c0b0bf",
+      "source_case_sha256": "203b167e75c73c58900fe13ca2202785e1d05cf2b96642964b6111eb97d95505",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 7,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              128
+            ],
+            [
+              640,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B04.elf.inert",
+        "scope": "controls",
+        "sha256": "a45cb96573b26e8d842632f2f09238a578db46a63827625c9714f1c8e836071d",
+        "size_bytes": 662
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B05",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "67ced70c13588e023b779802a84e109541525de909ae2a253a3387ba32c0b0bf",
+      "source_case_sha256": "ec592a5c33574464472b253bc7c608cd06d6ed79d28b2da50e34becef4555f8f",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B05.elf.inert",
+        "scope": "controls",
+        "sha256": "596f5be224dd3e6ed25223624bf6ff8ca5b01c561ddbb25bdfbdc757b878764f",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B06",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "67ced70c13588e023b779802a84e109541525de909ae2a253a3387ba32c0b0bf",
+      "source_case_sha256": "96e550e8f8dc52fb45632b983e23823f02fad712da3c68b4a2efc51d638327b2",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B06.elf.inert",
+        "scope": "controls",
+        "sha256": "3c3a08ffdaad240b0c60e793bf0ff724f8da09a41af6644ce1c9f06d93ce6fa1",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B07",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "67ced70c13588e023b779802a84e109541525de909ae2a253a3387ba32c0b0bf",
+      "source_case_sha256": "0fc75581b881e6bb254feaa39324a1e45879e00eabd05330b07f567e15daa95b",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B07.elf.inert",
+        "scope": "controls",
+        "sha256": "31c11402e1922461cbd1f6230c427056e0a931eb3bbbabf9f3b6861ec289c0a1",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B08",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "6215da69c1672f6b6c90463e4feb554788008eef5e24dafe4c08a6b21427db99",
+      "source_case_sha256": "effc07d70e9410084fb8af6f34066e97830b423d23ad9c3b9bd22d4c814d0bb5",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libm.so.6",
+          "nonnull_dynamic_entries": 8,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              144
+            ],
+            [
+              656,
+              21
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B08.elf.inert",
+        "scope": "controls",
+        "sha256": "7f0d6da282249d765e50dd0a27d14eaa6402e080dccd070bd10a6788d6e1f7f7",
+        "size_bytes": 677
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B09",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "6215da69c1672f6b6c90463e4feb554788008eef5e24dafe4c08a6b21427db99",
+      "source_case_sha256": "1056aebe01703ee57f108521759cb8e29290f3bfb4840bb018941c7ae01500a4",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libm.so.6",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              21
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B09.elf.inert",
+        "scope": "controls",
+        "sha256": "d1c1741488e70395debcd72f2eac0c5b9ed3b7b04ec41475631d4ea72540f8c1",
+        "size_bytes": 693
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B10",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "6215da69c1672f6b6c90463e4feb554788008eef5e24dafe4c08a6b21427db99",
+      "source_case_sha256": "f59925ec0d242ba486f64408df694121ef669f0fceb440fa9065e9c97865f0c4",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libm.so.6",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              21
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B10.elf.inert",
+        "scope": "controls",
+        "sha256": "a48952a8d5553e9b10520f76b11d84439004126a3ced0f0f8d13c6748335e959",
+        "size_bytes": 693
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B11",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "30963af43dac8544c3e128324a88c2813cea18b20a9360fa49ab611067f674a7",
+      "source_case_sha256": "b97d178d96bed67ee4a1b574baa4cdbf68c412461c68665bddaba1d7584fe68f",
+      "fixture": {
+        "layout": {
+          "catalog_key": "librt.so.1",
+          "nonnull_dynamic_entries": 8,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              144
+            ],
+            [
+              656,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B11.elf.inert",
+        "scope": "controls",
+        "sha256": "bc407901e2cb4019e07db36f98409faa0236a363324a2ebfec8fccca403ab1f7",
+        "size_bytes": 678
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B12",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "30963af43dac8544c3e128324a88c2813cea18b20a9360fa49ab611067f674a7",
+      "source_case_sha256": "7b4f59e0c487ef558d3d38b4d08e728c6720bf023db768f3da0466bdf1ad6356",
+      "fixture": {
+        "layout": {
+          "catalog_key": "librt.so.1",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B12.elf.inert",
+        "scope": "controls",
+        "sha256": "00dc6e5136f899a9fecc604dce43c8c8ffeac20dc8983fb543559c8a80a0f413",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B13",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "30963af43dac8544c3e128324a88c2813cea18b20a9360fa49ab611067f674a7",
+      "source_case_sha256": "c52592ddd50ff8b790038e72dd73e11960187f956fa47eaeb10a92a43de1ae51",
+      "fixture": {
+        "layout": {
+          "catalog_key": "librt.so.1",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B13.elf.inert",
+        "scope": "controls",
+        "sha256": "842d6c0abd33a6d80762ce4e0b98ebd97e2e713e197164d85877b231c759897f",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B14",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "67ced70c13588e023b779802a84e109541525de909ae2a253a3387ba32c0b0bf",
+      "source_case_sha256": "57e75b4f5bdebd7665964f82571b060814e6af019ccf4580bc9fe63e54102f56",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B14.elf.inert",
+        "scope": "controls",
+        "sha256": "0ae1b0810d69205dc7755abeea95e4c5ac7488b251269fbc2a94f8feca59a076",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-B15",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "499e1e57f8cd25c3d975ea4d4dd202269390f547ac9e07fce0ffa5bc89a1f58e",
+      "source_case_sha256": "943ab0f2bdd81363ff249b61b4f97dce17e578811e22523c3949a7c853039d24",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 4095,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              65536
+            ],
+            [
+              66048,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-B15.elf.inert",
+        "scope": "controls",
+        "sha256": "305e7673beadf4ba514b778a9f50165da50076d4bbac730c81863847be4f93d8",
+        "size_bytes": 66070
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S01",
+      "route": "pure_selector",
+      "expected_sha256": "53a28a279b6c0b333bcff8339fac98fb55a9d2e8ced8462aeb60e79d3c7da42c",
+      "source_case_sha256": "84f6a852e4fac257f584e57597b730a6523d75f94952e67df60ec08fd56073ae",
+      "fixture": null,
+      "context": "contexts/RI-S01.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S02",
+      "route": "pure_selector",
+      "expected_sha256": "53a28a279b6c0b333bcff8339fac98fb55a9d2e8ced8462aeb60e79d3c7da42c",
+      "source_case_sha256": "73becc94505159296bb14bb7a54193ffc969109e945d020f2f239db251f9603f",
+      "fixture": null,
+      "context": "contexts/RI-S02.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S03",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "2fab3ecedc9f56272b8487136c6a7d67ed4b7932dc916d57af3882989e495ba7",
+      "fixture": null,
+      "context": "contexts/RI-S03.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S04",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "11a262e6a5fd6247168c74b2188bf8bcae4a4fc1f0b49673d54983dae356bfd2",
+      "fixture": null,
+      "context": "contexts/RI-S04.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S05",
+      "route": "pure_selector",
+      "expected_sha256": "d714449f2db647face6f86d4550db49832fc38a07bb62dda0fecf8468f265a01",
+      "source_case_sha256": "9ce2f66f3c39d88c01dd9f33f9c02fa45560c9252359f95c63475d6862b386dd",
+      "fixture": null,
+      "context": "contexts/RI-S05.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S06",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "c5138481f2f066dbf88baececf53e68a58630d7769c74e4755c05efdaeec0719",
+      "fixture": null,
+      "context": "contexts/RI-S06.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S07",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "0b25b257f0bbcd8473ee7f9d95debe96dddc424e705a66c59ef1b718c14a6525",
+      "fixture": null,
+      "context": "contexts/RI-S07.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S08",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "103344a1b73307f2968d5e28ee91c0f27d4a82e5fcff79eb921a564631c364e3",
+      "fixture": null,
+      "context": "contexts/RI-S08.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S09",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "85c377efd69ccce8f7f6ec50c0994430d1cfa391c021c8774c7875e7f96be848",
+      "fixture": null,
+      "context": "contexts/RI-S09.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S10",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "1f5e0d79d6e2fc66a4afeffc7b6d14b130769e8506d7c4557029ae9fda600ae1",
+      "fixture": null,
+      "context": "contexts/RI-S10.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S11",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "5f7e5bb6207c5448b01ec2a6fa2e5aafa32b3da529ab585957ee35fc08610575",
+      "fixture": null,
+      "context": "contexts/RI-S11.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S12",
+      "route": "private_metadata_mode",
+      "expected_sha256": "af3f4f7ecfa6c900745b74b6a56eeffecfd4a05ad8b96e8b4fe035ca4d24e9bf",
+      "source_case_sha256": "c26c2313c59ed239ee1337b77ec6767488dfe0430545dbdd313c5f022370b887",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libother.so.1",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-S12.elf.inert",
+        "scope": "controls",
+        "sha256": "131f9ac5c13b677e833e5f2ee23c40338de525364fb9d5fb0abfd642d03d5cfb",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D01",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "9a73c8ac16146b20e4a322d51faf84854953ffe54f6364dee8012a8a4519cd5f",
+      "source_case_sha256": "44d3773928012cee8eccb7e4ec1e9e68e87c6fa74f8deffbfb6a0473891f07b0",
+      "fixture": null,
+      "context": "contexts/RI-D01.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D02",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "9a73c8ac16146b20e4a322d51faf84854953ffe54f6364dee8012a8a4519cd5f",
+      "source_case_sha256": "7068b031b0ed7b93c96d96da319445909d505ea1b411cca228fad73dc6661d3e",
+      "fixture": null,
+      "context": "contexts/RI-D02.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D03",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "9a73c8ac16146b20e4a322d51faf84854953ffe54f6364dee8012a8a4519cd5f",
+      "source_case_sha256": "928bb1d9b2419f26b6cdcd2d3018e2349d84a370f489acf4c80ce1e7f94d7574",
+      "fixture": null,
+      "context": "contexts/RI-D03.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D04",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "9a73c8ac16146b20e4a322d51faf84854953ffe54f6364dee8012a8a4519cd5f",
+      "source_case_sha256": "2a4982ba0392c7efdd0d259e121c1e1aff6353d9d6fe77df920124c2104ac098",
+      "fixture": null,
+      "context": "contexts/RI-D04.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D05",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "b1b9a1b692f318ef2589605a250d6f985c9c2d5beafefd09b8bfe30c333ee1a8",
+      "source_case_sha256": "077922464d6af6f505ab0e06a0ddfcab4ecde83438f7ca7673bfa680e7483a46",
+      "fixture": null,
+      "context": "contexts/RI-D05.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D06",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "b1b9a1b692f318ef2589605a250d6f985c9c2d5beafefd09b8bfe30c333ee1a8",
+      "source_case_sha256": "abfa189ec62440216c74a71e06546e8fd7bdc83fdf29467486e01583ec5fb43d",
+      "fixture": null,
+      "context": "contexts/RI-D06.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D07",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "b1b9a1b692f318ef2589605a250d6f985c9c2d5beafefd09b8bfe30c333ee1a8",
+      "source_case_sha256": "b9bf5c306d565d29518fc3a019a1d6bcc2f5a9a6a20bd6f8893023b9b4c39904",
+      "fixture": null,
+      "context": "contexts/RI-D07.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D08",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "9a73c8ac16146b20e4a322d51faf84854953ffe54f6364dee8012a8a4519cd5f",
+      "source_case_sha256": "d530258108a3e6908b37f63c5ee2194f544799abd8e872c7c085f5deabf360ab",
+      "fixture": null,
+      "context": "contexts/RI-D08.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D09",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c361d1c4f3af07d02e448a8b8cdebc6635b55f9fd84f56fd50255cc86aa5b6a4",
+      "source_case_sha256": "3b10d089e8420dfc734eccd704de72ae2aed6f7c2628879f6d18ca8e7624ee5b",
+      "fixture": null,
+      "context": "contexts/RI-D09.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D10",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c361d1c4f3af07d02e448a8b8cdebc6635b55f9fd84f56fd50255cc86aa5b6a4",
+      "source_case_sha256": "0da71637fae05e1d37a0243c9d88f866f0e1a635fedb00bde204e3a4702cce6b",
+      "fixture": null,
+      "context": "contexts/RI-D10.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D11",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c361d1c4f3af07d02e448a8b8cdebc6635b55f9fd84f56fd50255cc86aa5b6a4",
+      "source_case_sha256": "25c019db7d7d56cee1810a72e8c85bdfec1e93379f462c30250d03f3569a559a",
+      "fixture": null,
+      "context": "contexts/RI-D11.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D12",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c361d1c4f3af07d02e448a8b8cdebc6635b55f9fd84f56fd50255cc86aa5b6a4",
+      "source_case_sha256": "ebefe7c9d3cf8e2da9355fef4f9670daa8832de806a3c4566c3bb78d5a0c54fa",
+      "fixture": null,
+      "context": "contexts/RI-D12.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D13",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "3ec8cfe5a6d67d3968c1ff1b30def89fcb357821b63cf5099ccbe4dbc9d58a44",
+      "source_case_sha256": "beeca899525c684b6b522c19cd83c2d4f006a356d241a685e204e193bea79619",
+      "fixture": null,
+      "context": "contexts/RI-D13.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D14",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c47ab399fe9da03db511ca3fde39fd900c94b371252c78255aa9b9001f8c3b68",
+      "source_case_sha256": "e3f9c62234b91725abb9bbebc27212bb28a82b09ce4a39ed278405e3061553c8",
+      "fixture": null,
+      "context": "contexts/RI-D14.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D15",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "9a73c8ac16146b20e4a322d51faf84854953ffe54f6364dee8012a8a4519cd5f",
+      "source_case_sha256": "33fb76312fb33419c353fffd4e3ff0f6e775f85181c8e66ccda05812e8c91586",
+      "fixture": null,
+      "context": "contexts/RI-D15.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D16",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "9a73c8ac16146b20e4a322d51faf84854953ffe54f6364dee8012a8a4519cd5f",
+      "source_case_sha256": "1f675704206e2000ba626db05a7cfc6cc51bb3e5f98c24154032a2202e311a04",
+      "fixture": null,
+      "context": "contexts/RI-D16.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D17A",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c47ab399fe9da03db511ca3fde39fd900c94b371252c78255aa9b9001f8c3b68",
+      "source_case_sha256": "288f2d236c58b033db7b5a65dd680e1cc5692173cabae58b021ac3c93eb126cf",
+      "fixture": null,
+      "context": "contexts/RI-D17A.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D17B",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c47ab399fe9da03db511ca3fde39fd900c94b371252c78255aa9b9001f8c3b68",
+      "source_case_sha256": "73c27f940e9a89b63cd7cfb3b229de43ed93a1b75f1a3f8b98f79fe9a1f998d7",
+      "fixture": null,
+      "context": "contexts/RI-D17B.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D17C",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c47ab399fe9da03db511ca3fde39fd900c94b371252c78255aa9b9001f8c3b68",
+      "source_case_sha256": "c5d3895f6a2c78cd665920e05ff3c12b32acc11841f00c5cde744b193544e2eb",
+      "fixture": null,
+      "context": "contexts/RI-D17C.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D17D",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c47ab399fe9da03db511ca3fde39fd900c94b371252c78255aa9b9001f8c3b68",
+      "source_case_sha256": "9a5a8efe82a394f14027ab294a03fe51d87a7ad608421b7bfd8f806769127bce",
+      "fixture": null,
+      "context": "contexts/RI-D17D.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D17E",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c47ab399fe9da03db511ca3fde39fd900c94b371252c78255aa9b9001f8c3b68",
+      "source_case_sha256": "0840c3172181a4d7fb043f60566a03cd951da1b76093ed9eb59b503d66daec42",
+      "fixture": null,
+      "context": "contexts/RI-D17E.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D17F",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c47ab399fe9da03db511ca3fde39fd900c94b371252c78255aa9b9001f8c3b68",
+      "source_case_sha256": "7334f24627730ed504c093ae543b51e5cfad273e116e587942f53e91b44a1ca5",
+      "fixture": null,
+      "context": "contexts/RI-D17F.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D17G",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c47ab399fe9da03db511ca3fde39fd900c94b371252c78255aa9b9001f8c3b68",
+      "source_case_sha256": "f7b59e8baae0d52428732c736d6c03c38037e7cd999b17bbc3b7f86f1f37c613",
+      "fixture": null,
+      "context": "contexts/RI-D17G.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D17H",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "c47ab399fe9da03db511ca3fde39fd900c94b371252c78255aa9b9001f8c3b68",
+      "source_case_sha256": "7370431d0ecfad9769d9fbd016ae3c4fdbaf34691aff44ece8668ac59427749f",
+      "fixture": null,
+      "context": "contexts/RI-D17H.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D18",
+      "route": "mocked_relation_and_policy",
+      "expected_sha256": "b1b9a1b692f318ef2589605a250d6f985c9c2d5beafefd09b8bfe30c333ee1a8",
+      "source_case_sha256": "0417713d62323d25fa57c0dbd98f214784a90c44ddded91f0d29e70aa360c599",
+      "fixture": null,
+      "context": "contexts/RI-D18.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-D19",
+      "route": "mocked_post_metadata_relation",
+      "expected_sha256": "91b1f693bb3c10f6d2be495860acddd3f014c416c1659a37fb5c9e33246eeb76",
+      "source_case_sha256": "95d8db0ff2347466fa6e99a9b5a00f47429dfcb7e15d99f1a05beca092018a22",
+      "fixture": null,
+      "context": "contexts/RI-D19.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N01",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "35c6f2e30ad2b0ce728ecb4135a06dd16b6e5e42da4efd05e8b13b96ac603bd2",
+      "source_case_sha256": "c322c5f7ce0fe1c76a9ad52b63956649b1cb38f19ed1b2c4483c07a4ab63b7d7",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N01.elf.inert",
+        "scope": "controls",
+        "sha256": "84183da86f61a3f5dee91b31350c56162357e266070ddd4c1396c5ebde857897",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N02",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "35c6f2e30ad2b0ce728ecb4135a06dd16b6e5e42da4efd05e8b13b96ac603bd2",
+      "source_case_sha256": "a06892a005a23a59c40cbeca79e2f942c8f44b710d5a7f650f91eb9d8109abcc",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N02.elf.inert",
+        "scope": "controls",
+        "sha256": "b7086e24c8bcc08ba4ac976dc28f729c03e501f72de3bf46695079e235785346",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N03",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "698595f396ee214788915692edaf4e9e85d913d8bfc12b4f0a3d21fc3a8e2c35",
+      "source_case_sha256": "488fc7eaf5128de6bab19f3ee5d7008326a6c927f42bce3ae0a43650045fb8d1",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 10,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              176
+            ],
+            [
+              688,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N03.elf.inert",
+        "scope": "controls",
+        "sha256": "560739682079f83398198472c61be1071caa69737974e72c1685b076cbe86969",
+        "size_bytes": 710
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N04",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "698595f396ee214788915692edaf4e9e85d913d8bfc12b4f0a3d21fc3a8e2c35",
+      "source_case_sha256": "b19d94dee3718c165530c374497fed9e7f0197969dba584883dd07e722ce2aaa",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 10,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              176
+            ],
+            [
+              688,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N04.elf.inert",
+        "scope": "controls",
+        "sha256": "8611826cf11fbf3004fdae556a563cf858eb2195321c9eb91b211bf0ac175641",
+        "size_bytes": 710
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N05",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "e35f3e328950668523670fc773a939aac3b4dc185450b5e374bc4923d70ded44",
+      "source_case_sha256": "e4a903cf612e5dfef7a8ce68d430e67808afa7f688b437ea970f022ecea6dd45",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 8,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              144
+            ],
+            [
+              656,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N05.elf.inert",
+        "scope": "controls",
+        "sha256": "f3b64ef272ec1f470ebf65826e2744d4727c4ee3b078d4eb0c2f2903a4b9e3a2",
+        "size_bytes": 678
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N06",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "e35f3e328950668523670fc773a939aac3b4dc185450b5e374bc4923d70ded44",
+      "source_case_sha256": "33f85b308c7a27cb76ed021f2f02873730d731d3e894c74b91ee44ed15305a02",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 6,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              112
+            ],
+            [
+              624,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N06.elf.inert",
+        "scope": "controls",
+        "sha256": "613a35df1e9ef513c6d41bd7a4c5f1d6a4a72294e5df25b01d68693ed0cd9076",
+        "size_bytes": 646
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N07",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "e35f3e328950668523670fc773a939aac3b4dc185450b5e374bc4923d70ded44",
+      "source_case_sha256": "a7f3fbb69c803219ecdb3c480f25f32a26b1cff11764cce1eb33883801b00026",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 10,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              176
+            ],
+            [
+              688,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N07.elf.inert",
+        "scope": "controls",
+        "sha256": "c10599cc0bf8c7fdb302c479d4b1306518b57090bae175f0fbe6e2ce7b2854d1",
+        "size_bytes": 710
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N08",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "d2fefe0748bf708448a8cd85c2dfb2be282b9d287eb7905a37c0ede58c266bcd",
+      "source_case_sha256": "a30b221ec7c995eabad9095422f654808fcf510e000049fa5c57ebf1b5b416ba",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N08.elf.inert",
+        "scope": "controls",
+        "sha256": "03fac17777ba9ec59e993168809f04abbd1ba621453ccb226ea8fcfbd550bddf",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N09",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "d2fefe0748bf708448a8cd85c2dfb2be282b9d287eb7905a37c0ede58c266bcd",
+      "source_case_sha256": "909b0a35ed0c03c8d3a09b56afff533295a09a378374721bef2efe039e5d5b22",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N09.elf.inert",
+        "scope": "controls",
+        "sha256": "9dfb7d81dd7a744d0ed97fd251a9469ed8881c438665556a8fc8cc31708660c5",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N10",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "d2fefe0748bf708448a8cd85c2dfb2be282b9d287eb7905a37c0ede58c266bcd",
+      "source_case_sha256": "ea39124756d7dfe00eb9557de22107f38ef353b244a710b4b0afc683fddf5ff0",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N10.elf.inert",
+        "scope": "controls",
+        "sha256": "5fe32d5ee1b2c4f03505fa1c2c2c32760d1c2fd69478ac1148c151cbe25bb3c3",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N11",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "d2fefe0748bf708448a8cd85c2dfb2be282b9d287eb7905a37c0ede58c266bcd",
+      "source_case_sha256": "fc682469520ce2296821535ed609d76178f58a7c282d08efefe9a205098837f3",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libm.so.6",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N11.elf.inert",
+        "scope": "controls",
+        "sha256": "9499aa976f6b943267d1d0e0f62fd7f5b0224437b4ee8f692fa7e24eafd27ba3",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N12",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "d2fefe0748bf708448a8cd85c2dfb2be282b9d287eb7905a37c0ede58c266bcd",
+      "source_case_sha256": "5627efeef7bde754e56f5468744c8ce4482bedea88d7813fd19c2e243f309818",
+      "fixture": {
+        "layout": {
+          "catalog_key": "librt.so.1",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N12.elf.inert",
+        "scope": "controls",
+        "sha256": "5fe32d5ee1b2c4f03505fa1c2c2c32760d1c2fd69478ac1148c151cbe25bb3c3",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N13",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "d2fefe0748bf708448a8cd85c2dfb2be282b9d287eb7905a37c0ede58c266bcd",
+      "source_case_sha256": "50ea7fdb63c9c874353b0d678ff4a57735e52d52a8e6406064e400b268c77e3b",
+      "fixture": {
+        "layout": {
+          "catalog_key": "librt.so.1",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N13.elf.inert",
+        "scope": "controls",
+        "sha256": "af0e8593974545f9e6090c544b0db6a71815ab4dca19d70ede2c13d5b3db3188",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N14",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "d2fefe0748bf708448a8cd85c2dfb2be282b9d287eb7905a37c0ede58c266bcd",
+      "source_case_sha256": "2ddfad9f31bb993d4b5c28bb54ef6b5daca680a9d963854c889a34cbf071b9bc",
+      "fixture": {
+        "layout": {
+          "catalog_key": "librt.so.1",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N14.elf.inert",
+        "scope": "controls",
+        "sha256": "cf84367fb4e7136ba9810603894798005a78a246e3258a81da7a12faba1328c7",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N15",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "d2fefe0748bf708448a8cd85c2dfb2be282b9d287eb7905a37c0ede58c266bcd",
+      "source_case_sha256": "f353be2714fbb138b4d3e37a1f7882c1c512b8b8383c6da97b7b18943a61c70c",
+      "fixture": {
+        "layout": {
+          "catalog_key": "librt.so.1",
+          "nonnull_dynamic_entries": 10,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              176
+            ],
+            [
+              688,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N15.elf.inert",
+        "scope": "controls",
+        "sha256": "5e81cd0071ad44c77fbd6202f91cdf336df07c8479b428229f194f342f2e42a4",
+        "size_bytes": 710
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N16",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "d2fefe0748bf708448a8cd85c2dfb2be282b9d287eb7905a37c0ede58c266bcd",
+      "source_case_sha256": "f178a86888cbb568a306ac338aa6370c8c93897591ba2e6324b05e1499700907",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libm.so.6",
+          "nonnull_dynamic_entries": 10,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              176
+            ],
+            [
+              688,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N16.elf.inert",
+        "scope": "controls",
+        "sha256": "bcb027595ecf98a6e0f24be89d568d3bf3e12e049b88f75c368a37016d18707b",
+        "size_bytes": 710
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N17",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "698595f396ee214788915692edaf4e9e85d913d8bfc12b4f0a3d21fc3a8e2c35",
+      "source_case_sha256": "abd961af9b6864776feaf2c55346882dd1be8fde6e2701bf056b912f1438cb03",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 10,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              176
+            ],
+            [
+              688,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N17.elf.inert",
+        "scope": "controls",
+        "sha256": "d5c8089e87bd1b7dd99bed1c34665789d8e34f14a75c171fb152a7167993cdc4",
+        "size_bytes": 710
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N18",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "e35f3e328950668523670fc773a939aac3b4dc185450b5e374bc4923d70ded44",
+      "source_case_sha256": "1d41d96b479d826ba3d12a3e2c4dbf920908903ad348a465fc01b152c792f3e0",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 8,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              144
+            ],
+            [
+              656,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N18.elf.inert",
+        "scope": "controls",
+        "sha256": "c7b9aa22dd66638b2b531f00f7de9f4545665d5f13d13fc578dda63c0f61e9ad",
+        "size_bytes": 678
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N19",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "ac02861fefe10f3ec16a5413213eecdc4f5f080bc3a51c568d16654eeb00d7e8",
+      "source_case_sha256": "4326d701f9f4d54de4c8e48afa984e736f9a1c6a118700bd1b0e99dda26fc50d",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N19.elf.inert",
+        "scope": "controls",
+        "sha256": "c7ee91c0f934b71f5d7387a69046236b9ce4acc5cbb6c95880eb0927583bceb0",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N20",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "26ffc705322bf8108a23a241c78a7be7af2941c31737e3e55ea3618a2c7f2a0a",
+      "source_case_sha256": "276ea9e63b4ad28e4ac2a83025fa0a4b34b3e11dfe6d045e32ae1ab50c9d8306",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 4096,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              65552
+            ],
+            [
+              66064,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N20.elf.inert",
+        "scope": "controls",
+        "sha256": "ccca7d932cecf9d23c779bc5513123b6690e3046df78091b85954e56fad0ac8a",
+        "size_bytes": 66086
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N21",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "41351d4f08c4fc194df744b4f5108d239592fac4e99037d662e4ffffbe99aeb1",
+      "source_case_sha256": "136702e7550d17887e3b9952c265e081115243b3976241c16dee00d301ab9379",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              24
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N21.elf.inert",
+        "scope": "controls",
+        "sha256": "a96f3ebd15a1eb896ae0759afa7c94d09187ea536b9d2016f486a4d605e06704",
+        "size_bytes": 696
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N22",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "32b4c4898ca51286065133ca38b9bbaa8c2e21f29748590ec0fc9030b1680330",
+      "source_case_sha256": "ae7144f5c341d2ea88163d4a3bfaf51ceb154dc3b48a1b9b042df4c5fc99d567",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 10,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              176
+            ],
+            [
+              688,
+              34
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N22.elf.inert",
+        "scope": "controls",
+        "sha256": "142f29dd30d27252188e1039660887ca04e00bba2df2aa5d177fd50ed872a826",
+        "size_bytes": 722
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N23",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "efaf11ba850f6b8574ad61efb6eec2497fd46b6cb11da6f0cd2f5eeef7f33cf4",
+      "source_case_sha256": "59db5b5e7759b9f422ef04d8ec4cb5e36f167cd49bbb05dac07de3edd1635ef9",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              144
+            ],
+            [
+              656,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N23.elf.inert",
+        "scope": "controls",
+        "sha256": "afbb712e1b7995197e618d8613ed58affdf6ae8cadda180831a78f3347ef6f97",
+        "size_bytes": 678
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-C01",
+      "route": "mocked_resolution_order",
+      "expected_sha256": "217b1f467b5953f8f332126851ef3b3a7677145f7746afcc91e0fa974d18a513",
+      "source_case_sha256": "d910e51333cf7f1e6ea1de0c2738a0db2faafa0b6cc6c11857023cfbcc5e183c",
+      "fixture": null,
+      "context": "contexts/RI-C01.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-C02",
+      "route": "mocked_early_validation",
+      "expected_sha256": "705eca9827295613040507096b7a7672dc8eb49dbb480db391e0c1eccdc47bf0",
+      "source_case_sha256": "3d82b1013872ff239db74ec8cc440bd81df70874eb1d3033f451d179896f9d33",
+      "fixture": null,
+      "context": "contexts/RI-C02.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-C03",
+      "route": "mocked_complete_recheck",
+      "expected_sha256": "8a7bbe434670e378309a6c6a770def353dee727b14dfa40979e1d523f50235a6",
+      "source_case_sha256": "9afa864050bba7016cb094bfaf657e11888f444c62e41d271ed0dc6770dc43e8",
+      "fixture": null,
+      "context": "contexts/RI-C03.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-C04",
+      "route": "mocked_complete_recheck",
+      "expected_sha256": "2f9adaa083dc5f895ad725b19c5f304cb14135acb83bd3c9d00a67a4b074cff0",
+      "source_case_sha256": "d85b7e23da04cb98a664597eb9c28346409de85455a7501142dcecbef16cf19f",
+      "fixture": null,
+      "context": "contexts/RI-C04.json",
+      "findings_closed_in_candidate002": [
+        "FR-001"
+      ]
+    },
+    {
+      "id": "RI-C05",
+      "route": "mocked_launch_snapshot",
+      "expected_sha256": "22703e6fe06eb6a1f22c2deb47c89ca43687d7d8e315d51f112d027c19b57852",
+      "source_case_sha256": "67c95251117be75deba02ed942cbb18d9349b8b318318e072817b9b890b42a1c",
+      "fixture": null,
+      "context": "contexts/RI-C05.json",
+      "findings_closed_in_candidate002": [
+        "FR-002"
+      ]
+    },
+    {
+      "id": "RI-C06",
+      "route": "mocked_postflight_after_process",
+      "expected_sha256": "abe8d792c5805999bd04b289d6508feac7881b27d4006c9395f45a3fb3251505",
+      "source_case_sha256": "aad38c3919912b4016f47aee738207782b3d14a3e909bc7ee68ea64325755725",
+      "fixture": null,
+      "context": "contexts/RI-C06.json",
+      "findings_closed_in_candidate002": [
+        "FR-001"
+      ]
+    },
+    {
+      "id": "RI-F01",
+      "route": "private_callback_fault",
+      "expected_sha256": "f920afe4f24f552d8c5d3993fe075a4fbd2127e36f86e0d2456fe5d06a5dc90b",
+      "source_case_sha256": "fe87b7c30e00e568789b2a56b5db64e313b0f6055a94a388bacbbe9ae2c53489",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-F01.elf.inert",
+        "scope": "controls",
+        "sha256": "131f9ac5c13b677e833e5f2ee23c40338de525364fb9d5fb0abfd642d03d5cfb",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-F02",
+      "route": "private_callback_fault",
+      "expected_sha256": "f920afe4f24f552d8c5d3993fe075a4fbd2127e36f86e0d2456fe5d06a5dc90b",
+      "source_case_sha256": "0d44d9bcb9c892f8e26caaad69a3513a119d58c07e3ff472f500b6da243250ea",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-F02.elf.inert",
+        "scope": "controls",
+        "sha256": "131f9ac5c13b677e833e5f2ee23c40338de525364fb9d5fb0abfd642d03d5cfb",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-F03",
+      "route": "private_callback_fault",
+      "expected_sha256": "f920afe4f24f552d8c5d3993fe075a4fbd2127e36f86e0d2456fe5d06a5dc90b",
+      "source_case_sha256": "06f5437f543ead07c1a137d53d33c8de80034ed311015b53d3350ddf86ccc280",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-F03.elf.inert",
+        "scope": "controls",
+        "sha256": "131f9ac5c13b677e833e5f2ee23c40338de525364fb9d5fb0abfd642d03d5cfb",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-F04",
+      "route": "private_callback_fault",
+      "expected_sha256": "f920afe4f24f552d8c5d3993fe075a4fbd2127e36f86e0d2456fe5d06a5dc90b",
+      "source_case_sha256": "a26b833af3a4ed67307d9fb48158525b8db5b8d3ebe1795bf9e53142cf6bce37",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-F04.elf.inert",
+        "scope": "controls",
+        "sha256": "131f9ac5c13b677e833e5f2ee23c40338de525364fb9d5fb0abfd642d03d5cfb",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-F05",
+      "route": "pure_relation_callback_fault",
+      "expected_sha256": "9d6df8083ff1f4ed24758cd1e4735214a0c468a3ccc41f28316d71548b6c6cc8",
+      "source_case_sha256": "d80e9fb0252bf7234b3b48f4314de8bdc2bfa4967c84f22ddb55f7b9b6bfd222",
+      "fixture": null,
+      "context": "contexts/RI-F05.json",
+      "findings_closed_in_candidate002": [
+        "FR-004"
+      ]
+    },
+    {
+      "id": "RI-F06",
+      "route": "private_metadata_read_fault",
+      "expected_sha256": "96337de38bfb0f40cc5e7e31fb0bbae5d8578d62c3f11c59695acaf05b854a28",
+      "source_case_sha256": "15a4645e6b6d0b9dfb9b9b250326f5bc5c99003682158cfe7eb3f9f79b488a92",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-F06.elf.inert",
+        "scope": "controls",
+        "sha256": "131f9ac5c13b677e833e5f2ee23c40338de525364fb9d5fb0abfd642d03d5cfb",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-F07",
+      "route": "private_metadata_close_fault",
+      "expected_sha256": "0bca7ad8b923dc8fbc15ad9ebd83999f9fd2788d609fe9ca36aba1ff43414482",
+      "source_case_sha256": "6a333ed6e6f7773d5d2b49a820ac2448ac66a41fba1003e5fa06b18980d28622",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-F07.elf.inert",
+        "scope": "controls",
+        "sha256": "131f9ac5c13b677e833e5f2ee23c40338de525364fb9d5fb0abfd642d03d5cfb",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-F08",
+      "route": "private_metadata_identity_drift",
+      "expected_sha256": "ca95618e5af9d39355d859ae8bb815053e7caa97a7889988d25ad936bdd54d46",
+      "source_case_sha256": "b049cd0329aa4411fe4b1d192dccadec0790682098f9e0c53deb2b71f012a679",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libdl.so.2",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              22
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-F08.elf.inert",
+        "scope": "controls",
+        "sha256": "131f9ac5c13b677e833e5f2ee23c40338de525364fb9d5fb0abfd642d03d5cfb",
+        "size_bytes": 694
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L01",
+      "route": "old_route_dispatch",
+      "expected_sha256": "698595f396ee214788915692edaf4e9e85d913d8bfc12b4f0a3d21fc3a8e2c35",
+      "source_case_sha256": "a42980e7eb146a719bdd63ee1dc25845ae224fceddd85ca065354ec1c17f7cac",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/libdl.so.2.inert",
+        "scope": "repository",
+        "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+        "size_bytes": 14408
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L02",
+      "route": "old_route_dispatch",
+      "expected_sha256": "698595f396ee214788915692edaf4e9e85d913d8bfc12b4f0a3d21fc3a8e2c35",
+      "source_case_sha256": "c9e8bb150927f01dcc8c08c046c1898a13c12bf21ca0a454d24cf9a1554a3769",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/libdl.so.2.inert",
+        "scope": "repository",
+        "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+        "size_bytes": 14408
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L03",
+      "route": "old_route_dispatch",
+      "expected_sha256": "698595f396ee214788915692edaf4e9e85d913d8bfc12b4f0a3d21fc3a8e2c35",
+      "source_case_sha256": "3f2e075758a826588923cb30be380cb8b78f5f0e8c29761514df3c0896a84803",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/libdl.so.2.inert",
+        "scope": "repository",
+        "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+        "size_bytes": 14408
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L04",
+      "route": "old_route_dispatch",
+      "expected_sha256": "698595f396ee214788915692edaf4e9e85d913d8bfc12b4f0a3d21fc3a8e2c35",
+      "source_case_sha256": "54c51e7b359dcbe1c2843ac766ebcc89da8b3869488bfcaf877cd4588ef6937b",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/libdl.so.2.inert",
+        "scope": "repository",
+        "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+        "size_bytes": 14408
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L05",
+      "route": "old_route_dispatch",
+      "expected_sha256": "698595f396ee214788915692edaf4e9e85d913d8bfc12b4f0a3d21fc3a8e2c35",
+      "source_case_sha256": "df72b2d8f0fd4091881837aca2a661649de3be95ca584662aecde16cc1740a03",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/libdl.so.2.inert",
+        "scope": "repository",
+        "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+        "size_bytes": 14408
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L06",
+      "route": "old_route_dispatch",
+      "expected_sha256": "698595f396ee214788915692edaf4e9e85d913d8bfc12b4f0a3d21fc3a8e2c35",
+      "source_case_sha256": "157156221ef55425e625e2bce2cc72efbd81a76c6042ce23758997bd6321510f",
+      "fixture": {
+        "mode": "0o644",
+        "path": "docs/engineering/localized-repair-c271/required-image-design-p27/design/sources/package-images/libdl.so.2.inert",
+        "scope": "repository",
+        "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+        "size_bytes": 14408
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L07",
+      "route": "old_route_libc",
+      "expected_sha256": "56d6cecde8ff47228ca46d8d3ee4395100664189ce916e09352ce0cd1b6d7862",
+      "source_case_sha256": "7740c8608659c8571f372cf47790510a32b43241e7a4af29dabf5ad315288277",
+      "fixture": null,
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L08",
+      "route": "old_route_rtld",
+      "expected_sha256": "ab17f56b8e0bc1661f486c595db05375e979fbe8c3e639f0f56de71cffc566e4",
+      "source_case_sha256": "185700ee7c0434f5b450ee41570b1a1ee2f8c1b4fe42277c2441eec5ea68f74f",
+      "fixture": null,
+      "context": null,
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L09A",
+      "route": "old_schema_closed_shape",
+      "expected_sha256": "280feddb4993bcf8123d13c25dc5f56b4130221f4f4ccc5a1c92e5d28bcb2612",
+      "source_case_sha256": "9363d254c7ab5fb2c321d9130ce909a3e0024daa3430a297c6ad25420c0aa378",
+      "fixture": null,
+      "context": "contexts/RI-L09A.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L09B",
+      "route": "old_schema_closed_shape",
+      "expected_sha256": "40dfdab0cf03f42592953b65e4a57b4fa6fa1afb29986a49ec03bc5eb7b48c1a",
+      "source_case_sha256": "3c2655a7d1d44b9b9712730bb23be1d95640a81a482188c46d8947534884304a",
+      "fixture": null,
+      "context": "contexts/RI-L09B.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L09C",
+      "route": "old_schema_closed_shape",
+      "expected_sha256": "40dfdab0cf03f42592953b65e4a57b4fa6fa1afb29986a49ec03bc5eb7b48c1a",
+      "source_case_sha256": "5cf72cfc263038f0d63107a2e2260a3cb85098c4fabdd77b88853b66c474bdd8",
+      "fixture": null,
+      "context": "contexts/RI-L09C.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L09D",
+      "route": "old_schema_closed_shape",
+      "expected_sha256": "40dfdab0cf03f42592953b65e4a57b4fa6fa1afb29986a49ec03bc5eb7b48c1a",
+      "source_case_sha256": "a7dfca1465633e43da45b91cfc826da6dbfc462e7dda285c6c8fa9865dbedf8d",
+      "fixture": null,
+      "context": "contexts/RI-L09D.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-L09E",
+      "route": "old_schema_closed_shape",
+      "expected_sha256": "4c23bcff6e79da6dc4dd22c108940caf4d6f8614573d3bc54532ad5beb975990",
+      "source_case_sha256": "57762fbec554cf4e81b0068433954982123263731fcf22d0652588a5aa2c2279",
+      "fixture": null,
+      "context": "contexts/RI-L09E.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S13",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "5b7a73f7ac6e04e7153186ac1d3cc243a862214f9649dcc7010fd0c83cedd5af",
+      "fixture": null,
+      "context": "contexts/RI-S13.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S14",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "4a194bc52f446b1164950fe2a483a7271bfcc904fa02470d374f2df56db2aadc",
+      "fixture": null,
+      "context": "contexts/RI-S14.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S15",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "13d4b58277b347ce8fc5350178c520d96a1a986babccdf9c9b05c65ace79b15c",
+      "fixture": null,
+      "context": "contexts/RI-S15.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-S16",
+      "route": "pure_selector",
+      "expected_sha256": "d8a9fcfbb244e55dacf5875932e74076863df50acd454b6079439ba06eca3bd8",
+      "source_case_sha256": "36c647a1eb606b3310296be40999acfccfa4eeeb263022e9e82ecc43eabbb622",
+      "fixture": null,
+      "context": "contexts/RI-S16.json",
+      "findings_closed_in_candidate002": []
+    },
+    {
+      "id": "RI-N24",
+      "route": "private_metadata_synthetic",
+      "expected_sha256": "d2fefe0748bf708448a8cd85c2dfb2be282b9d287eb7905a37c0ede58c266bcd",
+      "source_case_sha256": "4c452b1331746e85040c7cd3c6c86a0cb2a1c51705deaa6df34b4f52fe66d659",
+      "fixture": {
+        "layout": {
+          "catalog_key": "libm.so.6",
+          "nonnull_dynamic_entries": 9,
+          "pread_ranges": [
+            [
+              0,
+              64
+            ],
+            [
+              64,
+              112
+            ],
+            [
+              512,
+              160
+            ],
+            [
+              672,
+              21
+            ]
+          ]
+        },
+        "mode": "0o644",
+        "path": "images/RI-N24.elf.inert",
+        "scope": "controls",
+        "sha256": "152bd52f983503337141a3cd0605baaf7fceae353111c550c3952013935ad413",
+        "size_bytes": 693
+      },
+      "context": null,
+      "findings_closed_in_candidate002": []
+    }
+  ],
+  "gate_effect": "The exact candidate002 fixture/adapter freeze is independently accepted. The Director must save and verify this accepted freeze checkpoint before any baseline product execution or implementation edit. After that save, the declared P29 implementation and exact frozen commands may proceed within existing phase boundaries.",
+  "runtime_results": "NOT_RUN",
+  "claims_not_established": [
+    "Current-host admission or successful native readback",
+    "H0/H1 or original-seven/full-routine acceptance",
+    "R03-R05/C271 closure",
+    "Recovery of missing original P28 source/evidence or verification of its reported 597 tests"
+  ],
+  "earlier_reviews": [
+    {
+      "path": "/workspace/scratch/2eb33b59a678/reviews/fixture-review/CANDIDATE001-REVIEW.json",
+      "size_bytes": 77183,
+      "sha256": "6391af602fab16bc565f4f0bcf0eef662db3ddc84e8319098aaec2e1bb2c31e3"
+    },
+    {
+      "path": "/workspace/scratch/2eb33b59a678/reviews/fixture-review/ORCHESTRATION-REVIEW.json",
+      "size_bytes": 4078,
+      "sha256": "0e40e20df5d1d9244122ac24eab9159dff2e6dd99afc71ceb449cae28b02413d"
+    },
+    {
+      "path": "/workspace/scratch/2eb33b59a678/reviews/fixture-review/INHERITED-COHORT-REVIEW.json",
+      "size_bytes": 5930,
+      "sha256": "f8f198a61ab7fd3933e7e458fc5ce3f56f830cc4f8c66f54a0b8058d8fae8f5a"
+    }
+  ],
+  "change_rule": "Any change to accepted fixture, adapter, commands or oracle bytes invalidates this exact-byte acceptance until a new identified freeze is independently reviewed. Preserve failed attempts and earlier candidates."
+}

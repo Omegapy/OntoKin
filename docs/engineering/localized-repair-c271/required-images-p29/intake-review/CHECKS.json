@@ -1,0 +1,3624 @@
+{
+  "schema": "ontokin.c271.supplied-r02-input-audit/1",
+  "reviewer": "/root/handoff_audit",
+  "recorded_at_utc": "2026-11-23T22:32:11.192710+00:00",
+  "verdict": "pass_with_original_p28_missing",
+  "scope": "Supplied outer R02 package, external receipt, declared frozen Git snapshots, and supplied live comment snapshots only.",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "git": "git version 2.56.1"
+  },
+  "command": "python3 reviews/input-audit/audit.py",
+  "archive": {
+    "path": "inputs/OntoKin/OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+    "file_name": "OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+    "bytes": 9962453,
+    "sha256": "113cf92489c6579168c57f816b8347ab99f8874f187de74b8434bb10ef701f3b"
+  },
+  "external_receipt": {
+    "path": "inputs/OntoKin/OntoKin_C271_P28_R02_Delivery_Receipt_2026-11-23.json",
+    "file_name": "OntoKin_C271_P28_R02_Delivery_Receipt_2026-11-23.json",
+    "bytes": 16190,
+    "sha256": "d706355292f0965d1e1482f443bc739d73578590e372bc23ddc573a7a1a5b2f8"
+  },
+  "counts": {
+    "zip_members": 149,
+    "zip_files": 149,
+    "zip_directories": 0,
+    "manifest_payloads": 148,
+    "source_bindings": 58,
+    "source_bindings_by_commit": {
+      "942096d22248fd84b7ac3a638e02aa1e66340519": 39,
+      "e43cc6c5777874101a40559e4058ad6826b07e51": 19
+    },
+    "passed_checks": 389,
+    "failed_checks": 0,
+    "issue_comments_supplied": 8,
+    "pr_comments_supplied": 10,
+    "product_tests_executed": 0
+  },
+  "comment_inputs": [
+    {
+      "path": "session/issue273_comments.json",
+      "file_name": "issue273_comments.json",
+      "bytes": 73489,
+      "sha256": "cbe7580365dfc205e554552930a1f6670a721e3c9bf057d9265c854113360f8c",
+      "comments": 8
+    },
+    {
+      "path": "session/pr274_comments.json",
+      "file_name": "pr274_comments.json",
+      "bytes": 79120,
+      "sha256": "8fa2659d132ecb1e6f87ab769f93363d3c8ba19d42e7bccb0dbc56a4720e6826",
+      "comments": 10
+    }
+  ],
+  "terminal_records": [
+    {
+      "input": "session/issue273_comments.json",
+      "id": 7115412292,
+      "url": "https://github.com/Omegapy/OntoKin/issues/273#issuecomment-7115412292",
+      "terminal": {
+        "schema": "ontokin.c271.p28-r02-terminal/1",
+        "confirmed_at_utc": "2026-11-23 22:10:06 UTC",
+        "phase": "C271-P28-R02-exact-candidate-recovery",
+        "phase_complete": true,
+        "parent_complete": false,
+        "parent_status": "blocked",
+        "blocker": "P28-RECOVERY-BYTES-001",
+        "source_commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+        "receipt_commit": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+        "branch": "work/c271-missing-import-digest-control",
+        "main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+        "pr": 274,
+        "pr_state": "draft_open_unmerged",
+        "issue": 273,
+        "issue_state": "open",
+        "branch_retained": true,
+        "archive": {
+          "library_file_id": "libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de",
+          "version": 0,
+          "bytes": 9962453,
+          "sha256": "113cf92489c6579168c57f816b8347ab99f8874f187de74b8434bb10ef701f3b"
+        },
+        "external_receipt": {
+          "library_file_id": "libfile_fde3_f-077448e2e970819198f175745b9acab0_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_0000000095ac81fdb389eedbd580e031",
+          "file_name": "OntoKin_C271_P28_R02_Delivery_Receipt_2026-11-23.json",
+          "version": 0,
+          "bytes": 16190,
+          "sha256": "d706355292f0965d1e1482f443bc739d73578590e372bc23ddc573a7a1a5b2f8",
+          "saved_bytes_readback_equal": true
+        },
+        "all_final_files_saved_and_byte_verified": true,
+        "owner": "c271-p28-r02-002c49ccf480",
+        "ownership": "released_after_both_matching_terminal_readbacks",
+        "main_lease_held": false,
+        "original_p28_implementation_verified": false,
+        "original_597_tests": "reported_unverified",
+        "original_uploads": "unresolved_not_replayed",
+        "requirements": {
+          "R01": "done",
+          "R02": "done",
+          "R03": "not_done",
+          "R04": "not_done",
+          "R05": "not_done"
+        },
+        "plan": {
+          "P01": "done",
+          "P02": "in_progress"
+        },
+        "current_workers": [],
+        "current_session_unknown_operations": [],
+        "next_action": "Provide exact original P28 tree and complete publication manifest/candidate artifact, or explicitly authorize the bounded reconstruction from adopted P27. Do not repeat an equivalent recovery phase with unchanged inputs.",
+        "terminal_effect": "Matching live copies resolve only this R02 source-time delivery/publication/ownership pending fields. They do not recover original P28, verify its test claim, qualify H0/H1, integrate main, or complete C271.",
+        "stop": "This bounded phase is complete. Stop; no second phase."
+      }
+    },
+    {
+      "input": "session/pr274_comments.json",
+      "id": 7115411913,
+      "url": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7115411913",
+      "terminal": {
+        "schema": "ontokin.c271.p28-r02-terminal/1",
+        "confirmed_at_utc": "2026-11-23 22:10:06 UTC",
+        "phase": "C271-P28-R02-exact-candidate-recovery",
+        "phase_complete": true,
+        "parent_complete": false,
+        "parent_status": "blocked",
+        "blocker": "P28-RECOVERY-BYTES-001",
+        "source_commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+        "receipt_commit": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+        "branch": "work/c271-missing-import-digest-control",
+        "main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+        "pr": 274,
+        "pr_state": "draft_open_unmerged",
+        "issue": 273,
+        "issue_state": "open",
+        "branch_retained": true,
+        "archive": {
+          "library_file_id": "libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de",
+          "version": 0,
+          "bytes": 9962453,
+          "sha256": "113cf92489c6579168c57f816b8347ab99f8874f187de74b8434bb10ef701f3b"
+        },
+        "external_receipt": {
+          "library_file_id": "libfile_fde3_f-077448e2e970819198f175745b9acab0_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_0000000095ac81fdb389eedbd580e031",
+          "file_name": "OntoKin_C271_P28_R02_Delivery_Receipt_2026-11-23.json",
+          "version": 0,
+          "bytes": 16190,
+          "sha256": "d706355292f0965d1e1482f443bc739d73578590e372bc23ddc573a7a1a5b2f8",
+          "saved_bytes_readback_equal": true
+        },
+        "all_final_files_saved_and_byte_verified": true,
+        "owner": "c271-p28-r02-002c49ccf480",
+        "ownership": "released_after_both_matching_terminal_readbacks",
+        "main_lease_held": false,
+        "original_p28_implementation_verified": false,
+        "original_597_tests": "reported_unverified",
+        "original_uploads": "unresolved_not_replayed",
+        "requirements": {
+          "R01": "done",
+          "R02": "done",
+          "R03": "not_done",
+          "R04": "not_done",
+          "R05": "not_done"
+        },
+        "plan": {
+          "P01": "done",
+          "P02": "in_progress"
+        },
+        "current_workers": [],
+        "current_session_unknown_operations": [],
+        "next_action": "Provide exact original P28 tree and complete publication manifest/candidate artifact, or explicitly authorize the bounded reconstruction from adopted P27. Do not repeat an equivalent recovery phase with unchanged inputs.",
+        "terminal_effect": "Matching live copies resolve only this R02 source-time delivery/publication/ownership pending fields. They do not recover original P28, verify its test claim, qualify H0/H1, integrate main, or complete C271.",
+        "stop": "This bounded phase is complete. Stop; no second phase."
+      }
+    }
+  ],
+  "missing_inputs": [
+    "Exact original P28 final uploaded tree SHA with complete publication manifest/group inventory, or a saved implementation/fixtures/tests/review artifact.",
+    "Alternatively, an explicit bounded reconstruction decision under adopted P27; this audit does not supply that decision."
+  ],
+  "limits": [
+    "No product code or product tests executed; the historical 597/597 claim remains unverified.",
+    "No recursive reconstruction or qualification of predecessor archives; they are verified only as outer-package payload bytes.",
+    "Latest terminal means greatest supplied comment ID; comment snapshots have no pagination-completeness metadata or creation timestamps. Director owns live GitHub reconciliation.",
+    "No fresh Library save/readback was performed by this worker; exact supplied bytes match the saved receipt and matching supplied terminal identities.",
+    "Source path, mode, blob, content and commit trees were checked against the freshly cloned authentic repository objects; no branch/index/ref was modified."
+  ],
+  "read_paths": [
+    "governing-main/AGENTS.md",
+    "governing-main/ROLE.md",
+    "governing-main/docs/workflow/PROTOCOL.md",
+    "governing-main/docs/workflow/HANDOFF.md",
+    "governing-main/docs/workflow/templates/WORKER.md",
+    "governing-main/docs/workflow/EPHEMERAL-HOST.md",
+    "governing-main/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+    "inputs/checkpoint/SOURCE-MANIFEST.json",
+    "inputs/checkpoint/MANIFEST-SHA256.json",
+    "inputs/checkpoint/CHECKPOINT.json",
+    "inputs/checkpoint/README-START-HERE.md",
+    "inputs/checkpoint/HANDOFF.md",
+    "inputs/checkpoint/NEXT-TASK.md",
+    "inputs/checkpoint/RECOVERY-STATUS.md",
+    "inputs/checkpoint/HOST-ENVIRONMENT.md",
+    "inputs/OntoKin/OntoKin_C271_P28_R02_Delivery_Receipt_2026-11-23.json",
+    "session/issue273_comments.json",
+    "session/pr274_comments.json"
+  ],
+  "checks": [
+    {
+      "check": "outer_archive_matches_saved_receipt",
+      "status": "passed",
+      "actual": {
+        "path": "inputs/OntoKin/OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+        "file_name": "OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+        "bytes": 9962453,
+        "sha256": "113cf92489c6579168c57f816b8347ab99f8874f187de74b8434bb10ef701f3b"
+      },
+      "receipt_archive": {
+        "library_file_id": "libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_00000000a09081fdbafb4a9fcd2acc58",
+        "file_name": "OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+        "path": "/OntoKin/OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+        "version": 0,
+        "bytes": 9962453,
+        "sha256": "113cf92489c6579168c57f816b8347ab99f8874f187de74b8434bb10ef701f3b",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "saved_bytes_readback_equal": true
+      }
+    },
+    {
+      "check": "zip_crc",
+      "status": "passed",
+      "members": 149
+    },
+    {
+      "check": "zip_safe_relative_paths",
+      "status": "passed",
+      "unsafe": []
+    },
+    {
+      "check": "zip_no_duplicate_members",
+      "status": "passed",
+      "duplicates": []
+    },
+    {
+      "check": "zip_no_links_or_special_members",
+      "status": "passed",
+      "special": []
+    },
+    {
+      "check": "zip_no_encrypted_members",
+      "status": "passed"
+    },
+    {
+      "check": "payload_manifest_observed_schema",
+      "status": "passed",
+      "root_type": "list",
+      "entries": 148,
+      "keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ]
+    },
+    {
+      "check": "source_manifest_observed_schema",
+      "status": "passed",
+      "root_type": "list",
+      "entries": 58,
+      "keys": [
+        "archive_path",
+        "bytes",
+        "commit",
+        "git_blob",
+        "git_mode",
+        "git_path",
+        "sha256"
+      ]
+    },
+    {
+      "check": "payload_manifest_unique_paths",
+      "status": "passed"
+    },
+    {
+      "check": "zip_exact_inventory",
+      "status": "passed",
+      "missing": [],
+      "extra": [],
+      "members": 149,
+      "files": 149,
+      "directories": 0,
+      "payloads": 148
+    },
+    {
+      "check": "required_handoff_root_files",
+      "status": "passed",
+      "missing": []
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "CHECKPOINT.json",
+      "bytes": 5546,
+      "sha256": "01b5cb6942cdc92098369737927613ae3e5efe9a3e633df27f2cd91884983228"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "CURRENT-DEPENDENCIES.json",
+      "bytes": 2276,
+      "sha256": "5e15d11bc7db25cca96289443c7f516dc26c861016dc2568c2384b84affa49e5"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "HANDOFF.md",
+      "bytes": 2688,
+      "sha256": "71b22cbdae887c980686176dbdf304b855a32ed32f8ebf1b17c7aa1089146335"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "HISTORICAL-DEPENDENCIES.json",
+      "bytes": 34514,
+      "sha256": "0d6160e7f820081fb4d2e35cd53c87ff24d92a6b2f8bf659bc8460aacb7a4484"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "HOST-ENVIRONMENT.md",
+      "bytes": 985,
+      "sha256": "fb528b2429290df668fe6c5276d1d974ffc460d32ff93286fb7e665045684909"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "NEXT-TASK.md",
+      "bytes": 1090,
+      "sha256": "1db8fb1cf3f5b58fed80968baabd4505d75b639510755ac975d406f7ad6e7bf1"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "PROMPT-1-CONTINUE.md",
+      "bytes": 1970,
+      "sha256": "e9d4b251db78cb7ace2a55b8ba6d9822c37c6862da450a3933b2140fc61e9f7a"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "PROMPT-2-RECOVER.md",
+      "bytes": 2179,
+      "sha256": "f9b774c0067a93763e3c19dc15c000234d1a30df92155661d5cca0c79d764d13"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "README-START-HERE.md",
+      "bytes": 2347,
+      "sha256": "4461cd2e1f467c3d201febb1f6e65b4056652cfadbc2d76373820eeabca7ea93"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "RECOVERY-STATUS.md",
+      "bytes": 1423,
+      "sha256": "4571d54ee9cf55860de1642fa685c006ed7181a64b35c8cc5f961d998c025f1c"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "SESSION.json",
+      "bytes": 2847,
+      "sha256": "bd653498842c49090a6c185a60fe94734998203433ee2a14ec5d6e88bb2abc22"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "SOURCE-MANIFEST.json",
+      "bytes": 25843,
+      "sha256": "f2f2128b03879e920f43799ded6e9c86ba8aac219e8d0d24174f132fff9a2098"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "branch-state/docs/workflow/CURRENT.json",
+      "bytes": 187657,
+      "sha256": "67dc30a4614873f8af3c722331ae9424a702a734bf72538981127e0647bb8064"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "observations/branches.json",
+      "bytes": 520,
+      "sha256": "d5a34aee4005536cc24bc9f45b692bf0536c5e37fb1d9a6fb7d506f18eff16d7"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "observations/issue.json",
+      "bytes": 74346,
+      "sha256": "0ff2f11596d2b110d97cf9aa85ffa291ec87b179fd8b03db4c246b404d7d3dc4"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "observations/main.json",
+      "bytes": 6625,
+      "sha256": "b78cd17de427c6be79fb400231cdcdd075ba5e3a30579d9a3c1ac56db98ef37f"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "observations/pr.json",
+      "bytes": 87373,
+      "sha256": "11bdb617446a3f905f57c8c5e95ef43084f6d3ad9ab7c6643e9f8ee45d9e543d"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "observations/prs.json",
+      "bytes": 87806,
+      "sha256": "337ceac1bd5068f582d8ce53400454ad9769beb73f74faf82b72d878aaab099f"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "predecessor/OntoKin_C271_P28_Recovery_Delivery_Receipt_2026-11-23.json",
+      "bytes": 96179,
+      "sha256": "a345691387fa0f32133b4202fc94abbca12b17c94a73eadda0fe26838b4bc408"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "predecessor/OntoKin_C271_P28_Recovery_Handoff_2026-11-23.zip",
+      "bytes": 9054965,
+      "sha256": "00432c32fc71530cf060ba901330ef38018301363bb2ef378591af540b04ee85"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/CORE-COMMIT-CREATE.json",
+      "bytes": 56,
+      "sha256": "1e49fa68adbb58614d9beb396ef852603f7276c7d22623fccbb23520376d0e5f"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/CORE-COMMIT-READBACK.json",
+      "bytes": 1333,
+      "sha256": "a9c6a199865d1be3cefa1f709cf66016befdaeae495e7d910005d603351a0a0b"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/CORE-REF-READBACK.json",
+      "bytes": 1547,
+      "sha256": "c1cbc57e6f68ac8822769e86980c6f8d123948fa6dcf2599ffec8332c43a0686"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/CORE-REF-UPDATE.json",
+      "bytes": 22,
+      "sha256": "5c7c84728d8ae2f2cb437ba7e26e60bdfd59e872c9fc3f179150670d5cc313fb"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/CORE-TREE-CREATE.json",
+      "bytes": 56,
+      "sha256": "27f3b2c07e6a13a3a135f54a39bc414cede8870be6f614c3a15c81ef8f4167c6"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/EARLY-IDENTITY.json",
+      "bytes": 357,
+      "sha256": "e5426b1c55194d6b105a35c920641be8d95be66335c30ca139f5451a05a6b96b"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/EARLY-SAVE-RESULT.json",
+      "bytes": 726,
+      "sha256": "07c1959f8ab6b66fd6e65e6b3e1e0cb6786c8a50f046f2b093c9899267a3349d"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/PUBLICATION-INTENT.json",
+      "bytes": 12694,
+      "sha256": "d43dc40757176764012aebb5bf142bd401398d2eb6440477ea666467e0531eda"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/PUBLICATION-RECOVERY-IDENTITY.json",
+      "bytes": 375,
+      "sha256": "387cd29cadb819e079f8556b7363581baa05a3e4871eeebee5a826dc7dbaa0d2"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/PUBLICATION-SAVE-RESULT.json",
+      "bytes": 737,
+      "sha256": "4d208b36633ead42c4240feb96e3c9c9a5cb14f80c7fadf19a8fef4b4fc49baf"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/build_early.py",
+      "bytes": 10392,
+      "sha256": "cd589fba2408d97357b92dcc0fcf7e546fdebca5e680f967c506bba92e025b8e"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/build_final.py",
+      "bytes": 15237,
+      "sha256": "aefe3fc04e3ee62db82e8ca66ad27fc93e805119e780424582fd2906743d9742"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/candidate.patch",
+      "bytes": 448157,
+      "sha256": "f7b48e70f93909ff202c5b74287e44d29d848080b21f0bb042e9be1952095b20"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/evidence/branches.json",
+      "bytes": 520,
+      "sha256": "d5a34aee4005536cc24bc9f45b692bf0536c5e37fb1d9a6fb7d506f18eff16d7"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/evidence/issue.json",
+      "bytes": 74346,
+      "sha256": "0ff2f11596d2b110d97cf9aa85ffa291ec87b179fd8b03db4c246b404d7d3dc4"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/evidence/main.json",
+      "bytes": 6625,
+      "sha256": "b78cd17de427c6be79fb400231cdcdd075ba5e3a30579d9a3c1ac56db98ef37f"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/evidence/ownership-comment.json",
+      "bytes": 5009,
+      "sha256": "b493e9340ef7beb54aec46d4d9f13e34c0dd9b98854bd2dd848e97985d85fb94"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/evidence/pr.json",
+      "bytes": 87373,
+      "sha256": "11bdb617446a3f905f57c8c5e95ef43084f6d3ad9ab7c6643e9f8ee45d9e543d"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/evidence/prs.json",
+      "bytes": 87806,
+      "sha256": "337ceac1bd5068f582d8ce53400454ad9769beb73f74faf82b72d878aaab099f"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/evidence/whitespace-final.txt",
+      "bytes": 268,
+      "sha256": "8622fb6b468d3e933e80f94e02df5255ddc4eff64f9d110491c43e3488abaf1b"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/evidence/workflow-attempt001.txt",
+      "bytes": 219,
+      "sha256": "acb499901aecc2ddc2f012ca04d25653e2e383723ad1c554b27f90b1fb466558"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/freeze_publication.py",
+      "bytes": 3952,
+      "sha256": "0653124c54682bbfcca0a3bfa73fdfc97db878d67f097a0e57b2a59a41866e35"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/prepare_checkpoint.py",
+      "bytes": 15110,
+      "sha256": "b1a8bbfd50966d9567ef52a12d7370438e8fa7e833385ad65a94ed9af32084f8"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/published-checks/CHECKS.json",
+      "bytes": 1183,
+      "sha256": "31c185d910fa340df1fb6ef83ba63d140f871efa7b8319b4977c44df9c8b65e8"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/published-checks/documentation.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/published-checks/documentation.stdout",
+      "bytes": 6609,
+      "sha256": "cd1bcb3865d77955ee04480d19c51a09e4af720cadcc90a10651778a686af24f"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/published-checks/workflow.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/published-checks/workflow.stdout",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/AUDIT.json",
+      "bytes": 210797,
+      "sha256": "65a5b2ccf0b2fd8c25b85c33088afadc4afdd10224b0e1ee9b837749a155ef3c"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/REPORT.md",
+      "bytes": 6447,
+      "sha256": "ff55aed504002daf63cebb5a3d1e882d3897ad16eb1a0d97b621898dfe206e2b"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/WORKER.md",
+      "bytes": 2879,
+      "sha256": "300ad23078ca3611a89400ba65db4630977816b0590efc2ef672375cdf964209"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/archive-inventories.json",
+      "bytes": 161347,
+      "sha256": "1f8fe6648de1afc99ef24614f5436070cb54a6321cecfe13e339b94e1f52ae10"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/audit.py",
+      "bytes": 15732,
+      "sha256": "7adce7f7a6b11b0bfb4bda0198372a9ef33a48dc4e7e73297a1291fa6159d551"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/candidate-identity-inventory.json",
+      "bytes": 4087,
+      "sha256": "8f23638d049929deb7d3374e545b90f7b02e96b0b4e1a6d1640ed9025680ee70"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/original-p28-early-source-bindings.json",
+      "bytes": 22530,
+      "sha256": "4f65b6931998e60e63bd8b9a486e7bb79c07e9bf50b2d057ba5adf452e964b48"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/p27-design-source-bindings.json",
+      "bytes": 77986,
+      "sha256": "c0ac8a84234543fca91c9028614739f4ad0180ec65c528f68f04f3799811e12f"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/receipt-recovery-evidence.zip",
+      "bytes": 25321,
+      "sha256": "27ddf304f6657ca1bc16469cd62c9fa51f1426b14a414e96e0524c4fbae1731c"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/receipt-summary.json",
+      "bytes": 13673,
+      "sha256": "8ed87508fc40a79b9a1bb7847c08325b8067d861e40719152eb2239e176dcb17"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/supplied-recovery-source-bindings.json",
+      "bytes": 43724,
+      "sha256": "97faada81ab809acd3abae1cd976ddf835e4bc957e9e166979a961c9852b2908"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "bytes": 7451,
+      "sha256": "c6b65b0b0bb87224252573fcd9a5432e4d82392915537cfb238f9a297c4af0d9"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/REPORT.md",
+      "bytes": 8443,
+      "sha256": "2e8c64ebe04c28c3a254ef9bc0c3b39367b32a2ce1b448aada12c0fba20ee991"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/REVIEW.json",
+      "bytes": 19870,
+      "sha256": "7c2a955d6b594b79028719f0f761536bcd61d5267ab7d3eab42cdcf898f51b5a"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "bytes": 3610,
+      "sha256": "59012ec4db86b68407594ab149255c485be9f23b4126fde145cc3b186d14e590"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/candidate.diff",
+      "bytes": 24211,
+      "sha256": "19a62b7de82f467f144751c79a2e46cafa1f8ad9a8fbe34cfa8fc5b76799be47"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/review.py",
+      "bytes": 14085,
+      "sha256": "cb4cbbb70d20b166fc7ba7ae2124b83c5c59e6a8fc3ba2daf68a96fff9fd6b27"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/AUDIT.json",
+      "bytes": 27696,
+      "sha256": "956ce5b04482405177da9e6d6710d6e4c48f2cb85aa76a4336f4e7a9eea30db0"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/POSTFREEZE-EVIDENCE.zip",
+      "bytes": 30001,
+      "sha256": "84b6f6b57831bb5af7a7f29fda3399c02a3e1f679ce8149e1d7897deb6fcbfa0"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/POSTFREEZE-INVENTORY.json",
+      "bytes": 3870,
+      "sha256": "4f55b8b36d3b2bd265a9a982fc902e52a0b45d944a9b15700f8c2ef1e523a6b1"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/REPORT.md",
+      "bytes": 5060,
+      "sha256": "44853def70c5c08976cf0fe72e296962a9a68a36dce5d0a1b37f02c8d78d73ad"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/audit.py",
+      "bytes": 17237,
+      "sha256": "86f9b1f065fa471e7467a985b02d89368c489776767b151a3de6740280d50dd8"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/branch-commit.json",
+      "bytes": 3421,
+      "sha256": "65fea41118e149e8d977a948dc4873d75fd3ea7aef8d2ba7e040c56df3aba3c9"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/ci-runs.json",
+      "bytes": 1035,
+      "sha256": "d153de1164cdb9016f77eac891350ffae95b798f5cbb4d7f1273188f1dd67c64"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/ci-status.json",
+      "bytes": 9957,
+      "sha256": "3ae383132739c13aa194de34a9b28390e17a5c8783a5f988993bc64d65eb92c7"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/commits-p28.json",
+      "bytes": 29074,
+      "sha256": "7989e6e2f3a8879f7dce661aea34f32c9544fe7fcba4b3f9470c35aaa4926a17"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/compare-p28-recovery.json",
+      "bytes": 477860,
+      "sha256": "09f881a1fe1dbce75dd29391ff4f790e3a80bddb008812f72d947029da3d5145"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/issue-comments-p28.json",
+      "bytes": 49095,
+      "sha256": "02ebd52b97339c098d8900f609042255b904a60c886f56f3685804b8ccba80f9"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/postfreeze-response.json",
+      "bytes": 42109,
+      "sha256": "c2b07e2dd868d69a89afe4f031ae972435429bb17e9e0ea89d1d411e478da409"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/pr-comments-p28.json",
+      "bytes": 58339,
+      "sha256": "91ba61842e2d0a87421317a40b2165167190b21f6f8a92904fa2ba18e1b15725"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/recovery-BRANCH-INVENTORY.json.response.json",
+      "bytes": 1474,
+      "sha256": "835fee39978d08a15fd99e8c46ebe0e844ff89a7fb1e31c7931f604e5c628118"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/recovery-OUTCOME.json.response.json",
+      "bytes": 12995,
+      "sha256": "e1ed14ce2069f6407ad2fa6cb5dad2e2eef6bc3cc5e7d97db3188173a59e1fca"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/recovery-RECONCILIATION.json.response.json",
+      "bytes": 10700,
+      "sha256": "7ca279f65b12466162b69db17574ab7f9654e853ce1c5c7886cf9dfc869e6eb8"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/recovery-SESSION.md.response.json",
+      "bytes": 7505,
+      "sha256": "add9c7eb1b897ab408a18dc476dd29f1f71b571b8770d8adc569b218b24e7e10"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-c271-evidence.json",
+      "bytes": 19157,
+      "sha256": "5716f56fc20fe507415727d74f0440ed925b31edf166daf93100b5222a4c925c"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-c271-task.json",
+      "bytes": 12481,
+      "sha256": "678199718af4d3688efd8bf501d96ec00be08c7a85e1b2c6542e48c6ae3a986a"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-docs.json",
+      "bytes": 4503,
+      "sha256": "9172f515c355f9f7832b0c56fb1ebfbae6d382c98f78ecae1af76a25e74fddb1"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-engineering.json",
+      "bytes": 121575,
+      "sha256": "c0cf3a0c304b7761a787a025a70bd0037dd7207e4eebf8aae9605f61a3138813"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-p27-design.json",
+      "bytes": 13625,
+      "sha256": "243017bff057f5cdb7445b02f864558c2e7bc83b049ffe2ae37d3bd99a9afe03"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-p28-recovery.json",
+      "bytes": 7633,
+      "sha256": "67532ff278233c4605b9c1d7843d1dde849e5231a31373ea2d95e001a9de6131"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-root.json",
+      "bytes": 11527,
+      "sha256": "0af12419cf351cd8d99555eb38fa0111fac4fd57ee761f3db676a824ad66b8ef"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-tasks.json",
+      "bytes": 6689,
+      "sha256": "e257a1fac07d03e207f51f1b81a4c76a93f08f8e0dd8b88c35d0ed92bcc9b768"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-workflow.json",
+      "bytes": 7005,
+      "sha256": "67e1001ce7dbba6c68514387327d365a67f81e05f30406741260c38269d48822"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "bytes": 1277,
+      "sha256": "7b7300a46e4f966314b74707a414f5fc72425c8eab4464cf12b20def9697529e"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/.agents/skills/ontokin-learning/SKILL.md",
+      "bytes": 2478,
+      "sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/.agents/skills/ontokin-session/SKILL.md",
+      "bytes": 1346,
+      "sha256": "4ce5917b05f94b1676e81102cc8518371e509dc8ac4a4f6bcfdf3881faacfc13"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/AGENTS.md",
+      "bytes": 7529,
+      "sha256": "8b59a0269e2138336c76b30ecc083c6be2a9545a0e6e00b02f26545266bf6de0"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/CHATGPT-START-HERE.md",
+      "bytes": 3305,
+      "sha256": "8bd05b9bfd855e16da2f8b318006540108e11a569f78565c3c93093fb3660014"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/GOAL.md",
+      "bytes": 11740,
+      "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/ROLE.md",
+      "bytes": 1683,
+      "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/STATUS.md",
+      "bytes": 13772,
+      "sha256": "04a500a21e7a7b0148345e97bca72da93700f649032ec202ebb0e96b64448d7e"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "bytes": 13604,
+      "sha256": "274f989927ca3de0fa1506f579e6872ac30ffca33df7b95ee7f23c4e1d2e62b2"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "bytes": 11426,
+      "sha256": "a037c8584f5bd94beea9bbb83079c437de90556a9d3ec8ec6295f6c93e459a45"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json",
+      "bytes": 523,
+      "sha256": "112e281823b768b1f5c41f958b3f6ccc5bbe5f05b81b2f789ed04255ae8ecd39"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "bytes": 713,
+      "sha256": "7e86965f831bfdf1b48252f26ae0476e126ff9809aae4fa147c275b536a9bb8d"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+      "bytes": 3330,
+      "sha256": "155fd258b96bf6d5b015515e06e4e8e0eced73f10798c1b1c90851a3733cac02"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "bytes": 5009,
+      "sha256": "b493e9340ef7beb54aec46d4d9f13e34c0dd9b98854bd2dd848e97985d85fb94"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md",
+      "bytes": 2350,
+      "sha256": "117f342367dd2d4135da048afb9f4d9e0db0f19c945cb8472e69d337ad6c5823"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md",
+      "bytes": 2583,
+      "sha256": "dfbb0bca4210a32edfe6acb897262a690e79dd5d1f63544809c5258283b30161"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json",
+      "bytes": 519,
+      "sha256": "f8624e6df87f71995789f9a23b44bc617b8ddd85e0e8ed8618bf2fd9ab851d14"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json",
+      "bytes": 2847,
+      "sha256": "bd653498842c49090a6c185a60fe94734998203433ee2a14ec5d6e88bb2abc22"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json",
+      "bytes": 3720,
+      "sha256": "160ccf0c0610ec015d8b8220899e15b61f939af73a24404b0f3ad35d8257d414"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout",
+      "bytes": 6609,
+      "sha256": "cd1bcb3865d77955ee04480d19c51a09e4af720cadcc90a10651778a686af24f"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout",
+      "bytes": 6609,
+      "sha256": "3c98bf64f93e3e3581e07e812de65dfc13305b9ae397f97518b6a6138af45f7b"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout",
+      "bytes": 268,
+      "sha256": "8622fb6b468d3e933e80f94e02df5255ddc4eff64f9d110491c43e3488abaf1b"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt",
+      "bytes": 219,
+      "sha256": "acb499901aecc2ddc2f012ca04d25653e2e383723ad1c554b27f90b1fb466558"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json",
+      "bytes": 210797,
+      "sha256": "65a5b2ccf0b2fd8c25b85c33088afadc4afdd10224b0e1ee9b837749a155ef3c"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md",
+      "bytes": 6447,
+      "sha256": "ff55aed504002daf63cebb5a3d1e882d3897ad16eb1a0d97b621898dfe206e2b"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md",
+      "bytes": 2879,
+      "sha256": "300ad23078ca3611a89400ba65db4630977816b0590efc2ef672375cdf964209"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py",
+      "bytes": 15732,
+      "sha256": "7adce7f7a6b11b0bfb4bda0198372a9ef33a48dc4e7e73297a1291fa6159d551"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "bytes": 7451,
+      "sha256": "c6b65b0b0bb87224252573fcd9a5432e4d82392915537cfb238f9a297c4af0d9"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md",
+      "bytes": 8443,
+      "sha256": "2e8c64ebe04c28c3a254ef9bc0c3b39367b32a2ce1b448aada12c0fba20ee991"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json",
+      "bytes": 19870,
+      "sha256": "7c2a955d6b594b79028719f0f761536bcd61d5267ab7d3eab42cdcf898f51b5a"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "bytes": 3610,
+      "sha256": "59012ec4db86b68407594ab149255c485be9f23b4126fde145cc3b186d14e590"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+      "bytes": 24211,
+      "sha256": "19a62b7de82f467f144751c79a2e46cafa1f8ad9a8fbe34cfa8fc5b76799be47"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py",
+      "bytes": 14085,
+      "sha256": "cb4cbbb70d20b166fc7ba7ae2124b83c5c59e6a8fc3ba2daf68a96fff9fd6b27"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json",
+      "bytes": 27696,
+      "sha256": "956ce5b04482405177da9e6d6710d6e4c48f2cb85aa76a4336f4e7a9eea30db0"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md",
+      "bytes": 5060,
+      "sha256": "44853def70c5c08976cf0fe72e296962a9a68a36dce5d0a1b37f02c8d78d73ad"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py",
+      "bytes": 17237,
+      "sha256": "86f9b1f065fa471e7467a985b02d89368c489776767b151a3de6740280d50dd8"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/BROWSER-PROMPTS.md",
+      "bytes": 2058,
+      "sha256": "2882178ad4dedfd9da2a2dd78f518a644bfd1e05a0819c24cecbf9f1b8708fdc"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/CURRENT.json",
+      "bytes": 5527,
+      "sha256": "fec57459bd12896effe23010dcc6d9f8b709e350fd8cabe1c67309a7da941d40"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/EPHEMERAL-HOST.md",
+      "bytes": 4424,
+      "sha256": "f861078b0f198f63f831667107cc647f22ab493422c8b8dd9d0028e6f2d8660a"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/HANDOFF.md",
+      "bytes": 6809,
+      "sha256": "4475a06b1c4fec52375797bd3a0bdd4fdffaef0c559d8d194da8b7e6bd28f6f4"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/PROTOCOL.md",
+      "bytes": 12680,
+      "sha256": "b1617baeb9f5d726e4b8c2d56e69513974849e1904f32756b800beaa83dc4404"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/registry.json",
+      "bytes": 1172,
+      "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C270/PLAN.md",
+      "bytes": 6971,
+      "sha256": "89c146faf671a1e09329dbaca3a5d69483750b75e8463a8d5b23da97ff6d6d78"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "bytes": 3382,
+      "sha256": "4c5161ed82ba2547ed555e8a2b7f08087ce4a5040a062eb57c09d4a30df50b31"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C270/task.json",
+      "bytes": 25381,
+      "sha256": "e4431384891bc12dfa224ae1baaabb64cfbff76f3a32afbb21f336c45a6cff1b"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C271/PLAN.md",
+      "bytes": 84271,
+      "sha256": "61f58111d501c31daa5f94c62121839320e900ec55f624bbf65a582952e43d63"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "bytes": 83153,
+      "sha256": "18e86838c55de524f5bfc7bbf91995202bbc14c1d9a78090ff8decc7bc2664bd"
+    },
+    {
+      "check": "payload_size_sha256",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C271/task.json",
+      "bytes": 397945,
+      "sha256": "4373d73e9ddeb5b500b3c6efe82981573ea1fd1f9cdc3f8bcb16609c47e8e0b8"
+    },
+    {
+      "check": "supplied_extraction_exact_inventory",
+      "status": "passed",
+      "missing": [],
+      "extra": [],
+      "symlinks": []
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "CHECKPOINT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "CURRENT-DEPENDENCIES.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "HANDOFF.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "HISTORICAL-DEPENDENCIES.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "HOST-ENVIRONMENT.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "MANIFEST-SHA256.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "NEXT-TASK.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "PROMPT-1-CONTINUE.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "PROMPT-2-RECOVER.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "README-START-HERE.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "RECOVERY-STATUS.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "SESSION.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "SOURCE-MANIFEST.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "branch-state/docs/workflow/CURRENT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "observations/branches.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "observations/issue.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "observations/main.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "observations/pr.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "observations/prs.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "predecessor/OntoKin_C271_P28_Recovery_Delivery_Receipt_2026-11-23.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "predecessor/OntoKin_C271_P28_Recovery_Handoff_2026-11-23.zip"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/CORE-COMMIT-CREATE.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/CORE-COMMIT-READBACK.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/CORE-REF-READBACK.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/CORE-REF-UPDATE.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/CORE-TREE-CREATE.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/EARLY-IDENTITY.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/EARLY-SAVE-RESULT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/PUBLICATION-INTENT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/PUBLICATION-RECOVERY-IDENTITY.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/PUBLICATION-SAVE-RESULT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/build_early.py"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/build_final.py"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/candidate.patch"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/evidence/branches.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/evidence/issue.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/evidence/main.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/evidence/ownership-comment.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/evidence/pr.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/evidence/prs.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/evidence/whitespace-final.txt"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/evidence/workflow-attempt001.txt"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/freeze_publication.py"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/prepare_checkpoint.py"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/published-checks/CHECKS.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/published-checks/documentation.stderr"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/published-checks/documentation.stdout"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/published-checks/workflow.stderr"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/published-checks/workflow.stdout"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/AUDIT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/REPORT.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/WORKER.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/archive-inventories.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/audit.py"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/candidate-identity-inventory.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/original-p28-early-source-bindings.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/p27-design-source-bindings.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/receipt-recovery-evidence.zip"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/receipt-summary.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/artifact_audit/supplied-recovery-source-bindings.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/CANDIDATE-MANIFEST.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/REPORT.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/REVIEW.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/candidate.diff"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/checkpoint_review/review.py"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/AUDIT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/POSTFREEZE-EVIDENCE.zip"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/POSTFREEZE-INVENTORY.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/REPORT.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/audit.py"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/branch-commit.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/ci-runs.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/ci-status.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/commits-p28.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/compare-p28-recovery.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/issue-comments-p28.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/postfreeze-response.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/pr-comments-p28.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/recovery-BRANCH-INVENTORY.json.response.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/recovery-OUTCOME.json.response.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/recovery-RECONCILIATION.json.response.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/recovery-SESSION.md.response.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-c271-evidence.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-c271-task.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-docs.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-engineering.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-p27-design.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-p28-recovery.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-root.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-tasks.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "recovery/reviews/state_audit/tree-workflow.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/.agents/skills/ontokin-delivery/SKILL.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/.agents/skills/ontokin-learning/SKILL.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/.agents/skills/ontokin-session/SKILL.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/AGENTS.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/CHATGPT-START-HERE.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/GOAL.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/ROLE.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/STATUS.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/BROWSER-PROMPTS.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/CURRENT.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/EPHEMERAL-HOST.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/HANDOFF.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/PROTOCOL.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/registry.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C270/PLAN.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C270/REQUIREMENTS.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C270/task.json"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C271/PLAN.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C271/REQUIREMENTS.md"
+    },
+    {
+      "check": "supplied_extraction_matches_zip",
+      "status": "passed",
+      "path": "repository/docs/workflow/tasks/C271/task.json"
+    },
+    {
+      "check": "fresh_safe_extraction_exact_inventory_and_bytes",
+      "status": "passed",
+      "files": 149,
+      "mismatch": [],
+      "temporary_extraction_removed_after_audit": true
+    },
+    {
+      "check": "source_manifest_unique_paths",
+      "status": "passed"
+    },
+    {
+      "check": "source_manifest_covers_frozen_git_snapshots",
+      "status": "passed",
+      "missing": [],
+      "extra": []
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "branch-state/docs/workflow/CURRENT.json",
+      "git_path": "docs/workflow/CURRENT.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "87dc554832dfca24cfa97fda42daa5ee09b36a8c",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 187657,
+      "sha256": "67dc30a4614873f8af3c722331ae9424a702a734bf72538981127e0647bb8064",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "git_path": ".agents/skills/ontokin-delivery/SKILL.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "117462416e6eb47a86bbb08b4618b9c5cb572f84",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 1277,
+      "sha256": "7b7300a46e4f966314b74707a414f5fc72425c8eab4464cf12b20def9697529e",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/.agents/skills/ontokin-learning/SKILL.md",
+      "git_path": ".agents/skills/ontokin-learning/SKILL.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "02283141a8610d3aa00eafb907b0c36b9f82f68b",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 2478,
+      "sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/.agents/skills/ontokin-session/SKILL.md",
+      "git_path": ".agents/skills/ontokin-session/SKILL.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "17714b7c4288efec7b60ab414840082a20264819",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 1346,
+      "sha256": "4ce5917b05f94b1676e81102cc8518371e509dc8ac4a4f6bcfdf3881faacfc13",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/AGENTS.md",
+      "git_path": "AGENTS.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "262f9e592b5d94ba53785026578d70cd0bffa5ba",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 7529,
+      "sha256": "8b59a0269e2138336c76b30ecc083c6be2a9545a0e6e00b02f26545266bf6de0",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/CHATGPT-START-HERE.md",
+      "git_path": "CHATGPT-START-HERE.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "9ae7853a11b4fdfcf761d418ce4b10dbaf24d0fa",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 3305,
+      "sha256": "8bd05b9bfd855e16da2f8b318006540108e11a569f78565c3c93093fb3660014",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/GOAL.md",
+      "git_path": "GOAL.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "069d6551a03fc2c974d2e844a9bb285bae312ada",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 11740,
+      "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/ROLE.md",
+      "git_path": "ROLE.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "94cba1161037beddb8b384a2c2cf1ee0d2120eaa",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 1683,
+      "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/STATUS.md",
+      "git_path": "STATUS.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "2cabb4caef0002173ccb897fbbc704559ec3815d",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 13772,
+      "sha256": "04a500a21e7a7b0148345e97bca72da93700f649032ec202ebb0e96b64448d7e",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "git_path": "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "8ff5b738e19f150d5c37948437bfe265d35505f7",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 13604,
+      "sha256": "274f989927ca3de0fa1506f579e6872ac30ffca33df7b95ee7f23c4e1d2e62b2",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "git_path": "docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "5fd35d5e3b4dd061c6258f1cd4f039e9cd0727b9",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 11426,
+      "sha256": "a037c8584f5bd94beea9bbb83079c437de90556a9d3ec8ec6295f6c93e459a45",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "595614be18fe0183bdd62495c0b51ba7518e5a44",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 523,
+      "sha256": "112e281823b768b1f5c41f958b3f6ccc5bbe5f05b81b2f789ed04255ae8ecd39",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "f31e371906eeab7c6aea238e342a2e8a5e10c30c",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 713,
+      "sha256": "7e86965f831bfdf1b48252f26ae0476e126ff9809aae4fa147c275b536a9bb8d",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "8e9847359c7ebc5428f6a79690100c2ec8f1e5a4",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 3330,
+      "sha256": "155fd258b96bf6d5b015515e06e4e8e0eced73f10798c1b1c90851a3733cac02",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "2946ea58eff5a86fb0ff4862128a6341342305ef",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 5009,
+      "sha256": "b493e9340ef7beb54aec46d4d9f13e34c0dd9b98854bd2dd848e97985d85fb94",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "bdfcc0328a27c84eb684fc49a11e9cef6c53e6d3",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 2350,
+      "sha256": "117f342367dd2d4135da048afb9f4d9e0db0f19c945cb8472e69d337ad6c5823",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "0133d65f8e27d08dc58f73bb9846cc0f5ab48acf",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 2583,
+      "sha256": "dfbb0bca4210a32edfe6acb897262a690e79dd5d1f63544809c5258283b30161",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "c57e3ea73cf2c4652f8473e6c141a9b6b5e14f72",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 519,
+      "sha256": "f8624e6df87f71995789f9a23b44bc617b8ddd85e0e8ed8618bf2fd9ab851d14",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "26d9520b189860874e23dbba68df834f12af3505",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 2847,
+      "sha256": "bd653498842c49090a6c185a60fe94734998203433ee2a14ec5d6e88bb2abc22",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "dc753faf163bc18ee0e6eea9f4446310eb183c7b",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 3720,
+      "sha256": "160ccf0c0610ec015d8b8220899e15b61f939af73a24404b0f3ad35d8257d414",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "4b850e2a83c984720031106e15a206c47e80b2a7",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 6609,
+      "sha256": "cd1bcb3865d77955ee04480d19c51a09e4af720cadcc90a10651778a686af24f",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "d19e7b3cde9e7241dc5dfb68783563588f162733",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 6609,
+      "sha256": "3c98bf64f93e3e3581e07e812de65dfc13305b9ae397f97518b6a6138af45f7b",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "7db6fb7ad90373ac7dba942fffe8f2dbf6a5754e",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 268,
+      "sha256": "8622fb6b468d3e933e80f94e02df5255ddc4eff64f9d110491c43e3488abaf1b",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "771a7df97eb07679ba0724a403eb7bcf63d7c11c",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 219,
+      "sha256": "acb499901aecc2ddc2f012ca04d25653e2e383723ad1c554b27f90b1fb466558",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "40357d223ca00eea4a48fb5223db1dfc26fad66f",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "40357d223ca00eea4a48fb5223db1dfc26fad66f",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "3654631aa703aa7f353c6c42028a709b4326398c",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 210797,
+      "sha256": "65a5b2ccf0b2fd8c25b85c33088afadc4afdd10224b0e1ee9b837749a155ef3c",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "75d8689e8446f292219dcfcf0cb217a839d1d82c",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 6447,
+      "sha256": "ff55aed504002daf63cebb5a3d1e882d3897ad16eb1a0d97b621898dfe206e2b",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "db5c2c26016eff8682f773d4dc1879fb916b4f65",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 2879,
+      "sha256": "300ad23078ca3611a89400ba65db4630977816b0590efc2ef672375cdf964209",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "0f8cf090679089002ff07dfe75f4a5a5f4663a1d",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 15732,
+      "sha256": "7adce7f7a6b11b0bfb4bda0198372a9ef33a48dc4e7e73297a1291fa6159d551",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "abcca471a01288e482a9a937045a9540ac563a17",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 7451,
+      "sha256": "c6b65b0b0bb87224252573fcd9a5432e4d82392915537cfb238f9a297c4af0d9",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "befcd0f3c6a304c29b59ac76cbf5f3a23e5c4b5a",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 8443,
+      "sha256": "2e8c64ebe04c28c3a254ef9bc0c3b39367b32a2ce1b448aada12c0fba20ee991",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "9bec2a8172b5bad6bc91a1b1e0a8870bafc8b262",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 19870,
+      "sha256": "7c2a955d6b594b79028719f0f761536bcd61d5267ab7d3eab42cdcf898f51b5a",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "cd38096bf5631b5d3cbceaaf5d795d04a4e44aba",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 3610,
+      "sha256": "59012ec4db86b68407594ab149255c485be9f23b4126fde145cc3b186d14e590",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "bf3eb290705b26d6d6cc574b43633b972e7785a2",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 24211,
+      "sha256": "19a62b7de82f467f144751c79a2e46cafa1f8ad9a8fbe34cfa8fc5b76799be47",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "4418e4e5f2c3cd36dd3977f7c271a962bbf84563",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 14085,
+      "sha256": "cb4cbbb70d20b166fc7ba7ae2124b83c5c59e6a8fc3ba2daf68a96fff9fd6b27",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "027c003046816af58369e5af47d94be20eb5e4ee",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 27696,
+      "sha256": "956ce5b04482405177da9e6d6710d6e4c48f2cb85aa76a4336f4e7a9eea30db0",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "62659d6da0fbba7c5ab9591aa6b4ed07fc3c2193",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 5060,
+      "sha256": "44853def70c5c08976cf0fe72e296962a9a68a36dce5d0a1b37f02c8d78d73ad",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "043fe185a06352c88f4b28bb79b5cdfd04af15c1",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 17237,
+      "sha256": "86f9b1f065fa471e7467a985b02d89368c489776767b151a3de6740280d50dd8",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/BROWSER-PROMPTS.md",
+      "git_path": "docs/workflow/BROWSER-PROMPTS.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "080a1a9a37f10805014dccfc1cab684027802a06",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 2058,
+      "sha256": "2882178ad4dedfd9da2a2dd78f518a644bfd1e05a0819c24cecbf9f1b8708fdc",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/CURRENT.json",
+      "git_path": "docs/workflow/CURRENT.json",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "9b9b7d4bb0eecde3691912b89d35a362c73b82c5",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 5527,
+      "sha256": "fec57459bd12896effe23010dcc6d9f8b709e350fd8cabe1c67309a7da941d40",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/EPHEMERAL-HOST.md",
+      "git_path": "docs/workflow/EPHEMERAL-HOST.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "f7c7dd594dccba294c0beb22df249b826694b15c",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 4424,
+      "sha256": "f861078b0f198f63f831667107cc647f22ab493422c8b8dd9d0028e6f2d8660a",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/HANDOFF.md",
+      "git_path": "docs/workflow/HANDOFF.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "363eaab0e4a86a192f255d8189a29df489d44c27",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 6809,
+      "sha256": "4475a06b1c4fec52375797bd3a0bdd4fdffaef0c559d8d194da8b7e6bd28f6f4",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/PROTOCOL.md",
+      "git_path": "docs/workflow/PROTOCOL.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "27cbe8eccd350584f4744e469354ac04837aa53d",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 12680,
+      "sha256": "b1617baeb9f5d726e4b8c2d56e69513974849e1904f32756b800beaa83dc4404",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/registry.json",
+      "git_path": "docs/workflow/registry.json",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "545e0619847b2fd767b93dfd0c81dd5a1f055a99",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 1172,
+      "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/tasks/C270/PLAN.md",
+      "git_path": "docs/workflow/tasks/C270/PLAN.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "e23235ba303d9260075afb60dbae62ec7eac9fe6",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 6971,
+      "sha256": "89c146faf671a1e09329dbaca3a5d69483750b75e8463a8d5b23da97ff6d6d78",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "git_path": "docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "c2e9cdf098fdbe0f65e6bb620d6001d524b80d90",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 3382,
+      "sha256": "4c5161ed82ba2547ed555e8a2b7f08087ce4a5040a062eb57c09d4a30df50b31",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/tasks/C270/task.json",
+      "git_path": "docs/workflow/tasks/C270/task.json",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "2f7dc7207699a47680379120148108bcc9d12c19",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 25381,
+      "sha256": "e4431384891bc12dfa224ae1baaabb64cfbff76f3a32afbb21f336c45a6cff1b",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/tasks/C271/PLAN.md",
+      "git_path": "docs/workflow/tasks/C271/PLAN.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "1836bf56de593fbd53125a488a571b17927a4a26",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 84271,
+      "sha256": "61f58111d501c31daa5f94c62121839320e900ec55f624bbf65a582952e43d63",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "git_path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "4f2ac0ed23485472f79e4ae8cbc0b7008896bd50",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 83153,
+      "sha256": "18e86838c55de524f5bfc7bbf91995202bbc14c1d9a78090ff8decc7bc2664bd",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "frozen_source_exact_git_binding",
+      "status": "passed",
+      "archive_path": "repository/docs/workflow/tasks/C271/task.json",
+      "git_path": "docs/workflow/tasks/C271/task.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "1a92fb8f0b844e4284b2c441630028af1eb04d3f",
+      "git_mode": "100644",
+      "zip_permissions": "0o644",
+      "bytes": 397945,
+      "sha256": "4373d73e9ddeb5b500b3c6efe82981573ea1fd1f9cdc3f8bcb16609c47e8e0b8",
+      "exact_path_mode_blob_at_commit": true,
+      "committed_bytes_equal": true
+    },
+    {
+      "check": "declared_source_commits",
+      "status": "passed"
+    },
+    {
+      "check": "checkpoint_commit_tree_binding",
+      "status": "passed",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "declared_tree": "3f8eba2e0de338a76fdb39aac373ed618c633c3c",
+      "actual_tree": "3f8eba2e0de338a76fdb39aac373ed618c633c3c"
+    },
+    {
+      "check": "checkpoint_commit_tree_binding",
+      "status": "passed",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "declared_tree": "2a4712e9d1c6ddd2fb4571292e239d1b16bb5fda",
+      "actual_tree": "2a4712e9d1c6ddd2fb4571292e239d1b16bb5fda"
+    },
+    {
+      "check": "checkpoint_matches_external_receipt_identity",
+      "status": "passed"
+    },
+    {
+      "check": "source_time_pending_delivery_is_explicit",
+      "status": "passed"
+    },
+    {
+      "check": "packaged_prompt_matches_saved_receipt",
+      "status": "passed",
+      "archive_path": "PROMPT-1-CONTINUE.md",
+      "saved_name": "OntoKin_C271_P28_R02_Continue_2026-11-23.md",
+      "bytes": 1970,
+      "sha256": "e9d4b251db78cb7ace2a55b8ba6d9822c37c6862da450a3933b2140fc61e9f7a"
+    },
+    {
+      "check": "packaged_prompt_matches_saved_receipt",
+      "status": "passed",
+      "archive_path": "PROMPT-2-RECOVER.md",
+      "saved_name": "OntoKin_C271_P28_R02_Recover_2026-11-23.md",
+      "bytes": 2179,
+      "sha256": "f9b774c0067a93763e3c19dc15c000234d1a30df92155661d5cca0c79d764d13"
+    },
+    {
+      "check": "latest_supplied_comment_has_r02_terminal",
+      "status": "passed",
+      "input": "session/issue273_comments.json",
+      "id": 7115412292,
+      "url": "https://github.com/Omegapy/OntoKin/issues/273#issuecomment-7115412292"
+    },
+    {
+      "check": "terminal_archive_matches_receipt",
+      "status": "passed",
+      "input": "session/issue273_comments.json"
+    },
+    {
+      "check": "terminal_external_receipt_exact_bytes",
+      "status": "passed",
+      "input": "session/issue273_comments.json",
+      "actual": {
+        "path": "inputs/OntoKin/OntoKin_C271_P28_R02_Delivery_Receipt_2026-11-23.json",
+        "file_name": "OntoKin_C271_P28_R02_Delivery_Receipt_2026-11-23.json",
+        "bytes": 16190,
+        "sha256": "d706355292f0965d1e1482f443bc739d73578590e372bc23ddc573a7a1a5b2f8"
+      }
+    },
+    {
+      "check": "terminal_identity_matches_receipt_and_checkpoint",
+      "status": "passed",
+      "input": "session/issue273_comments.json"
+    },
+    {
+      "check": "terminal_resolves_delivery_only",
+      "status": "passed",
+      "input": "session/issue273_comments.json",
+      "terminal_effect": "Matching live copies resolve only this R02 source-time delivery/publication/ownership pending fields. They do not recover original P28, verify its test claim, qualify H0/H1, integrate main, or complete C271."
+    },
+    {
+      "check": "latest_supplied_comment_has_r02_terminal",
+      "status": "passed",
+      "input": "session/pr274_comments.json",
+      "id": 7115411913,
+      "url": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7115411913"
+    },
+    {
+      "check": "terminal_archive_matches_receipt",
+      "status": "passed",
+      "input": "session/pr274_comments.json"
+    },
+    {
+      "check": "terminal_external_receipt_exact_bytes",
+      "status": "passed",
+      "input": "session/pr274_comments.json",
+      "actual": {
+        "path": "inputs/OntoKin/OntoKin_C271_P28_R02_Delivery_Receipt_2026-11-23.json",
+        "file_name": "OntoKin_C271_P28_R02_Delivery_Receipt_2026-11-23.json",
+        "bytes": 16190,
+        "sha256": "d706355292f0965d1e1482f443bc739d73578590e372bc23ddc573a7a1a5b2f8"
+      }
+    },
+    {
+      "check": "terminal_identity_matches_receipt_and_checkpoint",
+      "status": "passed",
+      "input": "session/pr274_comments.json"
+    },
+    {
+      "check": "terminal_resolves_delivery_only",
+      "status": "passed",
+      "input": "session/pr274_comments.json",
+      "terminal_effect": "Matching live copies resolve only this R02 source-time delivery/publication/ownership pending fields. They do not recover original P28, verify its test claim, qualify H0/H1, integrate main, or complete C271."
+    },
+    {
+      "check": "issue_and_pr_terminals_exactly_match",
+      "status": "passed"
+    },
+    {
+      "check": "historical_product_test_claim_remains_unverified",
+      "status": "passed"
+    }
+  ],
+  "source_bindings": [
+    {
+      "archive_path": "branch-state/docs/workflow/CURRENT.json",
+      "git_path": "docs/workflow/CURRENT.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "87dc554832dfca24cfa97fda42daa5ee09b36a8c",
+      "git_mode": "100644",
+      "bytes": 187657,
+      "sha256": "67dc30a4614873f8af3c722331ae9424a702a734bf72538981127e0647bb8064",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "git_path": ".agents/skills/ontokin-delivery/SKILL.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "117462416e6eb47a86bbb08b4618b9c5cb572f84",
+      "bytes": 1277,
+      "sha256": "7b7300a46e4f966314b74707a414f5fc72425c8eab4464cf12b20def9697529e",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/.agents/skills/ontokin-learning/SKILL.md",
+      "git_path": ".agents/skills/ontokin-learning/SKILL.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "02283141a8610d3aa00eafb907b0c36b9f82f68b",
+      "bytes": 2478,
+      "sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/.agents/skills/ontokin-session/SKILL.md",
+      "git_path": ".agents/skills/ontokin-session/SKILL.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "17714b7c4288efec7b60ab414840082a20264819",
+      "bytes": 1346,
+      "sha256": "4ce5917b05f94b1676e81102cc8518371e509dc8ac4a4f6bcfdf3881faacfc13",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/AGENTS.md",
+      "git_path": "AGENTS.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "262f9e592b5d94ba53785026578d70cd0bffa5ba",
+      "bytes": 7529,
+      "sha256": "8b59a0269e2138336c76b30ecc083c6be2a9545a0e6e00b02f26545266bf6de0",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/CHATGPT-START-HERE.md",
+      "git_path": "CHATGPT-START-HERE.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "9ae7853a11b4fdfcf761d418ce4b10dbaf24d0fa",
+      "bytes": 3305,
+      "sha256": "8bd05b9bfd855e16da2f8b318006540108e11a569f78565c3c93093fb3660014",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/GOAL.md",
+      "git_path": "GOAL.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "069d6551a03fc2c974d2e844a9bb285bae312ada",
+      "bytes": 11740,
+      "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/ROLE.md",
+      "git_path": "ROLE.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "94cba1161037beddb8b384a2c2cf1ee0d2120eaa",
+      "bytes": 1683,
+      "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/STATUS.md",
+      "git_path": "STATUS.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "2cabb4caef0002173ccb897fbbc704559ec3815d",
+      "bytes": 13772,
+      "sha256": "04a500a21e7a7b0148345e97bca72da93700f649032ec202ebb0e96b64448d7e",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "git_path": "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "8ff5b738e19f150d5c37948437bfe265d35505f7",
+      "bytes": 13604,
+      "sha256": "274f989927ca3de0fa1506f579e6872ac30ffca33df7b95ee7f23c4e1d2e62b2",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "git_path": "docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "5fd35d5e3b4dd061c6258f1cd4f039e9cd0727b9",
+      "bytes": 11426,
+      "sha256": "a037c8584f5bd94beea9bbb83079c437de90556a9d3ec8ec6295f6c93e459a45",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "595614be18fe0183bdd62495c0b51ba7518e5a44",
+      "git_mode": "100644",
+      "bytes": 523,
+      "sha256": "112e281823b768b1f5c41f958b3f6ccc5bbe5f05b81b2f789ed04255ae8ecd39",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "f31e371906eeab7c6aea238e342a2e8a5e10c30c",
+      "git_mode": "100644",
+      "bytes": 713,
+      "sha256": "7e86965f831bfdf1b48252f26ae0476e126ff9809aae4fa147c275b536a9bb8d",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "8e9847359c7ebc5428f6a79690100c2ec8f1e5a4",
+      "git_mode": "100644",
+      "bytes": 3330,
+      "sha256": "155fd258b96bf6d5b015515e06e4e8e0eced73f10798c1b1c90851a3733cac02",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "2946ea58eff5a86fb0ff4862128a6341342305ef",
+      "git_mode": "100644",
+      "bytes": 5009,
+      "sha256": "b493e9340ef7beb54aec46d4d9f13e34c0dd9b98854bd2dd848e97985d85fb94",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "bdfcc0328a27c84eb684fc49a11e9cef6c53e6d3",
+      "git_mode": "100644",
+      "bytes": 2350,
+      "sha256": "117f342367dd2d4135da048afb9f4d9e0db0f19c945cb8472e69d337ad6c5823",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "0133d65f8e27d08dc58f73bb9846cc0f5ab48acf",
+      "git_mode": "100644",
+      "bytes": 2583,
+      "sha256": "dfbb0bca4210a32edfe6acb897262a690e79dd5d1f63544809c5258283b30161",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "c57e3ea73cf2c4652f8473e6c141a9b6b5e14f72",
+      "git_mode": "100644",
+      "bytes": 519,
+      "sha256": "f8624e6df87f71995789f9a23b44bc617b8ddd85e0e8ed8618bf2fd9ab851d14",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "26d9520b189860874e23dbba68df834f12af3505",
+      "git_mode": "100644",
+      "bytes": 2847,
+      "sha256": "bd653498842c49090a6c185a60fe94734998203433ee2a14ec5d6e88bb2abc22",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "dc753faf163bc18ee0e6eea9f4446310eb183c7b",
+      "git_mode": "100644",
+      "bytes": 3720,
+      "sha256": "160ccf0c0610ec015d8b8220899e15b61f939af73a24404b0f3ad35d8257d414",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "4b850e2a83c984720031106e15a206c47e80b2a7",
+      "git_mode": "100644",
+      "bytes": 6609,
+      "sha256": "cd1bcb3865d77955ee04480d19c51a09e4af720cadcc90a10651778a686af24f",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "d19e7b3cde9e7241dc5dfb68783563588f162733",
+      "git_mode": "100644",
+      "bytes": 6609,
+      "sha256": "3c98bf64f93e3e3581e07e812de65dfc13305b9ae397f97518b6a6138af45f7b",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "7db6fb7ad90373ac7dba942fffe8f2dbf6a5754e",
+      "git_mode": "100644",
+      "bytes": 268,
+      "sha256": "8622fb6b468d3e933e80f94e02df5255ddc4eff64f9d110491c43e3488abaf1b",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "771a7df97eb07679ba0724a403eb7bcf63d7c11c",
+      "git_mode": "100644",
+      "bytes": 219,
+      "sha256": "acb499901aecc2ddc2f012ca04d25653e2e383723ad1c554b27f90b1fb466558",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "40357d223ca00eea4a48fb5223db1dfc26fad66f",
+      "git_mode": "100644",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "git_mode": "100644",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "40357d223ca00eea4a48fb5223db1dfc26fad66f",
+      "git_mode": "100644",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "3654631aa703aa7f353c6c42028a709b4326398c",
+      "git_mode": "100644",
+      "bytes": 210797,
+      "sha256": "65a5b2ccf0b2fd8c25b85c33088afadc4afdd10224b0e1ee9b837749a155ef3c",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "75d8689e8446f292219dcfcf0cb217a839d1d82c",
+      "git_mode": "100644",
+      "bytes": 6447,
+      "sha256": "ff55aed504002daf63cebb5a3d1e882d3897ad16eb1a0d97b621898dfe206e2b",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "db5c2c26016eff8682f773d4dc1879fb916b4f65",
+      "git_mode": "100644",
+      "bytes": 2879,
+      "sha256": "300ad23078ca3611a89400ba65db4630977816b0590efc2ef672375cdf964209",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "0f8cf090679089002ff07dfe75f4a5a5f4663a1d",
+      "git_mode": "100644",
+      "bytes": 15732,
+      "sha256": "7adce7f7a6b11b0bfb4bda0198372a9ef33a48dc4e7e73297a1291fa6159d551",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "abcca471a01288e482a9a937045a9540ac563a17",
+      "git_mode": "100644",
+      "bytes": 7451,
+      "sha256": "c6b65b0b0bb87224252573fcd9a5432e4d82392915537cfb238f9a297c4af0d9",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "befcd0f3c6a304c29b59ac76cbf5f3a23e5c4b5a",
+      "git_mode": "100644",
+      "bytes": 8443,
+      "sha256": "2e8c64ebe04c28c3a254ef9bc0c3b39367b32a2ce1b448aada12c0fba20ee991",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "9bec2a8172b5bad6bc91a1b1e0a8870bafc8b262",
+      "git_mode": "100644",
+      "bytes": 19870,
+      "sha256": "7c2a955d6b594b79028719f0f761536bcd61d5267ab7d3eab42cdcf898f51b5a",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "cd38096bf5631b5d3cbceaaf5d795d04a4e44aba",
+      "git_mode": "100644",
+      "bytes": 3610,
+      "sha256": "59012ec4db86b68407594ab149255c485be9f23b4126fde145cc3b186d14e590",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "bf3eb290705b26d6d6cc574b43633b972e7785a2",
+      "git_mode": "100644",
+      "bytes": 24211,
+      "sha256": "19a62b7de82f467f144751c79a2e46cafa1f8ad9a8fbe34cfa8fc5b76799be47",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "4418e4e5f2c3cd36dd3977f7c271a962bbf84563",
+      "git_mode": "100644",
+      "bytes": 14085,
+      "sha256": "cb4cbbb70d20b166fc7ba7ae2124b83c5c59e6a8fc3ba2daf68a96fff9fd6b27",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "027c003046816af58369e5af47d94be20eb5e4ee",
+      "git_mode": "100644",
+      "bytes": 27696,
+      "sha256": "956ce5b04482405177da9e6d6710d6e4c48f2cb85aa76a4336f4e7a9eea30db0",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "62659d6da0fbba7c5ab9591aa6b4ed07fc3c2193",
+      "git_mode": "100644",
+      "bytes": 5060,
+      "sha256": "44853def70c5c08976cf0fe72e296962a9a68a36dce5d0a1b37f02c8d78d73ad",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py",
+      "git_path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "043fe185a06352c88f4b28bb79b5cdfd04af15c1",
+      "git_mode": "100644",
+      "bytes": 17237,
+      "sha256": "86f9b1f065fa471e7467a985b02d89368c489776767b151a3de6740280d50dd8",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/BROWSER-PROMPTS.md",
+      "git_path": "docs/workflow/BROWSER-PROMPTS.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "080a1a9a37f10805014dccfc1cab684027802a06",
+      "bytes": 2058,
+      "sha256": "2882178ad4dedfd9da2a2dd78f518a644bfd1e05a0819c24cecbf9f1b8708fdc",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/CURRENT.json",
+      "git_path": "docs/workflow/CURRENT.json",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "9b9b7d4bb0eecde3691912b89d35a362c73b82c5",
+      "bytes": 5527,
+      "sha256": "fec57459bd12896effe23010dcc6d9f8b709e350fd8cabe1c67309a7da941d40",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/EPHEMERAL-HOST.md",
+      "git_path": "docs/workflow/EPHEMERAL-HOST.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "f7c7dd594dccba294c0beb22df249b826694b15c",
+      "bytes": 4424,
+      "sha256": "f861078b0f198f63f831667107cc647f22ab493422c8b8dd9d0028e6f2d8660a",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/HANDOFF.md",
+      "git_path": "docs/workflow/HANDOFF.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "363eaab0e4a86a192f255d8189a29df489d44c27",
+      "bytes": 6809,
+      "sha256": "4475a06b1c4fec52375797bd3a0bdd4fdffaef0c559d8d194da8b7e6bd28f6f4",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/PROTOCOL.md",
+      "git_path": "docs/workflow/PROTOCOL.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "27cbe8eccd350584f4744e469354ac04837aa53d",
+      "bytes": 12680,
+      "sha256": "b1617baeb9f5d726e4b8c2d56e69513974849e1904f32756b800beaa83dc4404",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/registry.json",
+      "git_path": "docs/workflow/registry.json",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "545e0619847b2fd767b93dfd0c81dd5a1f055a99",
+      "bytes": 1172,
+      "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/tasks/C270/PLAN.md",
+      "git_path": "docs/workflow/tasks/C270/PLAN.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "e23235ba303d9260075afb60dbae62ec7eac9fe6",
+      "bytes": 6971,
+      "sha256": "89c146faf671a1e09329dbaca3a5d69483750b75e8463a8d5b23da97ff6d6d78",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "git_path": "docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "c2e9cdf098fdbe0f65e6bb620d6001d524b80d90",
+      "bytes": 3382,
+      "sha256": "4c5161ed82ba2547ed555e8a2b7f08087ce4a5040a062eb57c09d4a30df50b31",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/tasks/C270/task.json",
+      "git_path": "docs/workflow/tasks/C270/task.json",
+      "commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "git_blob": "2f7dc7207699a47680379120148108bcc9d12c19",
+      "bytes": 25381,
+      "sha256": "e4431384891bc12dfa224ae1baaabb64cfbff76f3a32afbb21f336c45a6cff1b",
+      "git_mode": "100644",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/tasks/C271/PLAN.md",
+      "git_path": "docs/workflow/tasks/C271/PLAN.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "1836bf56de593fbd53125a488a571b17927a4a26",
+      "git_mode": "100644",
+      "bytes": 84271,
+      "sha256": "61f58111d501c31daa5f94c62121839320e900ec55f624bbf65a582952e43d63",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "git_path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "4f2ac0ed23485472f79e4ae8cbc0b7008896bd50",
+      "git_mode": "100644",
+      "bytes": 83153,
+      "sha256": "18e86838c55de524f5bfc7bbf91995202bbc14c1d9a78090ff8decc7bc2664bd",
+      "verified": true
+    },
+    {
+      "archive_path": "repository/docs/workflow/tasks/C271/task.json",
+      "git_path": "docs/workflow/tasks/C271/task.json",
+      "commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "git_blob": "1a92fb8f0b844e4284b2c441630028af1eb04d3f",
+      "git_mode": "100644",
+      "bytes": 397945,
+      "sha256": "4373d73e9ddeb5b500b3c6efe82981573ea1fd1f9cdc3f8bcb16609c47e8e0b8",
+      "verified": true
+    }
+  ],
+  "discrepancies": [],
+  "publication_or_integration": "none",
+  "workers_or_unknown_operations_remaining": []
+}

@@ -1,0 +1,1305 @@
+{
+  "actual_python_metadata": {
+    "class": 64,
+    "endian": "little",
+    "interpreter": "/lib64/ld-linux-x86-64.so.2",
+    "machine": 62,
+    "needed": [
+      "libpthread.so.0",
+      "libdl.so.2",
+      "libutil.so.1",
+      "libm.so.6",
+      "librt.so.1",
+      "libc.so.6"
+    ],
+    "rpath": [
+      "$ORIGIN/../lib"
+    ],
+    "runpath": [],
+    "soname": null,
+    "type": 3
+  },
+  "expected_resolution": {
+    "interpreter": "/lib64/ld-linux-x86-64.so.2",
+    "libraries": {
+      "libc.so.6": "/required-images/libc.so.6",
+      "libdl.so.2": "/required-images/libdl.so.2"
+    },
+    "vdso": []
+  },
+  "git_state": {
+    "synthetic": true
+  },
+  "libc_policy": {
+    "loader": {
+      "mode": "0o755",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+      "size_bytes": 225672
+    },
+    "schema": "ontokin.current-host-readback-inspection-plan/0.1.5",
+    "subject": {
+      "mode": "0o755",
+      "path": "/required-images/libc.so.6",
+      "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+      "size_bytes": 1995216
+    }
+  },
+  "mock_boundaries": [
+    "source/runtime/host/origin/libc/RTLD/guard prerequisite observations are stipulated, not proven",
+    "ROOT and logical Path.resolve/is_symlink projections do not observe a host",
+    "new selector, constructor, _bound comparisons, dispatch, private raw reads, caller order and wrappers remain real"
+  ],
+  "operational": false,
+  "origin_policy": {
+    "expanded_rpath": [
+      "/required-python/lib"
+    ],
+    "invocation": "/required-python/bin/python",
+    "kernel_origin": {
+      "at_secure": 0,
+      "exe_path": "/required-python/bin/python"
+    },
+    "needed_names": [
+      "libpthread.so.0",
+      "libdl.so.2",
+      "libutil.so.1",
+      "libm.so.6",
+      "librt.so.1",
+      "libc.so.6"
+    ],
+    "origin": "/required-python/bin",
+    "raw_rpath": [
+      "$ORIGIN/../lib"
+    ],
+    "schema": "ontokin.current-host-readback-python-origin-rpath/0.1.0",
+    "subject": {
+      "mode": "0o755",
+      "path": "/required-python/bin/python",
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+      "size_bytes": 30894944
+    },
+    "variant_review": {
+      "mode": "0o644",
+      "path": "/required-documents/variants.json",
+      "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+      "size_bytes": 30
+    },
+    "variants": []
+  },
+  "plan": {
+    "author": {
+      "entry_point": "/required-source/prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "git_descriptor": {
+        "mode": "0o755",
+        "path": "/required-tools/git",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "metadata_inventory": {
+        "mode": "0o644",
+        "path": "/required-documents/metadata.json",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "python_descriptor": {
+        "mode": "0o755",
+        "path": "/required-python/bin/python",
+        "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+        "size_bytes": 30894944
+      },
+      "python_version": "3.12.0",
+      "runtime_inventory": {
+        "mode": "0o644",
+        "path": "/required-documents/runtime.json",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "source_commands": [],
+      "source_descriptor": {
+        "mode": "0o644",
+        "path": "/required-source/prototypes/static_tray_v01/current_host_inspection_v01.py",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      }
+    },
+    "commands": [
+      {
+        "active_work_ms": 3000,
+        "argv": [
+          "/required-node/bin/node",
+          "--version"
+        ],
+        "cleanup_ms": 2000,
+        "cwd": "/required-evidence/attempt/node_version",
+        "expected_direct_starts": 1,
+        "id": "node_version",
+        "label": "host-node-version",
+        "stderr_predicate": "",
+        "stdout_predicate": "v24.22.1\n",
+        "timeout_ms": 5000
+      },
+      {
+        "active_work_ms": 3000,
+        "argv": [
+          "/usr/bin/ldd",
+          "/required-node/bin/node"
+        ],
+        "cleanup_ms": 2000,
+        "cwd": "/required-evidence/attempt/shared_libraries",
+        "expected_direct_starts": 1,
+        "id": "shared_libraries",
+        "label": "host-shared-libraries",
+        "stderr_predicate": "",
+        "stdout_predicate": "linux-glibc-declared-closure-v1",
+        "timeout_ms": 5000
+      }
+    ],
+    "contract": "ontokin.current-host-readback/0.1.0",
+    "dependencies": {
+      "install_receipt": {
+        "mode": "0o644",
+        "path": "/required-documents/dependencies-install.json",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "inventory": {
+        "mode": "0o644",
+        "path": "/required-documents/dependencies.json",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "root": "/required-dependencies"
+    },
+    "environment": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "PATH": "/usr/bin:/bin",
+      "TZ": "UTC",
+      "UV_THREADPOOL_SIZE": "2"
+    },
+    "evidence": {
+      "ancestor_identities": [],
+      "attempt_root": "/required-evidence/attempt",
+      "outer_capture": {
+        "authority": {
+          "mode": "0o644",
+          "path": "/required-documents/authority.txt",
+          "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+          "size_bytes": 30
+        },
+        "log": {
+          "mode": "0o644",
+          "path": "/required-documents/caller.log",
+          "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+          "size_bytes": 30
+        }
+      },
+      "outputs": {
+        "completion": "/required-evidence/attempt/completion.json",
+        "host": "/required-evidence/attempt/HOST.json",
+        "node_version": {
+          "failure": "/required-evidence/attempt/node_version/failure.json",
+          "inspection": "/required-evidence/attempt/node_version/inspection.json",
+          "intent": "/required-evidence/attempt/node_version/intent.json",
+          "postflight": "/required-evidence/attempt/node_version/postflight.json",
+          "started": "/required-evidence/attempt/node_version/started.json",
+          "stderr": "/required-evidence/attempt/node_version/host-node-version.stderr.log",
+          "stdout": "/required-evidence/attempt/node_version/host-node-version.stdout.log",
+          "supervisor_outcome": {
+            "committed": "/required-evidence/attempt/node_version/supervisor-outcome.json",
+            "raw": "/required-evidence/attempt/node_version/host-node-version.process.json"
+          }
+        },
+        "preflight": "/required-evidence/attempt/preflight.json",
+        "reserved": "/required-evidence/attempt/reserved.json",
+        "result": "/required-evidence/attempt/result.json",
+        "shared_libraries": {
+          "failure": "/required-evidence/attempt/shared_libraries/failure.json",
+          "inspection": "/required-evidence/attempt/shared_libraries/inspection.json",
+          "intent": "/required-evidence/attempt/shared_libraries/intent.json",
+          "postflight": "/required-evidence/attempt/shared_libraries/postflight.json",
+          "started": "/required-evidence/attempt/shared_libraries/started.json",
+          "stderr": "/required-evidence/attempt/shared_libraries/host-shared-libraries.stderr.log",
+          "stdout": "/required-evidence/attempt/shared_libraries/host-shared-libraries.stdout.log",
+          "supervisor_outcome": {
+            "committed": "/required-evidence/attempt/shared_libraries/supervisor-outcome.json",
+            "raw": "/required-evidence/attempt/shared_libraries/host-shared-libraries.process.json"
+          }
+        }
+      },
+      "parent": "/required-evidence"
+    },
+    "host_static": {
+      "aliases": {
+        "/lib64/ld-linux-x86-64.so.2": {
+          "link_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "symlink": true
+        },
+        "/required-images/libc.so.6": {
+          "link_target": null,
+          "resolved_path": "/required-images/libc.so.6",
+          "symlink": false
+        },
+        "/required-images/libdl.so.2": {
+          "link_target": null,
+          "resolved_path": "/required-images/libdl.so.2",
+          "symlink": false
+        },
+        "/required-images/libm.so.6": {
+          "link_target": null,
+          "resolved_path": "/required-images/libm.so.6",
+          "symlink": false
+        },
+        "/required-images/libpthread.so.0": {
+          "link_target": null,
+          "resolved_path": "/required-images/libpthread.so.0",
+          "symlink": false
+        },
+        "/required-images/librt.so.1": {
+          "link_target": null,
+          "resolved_path": "/required-images/librt.so.1",
+          "symlink": false
+        },
+        "/required-images/libutil.so.1": {
+          "link_target": null,
+          "resolved_path": "/required-images/libutil.so.1",
+          "symlink": false
+        },
+        "/required-node/bin/node": {
+          "link_target": null,
+          "resolved_path": "/required-node/bin/node",
+          "symlink": false
+        },
+        "/required-python/bin/python": {
+          "link_target": null,
+          "resolved_path": "/required-python/bin/python",
+          "symlink": false
+        },
+        "/required-source/prototypes/static_tray_v01/current_host_inspection_v01.py": {
+          "link_target": null,
+          "resolved_path": "/required-source/prototypes/static_tray_v01/current_host_inspection_v01.py",
+          "symlink": false
+        },
+        "/required-tools/bash": {
+          "link_target": null,
+          "resolved_path": "/required-tools/bash",
+          "symlink": false
+        },
+        "/required-tools/echo": {
+          "link_target": null,
+          "resolved_path": "/required-tools/echo",
+          "symlink": false
+        },
+        "/required-tools/git": {
+          "link_target": null,
+          "resolved_path": "/required-tools/git",
+          "symlink": false
+        },
+        "/usr/bin/ldd": {
+          "link_target": null,
+          "resolved_path": "/usr/bin/ldd",
+          "symlink": false
+        },
+        "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2": {
+          "link_target": null,
+          "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "symlink": false
+        }
+      },
+      "files": {
+        "/required-images/libc.so.6": {
+          "mode": "0o755",
+          "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+          "size_bytes": 1995216
+        },
+        "/required-images/libdl.so.2": {
+          "mode": "0o644",
+          "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+          "size_bytes": 14408
+        },
+        "/required-images/libm.so.6": {
+          "mode": "0o644",
+          "sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3",
+          "size_bytes": 977112
+        },
+        "/required-images/libpthread.so.0": {
+          "mode": "0o644",
+          "sha256": "85e21f7dba0394411d00959176fd18b470e575b0b05f1f4f41e5636802ce0500",
+          "size_bytes": 14408
+        },
+        "/required-images/librt.so.1": {
+          "mode": "0o644",
+          "sha256": "7b7b84d1aedda0e0b2bdfc68844362782132180b8f02be1300e21e77572e514b",
+          "size_bytes": 14552
+        },
+        "/required-images/libutil.so.1": {
+          "mode": "0o644",
+          "sha256": "e3981d10efd152a53f083e38f5f9ddde7a049c85d0ab388a5eec91b52fc98a11",
+          "size_bytes": 14408
+        },
+        "/required-node/bin/node": {
+          "mode": "0o755",
+          "sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+          "size_bytes": 126951512
+        },
+        "/required-python/bin/python": {
+          "mode": "0o755",
+          "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+          "size_bytes": 30894944
+        },
+        "/required-source/prototypes/static_tray_v01/current_host_inspection_v01.py": {
+          "mode": "0o644",
+          "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+          "size_bytes": 30
+        },
+        "/required-tools/bash": {
+          "mode": "0o755",
+          "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+          "size_bytes": 30
+        },
+        "/required-tools/echo": {
+          "mode": "0o755",
+          "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+          "size_bytes": 30
+        },
+        "/required-tools/git": {
+          "mode": "0o755",
+          "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+          "size_bytes": 30
+        },
+        "/usr/bin/ldd": {
+          "mode": "0o755",
+          "sha256": "7bcd61a279946cb376d36fd91f4938ab4f4aba48e793c652a9797319d23f8dd3",
+          "size_bytes": 5356
+        },
+        "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2": {
+          "mode": "0o755",
+          "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+          "size_bytes": 225672
+        }
+      },
+      "path_guards": [],
+      "platform": {
+        "boot_id": "synthetic-not-host",
+        "libc": [
+          "glibc",
+          "2.41"
+        ],
+        "machine": "x86_64",
+        "release": "synthetic",
+        "system": "Linux"
+      },
+      "resolution": {
+        "ignored_kernel_rows": [],
+        "images": [
+          {
+            "file": {
+              "mode": "0o644",
+              "path": "/required-images/libdl.so.2",
+              "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+              "size_bytes": 14408
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": null,
+              "machine": 62,
+              "needed": [
+                "libc.so.6"
+              ],
+              "rpath": [],
+              "runpath": [],
+              "soname": "libdl.so.2",
+              "type": 3
+            },
+            "resolved_needed": {
+              "libc.so.6": "/required-images/libc.so.6"
+            }
+          },
+          {
+            "file": {
+              "mode": "0o644",
+              "path": "/required-images/libm.so.6",
+              "sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3",
+              "size_bytes": 977112
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": null,
+              "machine": 62,
+              "needed": [
+                "libc.so.6",
+                "ld-linux-x86-64.so.2"
+              ],
+              "rpath": [],
+              "runpath": [],
+              "soname": "libm.so.6",
+              "type": 3
+            },
+            "resolved_needed": {
+              "ld-linux-x86-64.so.2": "/lib64/ld-linux-x86-64.so.2",
+              "libc.so.6": "/required-images/libc.so.6"
+            }
+          },
+          {
+            "file": {
+              "mode": "0o644",
+              "path": "/required-images/libpthread.so.0",
+              "sha256": "85e21f7dba0394411d00959176fd18b470e575b0b05f1f4f41e5636802ce0500",
+              "size_bytes": 14408
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": null,
+              "machine": 62,
+              "needed": [
+                "libc.so.6"
+              ],
+              "rpath": [],
+              "runpath": [],
+              "soname": "libpthread.so.0",
+              "type": 3
+            },
+            "resolved_needed": {
+              "libc.so.6": "/required-images/libc.so.6"
+            }
+          },
+          {
+            "file": {
+              "mode": "0o644",
+              "path": "/required-images/librt.so.1",
+              "sha256": "7b7b84d1aedda0e0b2bdfc68844362782132180b8f02be1300e21e77572e514b",
+              "size_bytes": 14552
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": null,
+              "machine": 62,
+              "needed": [
+                "libc.so.6"
+              ],
+              "rpath": [],
+              "runpath": [],
+              "soname": "librt.so.1",
+              "type": 3
+            },
+            "resolved_needed": {
+              "libc.so.6": "/required-images/libc.so.6"
+            }
+          },
+          {
+            "file": {
+              "mode": "0o644",
+              "path": "/required-images/libutil.so.1",
+              "sha256": "e3981d10efd152a53f083e38f5f9ddde7a049c85d0ab388a5eec91b52fc98a11",
+              "size_bytes": 14408
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": null,
+              "machine": 62,
+              "needed": [
+                "libc.so.6"
+              ],
+              "rpath": [],
+              "runpath": [],
+              "soname": "libutil.so.1",
+              "type": 3
+            },
+            "resolved_needed": {
+              "libc.so.6": "/required-images/libc.so.6"
+            }
+          },
+          {
+            "file": {
+              "mode": "0o755",
+              "path": "/required-images/libc.so.6",
+              "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+              "size_bytes": 1995216
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": null,
+              "machine": 62,
+              "needed": [],
+              "rpath": [],
+              "runpath": [],
+              "soname": "libc.so.6",
+              "type": 3
+            },
+            "resolved_needed": {}
+          },
+          {
+            "file": {
+              "mode": "0o755",
+              "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+              "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+              "size_bytes": 225672
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": null,
+              "machine": 62,
+              "needed": [],
+              "rpath": [],
+              "runpath": [],
+              "soname": "ld-linux-x86-64.so.2",
+              "type": 3
+            },
+            "resolved_needed": {}
+          },
+          {
+            "file": {
+              "mode": "0o755",
+              "path": "/required-python/bin/python",
+              "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+              "size_bytes": 30894944
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": "/lib64/ld-linux-x86-64.so.2",
+              "machine": 62,
+              "needed": [
+                "libpthread.so.0",
+                "libdl.so.2",
+                "libutil.so.1",
+                "libm.so.6",
+                "librt.so.1",
+                "libc.so.6"
+              ],
+              "rpath": [
+                "$ORIGIN/../lib"
+              ],
+              "runpath": [],
+              "soname": null,
+              "type": 3
+            },
+            "resolved_needed": {
+              "libc.so.6": "/required-images/libc.so.6",
+              "libdl.so.2": "/required-images/libdl.so.2",
+              "libm.so.6": "/required-images/libm.so.6",
+              "libpthread.so.0": "/required-images/libpthread.so.0",
+              "librt.so.1": "/required-images/librt.so.1",
+              "libutil.so.1": "/required-images/libutil.so.1"
+            }
+          },
+          {
+            "file": {
+              "mode": "0o755",
+              "path": "/required-node/bin/node",
+              "sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+              "size_bytes": 126951512
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": "/lib64/ld-linux-x86-64.so.2",
+              "machine": 62,
+              "needed": [
+                "libdl.so.2"
+              ],
+              "rpath": [],
+              "runpath": [],
+              "soname": null,
+              "type": 3
+            },
+            "resolved_needed": {
+              "libdl.so.2": "/required-images/libdl.so.2"
+            }
+          },
+          {
+            "file": {
+              "mode": "0o755",
+              "path": "/required-tools/git",
+              "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+              "size_bytes": 30
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": "/lib64/ld-linux-x86-64.so.2",
+              "machine": 62,
+              "needed": [],
+              "rpath": [],
+              "runpath": [],
+              "soname": null,
+              "type": 3
+            },
+            "resolved_needed": {}
+          },
+          {
+            "file": {
+              "mode": "0o755",
+              "path": "/required-tools/bash",
+              "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+              "size_bytes": 30
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": "/lib64/ld-linux-x86-64.so.2",
+              "machine": 62,
+              "needed": [],
+              "rpath": [],
+              "runpath": [],
+              "soname": null,
+              "type": 3
+            },
+            "resolved_needed": {}
+          },
+          {
+            "file": {
+              "mode": "0o755",
+              "path": "/required-tools/echo",
+              "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+              "size_bytes": 30
+            },
+            "metadata": {
+              "class": 64,
+              "endian": "little",
+              "interpreter": "/lib64/ld-linux-x86-64.so.2",
+              "machine": 62,
+              "needed": [],
+              "rpath": [],
+              "runpath": [],
+              "soname": null,
+              "type": 3
+            },
+            "resolved_needed": {}
+          }
+        ],
+        "inspector_commands": {
+          "commands": [
+            {
+              "mode": "0o755",
+              "path": "/required-tools/echo",
+              "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+              "size_bytes": 30
+            }
+          ],
+          "interpreter": {
+            "mode": "0o755",
+            "path": "/required-tools/bash",
+            "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+            "size_bytes": 30
+          },
+          "rtld_candidates": [
+            {
+              "binding": {
+                "mode": "0o755",
+                "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+                "size_bytes": 225672
+              },
+              "path": "/lib64/ld-linux-x86-64.so.2",
+              "state": "file"
+            },
+            {
+              "parent": "/lib",
+              "path": "/lib/ld-linux.so.2",
+              "state": "absent"
+            },
+            {
+              "parent": "/libx32",
+              "path": "/libx32/ld-linux-x32.so.2",
+              "state": "absent"
+            }
+          ],
+          "script": {
+            "mode": "0o755",
+            "path": "/usr/bin/ldd",
+            "sha256": "7bcd61a279946cb376d36fd91f4938ab4f4aba48e793c652a9797319d23f8dd3",
+            "size_bytes": 5356
+          }
+        },
+        "libc_plt": {
+          "loader": {
+            "mode": "0o755",
+            "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+            "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+            "size_bytes": 225672
+          },
+          "schema": "ontokin.current-host-readback-libc-plt/0.1.0",
+          "subject": {
+            "mode": "0o755",
+            "path": "/required-images/libc.so.6",
+            "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+            "size_bytes": 1995216
+          }
+        },
+        "loader_inputs": [],
+        "needed_edges": [
+          {
+            "image": "/required-images/libdl.so.2",
+            "resolved_path": "/required-images/libc.so.6",
+            "soname": "libc.so.6"
+          },
+          {
+            "image": "/required-images/libm.so.6",
+            "resolved_path": "/required-images/libc.so.6",
+            "soname": "libc.so.6"
+          },
+          {
+            "image": "/required-images/libm.so.6",
+            "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+            "soname": "ld-linux-x86-64.so.2"
+          },
+          {
+            "image": "/required-images/libpthread.so.0",
+            "resolved_path": "/required-images/libc.so.6",
+            "soname": "libc.so.6"
+          },
+          {
+            "image": "/required-images/librt.so.1",
+            "resolved_path": "/required-images/libc.so.6",
+            "soname": "libc.so.6"
+          },
+          {
+            "image": "/required-images/libutil.so.1",
+            "resolved_path": "/required-images/libc.so.6",
+            "soname": "libc.so.6"
+          },
+          {
+            "image": "/required-python/bin/python",
+            "resolved_path": "/required-images/libpthread.so.0",
+            "soname": "libpthread.so.0"
+          },
+          {
+            "image": "/required-python/bin/python",
+            "resolved_path": "/required-images/libdl.so.2",
+            "soname": "libdl.so.2"
+          },
+          {
+            "image": "/required-python/bin/python",
+            "resolved_path": "/required-images/libutil.so.1",
+            "soname": "libutil.so.1"
+          },
+          {
+            "image": "/required-python/bin/python",
+            "resolved_path": "/required-images/libm.so.6",
+            "soname": "libm.so.6"
+          },
+          {
+            "image": "/required-python/bin/python",
+            "resolved_path": "/required-images/librt.so.1",
+            "soname": "librt.so.1"
+          },
+          {
+            "image": "/required-python/bin/python",
+            "resolved_path": "/required-images/libc.so.6",
+            "soname": "libc.so.6"
+          },
+          {
+            "image": "/required-node/bin/node",
+            "resolved_path": "/required-images/libdl.so.2",
+            "soname": "libdl.so.2"
+          }
+        ],
+        "origin_rpath": {
+          "expanded_rpath": [
+            "/required-python/lib"
+          ],
+          "invocation": "/required-python/bin/python",
+          "kernel_origin": {
+            "at_secure": 0,
+            "exe_path": "/required-python/bin/python"
+          },
+          "needed_names": [
+            "libpthread.so.0",
+            "libdl.so.2",
+            "libutil.so.1",
+            "libm.so.6",
+            "librt.so.1",
+            "libc.so.6"
+          ],
+          "origin": "/required-python/bin",
+          "raw_rpath": [
+            "$ORIGIN/../lib"
+          ],
+          "schema": "ontokin.current-host-readback-python-origin-rpath/0.1.0",
+          "subject": {
+            "mode": "0o755",
+            "path": "/required-python/bin/python",
+            "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+            "size_bytes": 30894944
+          },
+          "variant_review": {
+            "mode": "0o644",
+            "path": "/required-documents/variants.json",
+            "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+            "size_bytes": 30
+          },
+          "variants": []
+        },
+        "profile": "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-rtld-paths-required-images-v1",
+        "rationale": {
+          "mode": "0o644",
+          "path": "/required-documents/rationale.txt",
+          "sha256": "46e2b0b7368776ce2f8f67164c4441f28d65890b475a72a3c998e7a111bb8758",
+          "size_bytes": 68
+        },
+        "required_images": {
+          "catalog": "debian-glibc-2.41-12+deb13u4-amd64-required-images-v1",
+          "loader": {
+            "mode": "0o755",
+            "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+            "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+            "size_bytes": 225672
+          },
+          "schema": "ontokin.current-host-readback-required-images/0.1.0",
+          "subjects": {
+            "libdl.so.2": {
+              "mode": "0o644",
+              "path": "/required-images/libdl.so.2",
+              "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+              "size_bytes": 14408
+            },
+            "libm.so.6": {
+              "mode": "0o644",
+              "path": "/required-images/libm.so.6",
+              "sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3",
+              "size_bytes": 977112
+            },
+            "libpthread.so.0": {
+              "mode": "0o644",
+              "path": "/required-images/libpthread.so.0",
+              "sha256": "85e21f7dba0394411d00959176fd18b470e575b0b05f1f4f41e5636802ce0500",
+              "size_bytes": 14408
+            },
+            "librt.so.1": {
+              "mode": "0o644",
+              "path": "/required-images/librt.so.1",
+              "sha256": "7b7b84d1aedda0e0b2bdfc68844362782132180b8f02be1300e21e77572e514b",
+              "size_bytes": 14552
+            },
+            "libutil.so.1": {
+              "mode": "0o644",
+              "path": "/required-images/libutil.so.1",
+              "sha256": "e3981d10efd152a53f083e38f5f9ddde7a049c85d0ab388a5eec91b52fc98a11",
+              "size_bytes": 14408
+            }
+          }
+        },
+        "rtld_paths": {
+          "absences": [
+            {
+              "first_missing": "/usr/lib/ld-linux.so.2",
+              "nearest_existing_ancestor": "/usr/lib",
+              "path": "/lib/ld-linux.so.2",
+              "remaining_suffix": []
+            },
+            {
+              "first_missing": "/libx32",
+              "nearest_existing_ancestor": "/",
+              "path": "/libx32/ld-linux-x32.so.2",
+              "remaining_suffix": [
+                "ld-linux-x32.so.2"
+              ]
+            }
+          ],
+          "components": [
+            {
+              "identity": [
+                1,
+                1,
+                16877,
+                1,
+                0,
+                1,
+                1
+              ],
+              "kind": "directory",
+              "path": "/",
+              "target": null
+            },
+            {
+              "identity": [
+                1,
+                2,
+                41471,
+                1,
+                0,
+                1,
+                1
+              ],
+              "kind": "symlink",
+              "path": "/lib",
+              "target": "usr/lib"
+            },
+            {
+              "identity": [
+                1,
+                3,
+                41471,
+                1,
+                0,
+                1,
+                1
+              ],
+              "kind": "symlink",
+              "path": "/lib64",
+              "target": "usr/lib64"
+            },
+            {
+              "identity": [
+                1,
+                4,
+                16877,
+                1,
+                0,
+                1,
+                1
+              ],
+              "kind": "directory",
+              "path": "/usr",
+              "target": null
+            },
+            {
+              "identity": [
+                1,
+                5,
+                16877,
+                1,
+                0,
+                1,
+                1
+              ],
+              "kind": "directory",
+              "path": "/usr/lib",
+              "target": null
+            },
+            {
+              "identity": [
+                1,
+                6,
+                16877,
+                1,
+                0,
+                1,
+                1
+              ],
+              "kind": "directory",
+              "path": "/usr/lib/x86_64-linux-gnu",
+              "target": null
+            },
+            {
+              "identity": [
+                1,
+                7,
+                33261,
+                1,
+                225672,
+                1,
+                1
+              ],
+              "kind": "file",
+              "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+              "target": null
+            },
+            {
+              "identity": [
+                1,
+                8,
+                16877,
+                1,
+                0,
+                1,
+                1
+              ],
+              "kind": "directory",
+              "path": "/usr/lib64",
+              "target": null
+            },
+            {
+              "identity": [
+                1,
+                9,
+                41471,
+                1,
+                0,
+                1,
+                1
+              ],
+              "kind": "symlink",
+              "path": "/usr/lib64/ld-linux-x86-64.so.2",
+              "target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+            }
+          ],
+          "schema": "ontokin.current-host-readback-rtld-paths/0.1.0"
+        },
+        "search_directories": [
+          {
+            "device": 1,
+            "entries": {},
+            "inode": 2,
+            "mode": "0o755",
+            "path": "/required-python/lib"
+          }
+        ]
+      },
+      "roles": {
+        "elf_interpreter": "/lib64/ld-linux-x86-64.so.2",
+        "inspector_interpreter": "/required-tools/bash",
+        "inspector_runtime": [
+          "/required-images/libdl.so.2",
+          "/required-images/libm.so.6",
+          "/required-images/libpthread.so.0",
+          "/required-images/librt.so.1",
+          "/required-images/libutil.so.1",
+          "/required-images/libc.so.6",
+          "/required-tools/git",
+          "/required-tools/bash",
+          "/required-tools/echo",
+          "/usr/bin/ldd"
+        ],
+        "ldd": "/usr/bin/ldd",
+        "loader_configuration": [],
+        "node": "/required-node/bin/node",
+        "python": "/required-python/bin/python",
+        "shared_libraries": [
+          "/required-images/libdl.so.2",
+          "/required-images/libc.so.6"
+        ]
+      }
+    },
+    "limits": {
+      "active_work_ms": 3000,
+      "cleanup_ms": 2000,
+      "command_ms": 5000,
+      "direct_starts": 2,
+      "document_bytes": 16777216,
+      "host_bytes": 8388608,
+      "inspection_bytes": 8388608,
+      "log_bytes": 4194304,
+      "publication_ms": 30000,
+      "stage_bytes": 67108864,
+      "stage_entries": 2048,
+      "static_ms": 60000
+    },
+    "runtime": {
+      "candidate": {
+        "mode": "0o755",
+        "sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+        "size_bytes": 126951512
+      },
+      "executable": "/required-node/bin/node",
+      "install_receipt": {
+        "mode": "0o644",
+        "path": "/required-documents/node-install.json",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "source_archive": {
+        "mode": "0o600",
+        "path": "/required-inputs/node.tar",
+        "sha256": "100ae976555b388472c3e875aeda67bd7d8c9229a968a11661fb852624adaeb5",
+        "size_bytes": 45186132
+      },
+      "version": "v24.22.1"
+    },
+    "schema": "ontokin.current-host-readback-inspection-plan/0.1.5",
+    "source": {
+      "commit": "1111111111111111111111111111111111111111",
+      "inventory": {
+        "mode": "0o644",
+        "path": "/required-documents/source.json",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "root": "/required-source",
+      "tree": "2222222222222222222222222222222222222222"
+    }
+  },
+  "plan_path": "/required-documents/plan.json",
+  "rationale_raw_ascii": "Frozen synthetic source-completeness prerequisite; not an approval.\n",
+  "rtld_snapshot": {
+    "observations": [],
+    "results": [
+      {
+        "binding": {
+          "mode": "0o755",
+          "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+          "size_bytes": 225672
+        },
+        "path": "/lib64/ld-linux-x86-64.so.2",
+        "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+      }
+    ]
+  },
+  "runtime": {
+    "aliases": {
+      "/lib64/ld-linux-x86-64.so.2": {
+        "link_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "symlink": true
+      },
+      "/required-images/libc.so.6": {
+        "link_target": null,
+        "resolved_path": "/required-images/libc.so.6",
+        "symlink": false
+      },
+      "/required-images/libdl.so.2": {
+        "link_target": null,
+        "resolved_path": "/required-images/libdl.so.2",
+        "symlink": false
+      },
+      "/required-images/libm.so.6": {
+        "link_target": null,
+        "resolved_path": "/required-images/libm.so.6",
+        "symlink": false
+      },
+      "/required-images/libpthread.so.0": {
+        "link_target": null,
+        "resolved_path": "/required-images/libpthread.so.0",
+        "symlink": false
+      },
+      "/required-images/librt.so.1": {
+        "link_target": null,
+        "resolved_path": "/required-images/librt.so.1",
+        "symlink": false
+      },
+      "/required-images/libutil.so.1": {
+        "link_target": null,
+        "resolved_path": "/required-images/libutil.so.1",
+        "symlink": false
+      },
+      "/required-node/bin/node": {
+        "link_target": null,
+        "resolved_path": "/required-node/bin/node",
+        "symlink": false
+      },
+      "/required-python/bin/python": {
+        "link_target": null,
+        "resolved_path": "/required-python/bin/python",
+        "symlink": false
+      },
+      "/required-source/prototypes/static_tray_v01/current_host_inspection_v01.py": {
+        "link_target": null,
+        "resolved_path": "/required-source/prototypes/static_tray_v01/current_host_inspection_v01.py",
+        "symlink": false
+      },
+      "/required-tools/bash": {
+        "link_target": null,
+        "resolved_path": "/required-tools/bash",
+        "symlink": false
+      },
+      "/required-tools/echo": {
+        "link_target": null,
+        "resolved_path": "/required-tools/echo",
+        "symlink": false
+      },
+      "/required-tools/git": {
+        "link_target": null,
+        "resolved_path": "/required-tools/git",
+        "symlink": false
+      },
+      "/usr/bin/ldd": {
+        "link_target": null,
+        "resolved_path": "/usr/bin/ldd",
+        "symlink": false
+      },
+      "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2": {
+        "link_target": null,
+        "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "symlink": false
+      }
+    },
+    "executable": "/required-python/bin/python",
+    "extension_files": [
+      "/required-images/libdl.so.2"
+    ],
+    "files": {
+      "/required-images/libc.so.6": {
+        "mode": "0o755",
+        "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+        "size_bytes": 1995216
+      },
+      "/required-images/libdl.so.2": {
+        "mode": "0o644",
+        "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+        "size_bytes": 14408
+      },
+      "/required-images/libm.so.6": {
+        "mode": "0o644",
+        "sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3",
+        "size_bytes": 977112
+      },
+      "/required-images/libpthread.so.0": {
+        "mode": "0o644",
+        "sha256": "85e21f7dba0394411d00959176fd18b470e575b0b05f1f4f41e5636802ce0500",
+        "size_bytes": 14408
+      },
+      "/required-images/librt.so.1": {
+        "mode": "0o644",
+        "sha256": "7b7b84d1aedda0e0b2bdfc68844362782132180b8f02be1300e21e77572e514b",
+        "size_bytes": 14552
+      },
+      "/required-images/libutil.so.1": {
+        "mode": "0o644",
+        "sha256": "e3981d10efd152a53f083e38f5f9ddde7a049c85d0ab388a5eec91b52fc98a11",
+        "size_bytes": 14408
+      },
+      "/required-node/bin/node": {
+        "mode": "0o755",
+        "sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+        "size_bytes": 126951512
+      },
+      "/required-python/bin/python": {
+        "mode": "0o755",
+        "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+        "size_bytes": 30894944
+      },
+      "/required-source/prototypes/static_tray_v01/current_host_inspection_v01.py": {
+        "mode": "0o644",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "/required-tools/bash": {
+        "mode": "0o755",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "/required-tools/echo": {
+        "mode": "0o755",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "/required-tools/git": {
+        "mode": "0o755",
+        "sha256": "97458f9218c90d5712f4014b4f3a9380af1dec869a6825e1791c3efbbc2693b1",
+        "size_bytes": 30
+      },
+      "/usr/bin/ldd": {
+        "mode": "0o755",
+        "sha256": "7bcd61a279946cb376d36fd91f4938ab4f4aba48e793c652a9797319d23f8dd3",
+        "size_bytes": 5356
+      },
+      "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2": {
+        "mode": "0o755",
+        "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+        "size_bytes": 225672
+      }
+    },
+    "interpreter": "/lib64/ld-linux-x86-64.so.2",
+    "loader_inputs": [],
+    "startup_files": [
+      "/required-images/libdl.so.2",
+      "/required-images/libm.so.6",
+      "/required-images/libpthread.so.0",
+      "/required-images/librt.so.1",
+      "/required-images/libutil.so.1",
+      "/required-images/libc.so.6"
+    ]
+  },
+  "source_inventory": {
+    "files": {}
+  }
+}

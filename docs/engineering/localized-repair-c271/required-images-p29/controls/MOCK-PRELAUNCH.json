@@ -1,0 +1,164 @@
+{
+  "claim": "Real _run_command and _launch_check refuse actual inert temporary-file identity drift before the counted fake process boundary. Initial preflight and the complete memory-store outputs are stipulated, not host or durability evidence.",
+  "command": {
+    "active_work_ms": 3000,
+    "argv": [
+      "/required-node/bin/node",
+      "--version"
+    ],
+    "cleanup_ms": 2000,
+    "cwd": "/required-evidence/attempt/node_version",
+    "expected_direct_starts": 1,
+    "id": "node_version",
+    "label": "host-node-version",
+    "stderr_predicate": "",
+    "stdout_predicate": "v24.22.1\n",
+    "timeout_ms": 5000
+  },
+  "expected_publications": [
+    {
+      "descriptor": {
+        "mode": "0o644",
+        "path": "/required-evidence/attempt/node_version/intent.json",
+        "sha256": "98b1539f97c5b7fc9d5f4b844b00b7b5dc957205bee27ac996f5c4e14bbf96b4",
+        "size_bytes": 621
+      },
+      "path": "/required-evidence/attempt/node_version/intent.json",
+      "payload": {
+        "actual_direct_starts": null,
+        "artifacts": {},
+        "command_id": "node_version",
+        "evidence_finalized": false,
+        "expected_argv": [
+          "/required-node/bin/node",
+          "--version"
+        ],
+        "expected_direct_starts": 1,
+        "failure": null,
+        "observed_direct_starts": 0,
+        "plan": {
+          "mode": "0o644",
+          "path": "/required-documents/plan.json",
+          "sha256": "fae756a2564a0f6ee16f53257333edeac1221511bf4f3970020efc61e4b738f8",
+          "size_bytes": 21089
+        },
+        "postflight": null,
+        "preflight": {
+          "mocked": true,
+          "passed": true
+        },
+        "schema": "ontokin.current-host-readback-inspection-attempt/0.1.0",
+        "start": null,
+        "start_count_state": "UNKNOWN",
+        "state": "UNKNOWN",
+        "supervisor_failure": null,
+        "supervisor_process": null
+      }
+    },
+    {
+      "descriptor": {
+        "mode": "0o644",
+        "path": "/required-evidence/attempt/node_version/failure.json",
+        "sha256": "fa37f49adb5a1921dcec34fe68004c031e7a0d7ee065627865348d57734c5fb2",
+        "size_bytes": 514
+      },
+      "path": "/required-evidence/attempt/node_version/failure.json",
+      "payload": {
+        "command_id": "node_version",
+        "failure": {
+          "cause": null,
+          "code": "CHI-DRIFT",
+          "details": {},
+          "reason": "Bound file/path changed immediately before launch",
+          "state": "REJECTED"
+        },
+        "observed_start": null,
+        "plan": {
+          "mode": "0o644",
+          "path": "/required-documents/plan.json",
+          "sha256": "fae756a2564a0f6ee16f53257333edeac1221511bf4f3970020efc61e4b738f8",
+          "size_bytes": 21089
+        },
+        "process": null,
+        "publications": [
+          {
+            "destination": "/required-evidence/attempt/node_version/intent.json"
+          }
+        ],
+        "schema": "ontokin.current-host-readback-inspection-failure/0.1.0"
+      }
+    },
+    {
+      "descriptor": {
+        "mode": "0o644",
+        "path": "/required-evidence/attempt/node_version/postflight.json",
+        "sha256": "b024afe7083789c5c25cae96b83684ea340bee5b28a42c3fe89f1a4a5eca3972",
+        "size_bytes": 744
+      },
+      "path": "/required-evidence/attempt/node_version/postflight.json",
+      "payload": {
+        "actual_direct_starts": 0,
+        "artifacts": {},
+        "command_id": "node_version",
+        "evidence_finalized": true,
+        "expected_argv": [
+          "/required-node/bin/node",
+          "--version"
+        ],
+        "expected_direct_starts": 1,
+        "failure": {
+          "cause": null,
+          "code": "CHI-DRIFT",
+          "details": {},
+          "reason": "Bound file/path changed immediately before launch",
+          "state": "REJECTED"
+        },
+        "observed_direct_starts": 0,
+        "plan": {
+          "mode": "0o644",
+          "path": "/required-documents/plan.json",
+          "sha256": "fae756a2564a0f6ee16f53257333edeac1221511bf4f3970020efc61e4b738f8",
+          "size_bytes": 21089
+        },
+        "postflight": null,
+        "preflight": {
+          "mocked": true,
+          "passed": true
+        },
+        "schema": "ontokin.current-host-readback-inspection-attempt/0.1.0",
+        "start": null,
+        "start_count_state": "PROVEN_ZERO",
+        "state": "REJECTED",
+        "supervisor_failure": null,
+        "supervisor_process": null
+      }
+    }
+  ],
+  "fake_run_process_calls": 0,
+  "operational": false,
+  "plan_descriptor": {
+    "mode": "0o644",
+    "path": "/required-documents/plan.json",
+    "sha256": "fae756a2564a0f6ee16f53257333edeac1221511bf4f3970020efc61e4b738f8",
+    "size_bytes": 21089
+  },
+  "preflight": {
+    "mocked": true,
+    "passed": true
+  },
+  "raw_ascii": {},
+  "real_launch_check_calls": 1,
+  "snapshot_fixture": {
+    "after_ascii": "changed inert snapshot fixture\n",
+    "before_ascii": "inert snapshot fixture\n",
+    "mode": "0o600",
+    "relative_name": "libdl.so.2"
+  },
+  "stipulated_initial_preflight_calls": 1,
+  "target_starts": {
+    "cpu_checker": 0,
+    "direct_loader": 0,
+    "ldd": 0,
+    "node": 0
+  }
+}

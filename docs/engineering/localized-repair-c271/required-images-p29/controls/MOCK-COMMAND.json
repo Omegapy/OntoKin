@@ -1,0 +1,500 @@
+{
+  "command": {
+    "active_work_ms": 3000,
+    "argv": [
+      "/required-node/bin/node",
+      "--version"
+    ],
+    "cleanup_ms": 2000,
+    "cwd": "/required-evidence/attempt/node_version",
+    "expected_direct_starts": 1,
+    "id": "node_version",
+    "label": "host-node-version",
+    "stderr_predicate": "",
+    "stdout_predicate": "v24.22.1\n",
+    "timeout_ms": 5000
+  },
+  "expected_publications": [
+    {
+      "descriptor": {
+        "mode": "0o644",
+        "path": "/required-evidence/attempt/node_version/intent.json",
+        "sha256": "98b1539f97c5b7fc9d5f4b844b00b7b5dc957205bee27ac996f5c4e14bbf96b4",
+        "size_bytes": 621
+      },
+      "path": "/required-evidence/attempt/node_version/intent.json",
+      "payload": {
+        "actual_direct_starts": null,
+        "artifacts": {},
+        "command_id": "node_version",
+        "evidence_finalized": false,
+        "expected_argv": [
+          "/required-node/bin/node",
+          "--version"
+        ],
+        "expected_direct_starts": 1,
+        "failure": null,
+        "observed_direct_starts": 0,
+        "plan": {
+          "mode": "0o644",
+          "path": "/required-documents/plan.json",
+          "sha256": "fae756a2564a0f6ee16f53257333edeac1221511bf4f3970020efc61e4b738f8",
+          "size_bytes": 21089
+        },
+        "postflight": null,
+        "preflight": {
+          "mocked": true,
+          "passed": true
+        },
+        "schema": "ontokin.current-host-readback-inspection-attempt/0.1.0",
+        "start": null,
+        "start_count_state": "UNKNOWN",
+        "state": "UNKNOWN",
+        "supervisor_failure": null,
+        "supervisor_process": null
+      }
+    },
+    {
+      "descriptor": {
+        "mode": "0o644",
+        "path": "/required-evidence/attempt/node_version/started.json",
+        "sha256": "1d23cb4c9cb295205ed59db7b4dd010f415b8dd41195903a4d0dfad9accf9bde",
+        "size_bytes": 806
+      },
+      "path": "/required-evidence/attempt/node_version/started.json",
+      "payload": {
+        "command_id": "node_version",
+        "observed_at_utc": "2026-01-01T00:00:00+00:00",
+        "plan": {
+          "mode": "0o644",
+          "path": "/required-documents/plan.json",
+          "sha256": "fae756a2564a0f6ee16f53257333edeac1221511bf4f3970020efc61e4b738f8",
+          "size_bytes": 21089
+        },
+        "process": {
+          "argv": [
+            "/required-node/bin/node",
+            "--version"
+          ],
+          "cleanup": {
+            "elapsed_ms": 0.0,
+            "passed": true,
+            "process_group_absent": true,
+            "reaped": true
+          },
+          "cwd": "/required-evidence/attempt/node_version",
+          "end_monotonic": 1000.1,
+          "environment": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          },
+          "error": null,
+          "handles_closed": true,
+          "label": "host-node-version",
+          "observed_log_bytes": 9,
+          "pid": 12345,
+          "process_group": 12345,
+          "retained_log_bytes": 9,
+          "returncode": 0,
+          "start_monotonic": 1000.0
+        },
+        "schema": "ontokin.current-host-readback-inspection-start/0.1.0"
+      }
+    },
+    {
+      "descriptor": {
+        "mode": "0o644",
+        "path": "/required-evidence/attempt/node_version/supervisor-outcome.json",
+        "sha256": "89ba5ce2cd6b4ed386a3725580434e397909f837e298bcdb8a81d64a90068261",
+        "size_bytes": 2456
+      },
+      "path": "/required-evidence/attempt/node_version/supervisor-outcome.json",
+      "payload": {
+        "artifacts": {
+          "raw_process": {
+            "mode": "0o600",
+            "path": "/required-evidence/attempt/node_version/host-node-version.process.json",
+            "sha256": "3c14d4e95b05f7d27f73d20c181038d26b8e9b599ca0ed9ae07444d5abaed28d",
+            "size_bytes": 498
+          },
+          "stderr": {
+            "mode": "0o600",
+            "path": "/required-evidence/attempt/node_version/host-node-version.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          },
+          "stdout": {
+            "mode": "0o600",
+            "path": "/required-evidence/attempt/node_version/host-node-version.stdout.log",
+            "sha256": "249baf635bb43877fcb9422efa1a4904b702d0ddf14d3949b7cd0950d5229c81",
+            "size_bytes": 9
+          }
+        },
+        "command_id": "node_version",
+        "decoded_raw_process": {
+          "argv": [
+            "/required-node/bin/node",
+            "--version"
+          ],
+          "cleanup": {
+            "elapsed_ms": 0.0,
+            "passed": true,
+            "process_group_absent": true,
+            "reaped": true
+          },
+          "cwd": "/required-evidence/attempt/node_version",
+          "end_monotonic": 1000.1,
+          "environment": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          },
+          "error": null,
+          "handles_closed": true,
+          "label": "host-node-version",
+          "observed_log_bytes": 9,
+          "pid": 12345,
+          "process_group": 12345,
+          "retained_log_bytes": 9,
+          "returncode": 0,
+          "start_monotonic": 1000.0
+        },
+        "faults": [],
+        "observed_start": {
+          "argv": [
+            "/required-node/bin/node",
+            "--version"
+          ],
+          "cleanup": {
+            "elapsed_ms": 0.0,
+            "passed": true,
+            "process_group_absent": true,
+            "reaped": true
+          },
+          "cwd": "/required-evidence/attempt/node_version",
+          "end_monotonic": 1000.1,
+          "environment": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          },
+          "error": null,
+          "handles_closed": true,
+          "label": "host-node-version",
+          "observed_log_bytes": 9,
+          "pid": 12345,
+          "process_group": 12345,
+          "retained_log_bytes": 9,
+          "returncode": 0,
+          "start_monotonic": 1000.0
+        },
+        "plan": {
+          "mode": "0o644",
+          "path": "/required-documents/plan.json",
+          "sha256": "fae756a2564a0f6ee16f53257333edeac1221511bf4f3970020efc61e4b738f8",
+          "size_bytes": 21089
+        },
+        "process": {
+          "argv": [
+            "/required-node/bin/node",
+            "--version"
+          ],
+          "cleanup": {
+            "elapsed_ms": 0.0,
+            "passed": true,
+            "process_group_absent": true,
+            "reaped": true
+          },
+          "cwd": "/required-evidence/attempt/node_version",
+          "end_monotonic": 1000.1,
+          "environment": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          },
+          "error": null,
+          "handles_closed": true,
+          "label": "host-node-version",
+          "observed_log_bytes": 9,
+          "pid": 12345,
+          "process_group": 12345,
+          "retained_log_bytes": 9,
+          "returncode": 0,
+          "start_monotonic": 1000.0
+        },
+        "schema": "ontokin.current-host-readback-inspection-supervisor-outcome/0.1.0",
+        "supervisor_failure": null
+      }
+    },
+    {
+      "descriptor": {
+        "mode": "0o644",
+        "path": "/required-evidence/attempt/node_version/failure.json",
+        "sha256": "811efea78a3dd0d859305e5b98e6ec3db0e9b4393e02518cc2ab8f1942234081",
+        "size_bytes": 1829
+      },
+      "path": "/required-evidence/attempt/node_version/failure.json",
+      "payload": {
+        "command_id": "node_version",
+        "failure": {
+          "cause": {
+            "cause": null,
+            "code": "CHI-INSPECTOR",
+            "details": {},
+            "reason": "Bound file identity differs: /required-images/libdl.so.2",
+            "state": "REJECTED"
+          },
+          "code": "CHI-DRIFT",
+          "details": {
+            "rule_id": "LP-RECHECK",
+            "stage": "recheck"
+          },
+          "reason": "An admitted input changed before/after the command",
+          "state": "REJECTED"
+        },
+        "observed_start": {
+          "argv": [
+            "/required-node/bin/node",
+            "--version"
+          ],
+          "cleanup": {
+            "elapsed_ms": 0.0,
+            "passed": true,
+            "process_group_absent": true,
+            "reaped": true
+          },
+          "cwd": "/required-evidence/attempt/node_version",
+          "end_monotonic": 1000.1,
+          "environment": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          },
+          "error": null,
+          "handles_closed": true,
+          "label": "host-node-version",
+          "observed_log_bytes": 9,
+          "pid": 12345,
+          "process_group": 12345,
+          "retained_log_bytes": 9,
+          "returncode": 0,
+          "start_monotonic": 1000.0
+        },
+        "plan": {
+          "mode": "0o644",
+          "path": "/required-documents/plan.json",
+          "sha256": "fae756a2564a0f6ee16f53257333edeac1221511bf4f3970020efc61e4b738f8",
+          "size_bytes": 21089
+        },
+        "process": {
+          "argv": [
+            "/required-node/bin/node",
+            "--version"
+          ],
+          "cleanup": {
+            "elapsed_ms": 0.0,
+            "passed": true,
+            "process_group_absent": true,
+            "reaped": true
+          },
+          "cwd": "/required-evidence/attempt/node_version",
+          "end_monotonic": 1000.1,
+          "environment": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          },
+          "error": null,
+          "handles_closed": true,
+          "label": "host-node-version",
+          "observed_log_bytes": 9,
+          "pid": 12345,
+          "process_group": 12345,
+          "retained_log_bytes": 9,
+          "returncode": 0,
+          "start_monotonic": 1000.0
+        },
+        "publications": [
+          {
+            "destination": "/required-evidence/attempt/node_version/intent.json"
+          },
+          {
+            "destination": "/required-evidence/attempt/node_version/started.json"
+          },
+          {
+            "destination": "/required-evidence/attempt/node_version/supervisor-outcome.json"
+          }
+        ],
+        "schema": "ontokin.current-host-readback-inspection-failure/0.1.0"
+      }
+    },
+    {
+      "descriptor": {
+        "mode": "0o644",
+        "path": "/required-evidence/attempt/node_version/postflight.json",
+        "sha256": "1b6c2c775e90ea1afec09b92d17c6411a81a835a7db5c7dd1d707dd4428434b4",
+        "size_bytes": 2181
+      },
+      "path": "/required-evidence/attempt/node_version/postflight.json",
+      "payload": {
+        "actual_direct_starts": 1,
+        "artifacts": {
+          "raw_process": {
+            "mode": "0o600",
+            "path": "/required-evidence/attempt/node_version/host-node-version.process.json",
+            "sha256": "3c14d4e95b05f7d27f73d20c181038d26b8e9b599ca0ed9ae07444d5abaed28d",
+            "size_bytes": 498
+          },
+          "stderr": {
+            "mode": "0o600",
+            "path": "/required-evidence/attempt/node_version/host-node-version.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          },
+          "stdout": {
+            "mode": "0o600",
+            "path": "/required-evidence/attempt/node_version/host-node-version.stdout.log",
+            "sha256": "249baf635bb43877fcb9422efa1a4904b702d0ddf14d3949b7cd0950d5229c81",
+            "size_bytes": 9
+          }
+        },
+        "command_id": "node_version",
+        "evidence_finalized": true,
+        "expected_argv": [
+          "/required-node/bin/node",
+          "--version"
+        ],
+        "expected_direct_starts": 1,
+        "failure": {
+          "cause": {
+            "cause": null,
+            "code": "CHI-INSPECTOR",
+            "details": {},
+            "reason": "Bound file identity differs: /required-images/libdl.so.2",
+            "state": "REJECTED"
+          },
+          "code": "CHI-DRIFT",
+          "details": {
+            "rule_id": "LP-RECHECK",
+            "stage": "recheck"
+          },
+          "reason": "An admitted input changed before/after the command",
+          "state": "REJECTED"
+        },
+        "observed_direct_starts": 1,
+        "plan": {
+          "mode": "0o644",
+          "path": "/required-documents/plan.json",
+          "sha256": "fae756a2564a0f6ee16f53257333edeac1221511bf4f3970020efc61e4b738f8",
+          "size_bytes": 21089
+        },
+        "postflight": {
+          "failure": {
+            "cause": {
+              "cause": null,
+              "code": "CHI-INSPECTOR",
+              "details": {},
+              "reason": "Bound file identity differs: /required-images/libdl.so.2",
+              "state": "REJECTED"
+            },
+            "code": "CHI-DRIFT",
+            "details": {
+              "rule_id": "LP-RECHECK",
+              "stage": "recheck"
+            },
+            "reason": "An admitted input changed before/after the command",
+            "state": "REJECTED"
+          },
+          "passed": false
+        },
+        "preflight": {
+          "mocked": true,
+          "passed": true
+        },
+        "schema": "ontokin.current-host-readback-inspection-attempt/0.1.0",
+        "start": {
+          "mode": "0o644",
+          "path": "/required-evidence/attempt/node_version/started.json",
+          "sha256": "1d23cb4c9cb295205ed59db7b4dd010f415b8dd41195903a4d0dfad9accf9bde",
+          "size_bytes": 806
+        },
+        "start_count_state": "OBSERVED_ONE",
+        "state": "REJECTED",
+        "supervisor_failure": null,
+        "supervisor_process": {
+          "mode": "0o644",
+          "path": "/required-evidence/attempt/node_version/supervisor-outcome.json",
+          "sha256": "89ba5ce2cd6b4ed386a3725580434e397909f837e298bcdb8a81d64a90068261",
+          "size_bytes": 2456
+        }
+      }
+    }
+  ],
+  "fake_run_process_calls": 1,
+  "operational": false,
+  "plan_descriptor": {
+    "mode": "0o644",
+    "path": "/required-documents/plan.json",
+    "sha256": "fae756a2564a0f6ee16f53257333edeac1221511bf4f3970020efc61e4b738f8",
+    "size_bytes": 21089
+  },
+  "preflight": {
+    "mocked": true,
+    "passed": true
+  },
+  "process": {
+    "argv": [
+      "/required-node/bin/node",
+      "--version"
+    ],
+    "cleanup": {
+      "elapsed_ms": 0.0,
+      "passed": true,
+      "process_group_absent": true,
+      "reaped": true
+    },
+    "cwd": "/required-evidence/attempt/node_version",
+    "end_monotonic": 1000.1,
+    "environment": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "PATH": "/usr/bin:/bin",
+      "TZ": "UTC",
+      "UV_THREADPOOL_SIZE": "2"
+    },
+    "error": null,
+    "handles_closed": true,
+    "label": "host-node-version",
+    "observed_log_bytes": 9,
+    "pid": 12345,
+    "process_group": 12345,
+    "retained_log_bytes": 9,
+    "returncode": 0,
+    "start_monotonic": 1000.0
+  },
+  "raw_ascii": {
+    "/required-evidence/attempt/node_version/host-node-version.process.json": "{\"argv\":[\"/required-node/bin/node\",\"--version\"],\"cleanup\":{\"elapsed_ms\":0.0,\"passed\":true,\"process_group_absent\":true,\"reaped\":true},\"cwd\":\"/required-evidence/attempt/node_version\",\"end_monotonic\":1000.1,\"environment\":{\"LANG\":\"C.UTF-8\",\"LC_ALL\":\"C.UTF-8\",\"PATH\":\"/usr/bin:/bin\",\"TZ\":\"UTC\",\"UV_THREADPOOL_SIZE\":\"2\"},\"error\":null,\"handles_closed\":true,\"label\":\"host-node-version\",\"observed_log_bytes\":9,\"pid\":12345,\"process_group\":12345,\"retained_log_bytes\":9,\"returncode\":0,\"start_monotonic\":1000.0}",
+    "/required-evidence/attempt/node_version/host-node-version.stderr.log": "",
+    "/required-evidence/attempt/node_version/host-node-version.stdout.log": "v24.22.1\n"
+  },
+  "target_starts": {
+    "cpu_checker": 0,
+    "direct_loader": 0,
+    "ldd": 0,
+    "node": 0
+  },
+  "utc": "2026-01-01T00:00:00+00:00"
+}

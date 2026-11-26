@@ -1,0 +1,39 @@
+{
+  "schema": "ontokin.c271.p29-publication-preparation-recheck/1",
+  "reviewer": "/root/handoff_audit",
+  "source": {
+    "path": "scripts/publication_payload.py",
+    "bytes": 5961,
+    "sha256": "da484302d457d1dabefb9ba07826b787eccf7ce45594b8581095b595cbfb9162"
+  },
+  "verdict": "accepted_for_director_owned_local_staged_payload_preparation",
+  "scope": "Static recheck only; no script, Git mutation, product execution, build, upload or remote write by reviewer.",
+  "resolved_findings": [
+    {
+      "id": "PKG-02",
+      "evidence": "Both output directory and archive must be absent; directory uses exist_ok=False and ZIP uses exclusive x creation."
+    },
+    {
+      "id": "PKG-03-publication",
+      "evidence": "ASCII label allowlist; canonical relative change paths; explicit P29/documentary/production/adapter allowlist; stage zero; blob type and mode 100644; canonical ordinary working files; captured bytes equal working bytes."
+    },
+    {
+      "id": "PKG-05",
+      "evidence": "Change set comes from parent to captured immutable expected_tree. Each mode/blob comes from that tree, matches the index, and content is read by immutable blob ID. HEAD and write-tree are rechecked before the manifest is frozen. Deletions and nonordinary files fail closed."
+    }
+  ],
+  "additional_checks": [
+    "Archive reopens; CRC, JSON intent equality, every payload size/SHA256 and Git blob SHA1 are checked.",
+    "Exact parent, base tree, expected tree, mode/blob, bytes and content encoding are retained.",
+    "No network or GitHub operation exists in this script. Local git write-tree is Director-owned.",
+    "Current repository/packages paths resolve canonically and are ordinary directories; publication output root does not yet exist."
+  ],
+  "limits": [
+    "Acceptance authorizes no remote publication and does not validate any not-yet-created staged payload or ZIP.",
+    "Director must preserve prior attempts, stage only reviewed scope, and avoid concurrent mutation while capturing.",
+    "Constructed recovery ZIP, exact accepted fixture freeze, save/readback and any later conditional publication remain separate acceptance gates."
+  ],
+  "product_tests_executed": 0,
+  "remote_writes": 0,
+  "frozen_fixture_or_adapter_changes": 0
+}

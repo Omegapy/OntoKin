@@ -1,0 +1,106 @@
+{
+  "schema": "ontokin.c271.p29-independent-fixture-freeze-acceptance/1",
+  "reviewer": "/root/scope_review",
+  "recorded_at_utc": "2026-11-23T23:36:11.169981+00:00",
+  "candidate": "candidate004",
+  "status": "accepted_for_director_saved_recovery_then_focused_and_inherited_execution",
+  "freeze": {
+    "path": "repository/docs/engineering/localized-repair-c271/required-images-p29/controls/FREEZE.json",
+    "bytes": 31746,
+    "sha256": "69065e25738c81ab88cd502edc7069b3b005ba6ae4a67181c30c83f950aa54d5",
+    "mode": "0o644"
+  },
+  "adapter": {
+    "path": "repository/tests/test_current_host_required_images_v01.py",
+    "bytes": 50181,
+    "sha256": "92ed832d2f78509cc60185b5bbfd9da0ff563f595561f5a2cc46e5ff515581a7",
+    "mode": "0o644"
+  },
+  "fixture_manifest": {
+    "path": "repository/docs/engineering/localized-repair-c271/required-images-p29/controls/FIXTURE-MANIFEST.json",
+    "bytes": 21200,
+    "sha256": "e98978fe2df14a8862aa7065952068012e2825dc612c5b6c70a939c0376865a5",
+    "mode": "0o644"
+  },
+  "preserved_candidate003": {
+    "path": "repository/docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE003.zip",
+    "bytes": 1437202,
+    "sha256": "56f59a7cab4d8d552a9ccd3ea763e4dad9c187f9a263e2b68e746be0ff6801f1",
+    "mode": "0o644"
+  },
+  "held_production": {
+    "path": "repository/prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 249393,
+    "sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758",
+    "mode": "0o644"
+  },
+  "orchestrator": {
+    "path": "scripts/run_verification.py",
+    "bytes": 6954,
+    "sha256": "ef30c5505fe0941aa132a9fb92ed0b836300f8cb50077076a0e93c9b5e7a24e7",
+    "mode": "0o644"
+  },
+  "independent_read_set": {
+    "path": "reviews/implementation-review/FIXTURE-CANDIDATE004-READ-SET.json",
+    "bytes": 37184,
+    "sha256": "04358d8796ebbe84093ae80e5bff7d9667d396baae99ebda65d28ad3a031eea9",
+    "mode": "0o644"
+  },
+  "verification": {
+    "closed_frozen_payloads": 116,
+    "manifest_payloads": 114,
+    "unchanged_companions": 24,
+    "unchanged_prior_payloads": 111,
+    "changed_prior_payloads": [
+      "docs/engineering/localized-repair-c271/required-images-p29/controls/FIXTURE-MANIFEST.json",
+      "docs/engineering/localized-repair-c271/required-images-p29/controls/README.md",
+      "docs/engineering/localized-repair-c271/required-images-p29/controls/REVISION.json",
+      "tests/test_current_host_required_images_v01.py"
+    ],
+    "added_payloads": [
+      "docs/engineering/localized-repair-c271/required-images-p29/controls/INHERITED-METADATA-STUB.json"
+    ],
+    "archive_members_crc_and_hash_verified": 140,
+    "original_literal_oracles": 116,
+    "commands_byte_identical": true,
+    "cohort481_byte_identical": true,
+    "all_adapter_bytes_outside_manifest_pin_new_constant_and_inherited_case_identical": true,
+    "production_sha_held": true
+  },
+  "accepted_delta": [
+    "Only RI-L08 patches the test_current_host_rtld_paths_v01 module platform.platform leaf while running its nested suite; asserts exact module and old_route_rtld route.",
+    "Frozen label explicitly says synthetic and host not probed. No production input, policy, parser, callback or process API is replaced by this correction.",
+    "ExitStack preserves existing environment and new-checkpoint guards and restores original metadata callable before assertions.",
+    "Observed metadata call count/arguments/restoration are recorded. Exactly one zero-argument call, INPUTS.json label equality, all61 exact inherited IDs and zero failures/errors/skips are still required.",
+    "All old test sources, 116 original expectations, frozen commands,481 inherited IDs and24 companions are unchanged."
+  ],
+  "prior_failure": {
+    "attempt": "verification/implementation-focused-001",
+    "passed": 115,
+    "failed": [
+      "RI-L08"
+    ],
+    "nested_methods_executed": 10,
+    "nested_runtime_methods_unrun": 51,
+    "kept_failed": true,
+    "cause": "Evidence-only platform metadata setup triggered guarded uname -p before51 runtime methods; no actual uname delegation."
+  },
+  "classification_rationale": "Independent static source inspection found exactly one platform.platform() call in the unchanged RTLD module, solely in the INPUTS.json evidence record. Production uses its independent _platform implementation. Replacing this labelled recording field restores the intended inert nested run without changing the adopted behavior or relaxing guards. This is an adapter materialization correction, not a P27 rule or oracle change.",
+  "preceding_acceptances_retained": [
+    "reviews/fixture-review/FREEZE-CANDIDATE003-ACCEPTANCE.json",
+    "reviews/implementation-review/CANDIDATE001-STATIC-REVIEW.json"
+  ],
+  "remaining_gates": [
+    "Director must save/readback exact candidate004 plus held production and failed evidence before any new execution.",
+    "Use fresh attempt roots and unchanged accepted runner/commands; focused116 and inherited481 must pass completely on held production.",
+    "Independent exact result review before final implementation acceptance."
+  ],
+  "limits": [
+    "Candidate004 not executed by reviewer.",
+    "No final implementation pass or host-admission claim from this freeze.",
+    "N34/historicalN57 remain external; original P28 reported597 remains unverified.",
+    "No host profiling/preparation/install, H0/H1, native target, original-seven/full routine or parent closure authority."
+  ],
+  "concrete_blockers": [],
+  "reviewer_product_imports_or_execution": 0
+}

@@ -1,0 +1,51 @@
+{
+  "adapter_change_limit": "Only new INHERITED_METADATA_STUB constant load, RequiredImageControls.inherited_case metadata leaf scope/observation, and FIXTURE_MANIFEST_SHA256 literal may differ. Every other byte must match candidate003.",
+  "adopted_p27_expectations_changed": false,
+  "allowed_added_payloads": [
+    "docs/engineering/localized-repair-c271/required-images-p29/controls/INHERITED-METADATA-STUB.json"
+  ],
+  "allowed_changed_payloads": [
+    "tests/test_current_host_required_images_v01.py",
+    "docs/engineering/localized-repair-c271/required-images-p29/controls/README.md",
+    "docs/engineering/localized-repair-c271/required-images-p29/controls/REVISION.json",
+    "docs/engineering/localized-repair-c271/required-images-p29/controls/FIXTURE-MANIFEST.json"
+  ],
+  "candidate": "candidate004",
+  "candidate004_product_execution": "NOT_RUN",
+  "design_change": false,
+  "fixture_author_product_imports_or_execution": 0,
+  "old_corpus_sources_or_expectations_changed": false,
+  "previous_candidate": {
+    "adapter_sha256": "a6d5f9622eecd0f8a4e52621c851637a8b97f816b8d70a464c93ce97f5917de5",
+    "archive_sha256": "56f59a7cab4d8d552a9ccd3ea763e4dad9c187f9a263e2b68e746be0ff6801f1",
+    "freeze_sha256": "ca54eae3708af5e72f6d01c39a17b625511b8de1411b77d0a7ac0d7427eeae1a",
+    "preserved_archive": "docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE003.zip"
+  },
+  "prior_director_attempt": {
+    "blocked_before_real_launch": true,
+    "blocked_metadata_command": [
+      "uname",
+      "-p"
+    ],
+    "failure_evidence_sha256": "28038c710f692023611e35467920059e3c4d7a024cda92affb65d56491170872",
+    "nested_RTLD_methods_unrun": 51,
+    "nested_inherited_discovered": 61,
+    "nested_inherited_executed": 10,
+    "outer_failed": [
+      "RI-L08"
+    ],
+    "outer_passed": 115,
+    "outer_test_methods_executed": 116,
+    "path": "verification/implementation-focused-001/",
+    "production_source_sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758",
+    "relabeled_as_pass": false,
+    "returncode": 1
+  },
+  "production_changed_by_fixture_author": false,
+  "reviewer_findings": [
+    "RI-L08 RTLD setUpClass calls platform.platform once, only to record INPUTS.json metadata. Its lazy processor lookup attempted uname -p and the existing outer guard refused before launch. The 51 original RTLD runtime methods were unrun; the 10 supplemental methods ran.",
+    "The independent reviewer confirmed a scoped synthetic metadata label is permissible. Apply it only to the RI-L08 nested RTLD suite, observe exactly one zero-argument call, prove restoration and recorded label equality, and preserve every process/checkpoint guard and original expectation."
+  ],
+  "schema": "ontokin.c271.p29-fixture-revision/1",
+  "unchanged_inherited_cohort_sha256": "7aa9e1278419e6b4fd27afbc758d5dcea195a245960cd4c972d8102a34dcce77"
+}

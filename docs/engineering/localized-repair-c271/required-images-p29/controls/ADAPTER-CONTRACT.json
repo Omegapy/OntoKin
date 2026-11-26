@@ -1,0 +1,31 @@
+{
+  "all_product_execution": "NOT_RUN",
+  "checkpoint_stages": [
+    "required_policy_entry",
+    "required_policy_each_subject",
+    "before_required_image_tag_policy",
+    "during_required_image_tag_scan",
+    "before_required_image_flags",
+    "during_required_image_flags",
+    "before_required_image_final_identity"
+  ],
+  "helpers": [
+    "_select_required_images_profile(schema,resolution)",
+    "_prepare_required_images_policy(plan,runtime,python_metadata,libc_policy,*,check=lambda:None)",
+    "_read_required_image_elf_metadata(path,catalog_key,*,check=lambda:None,require_interpreter=False)",
+    "_required_image_checkpoint(check,stage)",
+    "_read_plan_elf_metadata(path,policy,*,check=lambda:None,require_interpreter=False,libc_policy=None,required_policy=None)"
+  ],
+  "mock_boundaries": [
+    "source/runtime/host/origin/libc/RTLD/guard prerequisite observations are stipulated, not proven",
+    "ROOT and logical Path.resolve/is_symlink projections do not observe a host",
+    "new selector, constructor, _bound comparisons, dispatch, private raw reads, caller order and wrappers remain real"
+  ],
+  "policy_exact_keys": [
+    "schema",
+    "subjects",
+    "loader"
+  ],
+  "schema": "ontokin.c271.p29-adapter-contract/1",
+  "subject_values": "immutable exact descriptors keyed by fixed catalog key"
+}

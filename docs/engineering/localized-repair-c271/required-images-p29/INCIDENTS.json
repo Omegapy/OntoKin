@@ -1,0 +1,83 @@
+{
+  "events": [
+    {
+      "id": "P29-CLI-READ-001",
+      "operation": "read-only gh api ref lookup",
+      "exit_code": 4,
+      "outcome": "CLI unauthenticated; no remote mutation",
+      "disposition": "Use available authenticated GitHub connector for publication; do not retry CLI authentication"
+    },
+    {
+      "id": "P29-RECORDS-001",
+      "operation": "startup workflow check",
+      "outcome": "exit1: next_action.status in_progress not allowed",
+      "disposition": "Correct to ready; preserve task status in_progress and original failed logs"
+    },
+    {
+      "id": "P29-RECORDS-002",
+      "operation": "startup documentation check",
+      "outcome": "exit1: copied review GOAL.md relative link unresolved",
+      "disposition": "Replace link in repository copy with immutable governing-main URL; preserve original failed logs"
+    },
+    {
+      "id": "P29-RECORDS-003",
+      "operation": "startup workflow attempt002",
+      "outcome": "exit1: ready next_action also requires nonempty suggested_task",
+      "disposition": "Add existing C271 continuation field, preserve failed attempt002"
+    },
+    {
+      "id": "P29-INVENTORY-001",
+      "operation": "Static inherited inventory construction; no product imports or execution",
+      "exit_code": 1,
+      "outcome": "KeyError: There is no item named 'CONTROLS.json' in the archive",
+      "disposition": "Read-only ZIP name inspection confirmed candidate001/CONTROLS.json in both archives; use that observed exact member. Failed command wrote no inventory changes."
+    },
+    {
+      "id": "P29-WHITESPACE-001",
+      "operation": "Full staged whitespace check",
+      "exit_code": 2,
+      "outcome": "Four presentation-whitespace findings across three exact frozen/copied evidence documents; full failure retained.",
+      "disposition": "Preserve evidence bytes; selected code/canonical task files independently checked with exit0. Not relabelled as full pass."
+    },
+    {
+      "id": "P29-BASELINE-PREFLIGHT-001",
+      "operation": "baseline-inherited frozen command",
+      "exit_code": 1,
+      "tests_executed": 0,
+      "outcome": "Runtime discovery481 differed from declared372; preflight assertion stopped execution.",
+      "cause": "Static cohort inventory omitted109 generated HI01-HI20 controls; independent review initially missed the same generator.",
+      "disposition": "Preserve accepted/saved candidate002 and failed attempt; statically derive all481, independently review and save amended candidate003 before retry. No old tests/oracles changed."
+    },
+    {
+      "id": "P29-BASELINE-RETENTION-001",
+      "operation": "baseline-inherited-003",
+      "exit_code": 1,
+      "tests_run": 481,
+      "passed": 441,
+      "failures": 40,
+      "errors": 0,
+      "skipped": 0,
+      "cause": "Mapping adapter requires existing absolute retention parent; outer orchestration/frozen command defaults omitted mkdir. All40 failures precede parser calls.",
+      "disposition": "Retain full failed attempt and old runner; independently accepted outer runner creates fresh mapping parent without changing frozen commands/adapters/oracles. Repeat complete baseline in fresh attempt."
+    },
+    {
+      "id": "P29-FOCUSED-METADATA-001",
+      "operation": "implementation-focused-001",
+      "exit_code": 1,
+      "tests_run": 116,
+      "passed": 115,
+      "failed_obligation": "RI-L08",
+      "cause": "Nested old RTLD setUpClass platform.platform recording-only metadata lookup attempted uname and was refused by the outer adapter process guard before launch;51 nested cases did not run.",
+      "disposition": "Preserve exact failed attempt, candidate003 and productioncandidate001; independently freeze explicit synthetic metadata logging leaf forRI-L08 only, retain allprocess guards and unchanged116 oracles; rerun only after revised freeze saved."
+    },
+    {
+      "kind": "git_push_dry_run_transport_unavailable",
+      "recorded_at_utc": "2026-11-23T23:56:41.453610+00:00",
+      "command": "GIT_TERMINAL_PROMPT=0 git push --dry-run origin HEAD:refs/heads/work/c271-missing-import-digest-control",
+      "returncode": 128,
+      "outcome": "Git HTTPS write transport has no configured username; no mutation attempted. Continue using the authenticated GitHub connector.",
+      "evidence": "record-checks/GIT-PUSH-DRY-RUN.json",
+      "retry": false
+    }
+  ]
+}
