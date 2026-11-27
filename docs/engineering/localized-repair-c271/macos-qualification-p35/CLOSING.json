@@ -1,0 +1,70 @@
+{
+  "schema": "ontokin.c271.p35-closing/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "purpose": "The phase's closing record: the push of its outcome records commit, the checks of that commit's tree, the checkpoint comments, the retention for MR and the release of ownership. It completes acceptance A10. Git reveals the commit that carries this record; its own push is observed in the final report.",
+  "outcome_records_commit": {
+    "commit": "2cd6982946e20575cc8af6d441669f81a21eee74",
+    "tree": "4765f830060dd5814c4ce4f487150a21f590c159",
+    "parent": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a"
+  },
+  "bound_commit": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
+  "push_observation": {
+    "command": "git push origin work/c271-missing-import-digest-control (no force), then git ls-remote --heads origin and the GitHub API's commit tree",
+    "observed_at_utc": "2026-11-27T11:40:11Z",
+    "update": "0eb9a551..2cd69829, fast-forward",
+    "remote_heads": {
+      "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "refs/heads/work/c271-missing-import-digest-control": "2cd6982946e20575cc8af6d441669f81a21eee74",
+      "refs/heads/work/c271-p29-trd-record": "880933a40aac70f583c97373133e43a4e8244491 (not created or touched by this phase)"
+    },
+    "remote_tree": "4765f830060dd5814c4ce4f487150a21f590c159, equal to the local tree"
+  },
+  "checks_of_final_tree": {
+    "started_at_utc": "2026-11-27T11:41:37Z",
+    "ended_at_utc": "2026-11-27T11:41:39Z",
+    "tree": "the clean checkout at 2cd69829",
+    "workflow": {
+      "result": "passed",
+      "observed": "Workflow structure passed (13 tasks).",
+      "output_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+    },
+    "documentation": {
+      "result": "passed",
+      "documents": 1748,
+      "local_links": 6962,
+      "failures": 0,
+      "output_sha256": "f2e1b5e40ec1e87176588bb3fb775aa73f696caf4210e0d749df6a6b4ec48b5d"
+    },
+    "whitespace": "git diff --check 0eb9a551 HEAD reports only the two preserved paths of checks/s9/CHECKS.json (the MC29 configuration copy's frozen trailing space, and the record of that check); with both excluded it passes"
+  },
+  "checkpoint_comments": {
+    "pull_request_274": {
+      "id": 7217353246,
+      "created_at_utc": "2026-11-27T11:40:53Z",
+      "url": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7217353246"
+    },
+    "issue_273": {
+      "id": 7217353571,
+      "created_at_utc": "2026-11-27T11:40:54Z",
+      "url": "https://github.com/Omegapy/OntoKin/issues/273#issuecomment-7217353571"
+    },
+    "body_sha256": "314d5d223ba57af21d5f841fa20852db9e793868e0e6cc410428d972100d7fb3",
+    "readback": "both posted bodies read back byte-identical to the body"
+  },
+  "github_state_after": {
+    "pull_request_274": "open, draft, head 2cd69829",
+    "issue_273": "open",
+    "observed_at_utc": "2026-11-27T11:41:05Z"
+  },
+  "retained_for_mr": [
+    "the exact records beside the clone under ../OntoKin-local/c271-p35/ (plans, freezes, reviews, evidence, audit, Director's records), unchanged, with EXACT-RECORDS.json's digests",
+    "MP's prepared inputs under ../OntoKin-local/c271-macos/ and ../OntoKin-local/c271-p34/, unchanged at their paths and modes, not opened in Finder",
+    "HOST 34e94f29..., valid only while the Python inventory (c277bdd3...) and the language and region settings stay as observed: a later gate that binds it keeps every start of the framework interpreter with -B; otherwise it observes again"
+  ],
+  "processes": "no process started by the phase remains (a process listing at 11:41:39Z, context only, showed none)",
+  "ownership": "Owner c271-p35-e38e3aa82ade is released with the push of this record. It makes no further write. The next phase declares its own owner.",
+  "unknown_operations": [],
+  "next_action": "MR (R03), the complete routine of gate R on this executor, then R04 and R05, each a separate phase that needs the owner's selection."
+}
