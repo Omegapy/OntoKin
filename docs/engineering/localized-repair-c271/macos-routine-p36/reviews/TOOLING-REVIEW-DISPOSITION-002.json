@@ -1,0 +1,59 @@
+{
+  "schema": "ontokin.c271.p36-review-disposition/1",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "stage": "S3",
+  "director": "c271-p36-14f7f8b219db",
+  "recorded_at_utc": "2026-11-27T18:35:06Z",
+  "review": {
+    "record": "workers/W3-tooling-002/TOOLING-REVIEW-002.md",
+    "record_sha256": "37144d3d4d156bff27c5e7b55e8e8a6be775d6815eeee9444ef800a5dcf80dde",
+    "json": "workers/W3-tooling-002/TOOLING-REVIEW-002.json",
+    "json_sha256": "6bc102939d41e656db9329f9bc1ece37be3b0388b25812981970e69c8888b013",
+    "sums_sha256": "74197bf9d47c9137972322f31a0c8db75f81ac59eb541b7979a8a44a169db008",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; it took no part in review 001 or in the authoring"
+  },
+  "accepted_candidate": {
+    "sums": "workers/W2/SHA256SUMS.txt",
+    "sums_sha256": "d9686c8d320ee2d705c658bffaaeeac9ac11b7bb57cdbcd53239adf3abf9ebde",
+    "files": 159,
+    "tr_001_status": "TR-01 to TR-11 met as disposition 001 requires; TR-09's binding carried to S6; TR-10 met outside the tooling"
+  },
+  "dispositions": [
+    {
+      "id": "TR2-01",
+      "mandatory": false,
+      "disposition": "recorded; no code change; a rule for S6",
+      "reason": "The remaining case of TR-05 needs a skipped test: it can swap which ID is skipped or replace a skip reason, never the number of skips, which the log's own result line and the driver's summary give. R1 and R2 are expected to have no skip at all.",
+      "freeze_rule": "R1's and R2's zero-skip checks use the log's own result-line counts and the driver's test_execution record, besides the collector's records."
+    },
+    {
+      "id": "TR2-02",
+      "mandatory": false,
+      "disposition": "recorded for a later revision of the tooling; no code change in MR",
+      "reason": "a stale class docstring and one README wording; the module docstring and the code are right"
+    },
+    {
+      "id": "TR2-03",
+      "mandatory": false,
+      "disposition": "recorded; a rule for S6",
+      "reason": "two limits on repeated IDs are missing from the README",
+      "freeze_rule": "No attribution is frozen for an ID that the frozen discovery lists more than once; the collector's refusal of a repeated ID stays a refusal."
+    },
+    {
+      "id": "TR2-04",
+      "mandatory": false,
+      "disposition": "recorded; a rule for S6",
+      "reason": "an attribution with a passing or self-contradictory outcome is accepted, though it can never exempt anything",
+      "freeze_rule": "Every frozen attribution states a not-passing outcome that agrees with its own events; the freeze review checks each one."
+    },
+    {
+      "id": "TR2-05",
+      "mandatory": false,
+      "disposition": "recorded for a later revision of the tooling",
+      "reason": "no test pins those documented limits; each behaviour is right or documented"
+    }
+  ],
+  "a3": "The tooling is accepted for commit B. The Director copies the repository-bound files to their committed place, runs the suite there once, and commits only if it passes there.",
+  "next": "commit B: the inventory's records, the tooling, the two reviews and their dispositions"
+}

@@ -1735,7 +1735,7 @@
     "record": "docs/engineering/localized-repair-c271/macos-routine-p36/PHASE.json",
     "plan": "docs/engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P36-SESSION.md",
-    "status": "declared_routine_pending"
+    "status": "commit_b_inventory_and_tooling_reviewed"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8597,7 +8597,7 @@
     "plan": "docs/engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P36-SESSION.md",
     "declared_at_utc": "2026-11-27T15:46:53Z",
-    "status": "declared_routine_pending",
+    "status": "commit_b_inventory_and_tooling_reviewed",
     "owner_direction": [
       {
         "date": "2026-11-27 (UTC)",
@@ -8610,7 +8610,14 @@
     "gate": "MR of ontokin.current-host-readback/0.2.0, and R03's acceptance",
     "downloads": "none needed and none approved",
     "host_record": "MH's HOST 34e94f29 is not reused: it binds the source at 0eb9a551, and the branch head has moved since",
-    "parent_complete": false
+    "parent_complete": false,
+    "stages": {
+      "recorded_at_utc": "2026-11-27T18:38:28Z",
+      "S1": "Declaration d3b622d6 pushed and read back at 2026-11-27T15:48:07Z (A1).",
+      "S2": "W1's start-and-write inventory, read only: every start of both run kinds; a Node of other software is reachable only through PATH (two doctor tests); no ldd, codesign or otool; no bound-tree write by reading; Node R1 3, R2 0. The Director's disposition gives the freeze D-P1 to D-P7 (A2).",
+      "S3": "W2's tooling: review 001 rejected revision 1 on TR-01 (an attribution matched by any one reason); revision 2 adopted TR-01 to TR-11; review 002 accepted it with nonmandatory findings TR2-01 to TR2-05, three of them freeze rules; the suite passed 90 of 90 at its committed place. Committed with the inventory's records at commit B (A3).",
+      "records": "docs/engineering/localized-repair-c271/macos-routine-p36/: inventory/, tooling/, authoring/, reviews/, checks/commit-b/"
+    }
   },
   "p36_fields_index": {
     "recorded_at_utc": "2026-11-27T15:46:53Z",

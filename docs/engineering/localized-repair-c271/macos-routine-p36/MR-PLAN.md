@@ -302,3 +302,42 @@ All of these are in this directory:
 
 The exact files stay beside the clone, and their SHA-256 values are recorded. Large raw logs and the
 isolated workspaces stay beside the clone, recorded by digest.
+
+## 12. Changes after the inventory and the tooling reviews
+
+W1's [start-and-write inventory](inventory/START-INVENTORY.md) answered section 4. Its
+[disposition](inventory/START-INVENTORY-DISPOSITION.json) gives the freeze seven decisions, D-P1 to
+D-P7. The sections above keep their first wording.
+
+- **D-P1, `PATH`.** Two unit tests run the real doctor, which starts the first `node` on `PATH`. On
+  this host, that is the package manager's Node. The freeze therefore fixes `PATH` for R1 and R2 so
+  that no Node other than the pinned runtime can be reached by name. The default is MH's
+  `/usr/bin:/bin`. If a test would then differ from the baseline only because `python3.12` or Git's
+  `lfs` helper cannot be found, a directory beside the clone that holds links to exactly those
+  programs goes first on `PATH`. It never holds `node`.
+- **D-P2, the environment.** R1 and R2 start from `env -i` with a declared environment that the
+  freeze lists in full. It holds no `PYTHON*`, `PIP_*`, `GIT_*`, `NODE_*` or `DYLD_*` variable.
+  Main's baseline recorded only that its caller set no `PYTHON*`, `PIP_*` or `GIT_*` variable, so the
+  difference is a stated limit.
+- **D-P3.** The global Git configuration that the doctor's Git children read is recorded by digest
+  only.
+- **D-P4.** The driver always runs with `-B`, and the freeze checks for bytecode before and after each
+  run.
+- **D-P5.** The Python installation inventory is compared with HOST's before R1, between the runs
+  and after R2.
+- **D-P6.** The two volumes of MC16 (I-05) are recorded.
+- **D-P7.** The starts that are recorded but not counted are given as expected magnitudes. Per run,
+  these are about four each of `uname` and `file`, and tens of Git reads.
+
+The tooling was rejected once. [Review 001](reviews/TOOLING-REVIEW-001.md) found that an attribution
+matched when any one of a test's reasons matched (TR-01, mandatory). [Revision 2](tooling/README.md)
+adopted TR-01 to TR-11, and [review 002](reviews/TOOLING-REVIEW-002.md) accepted it with
+nonmandatory findings. Its [disposition](reviews/TOOLING-REVIEW-DISPOSITION-002.json) carries three
+of them to the freeze as rules:
+- the zero-skip checks also use the log's own counts (TR2-01);
+- no attribution is frozen for an ID that is listed more than once (TR2-03);
+- every attribution states a consistent not-passing outcome (TR2-04).
+
+TR-09's binding of the reader's cohort root is carried to the freeze as well. Before commit B, the
+Director ran the suite once at its committed place: 90 of 90 passed, and the worktree's status did not
+change ([check record](checks/commit-b/CHECKS.json)).

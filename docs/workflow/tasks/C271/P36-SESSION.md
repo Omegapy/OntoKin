@@ -2,11 +2,12 @@
 
 Follows current main's [session template](https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/docs/workflow/templates/SESSION.md).
 Detailed evidence is linked, not repeated. Machine paths are left out; places beside the clone
-are named relative to it. Times are UTC. This is the declaration version of the checkpoint.
+are named relative to it. Times are UTC. This is the commit B version of the checkpoint, written
+at stage S3 of the MR plan. The declaration version is in this file's history at `d3b622d6`.
 
 ## Identity
 
-- Checkpoint time and author identity: 2026-11-27T15:46:53Z, Director `c271-p36-14f7f8b219db`.
+- Checkpoint time and author identity: 2026-11-27T18:38:28Z, Director `c271-p36-14f7f8b219db`.
 - Task, session, and agent or tool identity: C271, phase C271-P36-macos-complete-routine-mr;
   the same Claude Code session (model Claude Opus 5.5) that carried out C271-P30 to P35, working
   in the C271 worktree. The session's context was compacted after P35; the read-set below was
@@ -68,8 +69,23 @@ are named relative to it. Times are UTC. This is the declaration version of the 
 
 - Requirements: R01 and R02 done; R03, R04 and R05 not_done. P01 done, P02 in_progress. Task
   status `in_progress`.
-- Acceptance items: A1 to A11 of the declaration. None is complete at this checkpoint.
-- Workers: W1 to W4 of the MR plan, section 3. None is launched at this checkpoint.
+- Acceptance items of the declaration:
+  - A1 met: the declaration `d3b622d6` was pushed and read back at 15:48:07Z.
+  - A2 met: W1's [start-and-write inventory](../../../engineering/localized-repair-c271/macos-routine-p36/inventory/START-INVENTORY.md),
+    with its [disposition](../../../engineering/localized-repair-c271/macos-routine-p36/inventory/START-INVENTORY-DISPOSITION.json),
+    D-P1 to D-P7.
+  - A3 is met by this commit:
+    - [review 001](../../../engineering/localized-repair-c271/macos-routine-p36/reviews/TOOLING-REVIEW-001.md)
+      rejected the tooling's first version on TR-01;
+    - [review 002](../../../engineering/localized-repair-c271/macos-routine-p36/reviews/TOOLING-REVIEW-002.md)
+      accepted revision 2 with nonmandatory findings;
+    - the suite passed 90 of 90 at its committed place.
+  - A4 to A11: not yet.
+- Workers so far: W1 (the inventory), W2 (the tooling, in two revisions) and two fresh W3 agents
+  (tooling reviews 001 and 002). No worker made a Git write or edited the worktree.
+- Main's change between the baseline runs' commit `8e847c15` and `51223c9b`: ten documentation and
+  record files, none under `tests/`, `tools/`, `ontokin/`, `prototypes/`, `fixtures/`, `schemas/` or
+  `examples/` (read by the Director with `git diff --name-status`).
 - MH's HOST is not reused: it binds the source at MH's commit `0eb9a551`, and this branch's head
   has moved since. MR observes the host again (stages S4 and S5).
 
@@ -87,15 +103,22 @@ are named relative to it. Times are UTC. This is the declaration version of the 
 
 ## Verification
 
-- Commands run for this checkpoint, each start of the framework interpreter with `-B`: the doctor
-  as above, and the workflow check, which passed with 13 tasks.
+- Commands run for this checkpoint, each start of the framework interpreter with `-B`:
+  - the doctor as above;
+  - the workflow check, which passed with 13 tasks;
+  - the workers' own starts, which their records list (no Git, Node, observer, driver or unit test);
+  - the tooling's suite, once at its committed place;
+  - the checks of this commit
+    ([check record](../../../engineering/localized-repair-c271/macos-routine-p36/checks/commit-b/CHECKS.json)).
+- One deviation: an empty here-document ran under the operating system's own Python launcher. It
+  started no framework interpreter and wrote nothing. The worker log records it.
 - Commands planned: stages S2 to S9 of the MR plan.
 - Not run in this phase at this checkpoint: M0, M1, the routine driver, any Node, `ldd` or
   `codesign` start, and the visual-verification profile.
 
 ## Recovery
 
-- Unpublished commits: none after the push of this declaration, which the next checkpoint observes.
+- Unpublished commits: none after the push of commit B, which the next checkpoint observes.
 - Outstanding operations and owned processes: none.
 - Current blockers with concrete evidence: none. P30-EXECUTOR-001 still blocks the Linux
   contract's H0 and H1 in local mode.
@@ -107,8 +130,11 @@ are named relative to it. Times are UTC. This is the declaration version of the 
 
 ## Continuation
 
-- One exact next action: stages S2 and S3 of the MR plan, the start-and-write inventory and the
-  tooling, at the same time.
+- One exact next action: stage S4 of the MR plan. A fresh W2 writes observation plan 001 at commit
+  B, outside Git, and a fresh W3 reviews it.
+- From the observation plan's freeze to the end of the audit, HEAD stays at B and nothing is
+  committed. That period has one boot, every start of the framework interpreter uses `-B`, and the
+  language and region settings stay unchanged (MR plan section 6).
 - Stopping condition: R03 accepted, with the audited runs and their records pushed and read back;
   or a concrete blocker.
 

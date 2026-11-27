@@ -1,0 +1,82 @@
+{
+  "schema": "ontokin.c271.p36-checks/1",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "stage": "S3, commit B",
+  "director": "c271-p36-14f7f8b219db",
+  "recorded_at_utc": "2026-11-27T18:40:06Z",
+  "source_head_before_commit": "d3b622d61745259c3477bc94be0fb4da05c23c56",
+  "interpreter_rule": "every start of the framework interpreter with -B",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": ".venv/bin/python -B tools/chat_workflow.py check",
+      "exit": 0,
+      "result": "passed",
+      "stdout": "workflow.stdout",
+      "stdout_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+    },
+    {
+      "name": "documentation",
+      "command": ".venv/bin/python -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "exit": 0,
+      "result": "passed",
+      "links": {
+        "documents": 1756,
+        "local_links": 6999,
+        "anchors": 189,
+        "external_skipped": 1118
+      },
+      "failures": [],
+      "stdout": "documentation.stdout",
+      "stdout_sha256": "869b4551719f919c1c9503df5d06fe921818b8ab47b4764637465f66bf71b262",
+      "earlier_attempt": "the first run, before this record existed, failed only on the two links to this record (MR-PLAN.md and P36-SESSION.md)"
+    },
+    {
+      "name": "whitespace, every staged file",
+      "command": "git diff --cached --check",
+      "exit": 2,
+      "result": "failed_preserved",
+      "reason": "trailing spaces only in the three verbatim unittest records, where a test's status line follows its interleaved output, and in this check's own output, which quotes them; preserved as recorded",
+      "verbatim_records": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/authoring/test-runs/TEST-RUN-AGAINST-REJECTED-001.txt",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/authoring/test-runs/TEST-RUN.txt",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/checks/commit-b/inplace-run-001/output.txt",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/checks/commit-b/whitespace-staged.stdout"
+      ],
+      "stdout": "whitespace-staged.stdout",
+      "stdout_sha256": "b29f2c4012479f2be80fb82c2f42d325b39ed9cdd55ce9540339b4eba051f2cc"
+    },
+    {
+      "name": "whitespace, authored files",
+      "command": "git diff --cached --check -- . ':!<the four verbatim records>'",
+      "exit": 0,
+      "result": "passed",
+      "stdout": "whitespace-authored.stdout",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "tooling suite at its committed place",
+      "command": "python3 -I -S -B -m unittest discover -s tests -v, from the tooling directory",
+      "exit": 0,
+      "result": "passed",
+      "tests": 90,
+      "started_at_utc": "2026-11-27T18:37:21Z",
+      "record": "inplace-run-001/COMMAND.json",
+      "worktree_status_unchanged": true,
+      "bytecode_after": "none in the worktree, the .venv or the framework tree"
+    },
+    {
+      "name": "privacy search of every staged file",
+      "command": "the derived private terms and the application terms with grep -i -F, a machine-path pattern, and the joined and squeezed string constants of every staged Python file",
+      "result": "passed",
+      "accepted_classes": [
+        "python@3.12 only inside <prefix>/Cellar/... and <prefix>/opt/... interpreter paths, as in MH",
+        "the public repository name",
+        "Claude, ChatGPT and Codex as the project's own workflow vocabulary, and generic words",
+        "three joined-constant false positives formed across adjacent constants ('external' + 'external', 'external' + 'external_nonstdlib', and a generic /private/tmp)"
+      ],
+      "machine_paths": 0
+    }
+  ],
+  "result": "passed, apart from the preserved verbatim whitespace"
+}

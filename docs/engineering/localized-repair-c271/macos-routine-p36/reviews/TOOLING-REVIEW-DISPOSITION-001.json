@@ -1,0 +1,93 @@
+{
+  "schema": "ontokin.c271.p36-review-disposition/1",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "stage": "S3",
+  "director": "c271-p36-14f7f8b219db",
+  "recorded_at_utc": "2026-11-27T17:35:26Z",
+  "review": {
+    "record": "workers/W3-tooling-001/TOOLING-REVIEW-001.md",
+    "record_sha256": "d9846ec801a8f2382e8c999fa5ed316404ccc43ac901228d4fc0faa6df7dcf9a",
+    "json": "workers/W3-tooling-001/TOOLING-REVIEW-001.json",
+    "json_sha256": "dee4ca4298fb124b9a5eddcb574f64ed5ec28cbfc4b158e474b3d2fc852e014b",
+    "sums_sha256": "aed364ad53578e39c2d9827973f71a3330a6268724604be53c65a8510a0b8eca",
+    "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; it took no part in S2 or S3's authoring"
+  },
+  "director_confirmation": "TR-01 confirmed by reading W2/tooling/unit_log_outcomes.py:1220-1235: reason_matches is a membership test (expected_reason in reasons or in raw), so the rest of a not-passing record (its other events and its failing subtests) is never compared.",
+  "dispositions": [
+    {
+      "id": "TR-01",
+      "mandatory": true,
+      "disposition": "adopted now: W2 revises the tooling, with focused tests, before review 002",
+      "change": "An attribution states the test's complete not-passing record: its outcome; the status and first line of each of its own events; its failing and skipped subtests with status and first line or skip reason. It matches only when the candidate's record equals it exactly in one declared form (raw, or normalized), and the output says what differs. Focused tests: an exact two-event match (an erroring subtest plus the test's own failure), and mismatches for a changed subtest reason, an added subtest, a removed event and a changed outcome."
+    },
+    {
+      "id": "TR-02",
+      "mandatory": false,
+      "disposition": "adopted now: W2 revises the tooling, with focused tests, before review 002",
+      "change": "--expect accepts 'missing' as an expected outcome, and 'met' requires exactly one occurrence of the ID (or the expectation states the count); tests for a fixture ID that must be absent and for an ID that occurs twice."
+    },
+    {
+      "id": "TR-03",
+      "mandatory": false,
+      "disposition": "adopted now: W2 revises the tooling, with focused tests, before review 002",
+      "change": "A reports_different list (step, report path, both outcomes) enters the exit predicate and the README; tested."
+    },
+    {
+      "id": "TR-04",
+      "mandatory": false,
+      "disposition": "adopted now: W2 revises the tooling, with focused tests, before review 002",
+      "change": "A test that was skipped or an expected failure in the baseline and does not pass in the candidate is also listed as newly not passing; tested."
+    },
+    {
+      "id": "TR-05",
+      "mandatory": false,
+      "disposition": "adopted now: W2 revises the tooling, with focused tests, before review 002",
+      "change": "A status window with more than one candidate refuses as ambiguous; the docstring and the notes are corrected; the probes become tests."
+    },
+    {
+      "id": "TR-06",
+      "mandatory": false,
+      "disposition": "adopted now: W2 revises the tooling, with focused tests, before review 002",
+      "change": "The temporary-name mask matches only tempfile's name shape, and summary paths are replaced only at component boundaries; the masked components are recorded per entry; tested; the validation is run again."
+    },
+    {
+      "id": "TR-07",
+      "mandatory": false,
+      "disposition": "adopted now: W2 revises the tooling, with focused tests, before review 002",
+      "change": "The hygiene test's outcome must not depend on where the checkout lies or on this host's interpreter prefix: the project's own task and phase names are public vocabulary and are not derived as private components; the README says where the suite was run. The suite must pass at its committed place inside the worktree."
+    },
+    {
+      "id": "TR-08",
+      "mandatory": false,
+      "disposition": "adopted now: W2 revises the tooling, with focused tests, before review 002",
+      "change": "The README states the limit (a failed import inside a test package refuses, fail-closed; not reachable in this repository's tests/), or the parser accepts the dotted name; W2 chooses and records it."
+    },
+    {
+      "id": "TR-09",
+      "mandatory": false,
+      "disposition": "adopted now for the README; the binding is carried to S6",
+      "change": "The README statement is corrected. The operational freeze fixes the cohort route and root (W2's Q-2) and binds the reader's cohort_bindings for the audit."
+    },
+    {
+      "id": "TR-10",
+      "mandatory": false,
+      "disposition": "met outside the tooling",
+      "change": "The Director established main's change from 8e847c15 to 51223c9b with Git: director/inputs/main-8e847c15-to-51223c9b-name-status.txt (a3031678...) lists ten documentation and record paths, none under tests/, tools/, ontokin/, prototypes/, fixtures/, schemas/ or examples/. The documents stage's inputs did change; the freeze states the documents stage's expected comparison with that list. No tooling change."
+    },
+    {
+      "id": "TR-11",
+      "mandatory": false,
+      "disposition": "adopted now: W2 revises the tooling, with focused tests, before review 002",
+      "change": "driver_reading decodes as the driver does (universal newlines), or states the difference; tested with a carriage return next to a Ran or result line."
+    }
+  ],
+  "revision_rules": [
+    "W2 keeps the rejected version unchanged in workers/W2/rejected-001/ and writes revision 2 in workers/W2/tooling/.",
+    "AUTHOR-NOTES gains a section that maps TR-01 to TR-11 to each change and test.",
+    "The suite runs from W2's directory, and once against a copy of rejected-001, where each new test for TR-01 to TR-06 must fail for the defect it targets.",
+    "The validation runs again as run-003; run-002 stays as it is.",
+    "SHA256SUMS.txt covers every file under W2/; no Git, Node or observer start; every interpreter start with -B."
+  ],
+  "next": "W2 revision 2, then tooling review 002 by a fresh W3 that took no part in review 001"
+}

@@ -1,0 +1,290 @@
+{
+ "collector_exit": 0,
+ "defect_tests": 18,
+ "defect_tests_by_finding": {
+  "TR-01": [
+   "test_tr01_a_changed_outcome_does_not_match",
+   "test_tr01_a_changed_subtest_reason_does_not_match",
+   "test_tr01_a_removed_own_event_does_not_match",
+   "test_tr01_an_absent_id_does_not_match",
+   "test_tr01_an_added_own_event_does_not_match",
+   "test_tr01_an_added_subtest_does_not_match",
+   "test_tr01_an_exact_statement_of_a_two_part_record_matches",
+   "test_tr01_probe_pr5_a_changed_subtest_reason_and_an_extra_erroring_subtest",
+   "test_tr01_the_declared_form_applies_to_the_whole_record"
+  ],
+  "TR-02": [
+   "test_tr02_probe_pr1_a_fixture_record_that_must_be_absent",
+   "test_tr02_probe_pr2_an_id_that_starts_twice_does_not_meet_a_single_expectation"
+  ],
+  "TR-03": [
+   "test_tr03_probe_pr7_a_report_summary_that_differs_with_equal_statuses"
+  ],
+  "TR-04": [
+   "test_tr04_an_expected_failure_that_now_fails_is_newly_not_passing",
+   "test_tr04_probe_pr8_a_skipped_baseline_test_that_errors_is_newly_not_passing"
+  ],
+  "TR-05": [
+   "test_tr05_probe_pr3_printed_imitations_that_keep_every_count_are_refused",
+   "test_tr05_two_candidates_after_a_start_refuse_even_when_they_agree"
+  ],
+  "TR-06": [
+   "test_tr06_a_run_path_is_replaced_only_at_component_boundaries",
+   "test_tr06_probe_pr6_a_non_random_name_below_the_temporary_directory_is_not_masked"
+  ]
+ },
+ "defect_tests_not_failing": [],
+ "every_defect_test_fails": true,
+ "log": {
+  "bytes": 37825,
+  "sha256": "79df19e4293a1292375ed338eeaa8676b4f2d7cad15c9c06f113bbc43a44cbc1"
+ },
+ "not_passing": [
+  {
+   "failing_subtests": [],
+   "finding": "TR-02",
+   "id": "test_collect.Expectations.test_tr02_probe_pr1_a_fixture_record_that_must_be_absent",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: 2 != 1 : {\"finished_at_utc\": \"2026-11-27T17:53:53.833126Z\", \"invocation\": {\"argv\": [\"python3 -m unittest\", \"discover\", \"-s\", \"tests\", \"-v\"], \"cwd\": \"<local>/c271-p36/workers/W2/tooling\", \"orig_argv\": [\"<prefix>/Cellar/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python\", \"-I\", \"-S\", \"-B\", \"-m\", \"unittest\", \"discover\", \"-s\", \"tests\", \"-v\"], \"pid\": 10607, \"python\": {\"build_string\": \"3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]\", \"executable\": \"<prefix>/Cellar/python@3.12/3.12.13/libexec/bin/python3\", \"flags\": {\"bytes_warning\": 0, \"debug\": 0, \"dev_mode\": false, \"dont_write_bytecode\": 1, \"hash_randomization\": 1, \"ignore_environment\": 1, \"inspect\": 0, \"int_max_str_digits\": 4300, \"interactive\": 0, \"isolated\": 1, \"no_site\": 1, \"no_user_site\": 1, \"optimize\": 0, \"quiet\": 0, \"safe_path\": true, \"utf8_mode\": 1, \"verbose\": 0, \"warn_default_encoding\": 0}, \"implementation\": \"cpython\", \"version\": \"3.12.13\"}}, \"refusal\": {\"details\": {\"expectation\": \"setUpClass (test_static_tray_readback_v01.ReadbackCPUControls)=missing\"}, \"reason\": \"An expectation is ID=OUTCOME with OUTCOME one of passed, failure, error, skipped, expected_failure, unexpected_success\", \"rule\": \"USAGE\"}, \"schema\": \"ontokin.c271.p36-tool-refusal/1\", \"state\": \"REFUSED\", \"tool\": \"unit_log_outcomes.py\"}"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-02",
+   "id": "test_collect.Expectations.test_tr02_probe_pr2_an_id_that_starts_twice_does_not_meet_a_single_expectation",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: 0 != 1"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-05",
+   "id": "test_collect.InterleavedOutput.test_tr05_probe_pr3_printed_imitations_that_keep_every_count_are_refused",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: Tuples differ: (0, 'PARSED') != (2, 'REFUSED')"
+   ]
+  },
+  {
+   "failing_subtests": [
+    [
+     "(method='test_noise_ending_like_a_status')",
+     "FAIL",
+     "AssertionError: Tuples differ: (0, 'PARSED') != (2, 'REFUSED')"
+    ],
+    [
+     "(method='test_noise_ending_with_another_status')",
+     "FAIL",
+     "AssertionError: Tuples differ: (0, 'PARSED') != (2, 'REFUSED')"
+    ]
+   ],
+   "finding": "TR-05",
+   "id": "test_collect.InterleavedOutput.test_tr05_two_candidates_after_a_start_refuse_even_when_they_agree",
+   "outcome": "failure",
+   "reasons": []
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-01",
+   "id": "test_compare.Attributions.test_tr01_a_changed_outcome_does_not_match",
+   "outcome": "error",
+   "reasons": [
+    "KeyError: 'differences'"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-01",
+   "id": "test_compare.Attributions.test_tr01_a_changed_subtest_reason_does_not_match",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: True is not false"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-01",
+   "id": "test_compare.Attributions.test_tr01_a_removed_own_event_does_not_match",
+   "outcome": "error",
+   "reasons": [
+    "KeyError: 'differences'"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-01",
+   "id": "test_compare.Attributions.test_tr01_an_absent_id_does_not_match",
+   "outcome": "error",
+   "reasons": [
+    "KeyError: 'differences'"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-01",
+   "id": "test_compare.Attributions.test_tr01_an_added_own_event_does_not_match",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: True is not false"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-01",
+   "id": "test_compare.Attributions.test_tr01_an_added_subtest_does_not_match",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: True is not false"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-01",
+   "id": "test_compare.Attributions.test_tr01_an_exact_statement_of_a_two_part_record_matches",
+   "outcome": "error",
+   "reasons": [
+    "KeyError: 'observed'"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-01",
+   "id": "test_compare.Attributions.test_tr01_probe_pr5_a_changed_subtest_reason_and_an_extra_erroring_subtest",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: True is not false"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-01",
+   "id": "test_compare.Attributions.test_tr01_the_declared_form_applies_to_the_whole_record",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: Tuples differ: (True, True) != (True, False)"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-03",
+   "id": "test_compare.Probes.test_tr03_probe_pr7_a_report_summary_that_differs_with_equal_statuses",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: 0 != 1 : UNIT-LOG-COMPARISON {\"counts\": {\"added_ids\": 0, \"different_occurrences\": 0, \"different_outcome\": 0, \"different_reason\": 0, \"different_skip_reason\": 0, \"different_subtests\": 0, \"new_not_passing\": 0, \"no_longer_failing\": 0, \"removed_ids\": 0, \"unchanged_expected_failures\": 0, \"unchanged_not_passing\": 0, \"unchanged_skipped\": 0}, \"steps_different\": [], \"unchanged\": {\"error\": 0, \"expected_failure\": 0, \"failure\": 0, \"passed\": 1, \"skipped\": 0, \"unexpected_success\": 0}}"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-04",
+   "id": "test_compare.Probes.test_tr04_an_expected_failure_that_now_fails_is_newly_not_passing",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: Lists differ: [] != ['test_x']"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-04",
+   "id": "test_compare.Probes.test_tr04_probe_pr8_a_skipped_baseline_test_that_errors_is_newly_not_passing",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: Lists differ: [] != ['test_q01']"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-06",
+   "id": "test_compare.Probes.test_tr06_a_run_path_is_replaced_only_at_component_boundaries",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: Lists differ: ['AssertionError: see <workspace>2/x.py and <workspace>/tests/x.py'] != ['AssertionError: see <output>/workspace2/x.py and <workspace>/tests/x.py']"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": "TR-06",
+   "id": "test_compare.Probes.test_tr06_probe_pr6_a_non_random_name_below_the_temporary_directory_is_not_masked",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: Lists differ: [] != ['test_reads_a_plan']"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": null,
+   "id": "test_collect.DriverReading.test_tr11_the_drivers_reading_translates_line_ends_as_the_driver_does",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: 14 != 9"
+   ]
+  },
+  {
+   "failing_subtests": [
+    [
+     "(name='package.test_inside_a_package')",
+     "FAIL",
+     "AssertionError: Tuples differ: (2, 'REFUSED') != (0, 'PARSED')"
+    ]
+   ],
+   "finding": null,
+   "id": "test_collect.LoaderTests.test_tr08_probe_pr4_a_failed_import_inside_a_test_package_is_read",
+   "outcome": "failure",
+   "reasons": []
+  },
+  {
+   "failing_subtests": [
+    [
+     "(document=\"revision 1's single reason\")",
+     "ERROR",
+     "KeyError: 'refusal'"
+    ]
+   ],
+   "finding": null,
+   "id": "test_compare.Attributions.test_malformed_attributions_refuse",
+   "outcome": "error",
+   "reasons": []
+  },
+  {
+   "failing_subtests": [],
+   "finding": null,
+   "id": "test_compare.ItemFourLists.test_every_category_is_listed_and_nothing_is_exempt",
+   "outcome": "failure",
+   "reasons": [
+    "AssertionError: Lists differ: ['test_i_regresses', 'test_k_new_failing'] != ['test_i_regresses', 'test_j_outcome_changes', 'test_k_new_failing']"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": null,
+   "id": "test_compare.ItemFourLists.test_identical_runs_compare_as_identical",
+   "outcome": "error",
+   "reasons": [
+    "KeyError: 'reports_different'"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": null,
+   "id": "test_compare.ItemFourLists.test_steps_reports_pending_cases_and_not_executed_steps_side_by_side",
+   "outcome": "error",
+   "reasons": [
+    "KeyError: 'reports_different'"
+   ]
+  },
+  {
+   "failing_subtests": [],
+   "finding": null,
+   "id": "test_compare.ItemFourLists.test_the_declared_normalization_replaces_only_the_runs_own_paths",
+   "outcome": "error",
+   "reasons": [
+    "KeyError: 'masked_temporary_names'"
+   ]
+  }
+ ],
+ "passing_tests": 65,
+ "ran": 90,
+ "result_line": "FAILED (failures=18, errors=8)",
+ "schema": "ontokin.c271.p36-w2-against-rejected-001/1"
+}

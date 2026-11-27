@@ -1,0 +1,150 @@
+{
+ "schema": "ontokin.c271.p36-tooling-review/1",
+ "review": "TOOLING-REVIEW-001",
+ "task": "C271",
+ "phase": "C271-P36",
+ "gate": "MR",
+ "stage": "S3",
+ "director": "c271-p36-14f7f8b219db",
+ "reviewer": "W3 (tooling review 001), a Claude Code subagent in a fresh context with the session's model; took no part in writing the tooling",
+ "written_utc": "2026-11-27",
+ "labels": {
+  "<worktree>": "the C271 worktree, stated clean at d3b622d61745259c3477bc94be0fb4da05c23c56 (no Git was started by the reviewer)",
+  "<local>": "the place beside the clone",
+  "<W2>": "<local>/c271-p36/workers/W2",
+  "<W3>": "<local>/c271-p36/workers/W3-tooling-001",
+  "<tmp>": "the per-user temporary directory"
+ },
+ "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+ "verdict_summary": "One mandatory finding (TR-01: an attribution cannot state a not-passing record exactly and matches by containment of one reason; D-18's first test has two reasons and a failing subtest). Ten nonmandatory findings (TR-02 to TR-11). The collector, comparator and reader read the real layouts; the four reused MH files are byte-identical; the validation reproduces INTEGRATION.json's comparison exactly; the repository-bound files hold no private string. After TR-01 is corrected, the change needs a repeated review.",
+ "candidate": {
+  "sha256sums_file": "<W2>/SHA256SUMS.txt",
+  "sha256sums_file_sha256": "c7ec20ca970e6bdf2e668a8df98519af26cbb5cf78186b7dd827979f08cb8d29",
+  "listed_files": 83,
+  "all_listed_digests_verified": true,
+  "unlisted_files": 0,
+  "committed_place": "<worktree>/docs/engineering/localized-repair-c271/macos-routine-p36/tooling/"
+ },
+ "reviewed_files": [
+  {"path": "tooling/unit_log_outcomes.py", "sha256": "462022b5a857d0f50ea68afdccfddc3abdbc0cdfeb64a8a5b2e7a7dab906cc98", "size_bytes": 74353, "mode": "0o644"},
+  {"path": "tooling/readback_evidence.py", "sha256": "ad47b9931675eaeaa7584b42410a7952d7398b4ee039c4ebb58ca177f005c69d", "size_bytes": 47080, "mode": "0o644"},
+  {"path": "tooling/README.md", "sha256": "eada0ba989f66c21120e29f19e07f7635e7d43588da088c9077e32658cece902", "size_bytes": 23064, "mode": "0o644"},
+  {"path": "tooling/tests/w2_support.py", "sha256": "5e68c93ec736f7115d7aee5795e412bdf79269585672e05534ce994865770b70", "size_bytes": 27991, "mode": "0o644"},
+  {"path": "tooling/tests/test_collect.py", "sha256": "2335946effe632bf78f5fb05aedd9f0c079ac7031b875a33747c81f3111d4ac7", "size_bytes": 19543, "mode": "0o644"},
+  {"path": "tooling/tests/test_compare.py", "sha256": "66296e0bc772848f9e240060e7aa2ef954fb490548fc3a555a4ffc62796bae01", "size_bytes": 16148, "mode": "0o644"},
+  {"path": "tooling/tests/test_readback_evidence.py", "sha256": "3c1350b24a86bcd1163ced2d888e9e9a5e6628474ee975b3f558b4d8ef02656d", "size_bytes": 10452, "mode": "0o644"},
+  {"path": "tooling/tests/test_zz_hygiene.py", "sha256": "1594d614c0cacaa2e25a2a07a377c275bb24d2f03748b41c4ad0ed2c6df5c7fd", "size_bytes": 8810, "mode": "0o644"}
+ ],
+ "also_read": [
+  {"path": "<W2>/AUTHOR-NOTES.md", "sha256": "62dcea8f66b97f8ac98365487192de0752ded179d90d8b148ddae7b82ee10ecc"},
+  {"path": "<W2>/validation/scripts/run_validation.py", "sha256": "50f1503080ee6391107a075733c068acf577d9a587b9f591830263b85ac03fb5"},
+  {"path": "<W2>/validation/scripts/check_recorded.py", "sha256": "80d6b6c4ab75d33e445e1ccaca38abc796652d0978aab1f63ed7faab62e06f10"},
+  {"path": "<W2>/test-runs/ and <W2>/validation/run-002/", "sha256": "as listed in <W2>/SHA256SUMS.txt"}
+ ],
+ "reused_mh_files": [
+  {"path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/FAILURE-CAPTURE.md", "sha256": "f387fb3ec0ed306366f6d3f22820ec344f1ac843008775475258c5de9634c99c", "size_bytes": 13147, "mode": "0o644"},
+  {"path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py", "sha256": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f", "size_bytes": 29076, "mode": "0o644"},
+  {"path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/discover_inventory.py", "sha256": "980c80883f3106706a3ecd3b03e908efe31a5c572a67a0d71dc650f85cfb695e", "size_bytes": 35270, "mode": "0o644"},
+  {"path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/audit_numeric.py", "sha256": "9140379c61bc70f29939bd7b216ef5ca5e2f5e6cab5b4a452e50018651bac4e3", "size_bytes": 40667, "mode": "0o644"}
+ ],
+ "reuse_result": "Computed by the reviewer on the worktree's files; each equals W2's README table, MH's authoring/TOOLING-SHA256SUMS.txt and plans/freeze-002/FREEZE-002.json. Equality with the committed blobs at d3b622d6 rests on the brief's statement that the worktree is clean. No W2 tool imports an MH tool; W2 uses MH's discovery document (ontokin.c271.p35-runtime-discovery/2, COMPLETE) and audit record (ontokin.c271.p35-numerical-audit/2) as their outputs.",
+ "findings": [
+  {"id": "TR-01", "mandatory": true, "file": "tooling/unit_log_outcomes.py", "line": "1083-1099, 1220-1235 (1228); README.md 186-191; tests/test_compare.py 156-173",
+   "statement": "An attribution row holds one reason_first_line, IDs may not repeat, and matches is true when that reason is one of the candidate's reasons (raw or normalized); the test's other reasons and its failing subtests are not compared. A not-passing record with more than one reason or with failing subtests cannot be attributed exactly, and a change in its other parts still gives matches true (probe PR-5: a changed subtest reason and an extra erroring subtest gave matches true). D-18's first test is such a record: in MI's retained final-003 run of the 0.1.0 driver module it has an erroring subtest (fail_after=False) with a TypeError first line and its own failure with an AssertionError first line (outcome error). MR-PLAN sections 5, 7 and 9 require attribution by exact test ID and reason, and section 9 makes an unattributed not-passing test a finding, so the S7 checker could clear a changed D-18 failure.",
+   "required_change": "An attribution states the test's complete not-passing record (outcome; the list of status and first line of its own events; its failing and skipped subtests with status and first line or skip reason), and matches is true only when the candidate's record equals it exactly in one declared form (raw, or normalized); the output says what differs. Add focused tests: an exact match of a two-event record (erroring subtest plus own failure), and mismatches for a changed subtest reason, an added subtest and an added own event. Update the README's attribution paragraph. Review the change again."},
+  {"id": "TR-02", "mandatory": false, "file": "tooling/unit_log_outcomes.py", "line": "901-914; README.md 123-124",
+   "statement": "--expect accepts only the six outcomes, so no expectation can state that an ID is absent (MC23 needs that for the setUpClass and tearDownClass records of the two readback classes), and met ignores occurrences (probe PR-2: an ID started twice meets =passed). Probe PR-1: the seven readback methods pass while the CPU class's tearDownClass (the cohort accounting) errors, and collect exits 0 with expectations_met true. The comparator (added fixture ID, new_not_passing) and the reader (cohort.json passed false when the accounting fails) would show it, and W2's Q-5 asks the freeze to check fixtures.",
+   "required_change": "Recommended: accept missing as an expected outcome and require exactly one occurrence for met (or record it as part of the expectation), with tests; otherwise the freeze binds the fixture-absence and occurrence checks explicitly."},
+  {"id": "TR-03", "mandatory": false, "file": "tooling/unit_log_outcomes.py", "line": "1119-1159, 1301-1303; README.md 193-199, 207-209",
+   "statement": "A report summary that differs while every step status is equal appears only as steps[].report_outcomes_equal false; steps_different stays empty and the exit code can be 0 (probe PR-7: a changed source report summary gave exit 0). MR-PLAN section 5 names the report summaries next to the statuses and pending cases.",
+   "required_change": "Recommended: add a reports_different list (step, report path, both outcomes), include it in the exit predicate, describe it in the README and test it."},
+  {"id": "TR-04", "mandatory": false, "file": "tooling/unit_log_outcomes.py", "line": "1185-1192; README.md 157-161; AUTHOR-NOTES D-7",
+   "statement": "A test that was skipped or an expected failure in the baseline and does not pass in the candidate is listed only under different_outcome, not under new_not_passing (probe PR-8). In R1, main's three skipped readback tests would fall there if they did not pass (MC23 covers them).",
+   "required_change": "Recommended: also flag such entries as newly not passing, or the freeze's checker treats every different_outcome entry whose candidate outcome is not passing as new."},
+  {"id": "TR-05", "mandatory": false, "file": "tooling/unit_log_outcomes.py", "line": "639-662 (and docstring 40-41); README.md 80-85, 103; AUTHOR-NOTES 303-307",
+   "statement": "When a status does not follow its start, an exact candidate is preferred and a glued candidate of another value is ignored; misreads among statuses that have no listing entry (ok, skipped, expected failure) and of skip reasons are caught only by the counts. Probe PR-3: two printed imitations swapped a skipped and a passing test, and one imitation replaced a recorded skip reason; both logs were read completely with exit 0. So the docstring's refusal of a guess that changes an outcome, and AUTHOR-NOTES's 'misread only if the imitation changes no value and no count', do not hold. On 130 real logs (101,150 starts) only 105 windows needed a choice and none had more than one candidate.",
+   "required_change": "Recommended: refuse (AMBIGUOUS) any window with more than one candidate, which refuses none of the 130 real logs; correct both statements; keep the probes as tests."},
+  {"id": "TR-06", "mandatory": false, "file": "tooling/unit_log_outcomes.py", "line": "1040-1048; README.md 169-184",
+   "statement": "The * replaces any one component directly below a given temporary directory, not only tempfile's random names, so two reasons that name different directories there compare as unchanged (probe PR-6). Summary paths are replaced as plain substrings without a component boundary (1043-1044). On the retained runs only tempfile names were masked (see validation).",
+   "required_change": "Recommended: restrict * to tempfile's name shape (prefix plus eight characters of [a-z0-9_]) or record the masked components per entry; replace summary paths only at component boundaries."},
+  {"id": "TR-07", "mandatory": false, "file": "tooling/tests/test_zz_hygiene.py", "line": "42-43, 57-62, 109; README.md 341-374",
+   "statement": "The hygiene test treats every non-generic component of the checkout's parent as private, so its outcome depends on where the checkout lies. In an APFS clone of the worktree under the phase's worker directory, with the tooling at its committed place, 3 subtests failed (README.md, unit_log_outcomes.py, readback_evidence.py) because the phase directory's name, which those files write as the phase ID, is a component of that parent; the other 67 of 68 tests passed. At the real worktree the parent's components do not occur in the tooling (checked), so it should pass there. Line 109 also requires a non-generic interpreter-prefix component, which ties the test to this host. The README does not say so; MH's review 003 (Q4, Q5) accepted the same behaviour for MH's test.",
+   "required_change": "Recommended: exclude the project's own task and phase names (public vocabulary) from the derived components, or document where the suite must run and why it fails elsewhere."},
+  {"id": "TR-08", "mandatory": false, "file": "tooling/unit_log_outcomes.py", "line": "322-344; README.md 63-79",
+   "statement": "A failed import of a module inside a test package (pkg.test_x (unittest.loader._FailedTest.pkg.test_x)) makes the log unreadable (PARSE, LISTING; probe PR-4), since the method is taken as the last dotted part of the ID. Not reachable in this repository (tests/ has no package; 3.12's discovery recurses only into packages), and the refusal is fail-closed, but the limit is not stated.",
+   "required_change": "Recommended: document the limit, or accept a dotted method name for unittest.loader._FailedTest and unittest.loader.ModuleSkipped."},
+  {"id": "TR-09", "mandatory": false, "file": "tooling/README.md", "line": "32-36; readback_evidence.py 337-522, 677-707",
+   "statement": "The README says every input is bound by a supplied SHA-256 or by a digest that another bound input records; the reader's cohort-root files are not: neither the command line nor the summary binds them. They are cross-checked with each other and with the derived selection, and their bindings are recorded (cohort_bindings). The run command and the preserved route rest on synthetic records only (cohort mode passed 144 checks on MH's real kept-in-place cohort).",
+   "required_change": "Recommended: correct the README statement; the freeze fixes the route and the root (W2's Q-2) and binds the reader's cohort_bindings for the audit."},
+  {"id": "TR-10", "mandatory": false, "file": "AUTHOR-NOTES.md (not repository-bound)", "line": "228-233 (Q-6); MR-PLAN.md 54-57",
+   "statement": "MR-PLAN section 1 says W2 confirms with exact inputs that main changed no file under tests/, tools/, ontokin/, prototypes/, fixtures/, schemas/ or examples/ from 8e847c15 to 51223c9b, and the documents that the documents stage reads; W2 did not (no Git). The Director's name-status input lists ten documentation and record paths only, none under those directories; the documents stage's inputs (STATUS.md and docs/) did change.",
+   "required_change": "Outside section 5: establish it with exact inputs in S4 or by the Director, as W2's Q-6 proposes."},
+  {"id": "TR-11", "mandatory": false, "file": "tooling/unit_log_outcomes.py", "line": "786-794 (driver: tools/check_local.py 684)",
+   "statement": "driver_reading applies the driver's regular expressions to text decoded without line-end translation, while the driver reads the log with Path.read_text, which translates carriage returns; a carriage return next to a Ran or result line could make the two readings differ. No retained log holds one, and the field is informational.",
+   "required_change": "Recommended: decode as the driver does (universal newlines), or state the difference."}
+ ],
+ "requirement_coverage": {
+  "collector": {"outcome_kinds": "met", "first_line_of_reasons": "met", "failing_subtests": "met",
+                "fixture_errors_and_import_failures": "met, with TR-08", "interleaved_output": "met, with TR-05",
+                "multi_line_reasons": "met", "count_checks": "met", "refusals": "met"},
+  "comparator": {"item_4_lists": "met (category choice TR-04)", "bindings": "met",
+                 "summary_level": "partly: statuses, pending cases and not-executed steps surfaced; report summaries compared but not surfaced (TR-03)",
+                 "attributions_by_exact_id_and_reason": "not met (TR-01)", "nothing_exempt": "met", "inputs_never_edited": "met"},
+  "reader": {"real_layout": "met against the provider's code and MH's real cohort; run mode and preserved route synthetic only (TR-09)",
+             "handover_to_mh_audit": "met"},
+  "reuse": "met",
+  "readme_and_reuse_table": "met, with TR-03, TR-09 and TR-11 corrections"
+ },
+ "validation": {
+  "runner_attempt": "W2's run_validation.py started once; it failed at its own os.mkdir(OUTPUTS) because the given outputs path's parent did not exist; no child was started and nothing was written; not started again (runs/failed-runner-attempt/).",
+  "reproduction": "scripts/w3_validate.py built the runner's 28 argument lists exactly and called each tool's main() in its own process (-B, the same TMPDIR as W2's run-002); exit codes 20 x 0, 6 x 1, 2 x 2, as in run-002; every output equals W2's run-002 output without the volatile fields; 140 checks, 0 disagreements (runs/validation-reproduction/CHECK.json).",
+  "integration_json": {"resolved_tmpdir": {"unchanged": 1, "difference_lists_empty": true, "tests": [4740, 4989], "steps_different": [["documents", "failed", "passed"]], "pending_equal": true, "skips_equal": true},
+                       "default": {"unchanged": 307, "difference_lists_empty": true, "tests": [4740, 4989], "steps_different": [["documents", "failed", "passed"]], "pending_equal": true, "skips_equal": true},
+                       "not_stated_by_the_record": "249 added IDs, all passed; no removed ID; every step's report outcomes equal; the driver's own reading equals each summary"},
+  "candidate_checks_json": "reproduced",
+  "baseline_checks_json": "the collector's not-passing IDs, module counts and skipped IDs equal the record's",
+  "independent_listing_check": "for the six recorded logs, the not-passing and fixture IDs read from the listing headers equal the collector's, and the header counts equal failures plus errors",
+  "normalization_needed_for_a_genuine_difference": false,
+  "normalization_detail": "Without any normalization the resolved pair shows no difference, and the default pair shows 3 different reasons (two in test_force_evidence_collection, one in test_local_checks), each differing only in a random tmp-plus-eight-character directory directly below the given temporary directory; the test_local_checks reason also names each run's own interpreter. With the declared normalization all 307 are unchanged.",
+  "mh_cohort": "readback_evidence.py cohort on MH's real retained cohort: 144 checks passed, 3 starts, audit tool is MH's file",
+  "other_real_logs": "130 distinct real unittest -v logs (the 19 retained driver logs and 111 logs of C271 modules, MH's runs and tool test runs; 101,150 starts) were read completely; the 2 stopped logs and 13 verbosity-1 logs were refused",
+  "inventory_join_real_documents": "collect --inventory with main 8e847c15's resolved log and MH's two real discovery documents: format accepted; all 4,989 started IDs are in each document in the same form and were started in discovery order; the differences are exactly the IDs the branch adds (598 and 1,005)"
+ },
+ "tests": {
+  "run_at_w2": {"command": "python3 -I -S -B -m unittest discover -s tests -v (cwd <W2>/tooling, TMPDIR in <W3>)", "result": "68 tests, OK, no skip, 0 process-creation events", "wrote_into_w2": false},
+  "run_in_clone_at_committed_place": {"command": "the same, from <clone>/docs/engineering/localized-repair-c271/macos-routine-p36/tooling, in an APFS clone of <worktree> without .git and .venv under <W3>, TMPDIR in <W3>; the clone was removed afterwards", "result": "exit 1: 67 of 68 passed; the hygiene test failed in 3 subtests (TR-07); 0 process-creation events; no bytecode or other write in the clone"},
+  "dependence_on_files_beside_the_clone": "none",
+  "gaps": ["TR-01 multi-reason attribution", "TR-02 absence and repetition expectations", "TR-03 report-summary exit", "TR-05 count-neutral misread", "TR-06 non-random masked component", "TR-08 dotted failed import"]
+ },
+ "privacy": {
+  "checked": "derived at run time and never written: the account name and its parts; the parts of the account's full name; the home directory; the ancestors and non-generic components of the worktree, the place beside the clone, the interpreter prefix and executable, the temporary directory and the reviewer's script path; the names of the applications in the system and user application folders; the package manager's installed formula names; e-mail-shaped text; absolute-path literals; string literals joined across adjacent constants, sums, statements and f-string parts",
+  "result": "No machine path, account name, personal name, e-mail address or installed application name in the eight repository-bound files, also not split across constants. Only false positives: two ordinary English words that are also names of applications bundled with the operating system, used in their ordinary sense; the generic /private/var form describing macOS's link; the plan's own runtime word used as an identifier."
+ },
+ "starts": {
+  "bash_tool_calls": 104,
+  "framework_interpreter": {"total": 25, "all_with": "-I -S -B", "one_liners": 16, "reviewer_scripts": 6, "w2_validation_runner": 1, "w2_test_suite": 2},
+  "processes_started_by_reviewer_scripts": 0,
+  "utilities": "ls, cat, sed, grep (ugrep), head, tail, wc, shasum, stat, find, awk, cut, sort, uniq, paste, tr, xargs, date, touch, mkdir, mv, rm, rmdir, cp -c, du, mount, which, getconf, id, ps, pgrep",
+  "never_started": ["Node", "Git", "ldd", "codesign", "the observer", "tools/check_local.py", "the repository's unit tests"],
+  "left_running": "none (checked with ps and pgrep)"
+ },
+ "deviations": [
+  {"id": "DV-1", "what": "A shell loop ran one grep per file over 19,501 files under <local> (read only) and was stopped with TaskStop; the number of grep starts is unknown (at most 19,501). It wrote a list of file names into the session's scratch directory, outside <W3>; that file was removed at once; no process remained."},
+  {"id": "DV-2", "what": "An earlier shell loop started at most 400 grep starts (read only)."},
+  {"id": "DV-3", "what": "W2's validation runner failed at its own precondition because of the reviewer's outputs path; it was not started again, and the reproduction ran in the reviewer's own script."},
+  {"id": "DV-4", "what": "One Bash call was refused by the session's permission check before it ran; it held an interpreter start without -I -S -B; nothing started."},
+  {"id": "DV-5", "what": "Two of the reviewer's own runs failed on errors in the reviewer's scripts (a probe script and a one-liner); both are kept and counted."}
+ ],
+ "not_checked": [
+  "the worktree's Git state and the committed blobs at d3b622d6 (no Git started)",
+  "the documentation verifier on the README at its committed place (not among the allowed starts)",
+  "the reader's run command and the preserved cohort route on real records (no qualifying driver run exists)",
+  "the collector on R1's own complete log (the branch's full suite has not run on this host)"
+ ],
+ "evidence": {
+  "note": "Raw records under runs/ hold machine paths; they stay beside the clone and are not portable. This file and TOOLING-REVIEW-001.md use labels.",
+  "scripts": ["scripts/w3_static.py", "scripts/w3_validate.py", "scripts/w3_probe.py", "scripts/w3_choices.py", "scripts/w3_inventory_probe.py"],
+  "runs": ["runs/static-checks.json", "runs/retained-unittest-logs.txt", "runs/failed-runner-attempt/", "runs/validation-reproduction/RUN.json", "runs/validation-reproduction/CHECK.json", "runs/validation-reproduction/outputs/", "runs/probes/PROBES.json", "runs/probes-attempt-1-failed/", "runs/status-choices.json", "runs/inventory-probe/INVENTORY-PROBE.json", "runs/suite-at-w2/SUITE-RUN.txt", "runs/suite-in-clone/SUITE-RUN-IN-CLONE.txt"],
+  "sums": "SHA256SUMS.txt lists every file the reviewer wrote"
+ }
+}

@@ -1,0 +1,140 @@
+{
+ "schema": "ontokin.c271.p36-tooling-review/2",
+ "review": "TOOLING-REVIEW-002",
+ "phase": "C271-P36-macos-complete-routine-mr",
+ "stage": "S3",
+ "gate": "MR",
+ "director": "c271-p36-14f7f8b219db",
+ "reviewer": "W3 (tooling review 002), a Claude Code subagent in a fresh context with the session's model; it took no part in writing the tooling or in review 001",
+ "written_at_utc": "2026-11-27T18:35:00Z",
+ "labels": {
+  "<worktree>": "the C271 worktree, said by the brief to be clean at d3b622d61745259c3477bc94be0fb4da05c23c56 (no Git started)",
+  "<local>": "the place beside the clone",
+  "<W2>": "<local>/c271-p36/workers/W2",
+  "<W3>": "<local>/c271-p36/workers/W3-tooling-002",
+  "<tmp>": "the per-user temporary directory"
+ },
+ "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+ "verdict_summary": "Revision 2 meets TR-01 to TR-11 as the disposition requires; the four details W2 reports as different are sound; five nonmandatory findings (TR2-01 to TR2-05), none affecting MR's comparisons; the tooling can be committed and bound by the operational freeze.",
+ "governing_inputs": {
+  "disposition": {"path": "<local>/c271-p36/director/reviews/TOOLING-REVIEW-DISPOSITION-001.json", "sha256": "0271f9961984bfd11b0edb9a2d8439983db47d0aba39c2645f4b93218df0ed24"},
+  "review_001_md": {"path": "<local>/c271-p36/workers/W3-tooling-001/TOOLING-REVIEW-001.md", "sha256": "d9846ec801a8f2382e8c999fa5ed316404ccc43ac901228d4fc0faa6df7dcf9a"},
+  "review_001_json": {"path": "<local>/c271-p36/workers/W3-tooling-001/TOOLING-REVIEW-001.json", "sha256": "dee4ca4298fb124b9a5eddcb574f64ed5ec28cbfc4b158e474b3d2fc852e014b"},
+  "plan": "<worktree>/docs/engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md (sections 1, 5, 7, 9)"
+ },
+ "candidate": {
+  "digest_list": {"path": "<W2>/SHA256SUMS.txt", "sha256": "d9686c8d320ee2d705c658bffaaeeac9ac11b7bb57cdbcd53239adf3abf9ebde", "files_listed": 159, "all_verify": true, "files_not_listed": 0},
+  "target": "<worktree>/docs/engineering/localized-repair-c271/macos-routine-p36/tooling/",
+  "repository_bound": [
+   {"path": "tooling/unit_log_outcomes.py", "sha256": "0b5269402005584ffa8c0fe4510a1f1d728f7922414a0d38cf841851e29cc75b", "size_bytes": 85540, "mode": "0o644", "revision_1": "462022b5a857d0f50ea68afdccfddc3abdbc0cdfeb64a8a5b2e7a7dab906cc98"},
+   {"path": "tooling/readback_evidence.py", "sha256": "ad47b9931675eaeaa7584b42410a7952d7398b4ee039c4ebb58ca177f005c69d", "size_bytes": 47080, "mode": "0o644", "revision_1": "unchanged"},
+   {"path": "tooling/README.md", "sha256": "c96faa076a1224be1fe02e561e5dbc7c4d9719a5c5ca8416bc6681551d8fcd9a", "size_bytes": 29824, "mode": "0o644", "revision_1": "eada0ba989f66c21120e29f19e07f7635e7d43588da088c9077e32658cece902"},
+   {"path": "tooling/tests/w2_support.py", "sha256": "741800d05276642cda3fc2b7b318078c79a3b361b1e131265cd3c637dbca76b1", "size_bytes": 32143, "mode": "0o644", "revision_1": "5e68c93ec736f7115d7aee5795e412bdf79269585672e05534ce994865770b70"},
+   {"path": "tooling/tests/test_collect.py", "sha256": "21cfd2b968954c03ca26d968d66d83a8a02f782a78f275a09d9bdac81fa8991d", "size_bytes": 26998, "mode": "0o644", "revision_1": "2335946effe632bf78f5fb05aedd9f0c079ac7031b875a33747c81f3111d4ac7"},
+   {"path": "tooling/tests/test_compare.py", "sha256": "e0e7627a56eaeb08e24d0161faaeb5ca86a16287ca1c8d1b0c840222c109cd44", "size_bytes": 28569, "mode": "0o644", "revision_1": "66296e0bc772848f9e240060e7aa2ef954fb490548fc3a555a4ffc62796bae01"},
+   {"path": "tooling/tests/test_readback_evidence.py", "sha256": "3c1350b24a86bcd1163ced2d888e9e9a5e6628474ee975b3f558b4d8ef02656d", "size_bytes": 10452, "mode": "0o644", "revision_1": "unchanged"},
+   {"path": "tooling/tests/test_zz_hygiene.py", "sha256": "585a7bf19d005466f96b1b26e52138a8d9f2fa34d727016fcfde14db114c6d63", "size_bytes": 10177, "mode": "0o644", "revision_1": "1594d614c0cacaa2e25a2a07a377c275bb24d2f03748b41c4ad0ed2c6df5c7fd"}
+  ],
+  "also_reviewed": [
+   {"path": "<W2>/AUTHOR-NOTES.md", "sha256": "9dec5fff0cb0d5f0eb4c2783fdcb9832fec2d0dafcbb43129aca411650e73a4a"},
+   {"path": "<W2>/test-runs/r2/TEST-RUNS.json", "sha256": "103ee521cce0aa664a02dc177e4c83e6567c489d31bbeafc7d7f1b638d0ce38e"},
+   {"path": "<W2>/test-runs/r2/AGAINST-REJECTED-001-ANALYSIS.json", "sha256": "49a1b8ce6f597f4d1a6795ebe4b126ce7aca992583c30a8aa5af4930b09dae21"},
+   {"path": "<W2>/validation/run-003/RUN.json", "sha256": "c828925713482b2fd7d18fdf1784c1a1a5d33632dd8f3b0ad51726c76b4691a6"},
+   {"path": "<W2>/validation/run-003/CHECK.json", "sha256": "cfdd78d5275549f6cb664de9f9f739474c1a352b26e250412750669d973fa422"},
+   {"path": "<W2>/validation/scripts-003/run_validation.py", "sha256": "feae28e0c24f4fa7539c4b95ce9d1877b7bfe1396b5659b3712dd63908373484"},
+   {"path": "<W2>/rejected-001/SHA256SUMS.txt", "sha256": "c7ec20ca970e6bdf2e668a8df98519af26cbb5cf78186b7dd827979f08cb8d29", "note": "the list review 001 checked; its eight files verify and equal review 001's table"}
+  ]
+ },
+ "requirements": [
+  {"id": "TR-01", "mandatory_in_review_001": true, "met": true, "evidence": "unit_log_outcomes.py:1174-1266 and :1401-1418: complete statement (outcome, occurrences, own events in order, failing and skipped subtests in order), one declared form per statement, matches only on exact equality, observed and differences given, revision 1's form refused; 24 adversarial probes (A01 to A24) including D-18's two tests in MI's retained log; W2's 9 TR-01 tests fail against rejected-001 (5 on the verdict, 4 on the missing observed or differences)"},
+  {"id": "TR-02", "met": true, "evidence": "unit_log_outcomes.py:941-969; ID=missing, ID=OUTCOME (exactly one occurrence), ID=OUTCOME*N; malformed rows refuse (USAGE); probes E01 to E03"},
+  {"id": "TR-03", "met": true, "evidence": "unit_log_outcomes.py:1301-1310 and :1487-1488; reports_different in the record and the exit predicate; probe R01"},
+  {"id": "TR-04", "met": true, "evidence": "unit_log_outcomes.py:1370-1372; probe N01 over seven transitions"},
+  {"id": "TR-05", "met": true, "evidence": "unit_log_outcomes.py:667-692: two or more candidates refuse (AMBIGUOUS) whatever their values; the remaining case W2 states (a bare status printed right after a start) is TR2-01, not mandatory; stale class docstring TR2-02", "different_detail_judged": "sound for MR (no undetected misread with zero skips and expected failures in the footer; baseline logs hold no status-shaped noise line); a cheap correction is recommended"},
+  {"id": "TR-06", "met": true, "evidence": "unit_log_outcomes.py:115, :117, :1052-1137; component boundaries; only tempfile's default name shape masked; masked_temporary_names per entry; probes M01, A19; validation: masking hides no real difference", "different_detail_judged": "sound: masking only the default tmp prefix errs on the safe side and is stated (README.md:225-232)"},
+  {"id": "TR-07", "met": true, "evidence": "tests/test_zz_hygiene.py:39, :49-50; one run in an APFS clone of the worktree with the tooling at its committed place: 90 tests OK; the strings derived for the real worktree place occur in no file", "different_detail_judged": "closed by W3's clone run"},
+  {"id": "TR-08", "met": true, "evidence": "unit_log_outcomes.py:113, :334-346; README.md:78-81; probe L01 (dotted _FailedTest and ModuleSkipped)"},
+  {"id": "TR-09", "met": true, "evidence": "README.md:33-40 corrected; the binding of cohort_bindings is carried to S6 by the disposition"},
+  {"id": "TR-10", "met": true, "evidence": "met outside the tooling: the Director's name-status input (a30316782f36cc029750769ab41dd65ee6da3ac6f72d636988b09beca5ee59a6) lists ten documentation and record paths, none under tests/, tools/, ontokin/, prototypes/, fixtures/, schemas/ or examples/; AUTHOR-NOTES Q-6 closed"},
+  {"id": "TR-11", "met": true, "evidence": "unit_log_outcomes.py:816-831 and :923-925; probe D01 against tools/check_local.py's own Path.read_text reading; driver_reading equal between revisions on all 130 real logs read"}
+ ],
+ "different_details_reported_by_w2": [
+  {"finding": "TR-06", "detail": "masks only tempfile's default tmp prefix", "judgement": "sound"},
+  {"finding": "TR-01", "detail": "form declared per attribution, not per file", "judgement": "sound: one form applies to each whole statement (probe A19)"},
+  {"finding": "TR-07", "detail": "shown only at a copy of the committed place", "judgement": "closed: the suite passes in an APFS clone of the worktree at the committed place"},
+  {"finding": "TR-05", "detail": "a status printed unbuffered right after a start is still read as the status (stated in the README)", "judgement": "acceptable for MR, not mandatory; see TR2-01"}
+ ],
+ "findings": [
+  {"id": "TR2-01", "mandatory": false, "file": "tooling/unit_log_outcomes.py; tooling/README.md", "line": "unit_log_outcomes.py:636-639; README.md:97-100 and 167-169",
+   "statement": "A bare status token that a test prints with a line end right after its own start is taken as the status without looking at the window, and unittest's real status then stands alone as noise. Probe S03: a printed skip replaces the real skip reason; probe S04: a passing and a skipped test swap outcomes, every count equal, exit 0. The README's reason 'nothing in the file tells the two apart' does not hold: the real status remains as a status-shaped noise line. In the 130 real logs that both revisions read (101,150 starts), no noise line is a status token or ends with one, so a refusal would cost nothing there. No effect expected on MR: with zero skips and zero expected failures in the footer, every such misread changes a count or a listing entry and is refused (probe S05); R1 must and R2 is expected to have zero of each, and the baseline logs hold no such line.",
+   "required_change": "Recommended, not required: refuse (AMBIGUOUS) when, after a direct status, a noise line before the next runner line is a status token or ends with one, or record such lines in the output so that the freeze's checker can require none; correct the README sentence."},
+  {"id": "TR2-02", "mandatory": false, "file": "tooling/unit_log_outcomes.py; tooling/README.md", "line": "unit_log_outcomes.py:464-468; README.md:201",
+   "statement": "The Progress class docstring still states revision 1's rule ('Exact candidates come first; candidates with different statuses refuse the log'), contradicting the corrected module docstring (:43-46) and plan_direct (:667-692); the disposition asked for the docstring to be corrected. README.md:201 defines different_outcome as 'another outcome not covered above, for example skipped and then error', while line 199 places such an entry in new_not_passing as well.",
+   "required_change": "Recommended: correct both statements."},
+  {"id": "TR2-03", "mandatory": false, "file": "tooling/unit_log_outcomes.py; tooling/README.md", "line": "unit_log_outcomes.py:1188-1201, 532-549, 605-611; README.md:130-131, 244-246",
+   "statement": "Repeated IDs: (1) a statement joins the events and subtests of every occurrence, so for an ID that runs more than once it does not fix which occurrence holds which event (probe A14: two distributions both match); (2) a later run of the same ID that starts with a direct FAIL, ERROR or skip is read as a further event of the earlier run, and the log is refused (probe A24), fail-closed; AUTHOR-NOTES section 7 states (2), the README does not and says a twice-run ID keeps both runs. No effect on MR: the retained baseline and main logs repeat no ID, D-18's tests run once, and occurrences is compared.",
+   "required_change": "Recommended: state both limits in the README, or state events per occurrence."},
+  {"id": "TR2-04", "mandatory": false, "file": "tooling/unit_log_outcomes.py; tooling/README.md", "line": "unit_log_outcomes.py:1222-1243; README.md:234-258",
+   "statement": "A statement whose outcome is passed (probe A16) or whose outcome contradicts its own events (probe A23) is accepted. Harmless, since nothing is exempt and a contradictory statement never matches, but the disposition describes an attribution as the test's not-passing record.",
+   "required_change": "Recommended: refuse a statement whose outcome does not follow from its own events and subtests, or state the rule in the README."},
+  {"id": "TR2-05", "mandatory": false, "file": "tooling/tests/test_collect.py; tooling/tests/test_compare.py", "line": "whole files",
+   "statement": "No test pins the undetected remaining case of TR-05 (probes S03, S04), the refusal of a repeated ID (probe A24) or a removed subtest (probe A04). Each behaviour is right or documented, but nothing would show a change.",
+   "required_change": "Recommended: add tests that pin these behaviours."}
+ ],
+ "observations": [
+  "reports_different compares report outcomes only; a difference only in two read errors is not listed (probe R01); not reachable in MR, where main's report steps passed with readable reports.",
+  "TR-05's stricter rule refuses any window with two candidates, so R1's log would be refused if a test printed a line ending with a status token (for example a word ending in 'ok') between a start and its status; none of the 130 real logs has one; AUTHOR-NOTES Q-8 governs that case as a finding of the tooling.",
+  "A statement states first lines only, by design (probe A20)."
+ ],
+ "checks": {
+  "regression_on_real_logs": {"script": "scripts/w3_regression.py", "record": "runs/regression/REGRESSION.json", "logs": 145, "both_parsed": 130, "both_refused_same_rule": 15, "refusals": {"FOOTER": 2, "PARSE": 13}, "state_differs": 0, "fields_differ": 0, "driver_reading_differs": 0, "tests_started": 101150, "ambiguous_refusals_in_revision_2": 0, "noise_lines_that_are_a_status_token": 0, "noise_lines_ending_with_a_status_token": 0},
+  "probes": {"script": "scripts/w3_probes.py", "record": "runs/probes/PROBES.json", "total": 34, "as_predicted": 34, "process_creation_events": 0},
+  "suite_runs": [
+   {"name": "from <W2>/tooling", "log": "runs/suite-w2/TEST-RUN-W2.txt", "log_sha256": "544562c3ea71caaca073c99de01a6eb20b69d02b61ae64e028be7fa658751f9e", "result": "Ran 90 tests, OK", "skipped": 0, "process_creation_events": 0, "exit": 0},
+   {"name": "against a copy of rejected-001 (revision 2's tests copied byte-equal into <W3>, W2_TOOLING_UNDER_TEST set)", "log": "runs/suite-against-rejected/TEST-RUN-AGAINST-REJECTED-001.txt", "log_sha256": "273b5810dea257b7ae76940f0a982da3d9b7054239fde5f731be7900cbaa5524", "result": "Ran 90 tests, FAILED (failures=18, errors=8)", "tr01_to_tr06_tests": 18, "tr01_to_tr06_failing": 18, "analysis": "runs/suite-against-rejected/ANALYSIS.json", "exit": 1},
+   {"name": "in an APFS clone of <worktree> without .git and .venv, tooling at its committed place, clone removed afterwards", "log": "runs/suite-clone/TEST-RUN-CLONE.txt", "log_sha256": "a7141d5cd2f0b93ef276880048d5b7ccf5526f1884c578cf984f8d1d3d788008", "result": "Ran 90 tests, OK", "skipped": 0, "process_creation_events": 0, "record": "runs/suite-clone/CLONE-RUN.json", "exit": 0}
+  ],
+  "validation": {"runner": "<W2>/validation/scripts-003/run_validation.py (feae28e0...)", "run_directory": "runs/validation-run-003-rerun", "tool_commands": 28, "exit_codes": {"0": 20, "1": 6, "2": 2}, "check_script": "scripts/w3_validation_check.py", "record": "runs/VALIDATION-CHECK.json", "checks_agree": 12, "checks_total": 12,
+   "reproduces_integration_json": {"resolved_unchanged": 1, "default_unchanged": 307, "default_by_outcome": {"error": 230, "failure": 77}, "five_difference_lists_empty": true, "tests": [4740, 4989], "steps_different": [["documents", "failed", "passed"]], "pending_equal": true, "skips_equal": true},
+   "not_in_the_record": {"added_ids": 249, "added_all_passed": true, "removed_ids": 0, "reports_different": 0, "different_skip_reason": 0, "different_occurrences": 0, "driver_reading_matches_summary": true, "duplicate_test_ids": 0},
+   "masking": {"resolved_pair_raw_differences": 0, "default_pair_raw_differences": 3, "explained_by_run_paths_and_tempfile_names_only": 3, "masked_names": 6, "all_tempfile_shape": true, "masked_names_in_both_runs": 0, "hides_a_real_difference": false},
+   "readback_reader_on_mh_cohort": {"state": "READ", "checks": 144, "passed": true}},
+  "privacy": {"script": "scripts/w3_privacy.py", "record": "runs/privacy/PRIVACY.json", "terms_derived": 255, "files": 8, "private_matches": 0, "false_positives": ["three ordinary English words that are also application names, used in their ordinary sense", "the plan's JavaScript runtime word as an identifier and an AST variable", "the generic /private/var form of macOS's link", "the shebang", "a synthetic /tmp component name in two tests"]},
+  "reused_mh_files": [
+   {"path": "docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/FAILURE-CAPTURE.md", "sha256": "f387fb3ec0ed306366f6d3f22820ec344f1ac843008775475258c5de9634c99c", "size_bytes": 13147, "mode": "0o644", "equals_readme": true, "equals_mh_records": true},
+   {"path": "docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py", "sha256": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f", "size_bytes": 29076, "mode": "0o644", "equals_readme": true, "equals_mh_records": true},
+   {"path": "docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/discover_inventory.py", "sha256": "980c80883f3106706a3ecd3b03e908efe31a5c572a67a0d71dc650f85cfb695e", "size_bytes": 35270, "mode": "0o644", "equals_readme": true, "equals_mh_records": true},
+   {"path": "docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/audit_numeric.py", "sha256": "9140379c61bc70f29939bd7b216ef5ca5e2f5e6cab5b4a452e50018651bac4e3", "size_bytes": 40667, "mode": "0o644", "equals_readme": true, "equals_mh_records": true}
+  ],
+  "reused_mh_files_note": "computed on the worktree's files; the brief states the worktree is clean at d3b622d6; no Git started, so the committed blobs were not compared"
+ },
+ "starts": {
+  "framework_interpreter": {"total": 54, "direct": 26, "started_by_w2_runner": 28, "every_start_flags": "-I -S -B",
+   "direct_breakdown": {"one_liners": 16, "w3_scripts": 6, "suite_runs": 3, "w2_runner": 1}},
+  "bash_tool_calls": 70,
+  "shell_utilities": "ls, cat, sed, grep, head, tail, wc, shasum, stat, find, awk, cut, sort, uniq, tr, diff, du, mount, getconf, id, ps, tee, date, basename, dirname, mkdir, touch, sleep, cp (28 cp -c for the clone), mv, rm, rmdir",
+  "never_started": ["Node", "Git", "ldd", "codesign", "otool", "the observer", "tools/check_local.py", "the repository's unit tests", "child agents"],
+  "running_at_the_end": 0
+ },
+ "deviations": [
+  {"id": "DV-1", "what": "The first start of scripts/w3_probes.py stopped on an error of mine: probe A14's first design hit the repeated-ID refusal that A24 now records. Its partial outputs are kept in runs/probes-attempt-1-failed/; the corrected script ran once into a fresh directory. Both starts are counted."},
+  {"id": "DV-2", "what": "One early read-only pipeline held a redirection to a nonexistent path; the shell reported an error; nothing was written."}
+ ],
+ "reads_beyond_the_brief_list": [
+  "MI's retained 0.1.0 driver module log under <local>/c271-p33/checks/final-003/ (probe A22), read only",
+  "review 001's runs/status-choices.json and the 145 logs it lists (regression), read only",
+  "the Git configuration file and the listings of the application and package folders (privacy derivation); nothing from them is recorded"
+ ],
+ "not_checked": [
+  "the documentation verifier on the README (not an allowed start)",
+  "the committed blobs at d3b622d6 (no Git started)",
+  "the reader's run command and the preserved route on real records (no qualifying run exists)",
+  "R1's and R2's own logs",
+  "a run at the real worktree's committed place (only an APFS clone; nothing may be written into the worktree)"
+ ],
+ "records": {
+  "portable": ["TOOLING-REVIEW-002.md", "TOOLING-REVIEW-002.json", "scripts/w3_regression.py", "scripts/w3_probes.py", "scripts/w3_suite_analysis.py", "scripts/w3_validation_check.py", "scripts/w3_privacy.py"],
+  "raw_beside_the_clone": "runs/ holds machine paths in its raw records and is not portable",
+  "digest_list": "SHA256SUMS.txt (every file written by W3 under <W3>)"
+ }
+}

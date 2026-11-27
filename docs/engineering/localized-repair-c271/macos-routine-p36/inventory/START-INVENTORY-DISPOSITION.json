@@ -1,0 +1,56 @@
+{
+  "schema": "ontokin.c271.p36-inventory-disposition/1",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "stage": "S2",
+  "director": "c271-p36-14f7f8b219db",
+  "recorded_at_utc": "2026-11-27T16:51:01Z",
+  "inventory": {
+    "report": "workers/W1-inventory/START-INVENTORY.md",
+    "report_sha256": "a70665a9063846580ad32504ce2e1ab3e8d2de5b5ed7fc52ec11e6c24911b828",
+    "list": "workers/W1-inventory/START-INVENTORY.json",
+    "list_sha256": "76349a8280f6cbd2e0ef100eff59f8de71c107b2a089bf291cdcd9d2a8842630",
+    "sums": "workers/W1-inventory/SHA256SUMS.txt",
+    "sums_sha256": "020f27e16a0aadb1d08b1f1bec1f9cc0629fe78e4a6638170d47ba90ee891e67",
+    "worker": "W1, a Claude Code subagent in a fresh context with the session's model; it took no part in any other stage",
+    "director_checks": "every listed digest verifies; the six verdicts read against the cited sites of tools/check_local.py, tools/doctor_local.py:737-741, tests/test_doctor_local.py:1077-1090 and tests/test_bootstrap_local.py:1098-1120"
+  },
+  "accepted": "A2 met: every start of both run kinds listed by reading, with the six verdicts and their limits",
+  "decisions_for_the_freeze": [
+    {
+      "id": "D-P1",
+      "finding": "verdict 2(a): the real doctor in two unit tests starts the first node on PATH; on this host that is the package manager's Node, in the same directory as Git's lfs helper and python3.12",
+      "decision": "The freeze fixes PATH for R1 and R2 so that no Node other than the pinned runtime is reachable by name. The default is MH's declared PATH, /usr/bin:/bin. The freeze author establishes by reading the expected outcome of every PATH-sensitive start (W1's U-14, U-15, U-17, U-25, U-28, U-30, DRV-01 to DRV-04) under that PATH. If a test would then differ from main's baseline outcome only because python3.12 or Git's lfs helper cannot be found, the freeze puts first on PATH a directory beside the clone that holds only symbolic links to exactly those programs, each bound by its target's path and SHA-256. It never links node. The review checks both the reading and the links."
+    },
+    {
+      "id": "D-P2",
+      "finding": "the baseline records that no PYTHON*, PIP_* or GIT_* variable was set by its caller, and records no other variable; the Director's shell holds such variables (among them GIT_EDITOR, PYTHONDONTWRITEBYTECODE and NODE_USE_SYSTEM_CA) and many of the application's own",
+      "decision": "R1 and R2 start from /usr/bin/env -i with a declared environment that the freeze lists in full, holding no PYTHON*, PIP_*, GIT_*, NODE_* or DYLD_* variable. The freeze author establishes by reading which variables the routine's code reads (os.environ and os.getenv sites), and keeps those that main's baseline would have had (HOME, USER, LOGNAME and TMPDIR among them), with values from this host. TMPDIR is the resolved temporary directory in R1 and macOS's default form in R2. The difference from the baseline's unrecorded environment is stated as a limit."
+    },
+    {
+      "id": "D-P3",
+      "finding": "verdict 6: the doctor's Git children read the user's global Git configuration, which nothing binds",
+      "decision": "The freeze records that file's SHA-256 and size as host state, never its content, and states the limit."
+    },
+    {
+      "id": "D-P4",
+      "finding": "verdict 6: a driver started without -B would write bytecode into the worktree and make R1 refuse",
+      "decision": "Both runs start the driver as <worktree>/.venv/bin/python -B tools/check_local.py; the freeze checks the worktree, the .venv and the framework tree for bytecode before and after each run."
+    },
+    {
+      "id": "D-P5",
+      "finding": "verdict 3(a): twelve isolated starts without -B import only standard-library modules whose cached bytecode exists; dynamic imports are the residual",
+      "decision": "The freeze compares the Python installation inventory, through the observer's python-inventory command (which starts nothing), with HOST's before R1, between R1 and R2, and after R2. A difference is a finding."
+    },
+    {
+      "id": "D-P6",
+      "finding": "verdict 6: MC16 needs <output> and <tmp> on different volumes (I-05)",
+      "decision": "The freeze records both device numbers; the evidence lies on the clone's volume (device 16777244 at 15:49Z) and the temporary directory on the system volume (16777234)."
+    },
+    {
+      "id": "D-P7",
+      "finding": "W1's counts: per run 4 uname and 4 file starts; driver Git 49 in R1 and 29 in R2; the provider adds about 60 Git reads in R1; Git's own descendants not enumerated",
+      "decision": "The freeze carries these as the expected order of magnitude of starts that are recorded but not counted as bounded starts (MR plan section 8); the Node and bounded-start totals stay 4 and 1 for MR."
+    }
+  ],
+  "not_changed": "the MR plan and the declaration; D-P1 to D-P7 apply section 4's findings to the freeze, as the plan provides"
+}
