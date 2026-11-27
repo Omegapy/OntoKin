@@ -1,0 +1,72 @@
+{
+  "schema": "ontokin.c271.p36-closing/1",
+  "task": "C271",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "owner": "c271-p36-14f7f8b219db",
+  "purpose": "The phase's closing record: the push of its outcome records commit, the checks of that commit's tree, the checkpoint comments, what stays retained, and the release of ownership. It completes acceptance A11. Git reveals the commit that carries this record; its own push is observed in the final report.",
+  "outcome_records_commit": {
+    "commit": "0bde7688fc81a0a62a6921df7ed7b7edf1a39ccb",
+    "tree": "1b237f1b39e69a50643b3d297ba60e0273c0ea13",
+    "parent": "4ca781429c5411c67c0965bc69306b42c6cc74ad"
+  },
+  "bound_commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
+  "gate_result": "MR not met: stopped at S6 by FZ-01, an implementation blocker; R03 stays not_done",
+  "push_observation": {
+    "command": "git push origin work/c271-missing-import-digest-control (no force), then git ls-remote --heads origin and the GitHub API's commit tree",
+    "observed_at_utc": "2026-11-27T22:43:13Z",
+    "update": "4ca78142..0bde7688, fast-forward",
+    "remote_heads": {
+      "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "refs/heads/work/c271-missing-import-digest-control": "0bde7688fc81a0a62a6921df7ed7b7edf1a39ccb"
+    },
+    "remote_tree": "1b237f1b39e69a50643b3d297ba60e0273c0ea13, equal to the local tree"
+  },
+  "checks_of_final_tree": {
+    "started_at_utc": "2026-11-27T22:44:34Z",
+    "ended_at_utc": "2026-11-27T22:44:36Z",
+    "tree": "the clean checkout at 0bde7688",
+    "workflow": {
+      "result": "passed",
+      "observed": "Workflow structure passed (13 tasks).",
+      "output_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+    },
+    "documentation": {
+      "result": "passed",
+      "documents": 1767,
+      "local_links": 7024,
+      "failures": 0,
+      "output_sha256": "98d3f4c1867370ea1d7f6e5b8c89b0c42f0a3050da6c82d5e8aac06f1d3cee53"
+    },
+    "whitespace": "git diff --check 4ca78142 HEAD passes",
+    "recorded_failure": "the records check before the commit first failed on 13 local links (twelve to the freeze review's own outputs, which the first copy left out, and one to this record); the copies were rebuilt, and the worker log records it"
+  },
+  "checkpoint_comments": {
+    "pull_request_274": {
+      "id": 7229569554,
+      "created_at_utc": "2026-11-27T22:43:50Z",
+      "url": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7229569554"
+    },
+    "issue_273": {
+      "id": 7229569916,
+      "created_at_utc": "2026-11-27T22:43:52Z",
+      "url": "https://github.com/Omegapy/OntoKin/issues/273#issuecomment-7229569916"
+    },
+    "body_sha256": "06e5a78d4e17544d60e81b6e812419c46fffd5a64761cc5712271273de56fc5a",
+    "readback": "both posted bodies read back byte-identical to the body"
+  },
+  "github_state_after": {
+    "pull_request_274": "open, draft, head 0bde7688, MERGEABLE and CLEAN",
+    "issue_273": "open",
+    "observed_at_utc": "2026-11-27T22:44Z"
+  },
+  "retained": [
+    "the exact records beside the clone under ../OntoKin-local/c271-p36/ (workers, Director's records, the S5 attempt), unchanged, with EXACT-RECORDS.json's digests",
+    "MP's prepared inputs under ../OntoKin-local/c271-macos/ and ../OntoKin-local/c271-p34/, and MH's records under ../OntoKin-local/c271-p35/, unchanged at their paths and modes",
+    "HOST 858ef72a..., a record of this phase only: it binds commit B and boot C90010BA, and no run consumed it; the next MR attempt observes again at its corrected commit"
+  ],
+  "fixed_state": "MR-PLAN section 6's fixed state ended with the outcome records commit. The rules that the next MR attempt needs (one boot, -B, no Finder on the prepared trees, the language and region settings unchanged) start again with its observation plan.",
+  "processes": "no process started by the phase remains (a process listing at 22:44:36Z, context only, showed no driver, observer or provider process)",
+  "ownership": "Owner c271-p36-14f7f8b219db is released with the push of this record. It makes no further write. The next phase declares its own owner.",
+  "unknown_operations": [],
+  "next_action": "The owner selects the next phase. Recommended: a correction for FZ-01, deciding under contract section 7 and MC19 how a derived workspace treats tracked paths that the driver does not copy, with controls on a tree that tracks such paths; then MR again at the corrected commit with a new observation plan, HOST and freeze. R04 and R05 stay separate phases."
+}
