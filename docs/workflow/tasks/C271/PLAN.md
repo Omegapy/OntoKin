@@ -707,3 +707,17 @@ Recorded failures and deviations:
 - the freeze reviewer's one interpreter start that relied on `PYTHONDONTWRITEBYTECODE=1` instead of `-B`.
 
 The [outcome](../../../engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json) lists each. Each push was without force and read back. The next phase, not begun here, corrects how a derived workspace treats tracked paths that the driver does not copy. MR then runs again at the corrected commit, and R04 and R05 follow, each a separate phase.
+
+## P37 correction of the derived workspace's source check — November 27, 2026
+
+Local mode, on the owner's selection ([phase declaration](../../../engineering/localized-repair-c271/derived-workspace-p37/PHASE.json)). Director `c271-p37-08beec34eb0a`. The [correction plan](../../../engineering/localized-repair-c271/derived-workspace-p37/CORRECTION-PLAN.md) fixes the stages, the workers and their files, the checks and the records.
+
+Ordered steps:
+1. Declare and push.
+2. Measure the derived route's Git timing (FZ-02) in a workspace that the driver copies from the real tree.
+3. Have an independent author, W1, decide the rule and implement it, with focused tests.
+4. Have an independent control author, W2, freeze real-Git controls for the corrected route.
+5. Run the focused tests, the frozen controls and the existing modules of the changed files; commit the candidate C and push it.
+6. Run the complete ordinary routine at C once, with `PATH` fixed so that no Node can start, and list C's default inventory additions.
+7. Have a fresh reviewer, W3, review C and its evidence.
+8. Record, push without force, read the push back, comment once on PR274 and issue273, and stop.

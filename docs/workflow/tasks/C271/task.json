@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "in_progress",
-  "owner": "c271-p36-14f7f8b219db",
+  "owner": "c271-p37-08beec34eb0a",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -1802,27 +1802,24 @@
       "scope": "gate MR not met: stopped at S6 with FZ-01, an implementation blocker; no routine ran; R03 stays not_done"
     }
   },
-  "next_action": "C271-P36 stopped gate MR of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) at stage S6, before any routine run, with an implementation blocker (FZ-01): in a qualifying run at the bound commit 4ca781429c5411c67c0965bc69306b42c6cc74ad, the provider's derived source check refuses the driver's isolated workspace, because seven tracked .claude/ entries are not copied into it. The observation plan and HOST 858ef72a were accepted (M0 and M1: one Git and one Node start), and the operational freeze was rejected for this reason alone. R03 stays not_done. The next phase needs the owner's selection: the recommended one corrects how a derived workspace treats tracked paths that the driver does not copy, under contract section 7 and MC19, with controls on a tree that tracks such paths, before MR is attempted again at the corrected commit. R04 and R05 stay separate phases.",
+  "next_action": "C271-P37-derived-workspace-correction is declared and in progress: the correction of FZ-01, the implementation blocker that stopped gate MR at its operational freeze. An independent author decides, under P05 section 3 and MC19 of the adopted contract ontokin.current-host-readback/0.2.0, how the provider's derived source check treats tracked paths that the driver does not copy into its isolated workspace, and whether that needs an amendment; implements it in tools/check_local.py and the 0.2.0 provider with one definition of the copied set; an independent author freezes real-Git controls on a fixture tree that tracks such paths; the Director first measures the derived route's Git timing (FZ-02) at the real tree's scale, runs the focused tests, the controls and the complete ordinary routine at the candidate commit, and a fresh reviewer reviews the candidate. It does not run MR. Nothing is integrated. Then MR again at the corrected commit, with a new observation plan, HOST and freeze.",
   "session_phase": {
-    "schema": "ontokin.c271.p36-macos-complete-routine/1",
+    "schema": "ontokin.c271.p37-derived-workspace-correction/1",
     "task": "C271",
-    "phase": "C271-P36-macos-complete-routine-mr",
-    "owner": "c271-p36-14f7f8b219db",
-    "declared_at_utc": "2026-11-27T15:46:53Z",
+    "phase": "C271-P37-derived-workspace-correction",
+    "owner": "c271-p37-08beec34eb0a",
+    "declared_at_utc": "2026-11-27T23:16:33Z",
     "execution_mode": "local",
     "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-    "starting_branch_head": "47cc579fa28e23d3424a46c72fd80a71d73440dc",
+    "starting_branch_head": "07d4e3c31e31054b147b586569f29cff3d945d5b",
     "branch": "work/c271-missing-import-digest-control",
     "worktree": "../OntoKin-worktrees/c271",
     "pull_request": 274,
     "scope_issue": 273,
-    "record": "docs/engineering/localized-repair-c271/macos-routine-p36/PHASE.json",
-    "plan": "docs/engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md",
-    "session_checkpoint": "docs/workflow/tasks/C271/P36-SESSION.md",
-    "status": "stopped_at_s6_implementation_blocker",
-    "stopped_at_utc": "2026-11-27T22:35:30Z",
-    "bound_commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
-    "outcome": "docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json"
+    "record": "docs/engineering/localized-repair-c271/derived-workspace-p37/PHASE.json",
+    "plan": "docs/engineering/localized-repair-c271/derived-workspace-p37/CORRECTION-PLAN.md",
+    "session_checkpoint": "docs/workflow/tasks/C271/P37-SESSION.md",
+    "status": "declared_correction_pending"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8768,6 +8765,100 @@
         "p35_prior_current_fields",
         "p35_fields_index",
         "p36_prior_current_fields"
+      ]
+    }
+  },
+  "p37_prior_current_fields": {
+    "recorded_at_utc": "2026-11-27T23:16:33Z",
+    "purpose": "The current values that the C271-P37 declaration replaced, kept unchanged as P36's closing state.",
+    "owner": "c271-p36-14f7f8b219db",
+    "next_action": "C271-P36 stopped gate MR of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) at stage S6, before any routine run, with an implementation blocker (FZ-01): in a qualifying run at the bound commit 4ca781429c5411c67c0965bc69306b42c6cc74ad, the provider's derived source check refuses the driver's isolated workspace, because seven tracked .claude/ entries are not copied into it. The observation plan and HOST 858ef72a were accepted (M0 and M1: one Git and one Node start), and the operational freeze was rejected for this reason alone. R03 stays not_done. The next phase needs the owner's selection: the recommended one corrects how a derived workspace treats tracked paths that the driver does not copy, under contract section 7 and MC19, with controls on a tree that tracks such paths, before MR is attempted again at the corrected commit. R04 and R05 stay separate phases.",
+    "session_phase": {
+      "schema": "ontokin.c271.p36-macos-complete-routine/1",
+      "task": "C271",
+      "phase": "C271-P36-macos-complete-routine-mr",
+      "owner": "c271-p36-14f7f8b219db",
+      "declared_at_utc": "2026-11-27T15:46:53Z",
+      "execution_mode": "local",
+      "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "starting_branch_head": "47cc579fa28e23d3424a46c72fd80a71d73440dc",
+      "branch": "work/c271-missing-import-digest-control",
+      "worktree": "../OntoKin-worktrees/c271",
+      "pull_request": 274,
+      "scope_issue": 273,
+      "record": "docs/engineering/localized-repair-c271/macos-routine-p36/PHASE.json",
+      "plan": "docs/engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md",
+      "session_checkpoint": "docs/workflow/tasks/C271/P36-SESSION.md",
+      "status": "stopped_at_s6_implementation_blocker",
+      "stopped_at_utc": "2026-11-27T22:35:30Z",
+      "bound_commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
+      "outcome": "docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json"
+    }
+  },
+  "p37_derived_workspace_correction": {
+    "phase": "C271-P37-derived-workspace-correction",
+    "owner": "c271-p37-08beec34eb0a",
+    "record": "docs/engineering/localized-repair-c271/derived-workspace-p37/PHASE.json",
+    "plan": "docs/engineering/localized-repair-c271/derived-workspace-p37/CORRECTION-PLAN.md",
+    "session_checkpoint": "docs/workflow/tasks/C271/P37-SESSION.md",
+    "declared_at_utc": "2026-11-27T23:16:33Z",
+    "status": "declared_correction_pending",
+    "owner_direction": [
+      {
+        "date": "2026-11-27 (UTC)",
+        "question": "Should I start that correction phase now, or leave it for later?",
+        "reply": "Start the correction",
+        "how_received": "selected by the owner in this session, as the reply to the question that closed C271-P36",
+        "scope_of_selection": "the correction of FZ-01 recommended by gate MR's outcome: how the driver's workspace treats tracked paths it does not copy, with tests on a tree that has such paths; MR again afterwards"
+      }
+    ],
+    "blocker_corrected": "FZ-01 of gate MR (docs/engineering/localized-repair-c271/macos-routine-p36/reviews/FREEZE-REVIEW-DISPOSITION-001.json)",
+    "downloads": "none needed and none approved",
+    "parent_complete": false
+  },
+  "p37_fields_index": {
+    "recorded_at_utc": "2026-11-27T23:16:33Z",
+    "purpose": "Extends p36_fields_index, which stays unchanged: p37_derived_workspace_correction joins the current-state fields of task.json, and p36_macos_routine becomes history.",
+    "current_state_fields": {
+      "task.json": [
+        "status",
+        "blocked_reason",
+        "owner",
+        "branch",
+        "scope_issue",
+        "requirements",
+        "plan",
+        "checks",
+        "completion",
+        "next_action",
+        "session_phase",
+        "execution_mode",
+        "execution_mode_record",
+        "delivery_reconciliation",
+        "p37_derived_workspace_correction"
+      ],
+      "CURRENT.json": [
+        "schema_version",
+        "project",
+        "latest_task",
+        "active_task",
+        "execution_mode",
+        "observed_main",
+        "snapshot_date",
+        "next_action",
+        "checkpoint",
+        "unfinished",
+        "boundaries",
+        "delivery_policy",
+        "history"
+      ]
+    },
+    "now_history": {
+      "task.json": [
+        "p36_macos_routine",
+        "p36_prior_current_fields",
+        "p36_fields_index",
+        "p37_prior_current_fields"
       ]
     }
   }

@@ -723,3 +723,18 @@ Gate MR is not met. It stopped at stage S6, before any routine run, with an impl
 - **Open for the R03 review:** MI's per-module records show 93 of the branch's own tests not passing on this host, in five Linux-route modules. The freeze attributed 91 of them by exact record, which is not an acceptance.
 - **Unchanged:** R01/R02 remain done and R03–R05 not_done.
 - **Next:** a correction phase for FZ-01, then MR again at the corrected commit, each needing the owner's selection.
+
+## P37 correction of the derived workspace's source check — November 27, 2026
+
+The owner answered "Start the correction" in this session, after gate MR stopped. Phase C271-P37-derived-workspace-correction runs in local mode ([phase declaration](../../../engineering/localized-repair-c271/derived-workspace-p37/PHASE.json), [correction plan](../../../engineering/localized-repair-c271/derived-workspace-p37/CORRECTION-PLAN.md), [session checkpoint](P37-SESSION.md)).
+- **Objective:** correct FZ-01, the implementation blocker that stopped gate MR, under P05 section 3 and MC19 of the adopted contract `ontokin.current-host-readback/0.2.0`:
+  - an independent author's decision on how the 0.2.0 provider's derived source check treats tracked paths that the driver does not copy, and whether that needs an amendment;
+  - its implementation in `tools/check_local.py` and the 0.2.0 provider, with one definition of the copied set;
+  - independently frozen controls with real Git on a fixture tree that tracks such paths;
+  - the derived route's Git timing (FZ-02), measured first and corrected if the margin is too small;
+  - an independent review of the candidate, with the focused tests, the controls and the complete ordinary routine as evidence.
+- **Downloads:** none.
+- **Not run:** gate MR, `ldd`, `codesign`, any Node, and the `--full` and `--force-agent` profiles.
+- **Main:** not written.
+- **Excluded:** MR and R03's acceptance, R04 and R05, and the 0.1.0 provider.
+- **Unchanged until this phase's outcome records say otherwise:** R01/R02 remain done and R03–R05 not_done.
