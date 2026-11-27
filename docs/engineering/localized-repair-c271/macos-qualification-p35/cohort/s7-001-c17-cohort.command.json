@@ -1,0 +1,66 @@
+{
+  "schema": "ontokin.c271.p35-command-record/1",
+  "name": "s7-001-c17-cohort",
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "LANG=C.UTF-8",
+    "LC_ALL=C.UTF-8",
+    "ONTOKIN_CURRENT_HOST_READBACK_CONFIG=<local>/c271-p35/workers/W2-freeze-001/config/cohort-config-001.json",
+    "ONTOKIN_CURRENT_HOST_READBACK_CONFIG_SHA256=83c8b1582c1ea4263d60014ca6b4cd22130e57b3fb65e06ff60a78768a5d7a3c",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONNOUSERSITE=1",
+    "STATIC_TRAY_READBACK_CPU_OUTPUT=<local>/c271-p35/evidence/s7-001-cohort/run",
+    "TMPDIR=<local>/c271-p35/evidence/s7-001-tmp-cohort",
+    "TZ=UTC",
+    "<worktree>/.venv/bin/python",
+    "-B",
+    "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/collect_outcomes.py",
+    "cohort",
+    "--root",
+    "<worktree>",
+    "--environment",
+    "<local>/c271-p35/workers/W2-freeze-001/env/cohort.environment.json",
+    "--environment-sha256",
+    "8eea85d3d4f90c14c975b61ce1926cbad7d1cb188767b6e5603562a5bd8b203f",
+    "--module-sha256",
+    "6295e0442ba7e7a1d1236fb5d9148e97ed92cc4db3e77dcd7b2993af5ef0f662",
+    "--output-dir",
+    "<local>/c271-p35/evidence/s7-001-cohort-outcomes"
+  ],
+  "cwd": "<worktree>",
+  "environment": {
+    "file": "<local>/c271-p35/workers/W2-freeze-001/env/cohort.environment.json",
+    "sha256": "8eea85d3d4f90c14c975b61ce1926cbad7d1cb188767b6e5603562a5bd8b203f"
+  },
+  "started_at_utc": "2026-11-27T10:27:24Z",
+  "ended_at_utc": "2026-11-27T10:27:32Z",
+  "start_epoch_s": "1795775244.984649",
+  "end_epoch_s": "1795775252.966992",
+  "wall_time_s": "7.982343",
+  "boot": {
+    "before": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "after": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "exit": {
+    "status": 0
+  },
+  "streams": {
+    "stdout": {
+      "path": "<local>/c271-p35/evidence/s7-001-c17-cohort.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "stderr": {
+      "path": "<local>/c271-p35/evidence/s7-001-c17-cohort.stderr.txt",
+      "sha256": "f3a696d3f72744019c435e116307177b7bb6b5ad148b8b4f98e3e6eca03f2612",
+      "size_bytes": 1433
+    },
+    "exit": {
+      "path": "<local>/c271-p35/evidence/s7-001-c17-cohort.exit.txt"
+    }
+  },
+  "retries": 0,
+  "written_by": "director/run/run_once_v2.sh"
+}

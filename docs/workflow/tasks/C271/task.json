@@ -1482,6 +1482,98 @@
         "docs/engineering/localized-repair-c271/macos-preparation-p34/reviews/RESULT-REVIEW-001.md",
         "docs/engineering/localized-repair-c271/macos-preparation-p34/reviews/RESULT-REVIEW-DISPOSITION-001.json"
       ]
+    },
+    {
+      "name": "P35 N34-M review of the Mach-O parser and closure claim",
+      "command": "Fresh-context subagent W1, static reads of the parser's source and of the prepared bin/node and interpreter installation's load commands",
+      "result": "passed",
+      "required": true,
+      "scope": "ACCEPT_WITH_NONMANDATORY_FINDINGS, N-01 to N-09, before any execution plan; CoreFoundation linked (D-16)",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/n34m/N34-M-REVIEW.md",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/n34m/N34-M-DISPOSITION.json"
+      ]
+    },
+    {
+      "name": "P35 observational tooling and its reviews",
+      "command": "Independent author W2, three fresh reviews W3; the suite run by the Director at its committed place",
+      "result": "passed",
+      "required": true,
+      "scope": "review 001 rejected revision 1 (five mandatory findings); reviews 002 and 003 accepted revisions 2 and 3; 91 of 91 tests at commit C",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/TOOLING-REVIEW-003.md",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/TOOLING-REVIEW-DISPOSITION-003.json",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/checks/commit-c/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P35 observation plan and its review",
+      "command": "Independent author W2 at commit C, outside Git; fresh reviewer W3 re-deriving every key and inventory",
+      "result": "passed",
+      "required": true,
+      "scope": "plan b8cd6449, ACCEPT_WITH_NONMANDATORY_FINDINGS, PR-01 to PR-06; the digest taken from the review record",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/plans/observation-plan-001/observation-plan-001.json",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/plan-review-001/PLAN-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/PLAN-REVIEW-DISPOSITION-001.json"
+      ]
+    },
+    {
+      "name": "P35 M0 and M1, and the HOST review",
+      "command": "The observer's observe once through the Director's wrapper, from env -i with the declared environment; fresh reviewer W3",
+      "result": "passed",
+      "required": true,
+      "scope": "exit 0, OBSERVED_UNAPPROVED, one Git and one Node start through the Darwin supervisor, both processes absent; HOST 34e94f29, ACCEPT_WITH_NONMANDATORY_FINDINGS, HR-01 to HR-07",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/host/observe-001/HOST.json",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/host-review-001/HOST-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/HOST-REVIEW-DISPOSITION-001.json"
+      ]
+    },
+    {
+      "name": "P35 operational freeze and its reviews",
+      "command": "Independent author W2; fresh reviewers W3 for freeze 001 and for freeze 002",
+      "result": "passed",
+      "required": true,
+      "scope": "freeze 001 rejected with FR-01 and FR-02 mandatory and never run; freeze 002 bc35d634 accepted with FR2-01 to FR2-06, settled in its disposition before S7",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/freeze-review-001/FREEZE-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/freeze-review-002/FREEZE-REVIEW-002.md",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/FREEZE-REVIEW-DISPOSITION-002.json"
+      ]
+    },
+    {
+      "name": "P35 qualifying cohort and the MH controls",
+      "command": "Freeze 002's 72 commands once each, in order, through the bound wrapper in the shell tool's background mode, each with its frozen bound timer",
+      "result": "passed",
+      "required": true,
+      "scope": "every checker step and Q04 MET; probe syntax check, P06-H01 and P06-H02 as frozen; the seven methods 7 of 7 with exactly three CPU starts; MC10, MC11, MC24 to MC30, MC36, MC37 and F-04 as frozen; MH starts 9 Node and 2 other; inventories, worktree and boot unchanged",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/cohort/s7-001-c17-cohort.stderr.txt",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/cohort/s7-001-cohort-outcomes/outcomes.json",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/director/s7/LAUNCH-LINES.json"
+      ]
+    },
+    {
+      "name": "P35 independent audit",
+      "command": "Fresh-context subagent W4 recomputing from the records and bytes with its own code",
+      "result": "passed",
+      "required": true,
+      "scope": "PASS_WITH_NONBLOCKING_FINDINGS, AU-01 to AU-08: bindings, starts and receipts, method outcomes, 2,060 rows per case with the one intended matrix_0_3 finding, N-04, every control's label",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/audit/AUDIT-001.md",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/audit/AUDIT-001.json"
+      ]
+    },
+    {
+      "name": "P35 records checks",
+      "command": "workflow check, documentation verifier and scoped whitespace check on the records commit, each interpreter start with -B; privacy search of every committed file",
+      "result": "passed",
+      "required": true,
+      "scope": "see the check record",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/checks/s9/CHECKS.json"
+      ]
     }
   ],
   "completion": {
@@ -1618,9 +1710,15 @@
       "outcome": "docs/engineering/localized-repair-c271/macos-preparation-p34/OUTCOME.json",
       "review": "docs/engineering/localized-repair-c271/macos-preparation-p34/reviews/RESULT-REVIEW-001.md",
       "scope": "gate MP only: the pinned runtime, reader tree and .venv prepared and receipted; nothing observed, qualified or integrated"
+    },
+    "macos_0_2_0_qualification": {
+      "bound_commit": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
+      "outcome": "docs/engineering/localized-repair-c271/macos-qualification-p35/OUTCOME.json",
+      "audit": "docs/engineering/localized-repair-c271/macos-qualification-p35/audit/AUDIT-001.md",
+      "scope": "gate MH only: the seven readback methods and the direct negatives qualified on this executor (macos-arm64-local), with contract section 10's labels; not MR, R03, R04, R05, integration or a release"
     }
   },
-  "next_action": "C271-P35-macos-host-qualification-mh is declared and in progress: gate MH of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001). An independent reviewer carries out N34-M; an independent author writes the observational tooling, the observation plan and the operational freeze, and a fresh reviewer reviews each before it runs; M0 and M1 run once on this host (one Git and one Node start) and give HOST; the qualifying cohort runs the probe syntax check, the direct negatives P06-H01 and P06-H02 and the original seven methods (exactly three real CPU starts), with the controls assigned to MH; an independent audit recomputes the results. From the observation plan's freeze to the audit, one boot and one commit. Nothing is integrated, and the complete default routine is not run. Then MR (R03), R04 and R05, each a separate phase.",
+  "next_action": "C271-P35 passed gate MH of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) on this executor (macos-arm64-local), from the bound commit 0eb9a5517f4e19705178a2c59b8d8d33fb87867a: N34-M, M0 and M1 with HOST accepted, the qualifying cohort run once exactly as operational freeze 002 froze it (the probe syntax check, P06-H01, P06-H02, the original seven methods 7 of 7 with exactly three CPU starts and the intended matrix_0_3 negative, and the MH controls), and an independent audit that returned PASS_WITH_NONBLOCKING_FINDINGS. MH started Node 9 times and one other program twice, never ldd or codesign. It qualifies the seven methods and the direct negatives on this executor only, with contract section 10's labels; nothing is integrated into main. The next gates are MR (R03), then R04 and R05, each a separate phase that needs the owner's selection.",
   "session_phase": {
     "schema": "ontokin.c271.p35-macos-host-qualification/1",
     "task": "C271",
@@ -1637,7 +1735,10 @@
     "record": "docs/engineering/localized-repair-c271/macos-qualification-p35/PHASE.json",
     "plan": "docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P35-SESSION.md",
-    "status": "tooling_committed_qualification_pending"
+    "status": "qualification_passed_audited_pushed",
+    "completed_at_utc": "2026-11-27T11:32:20Z",
+    "bound_commit": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
+    "outcome": "docs/engineering/localized-repair-c271/macos-qualification-p35/OUTCOME.json"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8379,7 +8480,7 @@
     "plan": "docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P35-SESSION.md",
     "declared_at_utc": "2026-11-26T23:08:24Z",
-    "status": "tooling_committed_qualification_pending",
+    "status": "qualification_passed_audited_pushed",
     "owner_direction": [
       {
         "date": "2026-11-26 (America/Denver and UTC)",
@@ -8393,13 +8494,32 @@
     "downloads": "none needed and none approved",
     "parent_complete": false,
     "stages": {
-      "recorded_at_utc": "2026-11-27T04:13:31Z",
+      "recorded_at_utc": "2026-11-27T11:32:20Z",
       "S1": "Declaration 16d4f9f4, pushed and read back at 2026-11-26T23:08:39Z (A1).",
       "S2": "N34-M accepted with nonmandatory findings N-01 to N-09, recorded at c81cf07b before any execution plan existed (A2).",
       "S3": "The observational tooling. Review 001 rejected the first version with five mandatory findings. Review 002 accepted revision 2 with nonmandatory findings TR2-01 to TR2-06, carried to the S6 freeze. The Director then ran the suite at its committed place, and one test failed (IP-01). Review 003 accepted revision 3, which corrects that test only, with nonmandatory findings TR3-01 to TR3-03. Revision 3 passes 91 of 91 at its committed place. It is committed unchanged at commit C, the commit that carries this field (A3 once pushed and read back).",
-      "S4_to_S8": "Outside Git, from commit C, under MH-PLAN section 5: one boot, HEAD fixed at C, the worktree clean and no commit until the audit; a reboot restarts at S4.",
-      "records": "docs/engineering/localized-repair-c271/macos-qualification-p35/: n34m/, tooling/, reviews/ and authoring/"
-    }
+      "S4_to_S8": "Outside Git, from commit C, under MH-PLAN section 5: one boot (C90010BA), HEAD fixed at C, the worktree clean and no commit until the audit, every start of the framework interpreter with -B. Held throughout.",
+      "records": "docs/engineering/localized-repair-c271/macos-qualification-p35/: n34m/, tooling/, reviews/, authoring/, checks/, plans/, host/, cohort/, audit/, director/, OUTCOME.json, LEARNING-DECISION.md, CLOSING.json",
+      "S4": "Observation plan 001 (b8cd6449), accepted by plan review 001 with PR-01 to PR-06 (A4).",
+      "S5": "M0 and M1: observe once at 2026-11-27T05:34:37Z, exit 0, OBSERVED_UNAPPROVED, one Git and one Node start; HOST 34e94f29, accepted by HOST review 001 with HR-01 to HR-07 (A5).",
+      "S6": "Freeze 001 rejected by freeze review 001 (FR-01, FR-02 mandatory) and never run; freeze 002 (bc35d634) accepted by freeze review 002 with FR2-01 to FR2-06 (A6).",
+      "S7": "Freeze 002's 72 commands once each, 2026-11-27T10:05:55Z to 10:32:45Z, every check MET; the seven methods 7 of 7, the direct negatives and the MH controls as frozen; MH starts 9 Node and 2 other (A7).",
+      "S8": "Audit 001: PASS_WITH_NONBLOCKING_FINDINGS, AU-01 to AU-08 (A8).",
+      "S9": "Outcome records with path-portable copies, the checks, the push without force, the readback and one checkpoint comment each on PR274 and issue273 (A9, A10)."
+    },
+    "completed_at_utc": "2026-11-27T11:32:20Z",
+    "bound_commit": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
+    "verdicts": {
+      "n34m": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "tooling": "ACCEPT_WITH_NONMANDATORY_FINDINGS (review 003, after review 001's rejection)",
+      "plan": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "host": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "freeze": "ACCEPT_WITH_NONMANDATORY_FINDINGS (review 002, after review 001's rejection)",
+      "audit": "PASS_WITH_NONBLOCKING_FINDINGS"
+    },
+    "outcome": "docs/engineering/localized-repair-c271/macos-qualification-p35/OUTCOME.json",
+    "closing": "docs/engineering/localized-repair-c271/macos-qualification-p35/CLOSING.json",
+    "learning": "docs/engineering/localized-repair-c271/macos-qualification-p35/LEARNING-DECISION.md"
   },
   "p35_fields_index": {
     "recorded_at_utc": "2026-11-26T23:08:24Z",

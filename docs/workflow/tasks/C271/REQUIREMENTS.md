@@ -673,3 +673,23 @@ The owner answered "Start gate MH" in this session. Phase C271-P35-macos-host-qu
 - **Main:** not written.
 - **Excluded:** MR, R04 and R05.
 - **Unchanged:** R01/R02 remain done and R03–R05 not_done.
+
+### P35 qualification outcome (2026-11-27, UTC)
+
+Gate MH passed on this executor (`macos-arm64-local`: macOS 26.6.2 (25G83), arm64), from the bound commit `0eb9a5517f4e19705178a2c59b8d8d33fb87867a`. The records are pushed without force and read back ([outcome](../../../engineering/localized-repair-c271/macos-qualification-p35/OUTCOME.json), [audit](../../../engineering/localized-repair-c271/macos-qualification-p35/audit/AUDIT-001.md), [portable records](../../../engineering/localized-repair-c271/macos-qualification-p35/README-PORTABLE.md)).
+- **N34-M:** an independent reviewer accepted the Mach-O parser and the closure claim against the actual load commands, before any execution plan.
+- **M0 and M1:** one Git and one Node start through the Darwin supervisor gave HOST, which an independent review accepted.
+- **The qualifying cohort,** run once, exactly as the reviewed operational freeze 002 froze it. Freeze 001 was rejected and never ran.
+  - The probe syntax check passed.
+  - P06-H01 and P06-H02 refused where frozen, before any reader import.
+  - The original seven methods passed 7 of 7, with exactly three real CPU starts and the intended `matrix_0_3` negative. The four coordinator seams are mocked.
+  - The MH controls met their frozen expectations, with their labels.
+- **The audit:** an independent auditor recomputed the bindings, the starts and receipts, the method outcomes and every numerical row (2,060 per case). Its verdict is `PASS_WITH_NONBLOCKING_FINDINGS`.
+- **Starts:** 9 Node and 2 other in all MH, as the freeze stated. There was no `ldd` or `codesign` start, and every start of the framework interpreter used `-B`.
+- **Status, kept separate:**
+  - environment readiness: as MP prepared it, unchanged;
+  - test qualification: the seven methods and the direct negatives, on this executor only, with contract section 10's labels;
+  - integration: none;
+  - product completion: no.
+- **Unchanged:** R01/R02 remain done and R03–R05 not_done. MH is not MR (R03).
+- **Next gate:** MR (R03), then R04 and R05, each a separate phase that needs the owner's selection.

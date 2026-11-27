@@ -1,0 +1,538 @@
+{
+ "checks": {
+  "predicates": [
+   {
+    "observed_length": 40,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "ONTOKIN_CURRENT_HOST_READBACK_CONFIG=<local>/c271-p35/evidence/s7-001-mc29-inputs/configuration-config.json",
+       "ONTOKIN_CURRENT_HOST_READBACK_CONFIG_SHA256=196b8a932969edbd029c9dee397f8d8f18085d9743c94f75dc95b6b2c86a1aa1",
+       "PATH=/usr/bin:/bin",
+       "PYTHONDONTWRITEBYTECODE=1",
+       "PYTHONNOUSERSITE=1",
+       "STATIC_TRAY_READBACK_CPU_OUTPUT=<local>/c271-p35/evidence/s7-001-mc29-configuration/run",
+       "TMPDIR=<local>/c271-p35/evidence/s7-001-tmp-mc29-configuration",
+       "TZ=UTC",
+       "<worktree>/.venv/bin/python",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/control_harness.py",
+       "mc29",
+       "--root",
+       "<worktree>",
+       "--config",
+       "<local>/c271-p35/evidence/s7-001-mc29-inputs/configuration-config.json",
+       "--config-sha256",
+       "196b8a932969edbd029c9dee397f8d8f18085d9743c94f75dc95b6b2c86a1aa1",
+       "--glb",
+       "<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic.glb",
+       "--glb-sha256",
+       "d00a73622924f025ee7a1620de0104eac3013a5e27210f9842292bb32eacd0f5",
+       "--audit",
+       "<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic-audit.json",
+       "--audit-sha256",
+       "7f10f355d8bac0a6120159d3478cf28b8646755fb50fc240f0e36ad6b403a42e",
+       "--environment",
+       "<local>/c271-p35/workers/W2-freeze-001/env/mc29-configuration.environment.json",
+       "--environment-sha256",
+       "d31a1ce1afd647ae68308cb449c983aac727b05ccfae0ba2b1a6d4db4278cbcb",
+       "--change",
+       "configuration",
+       "--expect-code",
+       "CH-SELECTION",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-mc29-configuration.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<worktree>",
+    "ok": true,
+    "rule": {
+     "equals": "<worktree>",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "d31a1ce1afd647ae68308cb449c983aac727b05ccfae0ba2b1a6d4db4278cbcb",
+    "ok": true,
+    "rule": {
+     "equals": "d31a1ce1afd647ae68308cb449c983aac727b05ccfae0ba2b1a6d4db4278cbcb",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "EXPECTED",
+    "ok": true,
+    "rule": {
+     "equals": "EXPECTED",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/setup_passed"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/change_applied_once"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/attempt_refused_by_the_provider"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/zero_supervisor_calls"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/zero_on_started_calls"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/zero_node_process_events"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/refusal_counts_zero_starts"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/ledger_zero_starts_not_completed"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/ledger_labelled_mocked"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/accounting_refused"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/detectors_are_the_providers_own"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/checks/refusal_code"
+    }
+   },
+   {
+    "observed": "CH-SELECTION",
+    "ok": true,
+    "rule": {
+     "equals": "CH-SELECTION",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/attempt_error/code"
+    }
+   },
+   {
+    "observed": "Configuration differs from the independently supplied expected digest",
+    "ok": true,
+    "rule": {
+     "equals": "Configuration differs from the independently supplied expected digest",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/attempt_error/reason"
+    }
+   },
+   {
+    "observed": "CH-SELECTION",
+    "ok": true,
+    "rule": {
+     "equals": "CH-SELECTION",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/finish_error/code"
+    }
+   },
+   {
+    "observed": "Configuration differs from the independently supplied expected digest",
+    "ok": true,
+    "rule": {
+     "equals": "Configuration differs from the independently supplied expected digest",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/finish_error/reason"
+    }
+   },
+   {
+    "observed": "ontokin.current-host-readback-refusal/0.2.0",
+    "ok": true,
+    "rule": {
+     "equals": "ontokin.current-host-readback-refusal/0.2.0",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/refusal_record/schema"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence/s7-001-mc29-configuration/run",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence/s7-001-mc29-configuration/run",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/cohort_root"
+    }
+   },
+   {
+    "observed": "real",
+    "ok": true,
+    "rule": {
+     "equals": "real",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/boundary_before"
+    }
+   },
+   {
+    "observed": "mocked",
+    "ok": true,
+    "rule": {
+     "equals": "mocked",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/boundary_during"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "length": 0,
+     "pointer": "/node_process_events"
+    }
+   },
+   {
+    "observed": "0x1F5:0x0:0x0",
+    "ok": true,
+    "rule": {
+     "equals": "0x1F5:0x0:0x0",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/environment/admitted_cf_user_text_encoding"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration/run/setup.json",
+     "pointer": "/passed"
+    }
+   },
+   {
+    "observed": "ontokin.current-host-readback-cohort/0.2.0",
+    "ok": true,
+    "rule": {
+     "equals": "ontokin.current-host-readback-cohort/0.2.0",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration/run/cohort.json",
+     "pointer": "/schema"
+    }
+   },
+   {
+    "observed": false,
+    "ok": true,
+    "rule": {
+     "equals": false,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration/run/cohort.json",
+     "pointer": "/passed"
+    }
+   },
+   {
+    "observed": "CH-SELECTION",
+    "ok": true,
+    "rule": {
+     "equals": "CH-SELECTION",
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration/run/cohort.json",
+     "pointer": "/error/code"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration/run/provider-ledgers/Q01-positive/result.json",
+     "pointer": "/actual_checker_starts"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": false,
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration/run/provider-ledgers/Q01-positive/started.json"
+    }
+   },
+   {
+    "observed_length": 15,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "subprocess.Popen",
+      "pointer": "/event"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed_length": 15,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "/Library/Developer/CommandLineTools/usr/bin/git",
+      "pointer": "/argv/0"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed_length": 23,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+       "listing",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-mc29-configuration",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-mc29-inputs",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-tmp-mc29-configuration",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc29-configuration.json",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback-listing.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback-listing.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback-listing.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback-listing.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback-listing.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback-listing.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback-listing.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "listing",
+    "ok": true,
+    "rule": {
+     "equals": "listing",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback.json",
+     "pointer": "/command"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback.json",
+     "pointer": "/boot_before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback.json",
+     "pointer": "/boot_after"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback.json",
+     "length": 0,
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+    "ok": true,
+    "rule": {
+     "equals": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+     "file": "<local>/c271-p35/evidence/s7-001-c06-mc29-configuration.readback.json",
+     "pointer": "/tool/sha256"
+    }
+   }
+  ]
+ },
+ "command": "C06",
+ "failed": [],
+ "phase": "expect",
+ "predicate_set": "expect",
+ "python_flags": {
+  "dont_write_bytecode": 1,
+  "isolated": 1,
+  "no_site": 1
+ },
+ "schema": "ontokin.c271.p35-s7-check/1",
+ "state": "MET"
+}

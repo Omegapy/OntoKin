@@ -343,6 +343,62 @@
       "scope": "The preparer's --plan-sha256 and any check of a frozen input by digest; found by the independent plan review of C271's gate MP (P-07).",
       "recorded_at": "2026-11-26",
       "supersedes": null
+    },
+    {
+      "id": "memory-c271-executable-outer-bound",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "A frozen time limit must be one the actual executor can carry out. Claude Code's shell tool runs each command without a terminal (no Ctrl-C), blocks the Director in foreground mode and ends a foreground command at its own timeout of at most 600 s. So launch each frozen command alone in background mode with no tool timeout, and start a frozen bound timer beside it that only waits for the command's exit file. At the bound, record the outcome UNKNOWN, probe the recorded starts, and stop only processes whose identity is established; never signal the command, the tool's task or its group.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/freeze-review-001/FREEZE-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/FREEZE-REVIEW-DISPOSITION-001.json",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/plans/freeze-002/FREEZE-002.json",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/director/s7/LAUNCH-LINES.json"
+      ],
+      "scope": "Claude Code's shell tool in the desktop app on macOS, for a Director who runs frozen commands; found by freeze review 001 of C271's gate MH (FR-01) and used for all 72 commands of S7, none of which overran.",
+      "recorded_at": "2026-11-27",
+      "supersedes": null
+    },
+    {
+      "id": "memory-c271-evaluate-listing-probe-predicates",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "A capture tool that exits 0 whatever it records (here capture_probe.py's listing and probe) checks nothing by itself. Each of its predicates must be evaluated by a frozen step before the next start, for example by appending them to the main command's frozen expectations, which the checker step evaluates after the listing and the probe.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/freeze-review-001/FREEZE-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/plans/freeze-002/FREEZE-002-DIFFERENCES.json",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/audit/AUDIT-001.md"
+      ],
+      "scope": "The FAILURE-CAPTURE readback and process probe of C271's gate MH; found by freeze review 001 (FR-02).",
+      "recorded_at": "2026-11-27",
+      "supersedes": null
+    },
+    {
+      "id": "memory-c271-portable-copies-ignored-names",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "The repository's .gitignore matches *.log and ENV/, and on macOS's case-insensitive file system ENV/ also matches env/. Portable evidence copies with those names stay untracked unless they are added with git add -f, as earlier evidence logs were. Check git status --ignored after writing copies.",
+      "sources": [
+        ".gitignore",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/EXACT-RECORDS.json"
+      ],
+      "scope": "Committing evidence records on the owner's macOS clone; observed in C271's gate MH, where 29 portable copies were ignored.",
+      "recorded_at": "2026-11-27",
+      "supersedes": null
+    },
+    {
+      "id": "memory-c271-privacy-scan-scripts-stay-local",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "Workers' privacy-scan scripts often hard-code the very terms they search for, such as installed applications, process names or the package manager. Keep such scripts and raw outputs beside the clone, recorded by digest, and commit only labelled reports and scripts that derive their terms at run time. A plain text search misses split literals, so also search each Python file's joined string constants.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/README-PORTABLE.md",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/EXACT-RECORDS.json",
+        "docs/engineering/localized-repair-c271/macos-qualification-p35/reviews/PLAN-REVIEW-DISPOSITION-001.json"
+      ],
+      "scope": "Path-portable copies of worker records in a public repository; observed in C271's gate MH, where three such scripts were kept local.",
+      "recorded_at": "2026-11-27",
+      "supersedes": null
     }
   ]
 }

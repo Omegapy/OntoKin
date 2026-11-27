@@ -1,0 +1,1660 @@
+{
+  "schema": "ontokin.c271.p35-freeze-review/1",
+  "id": "FREEZE-REVIEW-002",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "gate": "MH",
+  "stage": "S6 (freeze review 002), for S7",
+  "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; it took no part in freeze review 001 and wrote none of the freezes, the tooling, the observer, the provider, the probe, the contract or MP's preparation",
+  "reviewed_at_utc": {
+    "date": "2026-11-27",
+    "first_file": "2026-11-27T09:25:49Z",
+    "records_hashed": "2026-11-27T09:56:09Z"
+  },
+  "fixed_state": {
+    "commit": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
+    "tree": "ea10cd94c05a2ebbb44b3f83d4c96cb0a59baa2b",
+    "boot_session_uuid": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "git_started": false
+  },
+  "labels": {
+    "<E>": "<local>/c271-p35/evidence",
+    "<F1>": "<local>/c271-p35/workers/W2-freeze-001",
+    "<F2>": "<local>/c271-p35/workers/W2-freeze-002",
+    "<R1>": "<local>/c271-p35/workers/W3-freeze-001",
+    "<OUT>": "<local>/c271-p35/workers/W3-freeze-002"
+  },
+  "subject": "operational freeze 002: <F2>/FREEZE-002.json and the 82 files of its SHA256SUMS.txt, a revision of freeze 001 (a5d994ea2db61262bf851379b9289ec028242bb7943d63df1992b3f386b634e6) under FREEZE-REVIEW-DISPOSITION-001.json (6eedbff56bf1dd5307510790a9ee97cc6c2577122b5c0d8cbb9c9dadda55bc43)",
+  "freeze_sha256": "bc35d6347608f7e04d9968957fa9888bee983c51ff12f2a3799e02733a82a621",
+  "freeze_size_bytes": 1329283,
+  "freeze_lines": 27142,
+  "configuration_sha256": "83c8b1582c1ea4263d60014ca6b4cd22130e57b3fb65e06ff60a78768a5d7a3c",
+  "configuration": {
+    "path": "<F1>/config/cohort-config-001.json",
+    "size_bytes": 2014,
+    "mode": "0o644"
+  },
+  "p00_lists": {
+    "first": {
+      "path": "<F2>/SHA256SUMS.txt",
+      "sha256": "0f441f5f9c4246c4422d5d67fb9365e476958d5f51ac7b7eabf8be587409ca4b",
+      "lines": 82
+    },
+    "second": {
+      "path": "<F2>/s7/p00-freeze-001-rebound.sha256sums.txt",
+      "sha256": "6912e1768e0d760a37e7c76d948f0b3839b4c525f3650f2d18345d7d341d4ef4",
+      "size_bytes": 7369,
+      "lines": 46,
+      "comment_lines": 2,
+      "digest_lines": 44,
+      "equals_freeze_001_lines_for_the_44_rebound_documents": true
+    }
+  },
+  "differences_sha256": "df7ae291bed508ef14c9367cf6f46827be1b2ef0378a99a30660558e9803bb83",
+  "author_notes_sha256": "3d0852631bb81501fb0781c19df1c327937105c06aed06bac9615051b7c6030f",
+  "mc11_reviewed_list": {
+    "binding_id": "review001:MC11-REVIEWED-LIST-001.json",
+    "path": "<R1>/MC11-REVIEWED-LIST-001.json",
+    "sha256": "aade03ac64a506678ce7ade184ecedcd10c5f6a58077d1f01aa7d0d70db63800",
+    "size_bytes": 344283,
+    "mode": "0o644",
+    "nlink": 1,
+    "canonical": true,
+    "components_spelled_on_disk": true,
+    "schema": "ontokin.c271.p35-mc11-reviewed/2",
+    "status": "REVIEWED",
+    "entries": 25,
+    "entries_re_reviewed": false,
+    "depends_on_unchanged": {
+      "probe": {
+        "binding": "source:prototypes/static_tray_v01/current_host_readback_v02.mjs",
+        "sha256": "bca11b2ab3acfb818fd6b43636a51056a60b4af888d77fefa0b1214fec4054cd",
+        "size_bytes": 58452,
+        "same_as_freeze_001": true
+      },
+      "dependencies_inventory": {
+        "binding": "plan001:dependencies-inventory-001.json",
+        "sha256": "3545d5f920ac840804a9e25d28a87d623f96af71537fd3f020a0c1d743f82fb4",
+        "size_bytes": 4543,
+        "same_as_freeze_001": true
+      },
+      "reader_tree": {
+        "bindings": 24,
+        "same_as_freeze_001": true,
+        "each_equal_to_the_inventory_entry": true
+      }
+    },
+    "c01": {
+      "argv_index": 25,
+      "argv_value": "aade03ac64a506678ce7ade184ecedcd10c5f6a58077d1f01aa7d0d70db63800",
+      "argv_rule_skips_index_25": false,
+      "equals_sha256_of_rule": "removed; the binding (P01, D02, Q04) and scan_mc11's own DIGEST check cover it"
+    },
+    "deferred_inputs": [],
+    "checked_by_the_checker_in_phase_pre": true
+  },
+  "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+  "mandatory_findings": [],
+  "nonmandatory_findings": [
+    "FR2-01",
+    "FR2-02",
+    "FR2-03",
+    "FR2-04",
+    "FR2-05",
+    "FR2-06"
+  ],
+  "settle_before_s7_in_the_disposition": [
+    "FR2-01",
+    "FR2-02",
+    "FR2-03 (a)",
+    "FR2-05"
+  ],
+  "findings": [
+    {
+      "id": "FR2-01",
+      "severity": "nonmandatory",
+      "title": "Overrun step 3's pointer /targets/<k-1> is wrong for 9 of the 17 probe commands",
+      "detail": "A probe <ID>.O<digits> passes only the selected pairs, in candidate order, so candidate k is at /targets/<j-1>, j its place among the digits. The pointer is right only for 1, 12 and 123; it is wrong for C16.O2, C16.O3, C16.O13, C16.O23, C17.O2, C17.O3, C17.O13, C17.O23 and C19.O2. The runner records only prefix sets, so it is reachable in C17 only (a case failed before its start, then an overrun). Read literally it either sends no stop to an established target (C17.O13: candidate 3 is /targets/1; /targets/2 is null) or starts the stop of an unselected pair (/targets/1 read as k=2: C17.S2), which can end a remaining CPU start against overrun.c17. The O commands' classification ('that pair's stop command') and each target's recorded pair paths give the right reading; the stop re-establishes identity for its own pair, so a wrong stop signals only an established process of that pair.",
+      "recommended": "Before S7, the disposition states: for <ID>.O<d1...dm>, /targets/<j-1> is candidate d_j and its stop is <ID>.S<d_j>; confirmed by /targets/<j-1>/pair/started/path equal to that candidate's after path. No tool changes."
+    },
+    {
+      "id": "FR2-02",
+      "severity": "nonmandatory",
+      "title": "A .P target whose start never happened is 'unknown', and the classes then collide",
+      "detail": "capture_probe.py gives state 'unknown' when a pair's records cannot be read: a runner row NOT_RUN after a missed row (no intent.json), a row REFUSED_BEFORE_START (no started-1.json), a cohort case that failed before its start (no started.json). The .X is then NOT_MET (S7 stops, as FR-02 requires), but freeze 002's FR-02 classification row and the .P's own row class it UNKNOWN, which collides with designed classes: n04.if_absent (MC30-probe 'Actual input identity differs', R2 stops, MC36 NOT_RUN, C19.P target 2 unknown) is CONTRACT; C16's row classes and C17's 'first unmet case's class decides' likewise. FAILURE-CAPTURE section 2, which classes.UNKNOWN cites, does not make a pair without records UNKNOWN. UNKNOWN is never relabelled and blocks every retry.",
+      "recommended": "Before S7, the disposition states: a .P target 'unknown' only because its pair's records do not exist, where the main command's own records show that start never happened (runner NOT_RUN, or REFUSED_BEFORE_START with PROVEN_ZERO; a case without started.json and with zero starts in its ledger), does not by itself make the outcome UNKNOWN; the main command's own class applies. Any other 'unknown' stays UNKNOWN."
+    },
+    {
+      "id": "FR2-03",
+      "severity": "nonmandatory",
+      "title": "The launch's corner cases are not stated",
+      "detail": "(a) The timer counts from its own start; if either call of the message waits for a permission prompt, or is refused (as the tool refused W2's call with a Git start in this phase), the timer runs ahead of the command (a false overrun: UNKNOWN, S7 stops) or behind it, and a refused call's outcome is not stated. In this session the two calls of one message started within the same second (t3). (b) An outer-bound line printed close to the task's end must be ordered from records (the timer's now= against the wrapper's end_epoch_s); a line after the task ended has 'no effect', but the Director 'goes on' only after an exit-file line, which that timer never prints. After an exit-file line nothing bounds the wrapper's record-building tail, and no frozen step tells the owner if that task does not end; likewise in step 6 if the second timer prints exit-file. (c) The tool reports a timer's status 1 as 'failed'; that is the frozen outer-bound result, not a timer failure under launch.after.",
+      "recommended": "Before S7: confirm that no command or timer call will wait for approval; put the command's call first in each message; treat a refused or failed call as an outcome that stops S7 (stop rule 4); order a near-bound outer-bound line by the timer's now= and the wrapper's end_epoch_s; tell the owner if a task has not ended within another outer_bound_s after its exit-file line."
+    },
+    {
+      "id": "FR2-04",
+      "severity": "nonmandatory",
+      "title": "Stale or inaccurate texts",
+      "detail": "(a) C16.P's, C17.P's and C19.P's classifications, unchanged from freeze 001, still describe an unfrozen stop 'capture_probe.py stop --pair BEFORE AFTER --output <name>.stop.json'; freeze 002 froze <ID>.S<k> with outputs <name>.stop-<k>.json (stop rule 4, overrun step 3); the stale path is in no absent list. (b) launch.after and the notes say a wrapper exit 90, 91 or 92 leaves no exit file; exits 91 and 92 come after run_once_v2.sh writes NAME.exit.txt (line 31, before lines 34 and 51), so the timer prints exit-file for them; stop rule 11 governs them. (c) launch.command says the string is passed alone 'so that zsh -c runs one simple command and the wrapper leads its group'; in this review's background test the started program's process group was the tool's zsh's (pid 24998, process group and session 24996); nothing in freeze 002 signals that group. (d) The difference record's where lists miss /trees (A-4) and /limits/this_freeze/7; its mechanical section and stated additions cover them.",
+      "recommended": "The disposition records that stop rule 4 and overrun step 3 (<ID>.S<k>) supersede the .P rows' stop text, and that the parenthetical in launch.after is wrong for 91 and 92."
+    },
+    {
+      "id": "FR2-05",
+      "severity": "nonmandatory",
+      "title": "What P00 itself trusts",
+      "detail": "The Director reads P00's shell and timer_shell from FREEZE-002.json before anything checks it; P00 checks freeze 002's files against SHA256SUMS.txt, which nothing checks; the wrapper runs P00 before P01 checks its binding. An accidental change is caught (P00, then P01's freeze digest and bindings), and a changed wrapper is caught at P01 before anything else runs; a change of SHA256SUMS.txt consistent with a file it lists is not caught by P00 alone.",
+      "recommended": "Immediately before P00, the Director compares FREEZE-002.json's and SHA256SUMS.txt's SHA-256 with this record (bc35d634..., 0f441f5f...) as one read, and records it."
+    },
+    {
+      "id": "FR2-06",
+      "severity": "nonmandatory",
+      "title": "Recorded, unbounded starts of the capture path",
+      "detail": "totals.capture_commands_only_on_failure counts each capture command as one Python launcher start; each also starts the wrapper's /bin/sh and /usr/bin/env and its jq, shasum (Perl), date, sysctl, cut and stat, and its timer's zsh, date and sleep; step 1's second timer adds the same; shell_and_env_launchers counts only the 72 ordered commands. None starts Node; none is bounded.",
+      "recommended": "S8 counts them as recorded starts if they occur."
+    }
+  ],
+  "director_checks_confirmed": {
+    "freeze_002_sums": {
+      "lines": 82,
+      "verify": 82,
+      "unlisted": 0,
+      "missing": 0
+    },
+    "freeze_001": {
+      "lines": 85,
+      "verify": 85,
+      "unlisted": 0,
+      "newer_than_sums": 0,
+      "freeze_001_sha256": "a5d994ea2db61262bf851379b9289ec028242bb7943d63df1992b3f386b634e6",
+      "sums_sha256": "587732618e5719035bdc477f622d56c3c225f797a592aa2600f0a37476e3b61a"
+    },
+    "review_001": {
+      "md": "af2ea72c6ee74520916ba350a1eeb93150b9f6b9dc79f2e7a41cc3943bf28ccc",
+      "json": "282188cc416f3a959951083dfbe65cfa7a32b78a7ede6a6bc749cbcb342965d4",
+      "mc11_list": "aade03ac64a506678ce7ade184ecedcd10c5f6a58077d1f01aa7d0d70db63800",
+      "newest_entry_utc": "2026-11-27T08:26:52Z"
+    },
+    "disposition": {
+      "sha256": "6eedbff56bf1dd5307510790a9ee97cc6c2577122b5c0d8cbb9c9dadda55bc43",
+      "size_bytes": 11599
+    },
+    "wrapper": {
+      "sha256": "3c24f923025f855603fce02a3e9fc794eb52409824369e53338f903ce9da8e1f",
+      "size_bytes": 3601,
+      "mode": "0o644"
+    },
+    "evidence_parent": {
+      "inode": 15728417,
+      "entries": 21,
+      "mtime_utc": "2026-11-27T05:35:19Z",
+      "newest_utc": "2026-11-27T05:35:19Z",
+      "s7_paths": []
+    },
+    "worktree": {
+      "bytecode_or_ds_store_outside_venv": [],
+      "newest_entry_utc": "2026-11-27T04:16:54Z",
+      "git_started": false
+    },
+    "boot": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "answers": {
+    "1_disposition": {
+      "FR-01": "carried out: (a) launch, (b) inline bound timer, all 97 timer_shell equal to the template with the command's exit file and bound, (c) the six steps with candidates, selection rule, 17 probes and 8 stops, (d) overrun.c17; the further option recorded as not taken; defect FR2-01",
+      "FR-02": "carried out: all 19 main expects end with their .L's 12 predicates and, for C16, C17 and C19, the .P's 12, in full and unchanged; checker unchanged (eb96aa1a); class question FR2-02",
+      "FR-03": "carried out: C17 each event subprocess.Popen and argv[0] one of the bound Node and the bound Git; C06 and C07 the bound Git only; rows added",
+      "FR-04": "carried out: stop rule 6 and C17's row",
+      "FR-05": "carried out in the notes; preparation unchanged, 43 = 25 + 18",
+      "FR-06": "carried out: C02 (same boot IMPLEMENTATION, other boot HOST), C03 to C05, C12/C13, C17 positive case and setup, C19",
+      "FR-07": "carried out: P00 first, through the wrapper, exit file alone; second list = freeze 001's lines for the 44 rebound documents, absolute; --strict (A-2)",
+      "FR-08_FR-10_FR-11": "no change, as disposed",
+      "FR-09": "carried out (limits.this_freeze)",
+      "FR-12": "carried out: n04.assumption; C17 expect {file: <home>/.CFUserTextEncoding, sha256: bd605d2e...}; gap stated",
+      "MC11": "carried out: bound directly; deferred_inputs empty; C01 argv[25] the digest",
+      "difference_record_complete": true,
+      "difference_record_where_omissions": [
+        "/trees (A-4)",
+        "/limits/this_freeze/7"
+      ],
+      "omitted_consequential_change": "the .P rows' stop text (FR2-04 a)",
+      "stated_additions": {
+        "A-1": "needed, correct, within intent",
+        "A-2": "needed, correct (shasum 6.02 skips a malformed line with a warning and exit 0 unless --strict)",
+        "A-3": "needed; see FR2-03 (b)",
+        "A-4": "correct",
+        "A-5": "correct, conservative",
+        "A-6": "needed",
+        "A-7": "correct (tested in phase prepared)"
+      }
+    },
+    "2_unchanged": {
+      "identical_argv_wrapper_shell": 48,
+      "changed": 23,
+      "changed_only_as_stated": true,
+      "only_timer_shell_added": 30,
+      "bindings": 122,
+      "bindings_verified": 122,
+      "kept_identical_in_order": 120,
+      "new_correct": 2,
+      "probe_inventory_reader_tree_unchanged": true
+    },
+    "3_fr01": {
+      "launch_executable": true,
+      "jq_extraction_equal": "100 of 100",
+      "timer_exit_file_is_wrapper_exit_txt": "97 of 97",
+      "timer_bound_is_outer_bound_s": "97 of 97",
+      "fires_early_from_own_start": false,
+      "fires_relative_to_command": "subject to launch skew (FR2-03 a)",
+      "timer_tests": {
+        "t1_exit_file_present": "exit-file, status 0",
+        "t3_exit_file_after_3s": "exit-file, status 0",
+        "t4_bound_3": "outer-bound began=1795772243 now=1795772247, status 1"
+      },
+      "sh_n_and_zsh_n": "100 of 100 texts pass",
+      "timer_starts_only": [
+        "builtins",
+        "/bin/date",
+        "/bin/sleep"
+      ],
+      "timer_writes": "nothing",
+      "select_texts_equal_generated": true,
+      "select_subsets_simulated": {
+        "C16": 8,
+        "C17": 8,
+        "C19": 4
+      },
+      "select_real_runs": {
+        "C16": "overrun-select: none",
+        "C17": "overrun-select: none",
+        "C19": "overrun-select: none"
+      },
+      "capture_commands_match_interface": true,
+      "fc_p6_identity_rule": "capture_probe.py stop re-establishes identity before SIGTERM and before SIGKILL",
+      "sends_to_wrapper_task_or_group": false,
+      "agrees_with_failure_capture_6_and_8": true,
+      "director_can_carry_it_out": "yes, with FR2-01's reading and FR2-03's preconditions"
+    },
+    "4_fr02": {
+      "appended_in_full": true,
+      "p_non_absent_fails_x": true,
+      "two_key_rules": 0,
+      "each_paired_with_length": true,
+      "base_worlds_met": "19 of 19",
+      "checker_cases": "111 of 111 as expected"
+    },
+    "5_other": {
+      "FR-03": "tested; vacuous on an empty list for C06 and C07",
+      "FR-04": "stop rule 6",
+      "FR-05": "43 = 25 + 18",
+      "FR-06": "rows present",
+      "FR-07": "P00 argv once: exit 0, 126 OK, empty stderr; lists cover freeze 002 and the 44 rebound documents; with the bindings every byte S7 runs or reads is covered except OS files (unbound by design), the wrapper and FREEZE-002.json at P00 (FR2-05)",
+      "FR-09": "present",
+      "FR-12": "sha256 predicate tested; mode/link/user gap as stated"
+    },
+    "6_totals": {
+      "absent_before": 495,
+      "absent_after": 428,
+      "added_capture_paths": 125,
+      "p00_records_in_lists": false,
+      "s7_bounded": {
+        "node": 8,
+        "other": 1
+      },
+      "mh": {
+        "node": 9,
+        "other": 2
+      },
+      "python_launchers_of_72": 64,
+      "provider_git_reads": 100,
+      "director_git_reads": 4,
+      "tar": 2,
+      "capture": {
+        "commands": 25,
+        "python_launchers": 25,
+        "node": 0
+      }
+    },
+    "7_open_questions": {
+      "Q2-1": "yes, within step 5",
+      "Q2-2": "yes",
+      "Q2-3": "acceptable; FR2-03 (b)",
+      "Q2-4": "correct; FR2-03 (a)",
+      "Q2-5": "harmless; FR2-01",
+      "Q2-6": "correct",
+      "Q2-7": "correct and acceptable",
+      "Q2-8": "acceptable"
+    },
+    "8_else": [
+      "take freeze_sha256 from this record with jq and compare FREEZE-002.json and SHA256SUMS.txt before P00 (FR2-05)",
+      "settle FR2-01 and FR2-02 in the disposition",
+      "confirm FR2-03 (a)'s preconditions",
+      "stop rule 4's <ID>.S<k> supersedes the .P rows' stop text",
+      "keep the MC11 list, the probe, the dependencies inventory and the reader tree unchanged until C01",
+      "for the auditor: the .X's own and the capture commands' expects are evaluated by no S7 step; a capture record after an overrun may hold two probe records"
+    ]
+  },
+  "checker_run_against_freeze_002": {
+    "phase": "pre",
+    "state": "MET",
+    "exit": 0,
+    "bindings": 122,
+    "absent_checked": 495,
+    "present": [],
+    "trees": 5,
+    "host_facts_ok": true,
+    "ancestors_ok": true,
+    "boot_ok": true,
+    "umask": "0o022",
+    "deferred_inputs": [],
+    "checker_sha256_checked_first": "eb96aa1a25ba51bf32f55420997bc8599343a59c2238ce70b4b0c622d01643f6"
+  },
+  "p00_run": {
+    "argv": "P00's exact argv, cwd <F2>, without the wrapper, streams into <OUT>",
+    "exit": 0,
+    "ok_lines": 126,
+    "stderr_bytes": 0,
+    "failed_lines": 0
+  },
+  "w2_selfcheck_crosscheck": {
+    "checks": 2483,
+    "failed": 0,
+    "identical_to_author_record": true
+  },
+  "python_inventory_after": {
+    "sha256": "c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633",
+    "size_bytes": 776209,
+    "equals_host_and_plan_001": true
+  },
+  "starts": {
+    "shell_tool_calls": 101,
+    "background_calls": 4,
+    "python": {
+      "total": 17,
+      "flags": "-I -S -B",
+      "own_scripts": 14,
+      "own_scripts_stopped_on_own_faults": 2,
+      "checker_direct_phase_pre": 1,
+      "w2_selfcheck": 1,
+      "python_inventory": 1,
+      "checker_in_process_cases_run_3": 111,
+      "checker_main_calls_run_3": 26
+    },
+    "sh_n": 100,
+    "zsh_n": 100,
+    "zsh_version": 1,
+    "select_texts_real_runs": 3,
+    "synthetic_timer_runs": 3,
+    "date": "about 16 (13 by the synthetic timers, 3 time stamps)",
+    "sleep": "about 7 (the synthetic timers)",
+    "shasum_perl": 5,
+    "env": 3,
+    "jq": "about 176",
+    "cmp": 4,
+    "find": 1,
+    "file": 1,
+    "mkdir": 2,
+    "never_started": [
+      "Node",
+      "Git of any kind",
+      "ldd",
+      "codesign",
+      "otool",
+      "the observer's observe",
+      "run_direct_probe.py",
+      "collect_outcomes.py",
+      "control_harness.py",
+      "discover_inventory.py",
+      "audit_numeric.py",
+      "the wrapper",
+      "capture_probe.py",
+      "the original preparation script",
+      "the project's test modules",
+      "ps"
+    ],
+    "writes": "only under <OUT>",
+    "processes_alive_at_end": "none: the four background tasks reported their exit; every foreground call returned"
+  },
+  "state_after": {
+    "freeze_002_sums": "82 of 82, none unlisted",
+    "freeze_001_sums": "85 of 85, none unlisted, nothing newer",
+    "review_001_newest_utc": "2026-11-27T08:26:52Z",
+    "evidence_parent": {
+      "inode": 15728417,
+      "entries": 21,
+      "mtime_utc": "2026-11-27T05:35:19Z",
+      "s7_paths": []
+    },
+    "worktree_bytecode_or_ds_store": [],
+    "venv_bytecode_newer_than_review_start": [],
+    "boot": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "records": {
+    "01-state.json": "e575a4069cf6f840443d4d7a530ec082014031fb73e4596a586db8a8297c7ab9",
+    "02-bindings.json": "88fda38ab0f42db6eb20438b3bfb80248c7c7acab3c81e517c31422d885404a1",
+    "03-commands.json": "7374875b54ade2efcca91bdf827b0a1deafa95c2b6928fc38c5eb3b2492e9946",
+    "03-commands-listing.txt": "65652bbcdba19d8a725a49f7e3820c1a01edaeb3f872238fc9b06b1a1710d787",
+    "04-overrun.json": "3010c82662a9f73f6f26cfe3f90bd219b8d93c4e7af5fb60a81e4545e46c5374",
+    "05-diff.json": "bb79b7db41aa9a0e1ad19be094456228c8f44ff1eeda6e4d9fd55f27649750ea",
+    "05-diff.txt": "67315d7a5d9c1b40ff2f8b5a44f4ca3a216580dd296e9e8341e207ba3fb4a7ee",
+    "06-absent.json": "9ad123b60b5ae21924a68a43fadf2d25476ca52ef9a4a9364b19952fc05566c4",
+    "07-texts.json": "f9ff0b146219411362136d5cf63fff2a98ba309a5176007e047933f145daf83e",
+    "07-syntax.txt": "be406e968b06a20856082452222178a4308a16c2f201166dd35a0b714668aa63",
+    "07-select-real-runs.txt": "819fc0d09600423cac53242011d31f7b59bb6f727f57ae992c7113bda35dafe9",
+    "09-checker-tests-run3.json": "efda02163ddbe64df2f251dbb70f10eab4a6719a778e789591250c0f257e6ff3",
+    "09-checker-tests.json (run 2)": "429afc880f58cb9007299b0e32828d1660e534260762439fd2433a10110b0972",
+    "10-checker-pre-real.json": "2dc1b0bbe6d974897ac31f82280eab94e9ad829fa0fc272172f47bf40df71fdb",
+    "10-p00-lists.json": "862a200e74b95d492b883af4edaa042f40bf8651b3864cc83929e82b1c89926a",
+    "11-p00-run.stdout.txt": "455ef110bf4a9c5c73a33eeb42917e93ac2016e37e898ed35727ee2cabfb5b16",
+    "11-final-state.json": "761dea6346891234f811d829d167daa90670319e64641de797d1ccf66606c78c",
+    "12-w2-selfcheck-crosscheck.txt": "c1664b6d18960fb63566b90ed3e77fc9d153982c3c118c0b079884a7facfd40d",
+    "python-inventory-after-W3F2.json": "c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633",
+    "note": "the scripts and records hold raw paths; any portable copy needs the labels"
+  },
+  "outputs": [
+    "FREEZE-REVIEW-002.md",
+    "FREEZE-REVIEW-002.json",
+    "scripts/w3f2_01_state.py ... w3f2_11_final_state.py",
+    "records/",
+    "timer-test/",
+    "checker-test/ (run 1, partial)",
+    "checker-test-run2/",
+    "checker-test-run3/"
+  ],
+  "reviewed_files": [
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-002/FREEZE-002.json",
+      "sha256": "bc35d6347608f7e04d9968957fa9888bee983c51ff12f2a3799e02733a82a621",
+      "size_bytes": 1329283
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-002/FREEZE-002-DIFFERENCES.json",
+      "sha256": "df7ae291bed508ef14c9367cf6f46827be1b2ef0378a99a30660558e9803bb83",
+      "size_bytes": 31442
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-002/FREEZE-AUTHOR-NOTES-002.md",
+      "sha256": "3d0852631bb81501fb0781c19df1c327937105c06aed06bac9615051b7c6030f",
+      "size_bytes": 11705
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-002/SHA256SUMS.txt",
+      "sha256": "0f441f5f9c4246c4422d5d67fb9365e476958d5f51ac7b7eabf8be587409ca4b",
+      "size_bytes": 10425
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-002/s7/p00-freeze-001-rebound.sha256sums.txt",
+      "sha256": "6912e1768e0d760a37e7c76d948f0b3839b4c525f3650f2d18345d7d341d4ef4",
+      "size_bytes": 7369
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-002/author/scripts/w2f2_selfcheck.py",
+      "sha256": "9bb2739ef899b8272da0159fcbfd394d1b8b2e775397f72fdde7c62da84f907a",
+      "size_bytes": 18437
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-002/author/records/selfcheck-002-001.txt",
+      "sha256": "c1664b6d18960fb63566b90ed3e77fc9d153982c3c118c0b079884a7facfd40d",
+      "size_bytes": 30
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-001/FREEZE-001.json",
+      "sha256": "a5d994ea2db61262bf851379b9289ec028242bb7943d63df1992b3f386b634e6",
+      "size_bytes": 884666
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-001/SHA256SUMS.txt",
+      "sha256": "587732618e5719035bdc477f622d56c3c225f797a592aa2600f0a37476e3b61a",
+      "size_bytes": 8548
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-001/s7/w2f_s7_check.py",
+      "sha256": "eb96aa1a25ba51bf32f55420997bc8599343a59c2238ce70b4b0c622d01643f6",
+      "size_bytes": 16612
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-001/s7/prepare-s7-001.sh",
+      "sha256": "6621518bdd5a7aedf010ace9baf77c578077d7ea883fae454675a39ddce3168e",
+      "size_bytes": 11387
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-001/config/cohort-config-001.json",
+      "sha256": "83c8b1582c1ea4263d60014ca6b4cd22130e57b3fb65e06ff60a78768a5d7a3c",
+      "size_bytes": 2014
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/declared.environment.json",
+      "sha256": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+      "size_bytes": 159
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/runner.environment.json",
+      "sha256": "a1ca9887ea41a6731d478da52443af57262b1ef79a6d8edcebba1e3d0b99f3ed",
+      "size_bytes": 87
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W3-freeze-001/FREEZE-REVIEW-001.md",
+      "sha256": "af2ea72c6ee74520916ba350a1eeb93150b9f6b9dc79f2e7a41cc3943bf28ccc",
+      "size_bytes": 40641
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W3-freeze-001/FREEZE-REVIEW-001.json",
+      "sha256": "282188cc416f3a959951083dfbe65cfa7a32b78a7ede6a6bc749cbcb342965d4",
+      "size_bytes": 49074
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/workers/W3-freeze-001/MC11-REVIEWED-LIST-001.json",
+      "sha256": "aade03ac64a506678ce7ade184ecedcd10c5f6a58077d1f01aa7d0d70db63800",
+      "size_bytes": 344283
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/director/reviews/FREEZE-REVIEW-DISPOSITION-001.json",
+      "sha256": "6eedbff56bf1dd5307510790a9ee97cc6c2577122b5c0d8cbb9c9dadda55bc43",
+      "size_bytes": 11599
+    },
+    {
+      "mode": "0o644",
+      "path": "<local>/c271-p35/director/run/run_once_v2.sh",
+      "sha256": "3c24f923025f855603fce02a3e9fc794eb52409824369e53338f903ce9da8e1f",
+      "size_bytes": 3601
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
+      "sha256": "02da913c198118fc356cccdb60e78a3a2fef3b7ba7115d77d794a85f9e22fc49",
+      "size_bytes": 16420
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/FAILURE-CAPTURE.md",
+      "sha256": "f387fb3ec0ed306366f6d3f22820ec344f1ac843008775475258c5de9634c99c",
+      "size_bytes": 13147
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/README.md",
+      "sha256": "60d9298f36a4170f8a610995e2b34cdfe2f70ed806683966a6556a0f1f7c6084",
+      "size_bytes": 35797
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+      "sha256": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+      "size_bytes": 29076
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/collect_outcomes.py",
+      "sha256": "510bcf3e5b6ce473707f2c0e6f49357983ab2c0964760bf388969d0e12cc2fdf",
+      "size_bytes": 46010
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/control_harness.py",
+      "sha256": "a54fb85d757e2908bfe36e1b77a9e7fc4afd7ae38a7faf4111432960996c9674",
+      "size_bytes": 48562
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/run_direct_probe.py",
+      "sha256": "4b30ac5bb633f4c82079c830f4c09720e57e944c51da44fe063b3b2f8f6be5a2",
+      "size_bytes": 56139
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/tests/test_static_tray_readback_v01.py",
+      "sha256": "6295e0442ba7e7a1d1236fb5d9148e97ed92cc4db3e77dcd7b2993af5ef0f662",
+      "size_bytes": 9298
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/tools/check_local.py",
+      "sha256": "4c55033d51bdd33700f6d8a847b3ed44e6b4f7f6489bf11b5f497279a5a4cb70",
+      "size_bytes": 50513
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.py",
+      "sha256": "d34ea2f98cf77188750b7819f0b5418d4811d0bfcd8612fdd71be58210f59071",
+      "size_bytes": 81218
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/prototypes/static_tray_v01/supervisor_darwin_v01.py",
+      "sha256": "bd4a5e3fcdfb5367994bfeeb93d211dd627b830017b17f607cd94d71ade2bd2b",
+      "size_bytes": 10621
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/prototypes/static_tray_v01/supervisor.py",
+      "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+      "size_bytes": 11286
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py",
+      "sha256": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+      "size_bytes": 162557
+    },
+    {
+      "mode": "0o644",
+      "path": "<worktree>/prototypes/static_tray_v01/format_check.py",
+      "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+      "size_bytes": 15959
+    },
+    {
+      "mode": "0o600",
+      "path": "<local>/c271-p35/evidence/observe-001/HOST.json",
+      "sha256": "34e94f29ea1b7d9d60b389598b4ce5bc7eaf6fcaa58f3798fc3df021a8f28a92",
+      "size_bytes": 18420
+    },
+    {
+      "mode": "0o755",
+      "path": "/usr/bin/shasum",
+      "sha256": "0812595f981a26f813d98dc380af14d4af427626c9339eda29eb849ae13de1e3",
+      "size_bytes": 9979
+    },
+    {
+      "mode": "0o644",
+      "path": "<prefix>/<package-manager>/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py",
+      "sha256": "85d29b2bf0249f5436838298c9a60ee93508b1102e9ac43b001f8a7e7ae8f375",
+      "size_bytes": 88747
+    }
+  ],
+  "reviewed_files_count": 36,
+  "bound_files_verified": [
+    {
+      "id": "tool:FAILURE-CAPTURE.md",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/FAILURE-CAPTURE.md",
+      "sha256": "f387fb3ec0ed306366f6d3f22820ec344f1ac843008775475258c5de9634c99c",
+      "size_bytes": 13147
+    },
+    {
+      "id": "tool:README.md",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/README.md",
+      "sha256": "60d9298f36a4170f8a610995e2b34cdfe2f70ed806683966a6556a0f1f7c6084",
+      "size_bytes": 35797
+    },
+    {
+      "id": "tool:audit_numeric.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/audit_numeric.py",
+      "sha256": "9140379c61bc70f29939bd7b216ef5ca5e2f5e6cab5b4a452e50018651bac4e3",
+      "size_bytes": 40667
+    },
+    {
+      "id": "tool:capture_probe.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+      "sha256": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+      "size_bytes": 29076
+    },
+    {
+      "id": "tool:collect_outcomes.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/collect_outcomes.py",
+      "sha256": "510bcf3e5b6ce473707f2c0e6f49357983ab2c0964760bf388969d0e12cc2fdf",
+      "size_bytes": 46010
+    },
+    {
+      "id": "tool:control_harness.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/control_harness.py",
+      "sha256": "a54fb85d757e2908bfe36e1b77a9e7fc4afd7ae38a7faf4111432960996c9674",
+      "size_bytes": 48562
+    },
+    {
+      "id": "tool:discover_inventory.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/discover_inventory.py",
+      "sha256": "980c80883f3106706a3ecd3b03e908efe31a5c572a67a0d71dc650f85cfb695e",
+      "size_bytes": 35270
+    },
+    {
+      "id": "tool:run_direct_probe.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/run_direct_probe.py",
+      "sha256": "4b30ac5bb633f4c82079c830f4c09720e57e944c51da44fe063b3b2f8f6be5a2",
+      "size_bytes": 56139
+    },
+    {
+      "id": "tool:scan_mc11.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/scan_mc11.py",
+      "sha256": "31cc6e35df6fc92b428310aedd71fb3c0c16f504424197ce69b30cbc8f6cd0c5",
+      "size_bytes": 42833
+    },
+    {
+      "id": "source:prototypes/__init__.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/prototypes/__init__.py",
+      "sha256": "84edcdc6554cf9f1e2b7b5f10729866fa31e6ba3d389043e716a751ea5271fc2",
+      "size_bytes": 72
+    },
+    {
+      "id": "source:prototypes/static_tray_v01/__init__.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/prototypes/static_tray_v01/__init__.py",
+      "sha256": "f63210895af2901371763f24f7ddb301c2a7c1f73f4133335ae85bbb559832e8",
+      "size_bytes": 85
+    },
+    {
+      "id": "source:prototypes/static_tray_v01/supervisor.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/prototypes/static_tray_v01/supervisor.py",
+      "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+      "size_bytes": 11286
+    },
+    {
+      "id": "source:prototypes/static_tray_v01/supervisor_darwin_v01.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/prototypes/static_tray_v01/supervisor_darwin_v01.py",
+      "sha256": "bd4a5e3fcdfb5367994bfeeb93d211dd627b830017b17f607cd94d71ade2bd2b",
+      "size_bytes": 10621
+    },
+    {
+      "id": "source:prototypes/static_tray_v01/current_host_observation_v02.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py",
+      "sha256": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+      "size_bytes": 162557
+    },
+    {
+      "id": "source:prototypes/static_tray_v01/current_host_readback_v01.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/prototypes/static_tray_v01/current_host_readback_v01.py",
+      "sha256": "cb3f0c7f247331c79171a9e1ac71141d93205392ff426382046cfa61999d1126",
+      "size_bytes": 74144
+    },
+    {
+      "id": "source:prototypes/static_tray_v01/current_host_readback_v02.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.py",
+      "sha256": "d34ea2f98cf77188750b7819f0b5418d4811d0bfcd8612fdd71be58210f59071",
+      "size_bytes": 81218
+    },
+    {
+      "id": "source:prototypes/static_tray_v01/current_host_readback_v02.mjs",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs",
+      "sha256": "bca11b2ab3acfb818fd6b43636a51056a60b4af888d77fefa0b1214fec4054cd",
+      "size_bytes": 58452
+    },
+    {
+      "id": "source:prototypes/static_tray_v01/format_check.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/prototypes/static_tray_v01/format_check.py",
+      "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+      "size_bytes": 15959
+    },
+    {
+      "id": "source:prototypes/static_tray_v01/canonical.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/prototypes/static_tray_v01/canonical.py",
+      "sha256": "ce3f67349ade5af1d966ed0f1f240b264278c14f1f77c8ecc5cdeabb12ad6433",
+      "size_bytes": 12078
+    },
+    {
+      "id": "source:tests/test_static_tray_readback_v01.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/tests/test_static_tray_readback_v01.py",
+      "sha256": "6295e0442ba7e7a1d1236fb5d9148e97ed92cc4db3e77dcd7b2993af5ef0f662",
+      "size_bytes": 9298
+    },
+    {
+      "id": "source:tests/test_current_host_readback_controls_v02.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/tests/test_current_host_readback_controls_v02.py",
+      "sha256": "3b8c91b7767c2db0ac3dd5c7dd48d035eb6dd602dc8c01e08bb0e49ac21bd618",
+      "size_bytes": 204751
+    },
+    {
+      "id": "source:tests/test_static_tray_reader_v01.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/tests/test_static_tray_reader_v01.py",
+      "sha256": "cb62893652f553d61d55a1d80b9855d16dda3d54a47a8914058b78b6cc6b6706",
+      "size_bytes": 27925
+    },
+    {
+      "id": "source:tools/check_local.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/tools/check_local.py",
+      "sha256": "4c55033d51bdd33700f6d8a847b3ed44e6b4f7f6489bf11b5f497279a5a4cb70",
+      "size_bytes": 50513
+    },
+    {
+      "id": "source:tools/native-reader-verification-macos-arm64-cp312.lock",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/tools/native-reader-verification-macos-arm64-cp312.lock",
+      "sha256": "b1e3e86668421539c6817faefe7f126b4dbf25153fcbb2fab6325e080cf7a81c",
+      "size_bytes": 799
+    },
+    {
+      "id": "source:docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
+      "sha256": "42db98dc6099ee605b0963f3734f7bff2d68c019ff6c00a0ee97bd753c03fdc9",
+      "size_bytes": 42769
+    },
+    {
+      "id": "source:docs/engineering/localized-repair-c271/macos-implementation-p33/ADOPTION-AMENDMENT-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/ADOPTION-AMENDMENT-001.json",
+      "sha256": "872312ed80a63fbb196c17ace42e786b7fe757b710eff41139b125dfaa507937",
+      "size_bytes": 5396
+    },
+    {
+      "id": "source:docs/engineering/localized-repair-c271/macos-implementation-p33/INVENTORY-ADDITIONS.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/INVENTORY-ADDITIONS.json",
+      "sha256": "f710dbb55483ca428e641e81c523ee556d422660a2594675be0d790fa3a4c9da",
+      "size_bytes": 49810
+    },
+    {
+      "id": "source:docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-FROZEN.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-FROZEN.json",
+      "sha256": "cd7ae80f93cc28b0a9fa69994a77672611eee2c3127b460a595d745c13230594",
+      "size_bytes": 292673
+    },
+    {
+      "id": "source:docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-REFREEZE-002.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-REFREEZE-002.json",
+      "sha256": "cfd6cd64d96e38a98131868370a8270dc052ced80fae742f8636b1839f7f0f69",
+      "size_bytes": 15815
+    },
+    {
+      "id": "source:docs/engineering/localized-repair-c271/current-host-p05/mapping/MAP-EVIDENCE.zip",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/localized-repair-c271/current-host-p05/mapping/MAP-EVIDENCE.zip",
+      "sha256": "e959d8df7a19327979e6f63508239950a3fa2e1aa59f1227ca610014bfc98db3",
+      "size_bytes": 1783600
+    },
+    {
+      "id": "source:docs/engineering/static-tray-mapping-c198/CONTROLS.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/static-tray-mapping-c198/CONTROLS.json",
+      "sha256": "69178feff0c0e566e8f9b648af0ea4b8aa8a1aa8a9524e6a90e0cc6044dc3950",
+      "size_bytes": 28255
+    },
+    {
+      "id": "source:docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
+      "sha256": "21fd6bad8738ed51d4ced8036a0fcde5dd046823f55f71de52b9b81df659ccd5",
+      "size_bytes": 19901
+    },
+    {
+      "id": "source:docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz",
+      "sha256": "b1e54a6cfef133f7004b1988c90bc718fc954409843c2bcac3772d42e904a0c9",
+      "size_bytes": 2611764
+    },
+    {
+      "id": "source:.git",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<worktree>/.git",
+      "sha256": "6d1fb636b7bf23f02f4f0a52984244692d0842bd1461d713878245beb9885a9d",
+      "size_bytes": 59
+    },
+    {
+      "id": "host:HOST.json",
+      "mode": "0o600",
+      "nlink": 1,
+      "path": "<local>/c271-p35/evidence/observe-001/HOST.json",
+      "sha256": "34e94f29ea1b7d9d60b389598b4ce5bc7eaf6fcaa58f3798fc3df021a8f28a92",
+      "size_bytes": 18420
+    },
+    {
+      "id": "host:completion.json",
+      "mode": "0o600",
+      "nlink": 1,
+      "path": "<local>/c271-p35/evidence/observe-001/completion.json",
+      "sha256": "fd1a035065e758825ddff81671fec29380720ed03d20c9571a17d993089488fe",
+      "size_bytes": 981
+    },
+    {
+      "id": "host:result.json",
+      "mode": "0o600",
+      "nlink": 1,
+      "path": "<local>/c271-p35/evidence/observe-001/result.json",
+      "sha256": "1b4cae0f80cce491b200b5a24a1b5a75660af7889bb7120e98cec0a7080b2e1d",
+      "size_bytes": 2621
+    },
+    {
+      "id": "host:git_version/inspection.json",
+      "mode": "0o600",
+      "nlink": 1,
+      "path": "<local>/c271-p35/evidence/observe-001/git_version/inspection.json",
+      "sha256": "d736f86f077169cc9d4b6420b4e831761b49859c805f793c119acc7afb248f21",
+      "size_bytes": 1441
+    },
+    {
+      "id": "host:node_version/inspection.json",
+      "mode": "0o600",
+      "nlink": 1,
+      "path": "<local>/c271-p35/evidence/observe-001/node_version/inspection.json",
+      "sha256": "7a1095fa906166c80c8df2453211134e6489b048f1e0baccbe09df6401efb222",
+      "size_bytes": 1163
+    },
+    {
+      "id": "plan001:observation-plan-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-plan-001/observation-plan-001.json",
+      "sha256": "b8cd6449aba958373f68715158402ed2e0e233e08213f3521bbc3d80cfe4c152",
+      "size_bytes": 9017
+    },
+    {
+      "id": "plan001:source-inventory-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-plan-001/source-inventory-001.json",
+      "sha256": "95abd300edbb9930e67c569b726015964ab98f4ed0ede389da122bbb3f145c4c",
+      "size_bytes": 96238
+    },
+    {
+      "id": "plan001:python-inventory-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-plan-001/python-inventory-001.json",
+      "sha256": "c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633",
+      "size_bytes": 776209
+    },
+    {
+      "id": "plan001:dependencies-inventory-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-plan-001/dependencies-inventory-001.json",
+      "sha256": "3545d5f920ac840804a9e25d28a87d623f96af71537fd3f020a0c1d743f82fb4",
+      "size_bytes": 4543
+    },
+    {
+      "id": "mp:node",
+      "mode": "0o755",
+      "nlink": 1,
+      "path": "<local>/c271-macos/node-v24.22.1-darwin-arm64/bin/node",
+      "sha256": "6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329",
+      "size_bytes": 122545856
+    },
+    {
+      "id": "mp:NODE-SOURCE.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/node-v24.22.1-darwin-arm64/NODE-SOURCE.json",
+      "sha256": "e928a8ec87a6fcd8f21d7bef3e080392e0bdaad3acbf2e767997dae5ead9ea2c",
+      "size_bytes": 976
+    },
+    {
+      "id": "mp:node-archive",
+      "mode": "0o444",
+      "nlink": 1,
+      "path": "<local>/c271-p34/downloads/node/node-v24.22.1-darwin-arm64.tar.gz",
+      "sha256": "89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7",
+      "size_bytes": 53062778
+    },
+    {
+      "id": "mp:node-install-plan",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p34/plans/node-install-plan.json",
+      "sha256": "1fee042d5e3c809a89d4975df40f69d7a27e88abf9ba58d8cf91ca16795c5ff1",
+      "size_bytes": 956650
+    },
+    {
+      "id": "mp:node-install-result",
+      "mode": "0o600",
+      "nlink": 1,
+      "path": "<local>/c271-p34/receipts/node-install-result.json",
+      "sha256": "65caf77a967898ef2d63a3f0595f6f754fde1e7fad9a61f938a084b6717d4729",
+      "size_bytes": 2897
+    },
+    {
+      "id": "mp:reader-install-plan",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p34/plans/reader-install-plan.json",
+      "sha256": "ff5a95da6d349e0bd6ea1d2c79fc02757de48ac9cbb89dc59737b67c6d7a71c8",
+      "size_bytes": 158115
+    },
+    {
+      "id": "mp:reader-install-result",
+      "mode": "0o600",
+      "nlink": 1,
+      "path": "<local>/c271-p34/receipts/reader-install-result.json",
+      "sha256": "03222a857c7a5a186f1bb30c205d10360882962a7a181d6b3659da47a0ac3fb2",
+      "size_bytes": 4116
+    },
+    {
+      "id": "reader:indexer-view/three/LICENSE",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/LICENSE",
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "size_bytes": 1081
+    },
+    {
+      "id": "reader:indexer-view/three/build/three.core.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.core.js",
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "size_bytes": 1458113
+    },
+    {
+      "id": "reader:indexer-view/three/build/three.module.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.module.js",
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "size_bytes": 662772
+    },
+    {
+      "id": "reader:indexer-view/three/build/three.tsl.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.tsl.js",
+      "sha256": "6e6b92d8ce467818944f73815a96abadc6392fb34de577d479a23810b6aeeed0",
+      "size_bytes": 36854
+    },
+    {
+      "id": "reader:indexer-view/three/build/three.webgpu.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.webgpu.js",
+      "sha256": "15cfce5c653541704fd9a3463c39d3e8b854bb6265ccd854d7cfe74090625cc6",
+      "size_bytes": 2284850
+    },
+    {
+      "id": "reader:indexer-view/three/examples/jsm/controls/OrbitControls.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/controls/OrbitControls.js",
+      "sha256": "3d79d07ecb686b4e5d93232eedab255331c1beef711e13164eaa1f68655a5f2b",
+      "size_bytes": 40755
+    },
+    {
+      "id": "reader:indexer-view/three/examples/jsm/gpgpu/CountingSort.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/gpgpu/CountingSort.js",
+      "sha256": "e9e90b6940a4da923534c3f249e8e7bd2c7603f8b432c54c62ecdc6db4be47e3",
+      "size_bytes": 8392
+    },
+    {
+      "id": "reader:indexer-view/three/examples/jsm/loaders/GLTFGaussianSplatLoaderExtension.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/loaders/GLTFGaussianSplatLoaderExtension.js",
+      "sha256": "2814d2e49dc31c8ea45a776978fa98bfb425b55265cd6200ef55472f5f3c9aaa",
+      "size_bytes": 9063
+    },
+    {
+      "id": "reader:indexer-view/three/examples/jsm/loaders/GLTFLoader.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/loaders/GLTFLoader.js",
+      "sha256": "131c0f78c01d19368ae495caa65b3adaa10487810a36a05bb5901b769a35ac16",
+      "size_bytes": 117570
+    },
+    {
+      "id": "reader:indexer-view/three/examples/jsm/objects/GaussianSplat.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/objects/GaussianSplat.js",
+      "sha256": "ea3f148d39413ef31781cdbb1c97a8972b2dce01ef5eebe6ef800c2b1ba7ab42",
+      "size_bytes": 32105
+    },
+    {
+      "id": "reader:indexer-view/three/examples/jsm/utils/BufferGeometryUtils.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/BufferGeometryUtils.js",
+      "sha256": "9fb63427ce6641fa14fd0baff9cc4d1b5f9c3d85fd084bf2e90e803c44ec1797",
+      "size_bytes": 37712
+    },
+    {
+      "id": "reader:indexer-view/three/examples/jsm/utils/GaussianSplatUtils.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/GaussianSplatUtils.js",
+      "sha256": "4b9b010149b3e1a7673de37638365e937e005a03ba706e4cd81301b717d30f54",
+      "size_bytes": 5586
+    },
+    {
+      "id": "reader:indexer-view/three/examples/jsm/utils/SkeletonUtils.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/SkeletonUtils.js",
+      "sha256": "b1632a703206c3d830de9fcbe515696770d04b71a15ee6b50afa6d2c3298c86f",
+      "size_bytes": 11535
+    },
+    {
+      "id": "reader:indexer-view/three/package.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/indexer-view/three/package.json",
+      "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+      "size_bytes": 3672
+    },
+    {
+      "id": "reader:tools/three_loader.mjs",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/tools/three_loader.mjs",
+      "sha256": "927190e6d34940b2c7f9586c72459c24dc5fad497268bded628acd459ec9235e",
+      "size_bytes": 564
+    },
+    {
+      "id": "reader:validator/package/ISSUES.md",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/validator/package/ISSUES.md",
+      "sha256": "72981a105335964111253e7e5db4e956b8ab3a17fd74c2d02180bffc7f533c20",
+      "size_bytes": 17519
+    },
+    {
+      "id": "reader:validator/package/LICENSE",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/validator/package/LICENSE",
+      "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+      "size_bytes": 11560
+    },
+    {
+      "id": "reader:validator/package/NOTICES",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/validator/package/NOTICES",
+      "sha256": "933f161ca1e7b3ead5a6cf93ebb3bf6cb67f0e79b38e08d2046f8cdc41cb78a3",
+      "size_bytes": 22286
+    },
+    {
+      "id": "reader:validator/package/README.md",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/validator/package/README.md",
+      "sha256": "f5f26dc624a62817b356cec631b33af7358d046a4b2c0499a5f55189d986afa5",
+      "size_bytes": 6814
+    },
+    {
+      "id": "reader:validator/package/gltf_validator.dart.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/validator/package/gltf_validator.dart.js",
+      "sha256": "b73a7b2d455ac217567725138b46d826a13d7d1bb0c88c15f7c571bfb349298c",
+      "size_bytes": 307792
+    },
+    {
+      "id": "reader:validator/package/index.js",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/validator/package/index.js",
+      "sha256": "78deff9ea85743e86461c2d14fae76e7fc3ca0432e652f62948066b55fa16f0d",
+      "size_bytes": 2829
+    },
+    {
+      "id": "reader:validator/package/module.mjs",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/validator/package/module.mjs",
+      "sha256": "d2a88775a8b22f61be8e00644760f0f04b615fad0fc5175fefd40e0da4df2c8f",
+      "size_bytes": 2822
+    },
+    {
+      "id": "reader:validator/package/package.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/validator/package/package.json",
+      "sha256": "3578d16153fa237c72784588da2e8fcccc9cd3c1c58ef34c7912f0732d2f5fa6",
+      "size_bytes": 618
+    },
+    {
+      "id": "reader:validator/package/validation.schema.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-macos/reader-c195/validator/package/validation.schema.json",
+      "sha256": "e33db4da1e907481a5fc056d2daab40be1a603620d8f4a1c81919120f3340365",
+      "size_bytes": 11107
+    },
+    {
+      "id": "git",
+      "mode": "0o755",
+      "nlink": 1,
+      "path": "(the bound Git: HOST git.path)",
+      "sha256": "be4afb2b003904725826250de9fb76567bbacf82323457b5a1ec26706b66bcae",
+      "size_bytes": 7604272
+    },
+    {
+      "id": "wrapper:run_once_v2.sh",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/director/run/run_once_v2.sh",
+      "sha256": "3c24f923025f855603fce02a3e9fc794eb52409824369e53338f903ce9da8e1f",
+      "size_bytes": 3601
+    },
+    {
+      "id": "freeze:config/cohort-config-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/config/cohort-config-001.json",
+      "sha256": "83c8b1582c1ea4263d60014ca6b4cd22130e57b3fb65e06ff60a78768a5d7a3c",
+      "size_bytes": 2014
+    },
+    {
+      "id": "freeze:config/discovery-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/config/discovery-001.json",
+      "sha256": "9438de3acb39734d28c55fda15b5047d078faf0cba85c828d8c9b17e2a3e1ba0",
+      "size_bytes": 1095
+    },
+    {
+      "id": "freeze:config/mc29-configuration-config-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/config/mc29-configuration-config-001.json",
+      "sha256": "196b8a932969edbd029c9dee397f8d8f18085d9743c94f75dc95b6b2c86a1aa1",
+      "size_bytes": 2026
+    },
+    {
+      "id": "freeze:config/mc29-job-input-config-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/config/mc29-job-input-config-001.json",
+      "sha256": "b283fa1f5684fa53f5ca338ad7a379bca5d43ff033b294d20013e58a1615623f",
+      "size_bytes": 2022
+    },
+    {
+      "id": "freeze:config/methods-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/config/methods-001.json",
+      "sha256": "ae687f2f3c7d4e905aa61e1561b76ab1d3c5fb29b4a990a6d0582c2af53b608b",
+      "size_bytes": 1576
+    },
+    {
+      "id": "freeze:env/cohort.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/cohort.environment.json",
+      "sha256": "8eea85d3d4f90c14c975b61ce1926cbad7d1cb188767b6e5603562a5bd8b203f",
+      "size_bytes": 632
+    },
+    {
+      "id": "freeze:env/declared.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/declared.environment.json",
+      "sha256": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+      "size_bytes": 159
+    },
+    {
+      "id": "freeze:env/discovery-baseline.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/discovery-baseline.environment.json",
+      "sha256": "e573d9dd86ca80f95f2e87f35d8599789e1cbbf1d9afdfd1715012f4cc7957f0",
+      "size_bytes": 283
+    },
+    {
+      "id": "freeze:env/discovery-current.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/discovery-current.environment.json",
+      "sha256": "980acd009aad891c7bc1344a937470a4492aafd980bf6e77a3ce054d0c07bcab",
+      "size_bytes": 282
+    },
+    {
+      "id": "freeze:env/git-worktree.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/git-worktree.environment.json",
+      "sha256": "1fde994c20957d2cbb2ebf1cf8359141f7014e6180126e4ce6150b711910db0c",
+      "size_bytes": 389
+    },
+    {
+      "id": "freeze:env/git.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/git.environment.json",
+      "sha256": "c852625d2d82dd8efd6a0de5c81947b2c37cc47c3ec0ae8577a0f69c2c9fb45d",
+      "size_bytes": 320
+    },
+    {
+      "id": "freeze:env/host-state.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/host-state.environment.json",
+      "sha256": "31da85189f6812b92d2f3114abd4ed6b3224391a4bf378759d1e636c6b94644c",
+      "size_bytes": 187
+    },
+    {
+      "id": "freeze:env/mc29-configuration.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/mc29-configuration.environment.json",
+      "sha256": "d31a1ce1afd647ae68308cb449c983aac727b05ccfae0ba2b1a6d4db4278cbcb",
+      "size_bytes": 658
+    },
+    {
+      "id": "freeze:env/mc29-job-input.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/mc29-job-input.environment.json",
+      "sha256": "3dcd16bb115349919d9f9ebfb5d4036b3aa23683cba5661d9eb38c924d0cc65a",
+      "size_bytes": 646
+    },
+    {
+      "id": "freeze:env/mc37.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/mc37.environment.json",
+      "sha256": "2bb3f77ad62225cf80fd8e2bcec4346a32ca6808afa02372ac808bc24857d9e7",
+      "size_bytes": 269
+    },
+    {
+      "id": "freeze:env/plain.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/plain.environment.json",
+      "sha256": "e99bb6b915491002e9bfe1563f78e0f360e8014739aa36a267ba46d51e785489",
+      "size_bytes": 134
+    },
+    {
+      "id": "freeze:env/runner.environment.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/env/runner.environment.json",
+      "sha256": "a1ca9887ea41a6731d478da52443af57262b1ef79a6d8edcebba1e3d0b99f3ed",
+      "size_bytes": 87
+    },
+    {
+      "id": "freeze:mc10/observation-plan-mc10-a.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/mc10/observation-plan-mc10-a.json",
+      "sha256": "2f2134a380580b550da79b43627bf4f3de5ce5d71961ab820901da2c3763b6b1",
+      "size_bytes": 9395
+    },
+    {
+      "id": "freeze:mc10/observation-plan-mc10-b.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/mc10/observation-plan-mc10-b.json",
+      "sha256": "1b690f23c5be562b5ddc9ffa9559900bc3e7c2d1794ebdee1daf94bea9b347eb",
+      "size_bytes": 9827
+    },
+    {
+      "id": "freeze:mc10/observation-plan-mc10-c.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/mc10/observation-plan-mc10-c.json",
+      "sha256": "ea87f9ee4e2bda9a51db6a763797890457d02dec4e6b07bca7277fda0e4b22f2",
+      "size_bytes": 9395
+    },
+    {
+      "id": "freeze:probe/h01/config.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/h01/config.json",
+      "sha256": "16032c32d71a4a25c60f32a88a581fce7301373a119cbf6d1dd777b00bd0598e",
+      "size_bytes": 2017
+    },
+    {
+      "id": "freeze:probe/h01/job.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/h01/job.json",
+      "sha256": "74d90fdb1becc4421b30c986ed7a48fd4555fc69b0b745b647dfa6fccb6f7921",
+      "size_bytes": 827
+    },
+    {
+      "id": "freeze:probe/h01/supplemental-cpu.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/h01/supplemental-cpu.json",
+      "sha256": "dc79f726d75eab1245f0528d041fb8da1b774914b367401faf18262413f36065",
+      "size_bytes": 21334
+    },
+    {
+      "id": "freeze:probe/h02/config.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/h02/config.json",
+      "sha256": "48d33d34d9d647ef348b3449285475fe87ac62837772fcaf273587277938d083",
+      "size_bytes": 2017
+    },
+    {
+      "id": "freeze:probe/h02/job.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/h02/job.json",
+      "sha256": "3dc6fd0703eef8e27aadc1de35df7600d9a2eb89a9a3807efda837ab8bd3c90e",
+      "size_bytes": 827
+    },
+    {
+      "id": "freeze:probe/h02/supplemental-cpu.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/h02/supplemental-cpu.json",
+      "sha256": "4aa599dfa6b3eb0d5a505f70013d61daa2dede9ca9ad27049f03bcae6f2f370c",
+      "size_bytes": 21334
+    },
+    {
+      "id": "freeze:probe/mc30/HOST.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc30/HOST.json",
+      "sha256": "1515cac3e8c63c5526a0d9d2cfe64871d8a3a5be39705e0c945805447ebe62f2",
+      "size_bytes": 18409
+    },
+    {
+      "id": "freeze:probe/mc30/config.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc30/config.json",
+      "sha256": "f86d32c7ff952171ae2371ea34b9a8f8d9766eea6cc6046c70ebe37ea8dedcec",
+      "size_bytes": 2030
+    },
+    {
+      "id": "freeze:probe/mc30/job.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc30/job.json",
+      "sha256": "4d25e839131d94156eaa2bce92e1e1875ba018b512a3ff97e1584ac0d33d71da",
+      "size_bytes": 831
+    },
+    {
+      "id": "freeze:probe/mc30/supplemental-cpu.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc30/supplemental-cpu.json",
+      "sha256": "c301fa2874d5dd13384eda1824aa724ddcf227767fcb5a146200cfea5b3f1d44",
+      "size_bytes": 21385
+    },
+    {
+      "id": "freeze:probe/mc36/HOST.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc36/HOST.json",
+      "sha256": "cea4d3d568a261882b630dec194fd33c75ec5acc310721e0eef1c03c39a56a51",
+      "size_bytes": 18426
+    },
+    {
+      "id": "freeze:probe/mc36/config.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc36/config.json",
+      "sha256": "8f46961e3df8da8c352d4ee807efccad1abbd18678898bf57492bef7c5769a79",
+      "size_bytes": 2030
+    },
+    {
+      "id": "freeze:probe/mc36/job.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc36/job.json",
+      "sha256": "6151ea76c3047654a4d03cce8bcd6acd0086aa41f4bc224a45bc4b13f8e34c10",
+      "size_bytes": 831
+    },
+    {
+      "id": "freeze:probe/mc36/supplemental-cpu.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc36/supplemental-cpu.json",
+      "sha256": "c62fc516f6b17c76f5f6126f6ad047d7ff4caa3bda25e2ccab4d65d642b6ae60",
+      "size_bytes": 21385
+    },
+    {
+      "id": "freeze:probe/rows-r1.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/rows-r1.json",
+      "sha256": "318154b3d51c6f0e65367cf027790d575a2ec6238c99e91e4d496df705c23d5f",
+      "size_bytes": 11140
+    },
+    {
+      "id": "freeze:probe/rows-r2.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/probe/rows-r2.json",
+      "sha256": "c3e57a9674638384444ac6a9c448591099286bf8695d3935f876802a8da4bfed",
+      "size_bytes": 13284
+    },
+    {
+      "id": "freeze:s7/prepare-s7-001.sh",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/s7/prepare-s7-001.sh",
+      "sha256": "6621518bdd5a7aedf010ace9baf77c578077d7ea883fae454675a39ddce3168e",
+      "size_bytes": 11387
+    },
+    {
+      "id": "freeze:fixtures/Q01-changed-reference/synthetic-audit.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01-changed-reference/synthetic-audit.json",
+      "sha256": "26d78f8d5998f012caf02bd49a31fe6cda654dff60f2211812ab156e2a99b61d",
+      "size_bytes": 567215
+    },
+    {
+      "id": "freeze:fixtures/Q01/synthetic-audit.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic-audit.json",
+      "sha256": "7f10f355d8bac0a6120159d3478cf28b8646755fb50fc240f0e36ad6b403a42e",
+      "size_bytes": 567205
+    },
+    {
+      "id": "freeze:fixtures/Q01/synthetic.glb",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic.glb",
+      "sha256": "d00a73622924f025ee7a1620de0104eac3013a5e27210f9842292bb32eacd0f5",
+      "size_bytes": 21152
+    },
+    {
+      "id": "freeze:fixtures/Q03/synthetic-audit.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/fixtures/Q03/synthetic-audit.json",
+      "sha256": "ae24b5ee5ecb86d5bf8082ea9324efbddc4cc4fcb7ad49bc1f23df28604e4132",
+      "size_bytes": 567002
+    },
+    {
+      "id": "freeze:fixtures/Q03/synthetic.glb",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/fixtures/Q03/synthetic.glb",
+      "sha256": "02a495d5f0e46365e64e510146d421694a7a2b36441a6364bf2d3c968bc71a8a",
+      "size_bytes": 21176
+    },
+    {
+      "id": "freeze:s7/w2f_s7_check.py",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/s7/w2f_s7_check.py",
+      "sha256": "eb96aa1a25ba51bf32f55420997bc8599343a59c2238ce70b4b0c622d01643f6",
+      "size_bytes": 16612
+    },
+    {
+      "id": "freeze:mc11/MC11-CANDIDATE-LIST-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-001/mc11/MC11-CANDIDATE-LIST-001.json",
+      "sha256": "22d57d8cc66e31e673e3d6c38bb16d4e76872451224ab9e32c87cffe52000db6",
+      "size_bytes": 262273
+    },
+    {
+      "id": "review001:MC11-REVIEWED-LIST-001.json",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W3-freeze-001/MC11-REVIEWED-LIST-001.json",
+      "sha256": "aade03ac64a506678ce7ade184ecedcd10c5f6a58077d1f01aa7d0d70db63800",
+      "size_bytes": 344283
+    },
+    {
+      "id": "freeze002:s7/p00-freeze-001-rebound.sha256sums.txt",
+      "mode": "0o644",
+      "nlink": 1,
+      "path": "<local>/c271-p35/workers/W2-freeze-002/s7/p00-freeze-001-rebound.sha256sums.txt",
+      "sha256": "6912e1768e0d760a37e7c76d948f0b3839b4c525f3650f2d18345d7d341d4ef4",
+      "size_bytes": 7369
+    }
+  ],
+  "bound_files_count": 122
+}

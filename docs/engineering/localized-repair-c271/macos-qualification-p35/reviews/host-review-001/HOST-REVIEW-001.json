@@ -1,0 +1,1095 @@
+{
+ "answers": {
+  "q1_shape_and_content": {
+   "checks": "h01 173/173, h02 16/16 apart from P11 (locale-dependent utf8_mode; settled by h04b run 2), h03 10/10, h04b run 2 2/2",
+   "closed_document": "HOST is exactly W3-OBSERVER section 3's document: 21 top-level keys, every sub-object closed, canonical JSON, no duplicate member.",
+   "plan_agreement": "every bound value agrees with plan 001 (23 groups)",
+   "recomputed": "descriptors and bindings, OS identity and cryptex hop, platform with boot session and proc_translated, Python inventory (byte-identical, c277bdd3..., 776,209 bytes), packages and RECORD rows, interpreter facts (under the declared environment), Node's binding, layout, NODE-SOURCE.json, Mach-O header and all 21 load commands, source inventory (byte-identical, 95abd300..., 644 files), HEAD from the Git files, commit C's tree (ea10cd94...), index equal to that tree, worktree equal to the index"
+  },
+  "q2_starts": {
+   "counts": {
+    "node": 1,
+    "other": 1
+   },
+   "git_version": {
+    "duration_ms": 6.654,
+    "pid": 7994,
+    "stderr_bytes": 0,
+    "stdout": "git version 2.50.1 (Apple Git-155)\\n"
+   },
+   "node_version": {
+    "duration_ms": 1109.748,
+    "pid": 7995,
+    "stderr_bytes": 0,
+    "stdout": "v24.22.1\\n"
+   },
+   "records": "intent.json before each start (UNKNOWN, observed 0); started.json with one positive PID leading its group; the supervisor's 14-field receipt with exit 0, reaped, group absent, handles closed; inspection.json closed with timeout_ms 5000; postflight.json COMPLETED, OBSERVED_ONE, both rechecks equal to facts 3867d3e8...; no failure.json",
+   "rule": "P07 section 4: one receipt with a positive PID per command; MH-PLAN section 7 rows M0 (other 1) and M1 (node 1)"
+  },
+  "q3_n07": "The recorded line equals 'git version ' + '2.50.1 (Apple Git-155)', the text embedded once in each slice of the bound fat Git; this host runs its arm64 slice (subtype 0; no arm64e slice).",
+  "q4_d16_n04": {
+   "cf_user_text_encoding": "0x1F5:0x0:0x0",
+   "d16": "runtime.macho.commands[14] is cmd 0x0000000c LC_LOAD_DYLIB of /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (current 3038.1.255, compatibility 150.0.0)",
+   "n04": "M1 shows nothing of Node's process.env; MC36 stays tied to a positive probe start that observes the variable with this value"
+  },
+  "q5_n06": "81 LC_RPATH entries: <prefix>/lib (78), the sqlite library's lib directory, libmpdec's @loader_path/../lib, and Pillow libjpeg's absent /Users/runner/work/Pillow/Pillow/build/deps/darwin/lib, recorded absent at /Users/runner; 162 references (127 system, 9 absolute bound, 26 @loader_path), no @rpath or @executable_path, so no entry is used; a change of resolution changes the inventory and fails closed",
+  "q6_n03": "The main cache file is N34-M's (7a024959..., 573,440 bytes, UUID F2E86C53-6052-388B-BA71-5A0C9B569413, platform 1, osVersion 26.6.0, 3,649 images, 12 subcaches); Node's four and Git's five system references are absent from disk and in its image table; /usr/lib/dyld is on disk with N34-M's bytes and in the table; osVersion agrees with HOST's 26.6.2 (25G83) on 26.6",
+  "q7_capture_records": {
+   "command_records": "observe, readback-listing, probes and the hand-written static record each hold argv, cwd, the environment file and its SHA-256 (0ed78f47..., M0-LAUNCH's), UTC and epoch times, wall time, boot before and after, exit and streams; each window holds what it records",
+   "empty_first_record": "kept unchanged, as FC-K1 requires; the reconstruction was written to a new, absent name",
+   "probes": "both recorded starts absent: kill and killpg ESRCH for 7994 and 7995; the pairs' digests and mtime_ns equal the files",
+   "readback": "equals the attempt now: root, 2 directories and 19 files; the 24 planned paths covered (19 files, 2 directories, 3 absent failure.json)",
+   "static_record": "faithful: start and end equal the stdout and exit files' birth times to the nanosecond; stdout byte-identical to W2's static output; wall and boot transcribed and corroborated (HR-01)"
+  },
+  "q8_other": [
+   "HR-02 (CF value)",
+   "HR-03 (PR-03's job)",
+   "HR-04 (finality)",
+   "HR-05 (recorded, not decided)",
+   "HR-06 (claims)",
+   "HR-07 (count evidence and M1 timing)"
+  ]
+ },
+ "findings": [
+  {
+   "effect": "None on HOST. The hand record is faithful to every checkable fact: its start and end equal the stdout and exit files' birth times to the nanosecond; its streams, exit status and argv agree; its wall time is 3.07 ms shorter than the birth interval, as the wrapper's order predicts; its boot is the plan's, as in every other record. Keeping the empty file is what FC-K1 requires.",
+   "id": "HR-01",
+   "issue": "run_once.sh left an empty .command.json and still exited 0. The hand record's wall time and boot readings are transcribed from the wrapper's printed terminal line, which is not retained. run_once_v2.sh takes its second-resolution UTC strings from date calls separate from its epoch readings, so they can differ by one second (probe record: end epoch 05:35:18.998Z, ended_at_utc 05:35:19Z). Neither wrapper is bound by a reviewed plan.",
+   "location": [
+    "<local>/c271-p35/evidence/observe-001.static.command.json (0 bytes)",
+    "<local>/c271-p35/evidence/observe-001.static.command-record.json",
+    "<local>/c271-p35/director/run/run_once.sh and run_once_v2.sh",
+    "FAILURE-CAPTURE FC-K1, FC-K3"
+   ],
+   "recommendation": "The freeze, the audit and S9's copies name observe-001.static.command-record.json as the static run's FC-K3 record, list the empty .command.json as retained unchanged, and state that its wall time and boot readings are transcribed. If S7 uses a wrapper, the freeze binds it by path and SHA-256 and treats its epoch fields as the authoritative times.",
+   "severity": "nonmandatory",
+   "title": "The static run's FC-K3 record is hand-written under a second name, and the wrappers are not bound"
+  },
+  {
+   "effect": "None on HOST. If that file changed or vanished before or during S7, the value in new processes would differ and the probe's environment binding would refuse every positive start (MC31's rule) until a new HOST; this fails closed.",
+   "id": "HR-02",
+   "issue": "0x1F5:0x0:0x0 is 0x + the UID 501 in hex + ':' + the 7-byte content 0x0:0x0 of <home>/.CFUserTextEncoding (mode 0o400, last modified 2026-02-15), consistent with CoreFoundation building it from the UID and that file. The declared environment has no HOME, so the file is found through the user database. A process launched as the observer was, and the reviewer's own shell, show the same value. M1 cannot show Node's.",
+   "location": [
+    "HOST environment.cf_user_text_encoding",
+    "contract S10 and section 12",
+    "MC30, MC31, MC36",
+    "N-04"
+   ],
+   "recommendation": "The freeze records that file's SHA-256 as an unbound host fact, asks that the owner's language and region settings stay unchanged until MH ends, and keeps N-04's tie of MC36 to a positive probe start that observed the variable with HOST's value.",
+   "severity": "nonmandatory",
+   "title": "HOST's __CF_USER_TEXT_ENCODING value depends on an unbound file in the owner's home directory"
+  },
+  {
+   "effect": "None so far: the installation inventory recomputed byte-identically after M0 and in the final check. If the job ever writes bytecode, the cohort's recheck refuses (MC32): fail closed, at the cost of a counted attempt.",
+   "id": "HR-03",
+   "issue": "PID 1304, parent launchd (PID 1), started 2026-11-23T12:21:13.98Z, same user, still runs <framework>/Resources/Python.app/Contents/MacOS/Python. Only its image, parent, group and start time were read.",
+   "location": [
+    "PLAN-REVIEW-001 PR-03 and its disposition",
+    "MH-PLAN sections 5 and 10 (N-09)"
+   ],
+   "recommendation": "The freeze restates PR-03's disposition and makes an inventory recheck immediately before S7 a stated precondition; the owner may pause the job until MH ends.",
+   "severity": "nonmandatory",
+   "title": "PR-03's launchd job still runs on the bound interpreter"
+  },
+  {
+   "effect": "None here: every record agrees. A reader of result.json alone could take a completed attempt for an unfinished one.",
+   "id": "HR-04",
+   "issue": "result.json inside the attempt is written before the completion marker with state PENDING_COMPLETION and evidence_finalized false; only completion.json and observe's stdout say OBSERVED_UNAPPROVED and finalized. HOST's starts is a constant of host_document; the computed counts are checked after HOST is published.",
+   "location": [
+    "observe_host",
+    "<attempt>/result.json, completion.json, HOST.json"
+   ],
+   "recommendation": "The freeze binds HOST together with completion.json and result.json by SHA-256 and cites completion.json's state.",
+   "severity": "nonmandatory",
+   "title": "HOST's finality rests on completion.json, not on result.json"
+  },
+  {
+   "effect": "None: every field agrees with the host now. This review verified commit C's tree, the index and the worktree statically, and records the cache (7a024959..., UUID F2E86C53-6052-388B-BA71-5A0C9B569413) and dyld (373fce2b...).",
+   "id": "HR-05",
+   "issue": "source.tree is a planned value (tree_check); source.head.files binds the loose ref in <common-dir>, which the provider does not re-compare; python.interpreter.flags.utf8_mode is 0 only under LC_ALL=C.UTF-8 (1 under an unset or C locale), and the provider does not compare flags; HOST records neither the shared cache's identity nor dyld's; labels.node.signature_check is not_performed; runtime.macho's flags, segments and signature range are recorded, not decided.",
+   "location": [
+    "HOST source, python.interpreter, runtime, labels.node",
+    "N-02, N-03, D-02",
+    "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.py lines 487 to 713"
+   ],
+   "recommendation": "The freeze cites this review for the tree and cache facts; any consumer that compares interpreter flags launches in the declared environment.",
+   "severity": "nonmandatory",
+   "title": "What HOST records without deciding, and what its consumer re-checks"
+  },
+  {
+   "effect": "None; the provider requires exactly these four texts.",
+   "id": "HR-06",
+   "issue": "Not restated: the Darwin supervisor's descendant limit; durability limited to fsync; and that Git is bound by bytes and a version grammar only, never parsed, with its system libraries identified by OS build alone (E18, N-07).",
+   "location": [
+    "HOST claims",
+    "the observer's CLAIMS",
+    "contract sections 5, 7 and 10",
+    "FC-P5"
+   ],
+   "recommendation": "The freeze and the audit cite contract section 10 for the full list of what results built on HOST cannot support, and do not read claims as complete.",
+   "severity": "nonmandatory",
+   "title": "HOST's four claims do not restate every limit that applies to M0 and M1"
+  },
+  {
+   "effect": "None on HOST: P07's rules are met and both durations lie within the limits.",
+   "id": "HR-07",
+   "issue": "The observer installs no audit hook and its own PID is recorded nowhere, so {node: 1, other: 1} rests on two receipts with positive PIDs and on the source, which calls run_process exactly twice. The PIDs 7994 and 7995 are consecutive, consistent with no other process creation on the host between the two forks. Node took 1,109.748 ms (37 percent of the 3,000 ms of work), Git 6.654 ms.",
+   "location": [
+    "_run_start",
+    "the attempt's receipts",
+    "MH-PLAN section 7, P07 section 4",
+    "PR-04"
+   ],
+   "recommendation": "S8's audit states this basis for M0's and M1's counts; the freeze may cite M1's duration as the only timing evidence for bin/node on this host.",
+   "severity": "nonmandatory",
+   "title": "The start-count evidence is receipts and source; M1's first execution took 1.110 s"
+  }
+ ],
+ "host_sha256": "34e94f29ea1b7d9d60b389598b4ce5bc7eaf6fcaa58f3798fc3df021a8f28a92",
+ "mandatory_findings": [],
+ "own_files": [
+  {
+   "mode": "0o644",
+   "path": "OUT/scripts/h00_explore.py",
+   "sha256": "f8717c506d8ba546d43bf03deffcb71f944e60a18fc87475116355c89ed9eb98",
+   "size_bytes": 5757
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/scripts/h01_host_bindings.py",
+   "sha256": "055497f7b36961a0ca4a48fd9f8d21cceed576aa6038c05a6ad16c97f49b03e5",
+   "size_bytes": 37617
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/scripts/h02_python_inventory.py",
+   "sha256": "47489e7117914a731ac1a567401623725bc4d0ab8eb7a5c9d7a521dbc86303fc",
+   "size_bytes": 24188
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/scripts/h03_source_and_head.py",
+   "sha256": "ef743c266859071b9e19f88c9f0db2d50ca06ab1349488abbfdf39fd8ab75eca",
+   "size_bytes": 18333
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/scripts/h04_evidence.py",
+   "sha256": "6578d2f3d48852b8aad5968baa85eec94aa75200e417f814ca0051800cbcca25",
+   "size_bytes": 32791
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/scripts/h04b_declared_launch.py",
+   "sha256": "08f639fe05774cefd95ecc598fcf513b4a3651057d9ba4232749640024596991",
+   "size_bytes": 3360
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/scripts/h05_report_json.py",
+   "sha256": "88785750c8448034c03869e4faf41bfc42ff490b5521bc507f9802e136339438",
+   "size_bytes": 23028
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/scripts/h06_final_check.py",
+   "sha256": "4b76fff92d73f4efaef7f754791c25d20fa963b6b3c545fe8ba3015a94af90d7",
+   "size_bytes": 5919
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/scripts/h_common.py",
+   "sha256": "a255cc81a6f0ab2fe820d13f26fd69350143d3ad7e63afaebd736fbde2ebe0db",
+   "size_bytes": 15854
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/outputs/h00-explore.json",
+   "sha256": "4bebac57d0f5a60f1b0ae28b98d5ae4448906746de9d5c7f183346427fcb4383",
+   "size_bytes": 24744
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/outputs/h01-host-bindings.json",
+   "sha256": "49b43e7340471aa6d7da39ccc98088936d231e0e009f4ca1c93c189d3b9071b8",
+   "size_bytes": 56031
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/outputs/h02-python-inventory.json",
+   "sha256": "e4e55f80a05508de6b68c01fbb69f4eb652a2cd8ef08b53728f44a12c9c53367",
+   "size_bytes": 6271
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/outputs/h03-source-and-head.json",
+   "sha256": "f1b558aa4be90382abc7e6299ddc4b6ce0efb9f6d91ceaea6e4064cf36d3ec0f",
+   "size_bytes": 5413
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/outputs/h04-evidence-run2.json",
+   "sha256": "a1f92047cdddac6fcd33a3d779a9b4f01d3774b4a0d246eb33abe2d6e99fb3d7",
+   "size_bytes": 14736
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/outputs/h04-evidence.json",
+   "sha256": "2fb7a3246b6a80fb24eeb2486936ba23d450f0086b6dbda0db86d7902be3c6ad",
+   "size_bytes": 13036
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/outputs/h04b-declared-launch-run2.json",
+   "sha256": "c2ea6d08ae8ccddf330eeb7f282de726ed21b6cfd767fcfbb9634d820ddb9e31",
+   "size_bytes": 2517
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/outputs/h04b-declared-launch.json",
+   "sha256": "99557a1d273ce924304905c8249699cae50a5681afba7e22a54eae65abfb663f",
+   "size_bytes": 3178
+  },
+  {
+   "mode": "0o644",
+   "path": "OUT/HOST-REVIEW-001.md",
+   "sha256": "68bc08412dcb81ce04bf5f3c8c4fdbaa9721b1188cfa1a9b84393b275dab0582",
+   "size_bytes": 45611
+  }
+ ],
+ "own_files_note": "h06's output and this file itself are not listed: h06 runs after this file is written, and records both digests",
+ "review": {
+  "boot_session_uuid": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+  "commit_c": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
+  "gate": "MH",
+  "id": "HOST-REVIEW-001",
+  "labels": {
+   "<attempt>": "<local>/c271-p35/evidence/observe-001",
+   "<common-dir>": "the clone's Git directory",
+   "<framework>": "<prefix>/Cellar/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12",
+   "<home>": "the owner's home directory",
+   "<local>": "the working directory beside the clone",
+   "<package-manager>": "the package manager that owns <prefix>",
+   "<prefix>": "the installation prefix of the framework and its non-system libraries",
+   "<worktree>": "the C271 worktree at commit C",
+   "OUT": "<local>/c271-p35/workers/W3-host-001"
+  },
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "reviewer": "W3, a Claude Code subagent in a fresh context with no earlier review in it",
+  "stage": "S5, the HOST review",
+  "tree": "ea10cd94c05a2ebbb44b3f83d4c96cb0a59baa2b",
+  "written_at_utc": "2026-11-27T06:15:05Z"
+ },
+ "reviewed_files": [
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.environment.json",
+   "role": "evidence",
+   "sha256": "0ed78f47b1929634d65b6407b8e8daf047aeb2daa6b5c194c24e91a7b91ebcf2",
+   "size_bytes": 96
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.observe.command.json",
+   "role": "evidence",
+   "sha256": "114047a209bf455780c77ce9b73a2f2fcb874dc3e97ad4ed18883e10bac28138",
+   "size_bytes": 1964
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.observe.exit.txt",
+   "role": "evidence",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "size_bytes": 2
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.observe.stderr.txt",
+   "role": "evidence",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.observe.stdout.txt",
+   "role": "evidence",
+   "sha256": "200d1f9cebeec9ffe19918e9ee48b1cffe062486ecc68e90c1979e51e0e7067d",
+   "size_bytes": 3045
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.probes.command.json",
+   "role": "evidence",
+   "sha256": "3d83d67acb0683887a676be1e7abf49b6ae6e687df3c0c6153ac2afb71bb3217",
+   "size_bytes": 2305
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.probes.exit.txt",
+   "role": "evidence",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "size_bytes": 2
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.probes.json",
+   "role": "evidence",
+   "sha256": "9030422faa95bb27ddf864d6404c9ab3931627347114099537e3e0d6695dbadd",
+   "size_bytes": 5299
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.probes.stderr.txt",
+   "role": "evidence",
+   "sha256": "e047aebe526ee97efd95d1532d2a52705b8ab2c0bc952ee5327d1fe0e42b6395",
+   "size_bytes": 64
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.probes.stdout.txt",
+   "role": "evidence",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.readback-listing.command.json",
+   "role": "evidence",
+   "sha256": "454fd7f82b91981f422d51ba52bb9bd62c9c8c3dde56edb1df05df0b51ce3dd3",
+   "size_bytes": 4744
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.readback-listing.exit.txt",
+   "role": "evidence",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "size_bytes": 2
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.readback-listing.stderr.txt",
+   "role": "evidence",
+   "sha256": "745f333f33d02410b9039deed593594f65787275a1dafdcac3c74b3ece751ea8",
+   "size_bytes": 34
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.readback-listing.stdout.txt",
+   "role": "evidence",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.readback.json",
+   "role": "evidence",
+   "sha256": "058aee0b2dd416ce8a300a35eed73a6c2210c574077ea86efdf3d8f739e3cb6a",
+   "size_bytes": 18288
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.static.command-record.json",
+   "role": "evidence",
+   "sha256": "6c80bc21e85b383b5bafdbe54854517a4240bea21289effecb779e231f3cd96a",
+   "size_bytes": 2699
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.static.command.json",
+   "role": "evidence",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.static.exit.txt",
+   "role": "evidence",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "size_bytes": 2
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.static.stderr.txt",
+   "role": "evidence",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001.static.stdout.txt",
+   "role": "evidence",
+   "sha256": "4e44510d876a39d721f41431ab67ec134b4eb312fc8d540b79ccd63373a752e0",
+   "size_bytes": 1650
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/HOST.json",
+   "role": "evidence",
+   "sha256": "34e94f29ea1b7d9d60b389598b4ce5bc7eaf6fcaa58f3798fc3df021a8f28a92",
+   "size_bytes": 18420
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/completion.json",
+   "role": "evidence",
+   "sha256": "fd1a035065e758825ddff81671fec29380720ed03d20c9571a17d993089488fe",
+   "size_bytes": 981
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/preflight.json",
+   "role": "evidence",
+   "sha256": "bc3feb604d7d23f785a68e6a3bdcf790f2125af33de5c5af09cec48455679cdb",
+   "size_bytes": 586
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/reserved.json",
+   "role": "evidence",
+   "sha256": "b5129461fbdbb646dee2d1c042ff16c110d31e43ec38876a1b0ce74064874bce",
+   "size_bytes": 785
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/result.json",
+   "role": "evidence",
+   "sha256": "1b4cae0f80cce491b200b5a24a1b5a75660af7889bb7120e98cec0a7080b2e1d",
+   "size_bytes": 2621
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001/git_version/host-git-version.process.json",
+   "role": "evidence",
+   "sha256": "af2cebe0ee6ba084d2d437c20db1d5bf1643b38c1cd320f14bdba071993c82d5",
+   "size_bytes": 740
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001/git_version/host-git-version.stderr.log",
+   "role": "evidence",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001/git_version/host-git-version.stdout.log",
+   "role": "evidence",
+   "sha256": "0a72a762b37a3800276a1004e2c169aed0610d4a3ba601ba59e70e1c4d9f3200",
+   "size_bytes": 35
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/git_version/inspection.json",
+   "role": "evidence",
+   "sha256": "d736f86f077169cc9d4b6420b4e831761b49859c805f793c119acc7afb248f21",
+   "size_bytes": 1441
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/git_version/intent.json",
+   "role": "evidence",
+   "sha256": "27589f665fd7456ff543f49faac7c1b190b983b4a8e042265cf6fa09079db71e",
+   "size_bytes": 771
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/git_version/postflight.json",
+   "role": "evidence",
+   "sha256": "86d811e4a25d2bfa1b882e8ec343d93fb8d8f16d64621c5a2b42f2dead4d6ba6",
+   "size_bytes": 2997
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/git_version/started.json",
+   "role": "evidence",
+   "sha256": "4e72f48d958daf1e5305f2dd492e360dd750dc8d905aaf7e98c53cbe959d7bac",
+   "size_bytes": 1139
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001/node_version/host-node-version.process.json",
+   "role": "evidence",
+   "sha256": "0bfa870d507c5d5fd50deb925cecca0e69a7640c2e72680d44fb9cbe81e9f628",
+   "size_bytes": 614
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001/node_version/host-node-version.stderr.log",
+   "role": "evidence",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/evidence/observe-001/node_version/host-node-version.stdout.log",
+   "role": "evidence",
+   "sha256": "249baf635bb43877fcb9422efa1a4904b702d0ddf14d3949b7cd0950d5229c81",
+   "size_bytes": 9
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/node_version/inspection.json",
+   "role": "evidence",
+   "sha256": "7a1095fa906166c80c8df2453211134e6489b048f1e0baccbe09df6401efb222",
+   "size_bytes": 1163
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/node_version/intent.json",
+   "role": "evidence",
+   "sha256": "8af3f9346d3697a896951ad2a20216eef165381420d71a045d79fbd448fe1b79",
+   "size_bytes": 807
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/node_version/postflight.json",
+   "role": "evidence",
+   "sha256": "da228a82f5eae8063bc979ecdd94dd57a5fde4725cd166e6f3bfd145a81c3c74",
+   "size_bytes": 2916
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/node_version/started.json",
+   "role": "evidence",
+   "sha256": "a248a6f45bf79fa749601e27ecc1641fe356c47823904a1518f2ba054fcdae37",
+   "size_bytes": 1016
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/workers/W2-plan-001/observation-plan-001.json",
+   "role": "plan 001 and its inputs",
+   "sha256": "b8cd6449aba958373f68715158402ed2e0e233e08213f3521bbc3d80cfe4c152",
+   "size_bytes": 9017
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/workers/W2-plan-001/M0-LAUNCH.json",
+   "role": "plan 001 and its inputs",
+   "sha256": "b092ea007048b7f8c1972bb02b3a9e6b9063f5d7c2bd75c06023ae29a3bc0b29",
+   "size_bytes": 15344
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/workers/W2-plan-001/python-inventory-001.json",
+   "role": "plan 001 and its inputs",
+   "sha256": "c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633",
+   "size_bytes": 776209
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/workers/W2-plan-001/source-inventory-001.json",
+   "role": "plan 001 and its inputs",
+   "sha256": "95abd300edbb9930e67c569b726015964ab98f4ed0ede389da122bbb3f145c4c",
+   "size_bytes": 96238
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/workers/W2-plan-001/dependencies-inventory-001.json",
+   "role": "plan 001 and its inputs",
+   "sha256": "3545d5f920ac840804a9e25d28a87d623f96af71537fd3f020a0c1d743f82fb4",
+   "size_bytes": 4543
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/workers/W2-plan-001/records/static-001.stdout.txt",
+   "role": "plan 001 and its inputs",
+   "sha256": "4e44510d876a39d721f41431ab67ec134b4eb312fc8d540b79ccd63373a752e0",
+   "size_bytes": 1650
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/workers/W3-plan-001/PLAN-REVIEW-001.md",
+   "role": "plan review, disposition and wrappers",
+   "sha256": "fa55a2116a6670d6fe32d8b96024d9959fe44e9b8782515e0d80d077e6b451da",
+   "size_bytes": 50957
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/workers/W3-plan-001/PLAN-REVIEW-001.json",
+   "role": "plan review, disposition and wrappers",
+   "sha256": "3b0c50a7296317edbb22223454a4c3707388dc1fd732ad5db72c84bdbc152fd1",
+   "size_bytes": 55394
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/director/reviews/PLAN-REVIEW-DISPOSITION-001.json",
+   "role": "plan review, disposition and wrappers",
+   "sha256": "4d4066a35d383049799f14a7de45ba2772ec500c1824e8043e79214fd1c37326",
+   "size_bytes": 5251
+  },
+  {
+   "mode": "0o755",
+   "path": "<local>/c271-p35/director/run/run_once.sh",
+   "role": "plan review, disposition and wrappers",
+   "sha256": "1b7cbe856924ddc583ce63525848a623b6d41c849c4e86a196a3313ddfddeb11",
+   "size_bytes": 2790
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p35/director/run/run_once_v2.sh",
+   "role": "plan review, disposition and wrappers",
+   "sha256": "3c24f923025f855603fce02a3e9fc794eb52409824369e53338f903ce9da8e1f",
+   "size_bytes": 3601
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
+   "role": "documents read",
+   "sha256": "02da913c198118fc356cccdb60e78a3a2fef3b7ba7115d77d794a85f9e22fc49",
+   "size_bytes": 16420
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W3-OBSERVER.md",
+   "role": "documents read",
+   "sha256": "5e936aa4b46590df710dd13da2c2a2d1ac758aa903470bb5e72ef2143a02018d",
+   "size_bytes": 38426
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
+   "role": "documents read",
+   "sha256": "42db98dc6099ee605b0963f3734f7bff2d68c019ff6c00a0ee97bd753c03fdc9",
+   "size_bytes": 42769
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md",
+   "role": "documents read",
+   "sha256": "cfb4200ea3745cfe590d9059cd272e244a2ba3cd8c9969f8df5982dc58a69bc1",
+   "size_bytes": 23696
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/n34m/N34-M-REVIEW.md",
+   "role": "documents read",
+   "sha256": "55e4a0568a35201f8064b606af8bcd8eed0f5d3758f72d20a315cc75ffd17547",
+   "size_bytes": 82141
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/n34m/N34-M-DISPOSITION.json",
+   "role": "documents read",
+   "sha256": "238feefeeecabab2dab8140856a9fdc5215bf8d49f68eaa8a9b245e6552f9e14",
+   "size_bytes": 7737
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/FAILURE-CAPTURE.md",
+   "role": "documents read",
+   "sha256": "f387fb3ec0ed306366f6d3f22820ec344f1ac843008775475258c5de9634c99c",
+   "size_bytes": 13147
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+   "role": "documents read",
+   "sha256": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+   "size_bytes": 29076
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py",
+   "role": "source read",
+   "sha256": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+   "size_bytes": 162557
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/prototypes/static_tray_v01/supervisor_darwin_v01.py",
+   "role": "source read",
+   "sha256": "bd4a5e3fcdfb5367994bfeeb93d211dd627b830017b17f607cd94d71ade2bd2b",
+   "size_bytes": 10621
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/prototypes/static_tray_v01/supervisor.py",
+   "role": "source read",
+   "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+   "size_bytes": 11286
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.py",
+   "role": "source read",
+   "sha256": "d34ea2f98cf77188750b7819f0b5418d4811d0bfcd8612fdd71be58210f59071",
+   "size_bytes": 81218
+  },
+  {
+   "mode": "0o755",
+   "path": "<local>/c271-macos/node-v24.22.1-darwin-arm64/bin/node",
+   "role": "bound or compared input, recomputed",
+   "sha256": "6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329",
+   "size_bytes": 122545856
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/node-v24.22.1-darwin-arm64/NODE-SOURCE.json",
+   "role": "bound or compared input, recomputed",
+   "sha256": "e928a8ec87a6fcd8f21d7bef3e080392e0bdaad3acbf2e767997dae5ead9ea2c",
+   "size_bytes": 976
+  },
+  {
+   "mode": "0o444",
+   "path": "<local>/c271-p34/downloads/node/node-v24.22.1-darwin-arm64.tar.gz",
+   "role": "bound or compared input, recomputed",
+   "sha256": "89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7",
+   "size_bytes": 53062778
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p34/plans/node-install-plan.json",
+   "role": "bound or compared input, recomputed",
+   "sha256": "1fee042d5e3c809a89d4975df40f69d7a27e88abf9ba58d8cf91ca16795c5ff1",
+   "size_bytes": 956650
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p34/receipts/node-install-result.json",
+   "role": "bound or compared input, recomputed",
+   "sha256": "65caf77a967898ef2d63a3f0595f6f754fde1e7fad9a61f938a084b6717d4729",
+   "size_bytes": 2897
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-p34/plans/reader-install-plan.json",
+   "role": "bound or compared input, recomputed",
+   "sha256": "ff5a95da6d349e0bd6ea1d2c79fc02757de48ac9cbb89dc59737b67c6d7a71c8",
+   "size_bytes": 158115
+  },
+  {
+   "mode": "0o600",
+   "path": "<local>/c271-p34/receipts/reader-install-result.json",
+   "role": "bound or compared input, recomputed",
+   "sha256": "03222a857c7a5a186f1bb30c205d10360882962a7a181d6b3659da47a0ac3fb2",
+   "size_bytes": 4116
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz",
+   "role": "bound or compared input, recomputed",
+   "sha256": "b1e54a6cfef133f7004b1988c90bc718fc954409843c2bcac3772d42e904a0c9",
+   "size_bytes": 2611764
+  },
+  {
+   "mode": "0o755",
+   "path": "/Library/Developer/CommandLineTools/usr/bin/git",
+   "role": "bound or compared input, recomputed",
+   "sha256": "be4afb2b003904725826250de9fb76567bbacf82323457b5a1ec26706b66bcae",
+   "size_bytes": 7604272
+  },
+  {
+   "mode": "0o755",
+   "path": "/usr/bin/git",
+   "role": "bound or compared input, recomputed",
+   "sha256": "b8763cf250e607a778bb4603cecb5b90338814d0a3dfcba0d57b1de242f610e9",
+   "size_bytes": 118640
+  },
+  {
+   "mode": "0o444",
+   "path": "/System/Library/CoreServices/SystemVersion.plist",
+   "role": "bound or compared input, recomputed",
+   "sha256": "6151cb883e5b48d43a33d4d41956405a1cd502e0c8622319388d943e2cb804a1",
+   "size_bytes": 603
+  },
+  {
+   "mode": "0o444",
+   "path": "/System/Volumes/Preboot/Cryptexes/OS/System/Library/CoreServices/SystemVersion.plist",
+   "role": "bound or compared input, recomputed",
+   "sha256": "6151cb883e5b48d43a33d4d41956405a1cd502e0c8622319388d943e2cb804a1",
+   "size_bytes": 603
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/tools/native-reader-verification-macos-arm64-cp312.lock",
+   "role": "bound or compared input, recomputed",
+   "sha256": "b1e3e86668421539c6817faefe7f126b4dbf25153fcbb2fab6325e080cf7a81c",
+   "size_bytes": 799
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
+   "role": "bound or compared input, recomputed",
+   "sha256": "21fd6bad8738ed51d4ced8036a0fcde5dd046823f55f71de52b9b81df659ccd5",
+   "size_bytes": 19901
+  },
+  {
+   "mode": "0o755",
+   "path": "/System/Volumes/Preboot/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_arm64e",
+   "role": "bound or compared input, recomputed",
+   "sha256": "7a024959c8c14d46e2964f975f2256b3f9efc2da950a31067d26ac7ac16498d4",
+   "size_bytes": 573440
+  },
+  {
+   "mode": "0o755",
+   "path": "/usr/lib/dyld",
+   "role": "bound or compared input, recomputed",
+   "sha256": "373fce2b3689c2113d5341a6bba735e9f970401ba64896c0a6379680192f1cdf",
+   "size_bytes": 2562000
+  },
+  {
+   "mode": "0o400",
+   "path": "<home>/.CFUserTextEncoding",
+   "role": "bound or compared input, recomputed",
+   "sha256": "bd605d2eae2bc28178ba94d69e189242f971d699c5846addae706d7e52bc69fd",
+   "size_bytes": 7
+  },
+  {
+   "mode": "0o644",
+   "path": "<common-dir>/worktrees/c271/index",
+   "role": "bound or compared input, recomputed",
+   "sha256": "25af1df0fb97408d9b0f7073e8550eddc8f0aefcc8ba13ae07bd81a4a16fa2e1",
+   "size_bytes": 3484425
+  },
+  {
+   "mode": "0o444",
+   "path": "<common-dir>/objects/0e/b9a5517f4e19705178a2c59b8d8d33fb87867a",
+   "role": "bound or compared input, recomputed",
+   "sha256": "ec90495962e52b8a807017e1dc5619e081ceb8df9909167bbc014adf66a0ca14",
+   "size_bytes": 689
+  },
+  {
+   "mode": "0o644",
+   "path": "<worktree>/.git",
+   "role": "HEAD file",
+   "sha256": "6d1fb636b7bf23f02f4f0a52984244692d0842bd1461d713878245beb9885a9d",
+   "size_bytes": 59
+  },
+  {
+   "mode": "0o644",
+   "path": "<common-dir>/refs/heads/work/c271-missing-import-digest-control",
+   "role": "HEAD file",
+   "sha256": "e76beaf7187d50e154d0f47cf641f26a966ae165f5cd34e5944e07a1a34c2df5",
+   "size_bytes": 41
+  },
+  {
+   "mode": "0o644",
+   "path": "<common-dir>/worktrees/c271/HEAD",
+   "role": "HEAD file",
+   "sha256": "1c8e255132a73d4daa977ccc2a5d27e6e617b7089ab0abd21fec8bf5c7c3e869",
+   "size_bytes": 56
+  },
+  {
+   "mode": "0o644",
+   "path": "<common-dir>/worktrees/c271/commondir",
+   "role": "HEAD file",
+   "sha256": "340ddcb67a6204f742cd1e28e5b462622dde7daaa8ee36001897196aacdc6d47",
+   "size_bytes": 6
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/LICENSE",
+   "role": "reader tree file",
+   "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+   "size_bytes": 1081
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/package.json",
+   "role": "reader tree file",
+   "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+   "size_bytes": 3672
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.core.js",
+   "role": "reader tree file",
+   "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+   "size_bytes": 1458113
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.module.js",
+   "role": "reader tree file",
+   "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+   "size_bytes": 662772
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.tsl.js",
+   "role": "reader tree file",
+   "sha256": "6e6b92d8ce467818944f73815a96abadc6392fb34de577d479a23810b6aeeed0",
+   "size_bytes": 36854
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.webgpu.js",
+   "role": "reader tree file",
+   "sha256": "15cfce5c653541704fd9a3463c39d3e8b854bb6265ccd854d7cfe74090625cc6",
+   "size_bytes": 2284850
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/controls/OrbitControls.js",
+   "role": "reader tree file",
+   "sha256": "3d79d07ecb686b4e5d93232eedab255331c1beef711e13164eaa1f68655a5f2b",
+   "size_bytes": 40755
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/gpgpu/CountingSort.js",
+   "role": "reader tree file",
+   "sha256": "e9e90b6940a4da923534c3f249e8e7bd2c7603f8b432c54c62ecdc6db4be47e3",
+   "size_bytes": 8392
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/loaders/GLTFGaussianSplatLoaderExtension.js",
+   "role": "reader tree file",
+   "sha256": "2814d2e49dc31c8ea45a776978fa98bfb425b55265cd6200ef55472f5f3c9aaa",
+   "size_bytes": 9063
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/loaders/GLTFLoader.js",
+   "role": "reader tree file",
+   "sha256": "131c0f78c01d19368ae495caa65b3adaa10487810a36a05bb5901b769a35ac16",
+   "size_bytes": 117570
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/objects/GaussianSplat.js",
+   "role": "reader tree file",
+   "sha256": "ea3f148d39413ef31781cdbb1c97a8972b2dce01ef5eebe6ef800c2b1ba7ab42",
+   "size_bytes": 32105
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/BufferGeometryUtils.js",
+   "role": "reader tree file",
+   "sha256": "9fb63427ce6641fa14fd0baff9cc4d1b5f9c3d85fd084bf2e90e803c44ec1797",
+   "size_bytes": 37712
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/GaussianSplatUtils.js",
+   "role": "reader tree file",
+   "sha256": "4b9b010149b3e1a7673de37638365e937e005a03ba706e4cd81301b717d30f54",
+   "size_bytes": 5586
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/SkeletonUtils.js",
+   "role": "reader tree file",
+   "sha256": "b1632a703206c3d830de9fcbe515696770d04b71a15ee6b50afa6d2c3298c86f",
+   "size_bytes": 11535
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/tools/three_loader.mjs",
+   "role": "reader tree file",
+   "sha256": "927190e6d34940b2c7f9586c72459c24dc5fad497268bded628acd459ec9235e",
+   "size_bytes": 564
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/validator/package/ISSUES.md",
+   "role": "reader tree file",
+   "sha256": "72981a105335964111253e7e5db4e956b8ab3a17fd74c2d02180bffc7f533c20",
+   "size_bytes": 17519
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/validator/package/LICENSE",
+   "role": "reader tree file",
+   "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+   "size_bytes": 11560
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/validator/package/NOTICES",
+   "role": "reader tree file",
+   "sha256": "933f161ca1e7b3ead5a6cf93ebb3bf6cb67f0e79b38e08d2046f8cdc41cb78a3",
+   "size_bytes": 22286
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/validator/package/README.md",
+   "role": "reader tree file",
+   "sha256": "f5f26dc624a62817b356cec631b33af7358d046a4b2c0499a5f55189d986afa5",
+   "size_bytes": 6814
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/validator/package/gltf_validator.dart.js",
+   "role": "reader tree file",
+   "sha256": "b73a7b2d455ac217567725138b46d826a13d7d1bb0c88c15f7c571bfb349298c",
+   "size_bytes": 307792
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/validator/package/index.js",
+   "role": "reader tree file",
+   "sha256": "78deff9ea85743e86461c2d14fae76e7fc3ca0432e652f62948066b55fa16f0d",
+   "size_bytes": 2829
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/validator/package/module.mjs",
+   "role": "reader tree file",
+   "sha256": "d2a88775a8b22f61be8e00644760f0f04b615fad0fc5175fefd40e0da4df2c8f",
+   "size_bytes": 2822
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/validator/package/package.json",
+   "role": "reader tree file",
+   "sha256": "3578d16153fa237c72784588da2e8fcccc9cd3c1c58ef34c7912f0732d2f5fa6",
+   "size_bytes": 618
+  },
+  {
+   "mode": "0o644",
+   "path": "<local>/c271-macos/reader-c195/validator/package/validation.schema.json",
+   "role": "reader tree file",
+   "sha256": "e33db4da1e907481a5fc056d2daab40be1a603620d8f4a1c81919120f3340365",
+   "size_bytes": 11107
+  }
+ ],
+ "schema": "ontokin.c271.p35-host-review/1",
+ "starts": {
+  "forbidden_starts": "none: no Node, Git, ldd, codesign, otool, observer, MH tool, wrapper or python3 from PATH",
+  "launcher": "<worktree>/.venv/bin/python -I -S -B for every Python start",
+  "limits": "each shell is started by the agent harness, whose own set-up inside the shell is outside the reviewer's view; the file-read, file-write and edit tools start no host process that the reviewer can observe",
+  "python": 12,
+  "python_starts": [
+   "h00",
+   "h01",
+   "h02",
+   "h03",
+   "h04 run 1 (superseded)",
+   "h04 run 2",
+   "h04b run 1 (superseded, via env -i)",
+   "h04b run 2 (via env -i)",
+   "h05 run 1 (blocked by its own scan, wrote nothing)",
+   "h05 run 2 (blocked, wrote nothing)",
+   "h05 run 3",
+   "h06"
+  ],
+  "shells": 28,
+  "total": 75,
+  "uncertain": "row 19's pipeline may also have forked up to three short-lived processes after the shell refused an unquoted glob",
+  "utilities": 35,
+  "utilities_by_name": {
+   "grep": 17,
+   "head": 4,
+   "ls": 3,
+   "mkdir": 1,
+   "od": 6,
+   "wc": 4
+  }
+ },
+ "subject": {
+  "host": {
+   "mode": "0o600",
+   "path": "<local>/c271-p35/evidence/observe-001/HOST.json",
+   "sha256": "34e94f29ea1b7d9d60b389598b4ce5bc7eaf6fcaa58f3798fc3df021a8f28a92",
+   "size_bytes": 18420
+  },
+  "plan": {
+   "path": "<local>/c271-p35/workers/W2-plan-001/observation-plan-001.json",
+   "sha256": "b8cd6449aba958373f68715158402ed2e0e233e08213f3521bbc3d80cfe4c152"
+  },
+  "state": "OBSERVED_UNAPPROVED"
+ },
+ "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS"
+}

@@ -1,0 +1,407 @@
+{
+ "checks": {
+  "predicates": [
+   {
+    "observed_length": 27,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/discover_inventory.py",
+       "compare",
+       "--current",
+       "<local>/c271-p35/evidence/s7-001-discovery-current.json",
+       "--current-sha256",
+       "<current discovery SHA-256>",
+       "--baseline",
+       "<local>/c271-p35/evidence/s7-001-discovery-baseline.json",
+       "--baseline-sha256",
+       "<baseline discovery SHA-256>",
+       "--additions",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/INVENTORY-ADDITIONS.json",
+       "--additions-sha256",
+       "f710dbb55483ca428e641e81c523ee556d422660a2594675be0d790fa3a4c9da",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-discovery-compare.json"
+      ],
+      "indices": [
+       16,
+       20
+      ]
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "48db9799fae9a76b621f27620a1b98f05e391256e8596382d6e160dcb7255b1d",
+    "ok": true,
+    "rule": {
+     "equals_from": {
+      "file": "<local>/c271-p35/evidence/s7-001-c13-discovery-current.readback.json",
+      "pointer": "/paths/<local>~1c271-p35~1evidence~1s7-001-discovery-current.json/sha256"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.command.json",
+     "pointer": "/argv/16"
+    }
+   },
+   {
+    "observed": "8d53b1c942c79676f0e0c23fe28f343f855e59ccc706e255ee605623ca8ce4c7",
+    "ok": true,
+    "rule": {
+     "equals_from": {
+      "file": "<local>/c271-p35/evidence/s7-001-c12-discovery-baseline.readback.json",
+      "pointer": "/paths/<local>~1c271-p35~1evidence~1s7-001-discovery-baseline.json/sha256"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.command.json",
+     "pointer": "/argv/20"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/exact_match"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "length": 0,
+     "pointer": "/missing"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "length": 0,
+     "pointer": "/extra"
+    }
+   },
+   {
+    "observed": 5994,
+    "ok": true,
+    "rule": {
+     "equals": 5994,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/expected_count"
+    }
+   },
+   {
+    "observed": 5994,
+    "ok": true,
+    "rule": {
+     "equals": 5994,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/current_count"
+    }
+   },
+   {
+    "observed": 5587,
+    "ok": true,
+    "rule": {
+     "equals": 5587,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/baseline/count"
+    }
+   },
+   {
+    "observed": 407,
+    "ok": true,
+    "rule": {
+     "equals": 407,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/additions/added"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "length": 0,
+     "pointer": "/additions_already_in_baseline"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/consistency/added_unique"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/consistency/added_count_matches"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/consistency/removed_count_matches"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/consistency/added_by_module_matches"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/consistency/baseline_count_matches_base_count"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/consistency/candidate_count_matches"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/consistency/additions_not_in_baseline"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+     "pointer": "/consistency/removals_in_baseline"
+    }
+   },
+   {
+    "observed_length": 17,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+       "listing",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-discovery-compare.json",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback-listing.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback-listing.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback-listing.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback-listing.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback-listing.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback-listing.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback-listing.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "listing",
+    "ok": true,
+    "rule": {
+     "equals": "listing",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback.json",
+     "pointer": "/command"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback.json",
+     "pointer": "/boot_before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback.json",
+     "pointer": "/boot_after"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback.json",
+     "length": 0,
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+    "ok": true,
+    "rule": {
+     "equals": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+     "file": "<local>/c271-p35/evidence/s7-001-c14-discovery-compare.readback.json",
+     "pointer": "/tool/sha256"
+    }
+   }
+  ]
+ },
+ "command": "C14",
+ "failed": [],
+ "phase": "expect",
+ "predicate_set": "expect",
+ "python_flags": {
+  "dont_write_bytecode": 1,
+  "isolated": 1,
+  "no_site": 1
+ },
+ "schema": "ontokin.c271.p35-s7-check/1",
+ "state": "MET"
+}

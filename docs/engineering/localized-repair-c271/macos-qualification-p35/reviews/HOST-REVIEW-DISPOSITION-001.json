@@ -1,0 +1,82 @@
+{
+  "schema": "ontokin.c271.p35-review-disposition/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "stage": "S5",
+  "recorded_at_utc": "2026-11-27T06:17:16Z",
+  "review": {
+    "record": "HOST-REVIEW-001.md",
+    "structured": "HOST-REVIEW-001.json",
+    "sha256": {
+      "HOST-REVIEW-001.md": "68bc08412dcb81ce04bf5f3c8c4fdbaa9721b1188cfa1a9b84393b275dab0582",
+      "HOST-REVIEW-001.json": "62a0ddf03806bdb864c9e53eed32012e74f35dd73014eb26a3efa04bd446d264"
+    },
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model, with no earlier review in its context",
+    "launched_at_utc": "2026-11-27T05:36:29Z",
+    "written_at_utc": "2026-11-27T06:15:05Z, the modification time of both records",
+    "subject": "HOST of attempt observe-001 (M0 and M1, 2026-11-27T05:34:37Z to 05:34:41Z), with the attempt's records and the capture records beside it",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS"
+  },
+  "host": {
+    "path": "../OntoKin-local/c271-p35/evidence/observe-001/HOST.json",
+    "sha256_from_the_review_record": "34e94f29ea1b7d9d60b389598b4ce5bc7eaf6fcaa58f3798fc3df021a8f28a92",
+    "size_bytes": 18420,
+    "mode": "0o600",
+    "with": {
+      "completion.json": {
+        "sha256": "fd1a035065e758825ddff81671fec29380720ed03d20c9571a17d993089488fe",
+        "size_bytes": 981,
+        "state": "OBSERVED_UNAPPROVED"
+      },
+      "result.json": {
+        "sha256": "1b4cae0f80cce491b200b5a24a1b5a75660af7889bb7120e98cec0a7080b2e1d",
+        "size_bytes": 2621
+      }
+    }
+  },
+  "director_checks": [
+    "Read the verdict and the seven findings with their locations.",
+    "HOST's SHA-256 in the review record equals the Director's own hash of the file. completion.json and result.json have the review's digests, and completion.json's state is OBSERVED_UNAPPROVED.",
+    "The review's records and scripts hold no private string derived at run time, apart from the public repository's name."
+  ],
+  "dispositions": [
+    {
+      "id": "HR-01",
+      "severity": "nonmandatory",
+      "disposition": "Adopted for S6, S8 and S9. The static run's FC-K3 record is observe-001.static.command-record.json. Its wall time and boot readings are transcribed from the first wrapper's printed line. The empty observe-001.static.command.json is retained unchanged under FC-K1. Any S7 wrapper is bound by path and SHA-256 in the operational freeze; run_once_v2.sh is 3c24f923025f855603fce02a3e9fc794eb52409824369e53338f903ce9da8e1f, 3,601 bytes, 0o644. Its epoch fields are the authoritative times, since its UTC strings come from separate date calls."
+    },
+    {
+      "id": "HR-02",
+      "severity": "nonmandatory",
+      "disposition": "Adopted for S6. The freeze records <home>/.CFUserTextEncoding as an unbound host fact: SHA-256 bd605d2eae2bc28178ba94d69e189242f971d699c5846addae706d7e52bc69fd, 7 bytes, 0o400, modified 2026-02-15, which the Director confirmed. HOST's value 0x1F5:0x0:0x0 is the UID with that content. The owner is asked to keep the language and region settings unchanged until MH ends. N-04's tie stays: MC36 waits for a positive probe start of the same freeze that observed the variable with HOST's value."
+    },
+    {
+      "id": "HR-03",
+      "severity": "nonmandatory",
+      "disposition": "Adopted for S6. The freeze restates PR-03's disposition, and makes a recheck of the installation inventory immediately before S7 a stated precondition. The job is the owner's, outside the project, and stays as it is unless the owner pauses it."
+    },
+    {
+      "id": "HR-04",
+      "severity": "nonmandatory",
+      "disposition": "Adopted for S6. The freeze binds HOST together with completion.json and result.json, with the digests above, and cites completion.json's state."
+    },
+    {
+      "id": "HR-05",
+      "severity": "nonmandatory",
+      "disposition": "Adopted for S6. The freeze cites this review for commit C's tree, the index and the shared cache's identity (7a024959..., UUID F2E86C53-6052-388B-BA71-5A0C9B569413) and dyld's (373fce2b...). Any consumer that compares interpreter flags launches in the declared environment."
+    },
+    {
+      "id": "HR-06",
+      "severity": "nonmandatory",
+      "disposition": "Adopted for S6 and S8. The freeze and the audit cite contract section 10 for the full list of what results built on HOST cannot support. They do not read HOST's claims as complete: they omit the supervisor's descendant limit, fsync without F_FULLFSYNC, and Git bound by bytes and a version grammar only."
+    },
+    {
+      "id": "HR-07",
+      "severity": "nonmandatory",
+      "disposition": "Adopted for S6 and S8. M0's and M1's counts rest on the two receipts with positive PIDs (7994 and 7995) and on the observer's source, since the observer installs no audit hook. The audit states this basis. M1's first execution of bin/node took 1,109.748 ms of its 3,000 ms of work, the only timing evidence for bin/node on this host so far."
+    }
+  ],
+  "acceptance": "A5: M0 and M1 ran once on this host through observe, with exactly one Node and one other start, and HOST has a review without mandatory findings.",
+  "next": "S6: a fresh W2 writes the operational freeze, and a fresh W3 reviews it."
+}

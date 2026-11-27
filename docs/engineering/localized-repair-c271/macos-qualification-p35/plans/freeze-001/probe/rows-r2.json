@@ -1,0 +1,410 @@
+{
+ "rows": [
+  {
+   "argv": [
+    "<local>/c271-macos/node-v24.22.1-darwin-arm64/bin/node",
+    "--no-addons",
+    "--max-old-space-size=256",
+    "--experimental-loader",
+    "<local>/c271-macos/reader-c195/tools/three_loader.mjs",
+    "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs",
+    "--expected-config-sha256",
+    "f86d32c7ff952171ae2371ea34b9a8f8d9766eea6cc6046c70ebe37ea8dedcec",
+    "--job",
+    "<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/job.json"
+   ],
+   "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "TZ": "UTC",
+    "UV_THREADPOOL_SIZE": "2"
+   },
+   "expected": {
+    "absent_paths": [],
+    "file_includes": {},
+    "json_members": {
+     "<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/probe.json": [
+      {
+       "equals": "ontokin.current-host-readback-result/0.2.0",
+       "pointer": "/schema"
+      },
+      {
+       "equals": false,
+       "pointer": "/passed"
+      },
+      {
+       "equals": "OTRAY-E-DELIVERY",
+       "pointer": "/error/code"
+      },
+      {
+       "equals": "Current-host binding: actual Node environment differs",
+       "pointer": "/error/message"
+      },
+      {
+       "absent": true,
+       "pointer": "/khronos"
+      },
+      {
+       "absent": true,
+       "pointer": "/three"
+      },
+      {
+       "absent": true,
+       "pointer": "/input_preserved"
+      },
+      {
+       "equals": "CPU-Q01-positive",
+       "pointer": "/slot"
+      },
+      {
+       "equals": "Q01",
+       "pointer": "/case"
+      },
+      {
+       "equals": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "pointer": "/artifact_sha256"
+      },
+      {
+       "equals": "7f10f355d8bac0a6120159d3478cf28b8646755fb50fc240f0e36ad6b403a42e",
+       "pointer": "/audit_sha256"
+      },
+      {
+       "equals": "c301fa2874d5dd13384eda1824aa724ddcf227767fcb5a146200cfea5b3f1d44",
+       "pointer": "/supplemental_manifest_sha256"
+      },
+      {
+       "equals": "CPU-ONLY-SYNTHETIC-NOT-NATIVE",
+       "pointer": "/input_lock_sha256"
+      },
+      {
+       "equals": "v24.22.1",
+       "pointer": "/node"
+      },
+      {
+       "equals": 0,
+       "pointer": "/native_starts"
+      },
+      {
+       "equals": 0,
+       "pointer": "/exports"
+      }
+     ]
+    },
+    "present_paths": [],
+    "returncode": 1,
+    "stderr_exact": null,
+    "stderr_excludes": [
+     "CH-SELECTION",
+     "Current-host binding"
+    ],
+    "stderr_includes": [],
+    "stdout_exact": "{\"passed\":false,\"slot\":\"CPU-Q01-positive\",\"artifact_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"}\n",
+    "stdout_excludes": [],
+    "stdout_includes": [],
+    "supervisor_error": {
+     "code": "OTRAY-E-BACKEND",
+     "reason": "Child exited with status 1",
+     "state": "REJECTED"
+    }
+   },
+   "id": "MC30-probe",
+   "inputs": [
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/job.json",
+     "sha256": "4d25e839131d94156eaa2bce92e1e1875ba018b512a3ff97e1584ac0d33d71da",
+     "size_bytes": 831
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/synthetic.glb",
+     "sha256": "d00a73622924f025ee7a1620de0104eac3013a5e27210f9842292bb32eacd0f5",
+     "size_bytes": 21152
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/synthetic-audit.json",
+     "sha256": "7f10f355d8bac0a6120159d3478cf28b8646755fb50fc240f0e36ad6b403a42e",
+     "size_bytes": 567205
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/supplemental-cpu.json",
+     "sha256": "c301fa2874d5dd13384eda1824aa724ddcf227767fcb5a146200cfea5b3f1d44",
+     "size_bytes": 21385
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc30/config.json",
+     "sha256": "f86d32c7ff952171ae2371ea34b9a8f8d9766eea6cc6046c70ebe37ea8dedcec",
+     "size_bytes": 2030
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc30/HOST.json",
+     "sha256": "1515cac3e8c63c5526a0d9d2cfe64871d8a3a5be39705e0c945805447ebe62f2",
+     "size_bytes": 18409
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-freeze-001/config/methods-001.json",
+     "sha256": "ae687f2f3c7d4e905aa61e1561b76ab1d3c5fb29b4a990a6d0582c2af53b608b",
+     "size_bytes": 1576
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-freeze-001/config/discovery-001.json",
+     "sha256": "9438de3acb39734d28c55fda15b5047d078faf0cba85c828d8c9b17e2a3e1ba0",
+     "size_bytes": 1095
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-plan-001/source-inventory-001.json",
+     "sha256": "95abd300edbb9930e67c569b726015964ab98f4ed0ede389da122bbb3f145c4c",
+     "size_bytes": 96238
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-plan-001/dependencies-inventory-001.json",
+     "sha256": "3545d5f920ac840804a9e25d28a87d623f96af71537fd3f020a0c1d743f82fb4",
+     "size_bytes": 4543
+    },
+    {
+     "mode": "0o644",
+     "path": "<worktree>/docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
+     "sha256": "42db98dc6099ee605b0963f3734f7bff2d68c019ff6c00a0ee97bd753c03fdc9",
+     "size_bytes": 42769
+    },
+    {
+     "mode": "0o644",
+     "path": "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/ADOPTION-AMENDMENT-001.json",
+     "sha256": "872312ed80a63fbb196c17ace42e786b7fe757b710eff41139b125dfaa507937",
+     "size_bytes": 5396
+    }
+   ],
+   "label": "mc30-probe",
+   "stage": "<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive",
+   "stage_entries": [
+    {
+     "kind": "file",
+     "path": "job.json"
+    },
+    {
+     "kind": "file",
+     "path": "synthetic-audit.json"
+    },
+    {
+     "kind": "file",
+     "path": "synthetic.glb"
+    }
+   ],
+   "stage_ms": 28000,
+   "total_ms": 30000
+  },
+  {
+   "argv": [
+    "<local>/c271-macos/node-v24.22.1-darwin-arm64/bin/node",
+    "--no-addons",
+    "--max-old-space-size=256",
+    "--experimental-loader",
+    "<local>/c271-macos/reader-c195/tools/three_loader.mjs",
+    "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs",
+    "--expected-config-sha256",
+    "8f46961e3df8da8c352d4ee807efccad1abbd18678898bf57492bef7c5769a79",
+    "--job",
+    "<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/job.json"
+   ],
+   "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "TZ": "UTC",
+    "UV_THREADPOOL_SIZE": "2"
+   },
+   "expected": {
+    "absent_paths": [],
+    "file_includes": {},
+    "json_members": {
+     "<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/probe.json": [
+      {
+       "equals": "ontokin.current-host-readback-result/0.2.0",
+       "pointer": "/schema"
+      },
+      {
+       "equals": false,
+       "pointer": "/passed"
+      },
+      {
+       "equals": "OTRAY-E-DELIVERY",
+       "pointer": "/error/code"
+      },
+      {
+       "equals": "Current-host binding: actual Node environment differs",
+       "pointer": "/error/message"
+      },
+      {
+       "absent": true,
+       "pointer": "/khronos"
+      },
+      {
+       "absent": true,
+       "pointer": "/three"
+      },
+      {
+       "absent": true,
+       "pointer": "/input_preserved"
+      },
+      {
+       "equals": "CPU-Q01-positive",
+       "pointer": "/slot"
+      },
+      {
+       "equals": "Q01",
+       "pointer": "/case"
+      },
+      {
+       "equals": "d00a73622924f025ee7a1620de0104eac3013a5e27210f9842292bb32eacd0f5",
+       "pointer": "/artifact_sha256"
+      },
+      {
+       "equals": "7f10f355d8bac0a6120159d3478cf28b8646755fb50fc240f0e36ad6b403a42e",
+       "pointer": "/audit_sha256"
+      },
+      {
+       "equals": "c62fc516f6b17c76f5f6126f6ad047d7ff4caa3bda25e2ccab4d65d642b6ae60",
+       "pointer": "/supplemental_manifest_sha256"
+      },
+      {
+       "equals": "CPU-ONLY-SYNTHETIC-NOT-NATIVE",
+       "pointer": "/input_lock_sha256"
+      },
+      {
+       "equals": "v24.22.1",
+       "pointer": "/node"
+      },
+      {
+       "equals": 0,
+       "pointer": "/native_starts"
+      },
+      {
+       "equals": 0,
+       "pointer": "/exports"
+      }
+     ]
+    },
+    "present_paths": [],
+    "returncode": 1,
+    "stderr_exact": null,
+    "stderr_excludes": [
+     "CH-SELECTION",
+     "Current-host binding"
+    ],
+    "stderr_includes": [],
+    "stdout_exact": "{\"passed\":false,\"slot\":\"CPU-Q01-positive\",\"artifact_sha256\":\"d00a73622924f025ee7a1620de0104eac3013a5e27210f9842292bb32eacd0f5\"}\n",
+    "stdout_excludes": [],
+    "stdout_includes": [],
+    "supervisor_error": {
+     "code": "OTRAY-E-BACKEND",
+     "reason": "Child exited with status 1",
+     "state": "REJECTED"
+    }
+   },
+   "id": "MC36",
+   "inputs": [
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/job.json",
+     "sha256": "6151ea76c3047654a4d03cce8bcd6acd0086aa41f4bc224a45bc4b13f8e34c10",
+     "size_bytes": 831
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/synthetic.glb",
+     "sha256": "d00a73622924f025ee7a1620de0104eac3013a5e27210f9842292bb32eacd0f5",
+     "size_bytes": 21152
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/synthetic-audit.json",
+     "sha256": "7f10f355d8bac0a6120159d3478cf28b8646755fb50fc240f0e36ad6b403a42e",
+     "size_bytes": 567205
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/supplemental-cpu.json",
+     "sha256": "c62fc516f6b17c76f5f6126f6ad047d7ff4caa3bda25e2ccab4d65d642b6ae60",
+     "size_bytes": 21385
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc36/config.json",
+     "sha256": "8f46961e3df8da8c352d4ee807efccad1abbd18678898bf57492bef7c5769a79",
+     "size_bytes": 2030
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-freeze-001/probe/mc36/HOST.json",
+     "sha256": "cea4d3d568a261882b630dec194fd33c75ec5acc310721e0eef1c03c39a56a51",
+     "size_bytes": 18426
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-freeze-001/config/methods-001.json",
+     "sha256": "ae687f2f3c7d4e905aa61e1561b76ab1d3c5fb29b4a990a6d0582c2af53b608b",
+     "size_bytes": 1576
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-freeze-001/config/discovery-001.json",
+     "sha256": "9438de3acb39734d28c55fda15b5047d078faf0cba85c828d8c9b17e2a3e1ba0",
+     "size_bytes": 1095
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-plan-001/source-inventory-001.json",
+     "sha256": "95abd300edbb9930e67c569b726015964ab98f4ed0ede389da122bbb3f145c4c",
+     "size_bytes": 96238
+    },
+    {
+     "mode": "0o644",
+     "path": "<local>/c271-p35/workers/W2-plan-001/dependencies-inventory-001.json",
+     "sha256": "3545d5f920ac840804a9e25d28a87d623f96af71537fd3f020a0c1d743f82fb4",
+     "size_bytes": 4543
+    },
+    {
+     "mode": "0o644",
+     "path": "<worktree>/docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
+     "sha256": "42db98dc6099ee605b0963f3734f7bff2d68c019ff6c00a0ee97bd753c03fdc9",
+     "size_bytes": 42769
+    },
+    {
+     "mode": "0o644",
+     "path": "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/ADOPTION-AMENDMENT-001.json",
+     "sha256": "872312ed80a63fbb196c17ace42e786b7fe757b710eff41139b125dfaa507937",
+     "size_bytes": 5396
+    }
+   ],
+   "label": "mc36",
+   "stage": "<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive",
+   "stage_entries": [
+    {
+     "kind": "file",
+     "path": "job.json"
+    },
+    {
+     "kind": "file",
+     "path": "synthetic-audit.json"
+    },
+    {
+     "kind": "file",
+     "path": "synthetic.glb"
+    }
+   ],
+   "stage_ms": 28000,
+   "total_ms": 30000
+  }
+ ],
+ "rows_independent": false,
+ "schema": "ontokin.c271.p35-direct-probe-rows/2"
+}

@@ -1,0 +1,1495 @@
+{
+ "schema": "ontokin.c271.p35-freeze-differences/1",
+ "from": {
+  "id": "FREEZE-001",
+  "sha256": "a5d994ea2db61262bf851379b9289ec028242bb7943d63df1992b3f386b634e6"
+ },
+ "to": {
+  "id": "FREEZE-002",
+  "path": "<local>/c271-p35/workers/W2-freeze-002/FREEZE-002.json",
+  "sha256": "bc35d6347608f7e04d9968957fa9888bee983c51ff12f2a3799e02733a82a621",
+  "size_bytes": 1329283
+ },
+ "rules": "disposition 001's dispositions and revision_rules; every other change in stated_additions, for freeze review 002",
+ "changes": [
+  {
+   "id": "D-01",
+   "finding": "FR-01 (a), (b)",
+   "what": "'launch' (new): the background launch of the shell member alone, one call per command, never retried; each command's 'timer_shell' (new member, from launch.timer_template); stop rules 2 and 3",
+   "where": [
+    "/launch",
+    "/commands/*/timer_shell",
+    "/stop_rules/1",
+    "/stop_rules/2"
+   ]
+  },
+  {
+   "id": "D-02",
+   "finding": "FR-01 (c), (d)",
+   "what": "'overrun' (new) replaces stop rule 9 with the six steps; candidates and selection rule; C16, C17 and C19 gain an 'overrun' member (candidates, select_shell, the IDs of their probes and stops); 25 capture commands (17 probes, 8 stops), phase 'capture', each with argv and absent outputs; 'capture_commands' lists them",
+   "where": [
+    "/overrun",
+    "/stop_rules/9",
+    "/commands/C16|C17|C19/overrun",
+    "/capture_commands",
+    "/commands (phase capture)"
+   ]
+  },
+  {
+   "id": "D-03",
+   "finding": "FR-02",
+   "what": "every main command C01 to C19 appends its .L's expect and, for C16, C17 and C19, its .P's expect, in full, to its own expect; stop rule 4; one classification row each",
+   "where": [
+    "/commands/C*/expect",
+    "/commands/C*/classification",
+    "/stop_rules/3"
+   ]
+  },
+  {
+   "id": "D-04",
+   "finding": "FR-03",
+   "what": "C17's expect: each process event subprocess.Popen, each argv[0] one of the bound Node and the bound Git; C06's and C07's: each subprocess.Popen, each argv[0] the bound Git; one classification row each",
+   "where": [
+    "/commands/C06|C07|C17/expect",
+    "/commands/C06|C07|C17/classification"
+   ]
+  },
+  {
+   "id": "D-05",
+   "finding": "FR-04",
+   "what": "stop rule 6: C17's trio is one indivisible row; C17's classification",
+   "where": [
+    "/stop_rules/5",
+    "/commands/C17/classification"
+   ]
+  },
+  {
+   "id": "D-06",
+   "finding": "FR-05",
+   "what": "the author's notes use 25 directories, 18 files and 43 entries; nothing in the freeze's JSON or the preparation changes",
+   "where": [
+    "FREEZE-AUTHOR-NOTES-002.md"
+   ]
+  },
+  {
+   "id": "D-07",
+   "finding": "FR-06",
+   "what": "classification rows: C02 (state_equals_host false is IMPLEMENTATION; a boot change HOST), C03 to C05 (SOURCE or PYTHON is PLAN or IMPLEMENTATION), C12 and C13 (a difference that exporting C causes is PLAN), C17 (another bootstrap refusal of a positive case is IMPLEMENTATION; an EVIDENCE refusal at setUpClass is PLAN), C19 (MC30-probe refusing after the environment check with another message is PLAN; MC36 NOT_RUN)",
+   "where": [
+    "/commands/C02|C03|C04|C05|C12|C13|C17|C19/classification"
+   ]
+  },
+  {
+   "id": "D-08",
+   "finding": "FR-07",
+   "what": "P00 (new, first in 'order', phase precondition): /usr/bin/shasum -a 256 --strict -c on freeze 002's SHA256SUMS.txt and on P00's second list (new document s7/p00-freeze-001-rebound.sha256sums.txt, bound); stop rule 1; preconditions; D02's re-evaluation covers it; its records are not in before_preparation, as P01's",
+   "where": [
+    "/commands/P00",
+    "/order/0",
+    "/stop_rules/0",
+    "/preconditions",
+    "/preparation/verification",
+    "/bindings (freeze002:...)"
+   ]
+  },
+  {
+   "id": "D-09",
+   "finding": "FR-09",
+   "what": "limits.this_freeze: the default temporary-cohort path is not exercised",
+   "where": [
+    "/limits/this_freeze"
+   ]
+  },
+  {
+   "id": "D-10",
+   "finding": "FR-12",
+   "what": "n04.assumption (new) names the user and the CF file; C17's expect checks the CF file's SHA-256; the gap is stated in limits.this_freeze; one classification row",
+   "where": [
+    "/n04/assumption",
+    "/n04/how_shown/2",
+    "/commands/C17/expect",
+    "/limits/this_freeze"
+   ]
+  },
+  {
+   "id": "D-11",
+   "finding": "disposition 001 (mc11_reviewed_list); revision rule 6",
+   "what": "the MC11 reviewed list is bound directly (bindings 'review001:MC11-REVIEWED-LIST-001.json'); deferred_inputs is empty; C01's argv holds its digest in place of the placeholder, so C01's wrapper predicates are rebuilt and its equals_sha256_of rule goes; decisions item 7",
+   "where": [
+    "/bindings",
+    "/deferred_inputs",
+    "/deferred_arguments",
+    "/commands/C01",
+    "/decisions/6"
+   ]
+  },
+  {
+   "id": "D-12",
+   "finding": "revision rules 2 and 6 (FREEZE-002.json's digest deferred)",
+   "what": "the checker's --freeze and --freeze-sha256 arguments of P01, D02, Q04 and every .X name FREEZE-002.json and the placeholder '<FREEZE-002.json SHA-256>'; their wrapper predicates are rebuilt; deferred_arguments",
+   "where": [
+    "/commands/P01|D02|Q04|*.X"
+   ]
+  },
+  {
+   "id": "D-13",
+   "finding": "revision rules 3 and 4",
+   "what": "every unchanged document is rebound at its W2-freeze-001 path with its digest (the 120 bindings of freeze 001, unchanged); attempt s7-001's paths are kept (attempt_paths); revision_of, places, status, id, author",
+   "where": [
+    "/revision_of",
+    "/attempt_paths",
+    "/places",
+    "/status",
+    "/id",
+    "/author"
+   ]
+  },
+  {
+   "id": "D-14",
+   "finding": "the reviews' records",
+   "what": "carried_findings gains FR-01 to FR-12; decisions gain items 12 to 15; open_questions are freeze 002's; freeze 001's questions move to answered_questions_001 with review 001's answers; tools.new_in_this_freeze; totals (P00, the capture commands, the Director's starts; Node and other unchanged); failure_capture notes",
+   "where": [
+    "/carried_findings",
+    "/decisions",
+    "/open_questions",
+    "/answered_questions_001",
+    "/tools",
+    "/totals",
+    "/failure_capture"
+   ]
+  }
+ ],
+ "stated_additions": [
+  {
+   "id": "A-1",
+   "rule": "overrun step 5",
+   "change": "after the wrapper exits, the command's .P runs too (with FC-P6 for an established target whose stop has not run), besides the .L of section 6 step 5",
+   "reason": "FR-04 (d) lets C17 record starts after the overrun probe; FAILURE-CAPTURE section 6 step 4 asks for a probe of every recorded start, and section 8's capture record for each one's probe; the .P is already frozen and reviewed"
+  },
+  {
+   "id": "A-2",
+   "rule": "P00",
+   "change": "--strict in shasum's argv",
+   "reason": "this shasum (Perl, 6.02) skips an improperly formatted line without failing unless --strict is given, so a damaged digest field would leave its file unchecked with exit 0"
+  },
+  {
+   "id": "A-3",
+   "rule": "overrun steps 1 and 6",
+   "change": "a second run of the command's own timer from the overrun decides when the owner is told that the wrapper has not exited",
+   "reason": "step 6 needs an executable criterion for 'never exits'; the same frozen text, no new tool"
+  },
+  {
+   "id": "A-4",
+   "rule": "trees",
+   "change": "the freeze 002 directory is a tree root (no .DS_Store)",
+   "reason": "as freeze 001's own directory was: it now holds a bound input (P00's second list) and the freeze itself"
+  },
+  {
+   "id": "A-5",
+   "rule": "launch.after",
+   "change": "a timer's 'no-clock' or other output is a PLAN deviation that stops S7 after the command's .L, .P and .X; a timer line after the command's task ended has no effect",
+   "reason": "the timer is new tooling and the launch must say what each of its outputs means"
+  },
+  {
+   "id": "A-6",
+   "rule": "stop rule 12",
+   "change": "Q01 to Q04 run only when every wrapper started has exited",
+   "reason": "after an overrun whose wrapper never exits, the post checks would observe a command still running"
+  },
+  {
+   "id": "A-7",
+   "rule": "P00's expect",
+   "change": "besides its exit, D02 checks P00's empty stderr, that stdout names FREEZE-002.json, the second list and the checker as OK, and holds no FAILED",
+   "reason": "so that D02's re-evaluation shows both lists were read; the Director's decision before P01 still reads the exit file alone"
+  }
+ ],
+ "mechanical": {
+  "top_level": {
+   "added": [
+    "answered_questions_001",
+    "attempt_paths",
+    "capture_commands",
+    "launch",
+    "overrun",
+    "revision_of"
+   ],
+   "changed": [
+    "absent_paths",
+    "author",
+    "bindings",
+    "carried_findings",
+    "commands",
+    "decisions",
+    "deferred_arguments",
+    "deferred_inputs",
+    "failure_capture",
+    "id",
+    "limits",
+    "n04",
+    "open_questions",
+    "order",
+    "places",
+    "preconditions",
+    "preparation",
+    "status",
+    "stop_rules",
+    "tools",
+    "totals",
+    "trees"
+   ],
+   "removed": []
+  },
+  "commands": {
+   "freeze_001": 71,
+   "freeze_002": 97,
+   "added": [
+    "P00",
+    "C16.O1",
+    "C16.O2",
+    "C16.O3",
+    "C16.O12",
+    "C16.O13",
+    "C16.O23",
+    "C16.O123",
+    "C16.S1",
+    "C16.S2",
+    "C16.S3",
+    "C17.O1",
+    "C17.O2",
+    "C17.O3",
+    "C17.O12",
+    "C17.O13",
+    "C17.O23",
+    "C17.O123",
+    "C17.S1",
+    "C17.S2",
+    "C17.S3",
+    "C19.O1",
+    "C19.O2",
+    "C19.O12",
+    "C19.S1",
+    "C19.S2"
+   ],
+   "only_timer_shell_added": [
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "D01",
+    "C01.L",
+    "C02.L",
+    "C03.L",
+    "C04.L",
+    "C05.L",
+    "C06.L",
+    "C07.L",
+    "C08.L",
+    "C09.L",
+    "C10.L",
+    "C11.L",
+    "C12.L",
+    "C13.L",
+    "C14.L",
+    "C15.L",
+    "C16.L",
+    "C16.P",
+    "C17.L",
+    "C17.P",
+    "C18.L",
+    "C19.L",
+    "C19.P",
+    "Q01",
+    "Q02",
+    "Q03"
+   ],
+   "changed": [
+    {
+     "id": "P00",
+     "change": "added",
+     "phase": "precondition"
+    },
+    {
+     "id": "P01",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "D02",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C01",
+     "changed_fields": [
+      "argv",
+      "classification",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      25
+     ],
+     "expect": {
+      "freeze_001": 17,
+      "freeze_002": 28,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [
+       {
+        "why": "FR-02 (C01.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C01.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C02",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 13,
+      "freeze_002": 25,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C02.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C02.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C03",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 23,
+      "freeze_002": 35,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C03.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C03.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C04",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 23,
+      "freeze_002": 35,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C04.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C04.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C05",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 21,
+      "freeze_002": 33,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C05.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C05.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C06",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 36,
+      "freeze_002": 50,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-03",
+        "count": 2
+       },
+       {
+        "why": "FR-02 (C06.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C06.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C07",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 36,
+      "freeze_002": 50,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-03",
+        "count": 2
+       },
+       {
+        "why": "FR-02 (C07.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C07.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C08",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 10,
+      "freeze_002": 22,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C08.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C08.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C09",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 12,
+      "freeze_002": 24,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C09.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C09.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C10",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 10,
+      "freeze_002": 22,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C10.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C10.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C11",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 12,
+      "freeze_002": 24,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C11.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C11.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C12",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 15,
+      "freeze_002": 27,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C12.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C12.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C13",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 15,
+      "freeze_002": 27,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C13.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C13.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C14",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 25,
+      "freeze_002": 37,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C14.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 8
+     }
+    },
+    {
+     "id": "C14.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C15",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 20,
+      "freeze_002": 32,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C15.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C15.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C16",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "overrun",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 43,
+      "freeze_002": 67,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C16.L)",
+        "count": 12
+       },
+       {
+        "why": "FR-02 (C16.P)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C16.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C17",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "overrun",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 60,
+      "freeze_002": 87,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-03",
+        "count": 2
+       },
+       {
+        "why": "FR-12",
+        "count": 1
+       },
+       {
+        "why": "FR-02 (C17.L)",
+        "count": 12
+       },
+       {
+        "why": "FR-02 (C17.P)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C17.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C18",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 21,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C18.L)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C18.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C19",
+     "changed_fields": [
+      "classification",
+      "expect",
+      "overrun",
+      "timer_shell"
+     ],
+     "expect": {
+      "freeze_001": 35,
+      "freeze_002": 59,
+      "freeze_001_rules_kept_in_order": true,
+      "appended": [
+       {
+        "why": "FR-02 (C19.L)",
+        "count": 12
+       },
+       {
+        "why": "FR-02 (C19.P)",
+        "count": 12
+       }
+      ],
+      "wrapper_rules_rebuilt": false,
+      "old_wrapper_rule_count": 6
+     }
+    },
+    {
+     "id": "C19.X",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "Q04",
+     "changed_fields": [
+      "argv",
+      "deferred_arguments",
+      "expect",
+      "shell",
+      "timer_shell",
+      "wrapper_argv"
+     ],
+     "argv_indices_changed": [
+      13,
+      15
+     ],
+     "expect": {
+      "freeze_001": 9,
+      "freeze_002": 9,
+      "freeze_001_rules_kept_in_order": false,
+      "appended": [],
+      "wrapper_rules_rebuilt": true,
+      "old_wrapper_rule_count": 7
+     }
+    },
+    {
+     "id": "C16.O1",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C16.O2",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C16.O3",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C16.O12",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C16.O13",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C16.O23",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C16.O123",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C16.S1",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C16.S2",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C16.S3",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C17.O1",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C17.O2",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C17.O3",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C17.O12",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C17.O13",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C17.O23",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C17.O123",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C17.S1",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C17.S2",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C17.S3",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C19.O1",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C19.O2",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C19.O12",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C19.S1",
+     "change": "added",
+     "phase": "capture"
+    },
+    {
+     "id": "C19.S2",
+     "change": "added",
+     "phase": "capture"
+    }
+   ]
+  },
+  "bindings": {
+   "freeze_001": 120,
+   "freeze_002": 122,
+   "added": [
+    "review001:MC11-REVIEWED-LIST-001.json",
+    "freeze002:s7/p00-freeze-001-rebound.sha256sums.txt"
+   ],
+   "freeze_001_kept_unchanged": true
+  },
+  "absent_paths": {
+   "before_preparation": [
+    370,
+    495
+   ],
+   "after_preparation": [
+    303,
+    428
+   ],
+   "added": 125
+  },
+  "argv_changed": {
+   "P01": [
+    13,
+    15
+   ],
+   "D02": [
+    13,
+    15
+   ],
+   "C01": [
+    25
+   ],
+   "C01.X": [
+    13,
+    15
+   ],
+   "C02.X": [
+    13,
+    15
+   ],
+   "C03.X": [
+    13,
+    15
+   ],
+   "C04.X": [
+    13,
+    15
+   ],
+   "C05.X": [
+    13,
+    15
+   ],
+   "C06.X": [
+    13,
+    15
+   ],
+   "C07.X": [
+    13,
+    15
+   ],
+   "C08.X": [
+    13,
+    15
+   ],
+   "C09.X": [
+    13,
+    15
+   ],
+   "C10.X": [
+    13,
+    15
+   ],
+   "C11.X": [
+    13,
+    15
+   ],
+   "C12.X": [
+    13,
+    15
+   ],
+   "C13.X": [
+    13,
+    15
+   ],
+   "C14.X": [
+    13,
+    15
+   ],
+   "C15.X": [
+    13,
+    15
+   ],
+   "C16.X": [
+    13,
+    15
+   ],
+   "C17.X": [
+    13,
+    15
+   ],
+   "C18.X": [
+    13,
+    15
+   ],
+   "C19.X": [
+    13,
+    15
+   ],
+   "Q04": [
+    13,
+    15
+   ]
+  }
+ }
+}

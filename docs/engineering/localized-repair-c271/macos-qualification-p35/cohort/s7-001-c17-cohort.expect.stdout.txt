@@ -1,0 +1,890 @@
+{
+ "checks": {
+  "predicates": [
+   {
+    "observed_length": 26,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "ONTOKIN_CURRENT_HOST_READBACK_CONFIG=<local>/c271-p35/workers/W2-freeze-001/config/cohort-config-001.json",
+       "ONTOKIN_CURRENT_HOST_READBACK_CONFIG_SHA256=83c8b1582c1ea4263d60014ca6b4cd22130e57b3fb65e06ff60a78768a5d7a3c",
+       "PATH=/usr/bin:/bin",
+       "PYTHONDONTWRITEBYTECODE=1",
+       "PYTHONNOUSERSITE=1",
+       "STATIC_TRAY_READBACK_CPU_OUTPUT=<local>/c271-p35/evidence/s7-001-cohort/run",
+       "TMPDIR=<local>/c271-p35/evidence/s7-001-tmp-cohort",
+       "TZ=UTC",
+       "<worktree>/.venv/bin/python",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/collect_outcomes.py",
+       "cohort",
+       "--root",
+       "<worktree>",
+       "--environment",
+       "<local>/c271-p35/workers/W2-freeze-001/env/cohort.environment.json",
+       "--environment-sha256",
+       "8eea85d3d4f90c14c975b61ce1926cbad7d1cb188767b6e5603562a5bd8b203f",
+       "--module-sha256",
+       "6295e0442ba7e7a1d1236fb5d9148e97ed92cc4db3e77dcd7b2993af5ef0f662",
+       "--output-dir",
+       "<local>/c271-p35/evidence/s7-001-cohort-outcomes"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<worktree>",
+    "ok": true,
+    "rule": {
+     "equals": "<worktree>",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "8eea85d3d4f90c14c975b61ce1926cbad7d1cb188767b6e5603562a5bd8b203f",
+    "ok": true,
+    "rule": {
+     "equals": "8eea85d3d4f90c14c975b61ce1926cbad7d1cb188767b6e5603562a5bd8b203f",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "ALL_PASSED",
+    "ok": true,
+    "rule": {
+     "equals": "ALL_PASSED",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed_length": 7,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "length": 7,
+     "pointer": "/tests"
+    }
+   },
+   {
+    "observed_length": 7,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "pass",
+      "pointer": "/outcome"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/tests"
+    }
+   },
+   {
+    "observed_length": 7,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "length": 7,
+     "pointer": "/required_methods"
+    }
+   },
+   {
+    "observed_length": 7,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "pass",
+      "pointer": "/outcome"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/required_methods"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "length": 0,
+     "pointer": "/class_level_events"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "length": 0,
+     "pointer": "/unplanned_events"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "length": 0,
+     "pointer": "/loader_errors"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "length": 0,
+     "pointer": "/bytecode_present"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/module_unchanged"
+    }
+   },
+   {
+    "observed": "6295e0442ba7e7a1d1236fb5d9148e97ed92cc4db3e77dcd7b2993af5ef0f662",
+    "ok": true,
+    "rule": {
+     "equals": "6295e0442ba7e7a1d1236fb5d9148e97ed92cc4db3e77dcd7b2993af5ef0f662",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/module/sha256"
+    }
+   },
+   {
+    "observed": "0x1F5:0x0:0x0",
+    "ok": true,
+    "rule": {
+     "equals": "0x1F5:0x0:0x0",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/environment/admitted_cf_user_text_encoding"
+    }
+   },
+   {
+    "observed": "83c8b1582c1ea4263d60014ca6b4cd22130e57b3fb65e06ff60a78768a5d7a3c",
+    "ok": true,
+    "rule": {
+     "equals": "83c8b1582c1ea4263d60014ca6b4cd22130e57b3fb65e06ff60a78768a5d7a3c",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/selection/configuration/sha256"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/selection/venv_is_root_venv"
+    }
+   },
+   {
+    "observed_length": 63,
+    "ok": true,
+    "rule": {
+     "count_where": {
+      "equals": "<local>/c271-macos/node-v24.22.1-darwin-arm64/bin/node",
+      "pointer": "/argv/0"
+     },
+     "equals": 3,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/setup.json",
+     "pointer": "/passed"
+    }
+   },
+   {
+    "observed": "real",
+    "ok": true,
+    "rule": {
+     "equals": "real",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/setup.json",
+     "pointer": "/labels/boundary"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/setup.json",
+     "pointer": "/boot/boot_session_uuid"
+    }
+   },
+   {
+    "observed": "83c8b1582c1ea4263d60014ca6b4cd22130e57b3fb65e06ff60a78768a5d7a3c",
+    "ok": true,
+    "rule": {
+     "equals": "83c8b1582c1ea4263d60014ca6b4cd22130e57b3fb65e06ff60a78768a5d7a3c",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/setup.json",
+     "pointer": "/config_sha256"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/cohort.json",
+     "pointer": "/passed"
+    }
+   },
+   {
+    "observed": 3,
+    "ok": true,
+    "rule": {
+     "equals": 3,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/cohort.json",
+     "pointer": "/actual_checker_starts"
+    }
+   },
+   {
+    "observed": "real",
+    "ok": true,
+    "rule": {
+     "equals": "real",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/cohort.json",
+     "pointer": "/labels/boundary"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": false,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/unused-native-schedule"
+    }
+   },
+   {
+    "observed": 1,
+    "ok": true,
+    "rule": {
+     "equals": 1,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/result.json",
+     "pointer": "/actual_checker_starts"
+    }
+   },
+   {
+    "observed": "COMPLETED",
+    "ok": true,
+    "rule": {
+     "equals": "COMPLETED",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/result.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed": null,
+    "ok": true,
+    "rule": {
+     "equals": null,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/result.json",
+     "pointer": "/provider_failure"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/result.json",
+     "pointer": "/process/returncode"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/result.json",
+     "pointer": "/process/cleanup/passed"
+    }
+   },
+   {
+    "observed": "real",
+    "ok": true,
+    "rule": {
+     "equals": "real",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/result.json",
+     "pointer": "/labels/boundary"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/result.json",
+     "pointer": "/boot_before/boot_session_uuid"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/result.json",
+     "pointer": "/boot_after/boot_session_uuid"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": false,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/finalization.failed.json"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/Q01-positive/probe.json",
+     "pointer": "/passed"
+    }
+   },
+   {
+    "observed": 1,
+    "ok": true,
+    "rule": {
+     "equals": 1,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/result.json",
+     "pointer": "/actual_checker_starts"
+    }
+   },
+   {
+    "observed": "COMPLETED",
+    "ok": true,
+    "rule": {
+     "equals": "COMPLETED",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/result.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed": null,
+    "ok": true,
+    "rule": {
+     "equals": null,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/result.json",
+     "pointer": "/provider_failure"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/result.json",
+     "pointer": "/process/returncode"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/result.json",
+     "pointer": "/process/cleanup/passed"
+    }
+   },
+   {
+    "observed": "real",
+    "ok": true,
+    "rule": {
+     "equals": "real",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/result.json",
+     "pointer": "/labels/boundary"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/result.json",
+     "pointer": "/boot_before/boot_session_uuid"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/result.json",
+     "pointer": "/boot_after/boot_session_uuid"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": false,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/finalization.failed.json"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/Q03-positive/probe.json",
+     "pointer": "/passed"
+    }
+   },
+   {
+    "observed": 1,
+    "ok": true,
+    "rule": {
+     "equals": 1,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/result.json",
+     "pointer": "/actual_checker_starts"
+    }
+   },
+   {
+    "observed": "SUPERVISOR_REFUSAL",
+    "ok": true,
+    "rule": {
+     "equals": "SUPERVISOR_REFUSAL",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/result.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed": null,
+    "ok": true,
+    "rule": {
+     "equals": null,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/result.json",
+     "pointer": "/provider_failure"
+    }
+   },
+   {
+    "observed": 1,
+    "ok": true,
+    "rule": {
+     "equals": 1,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/result.json",
+     "pointer": "/process/returncode"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/result.json",
+     "pointer": "/process/cleanup/passed"
+    }
+   },
+   {
+    "observed": "real",
+    "ok": true,
+    "rule": {
+     "equals": "real",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/result.json",
+     "pointer": "/labels/boundary"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/result.json",
+     "pointer": "/boot_before/boot_session_uuid"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/result.json",
+     "pointer": "/boot_after/boot_session_uuid"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": false,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/finalization.failed.json"
+    }
+   },
+   {
+    "observed": false,
+    "ok": true,
+    "rule": {
+     "equals": false,
+     "file": "<local>/c271-p35/evidence/s7-001-cohort/run/Q01-changed-reference/probe.json",
+     "pointer": "/passed"
+    }
+   },
+   {
+    "observed_length": 63,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "subprocess.Popen",
+      "pointer": "/event"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed_length": 63,
+    "ok": true,
+    "rule": {
+     "each": {
+      "one_of": [
+       "<local>/c271-macos/node-v24.22.1-darwin-arm64/bin/node",
+       "/Library/Developer/CommandLineTools/usr/bin/git"
+      ],
+      "pointer": "/argv/0"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-cohort-outcomes/outcomes.json",
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "bd605d2eae2bc28178ba94d69e189242f971d699c5846addae706d7e52bc69fd",
+    "ok": true,
+    "rule": {
+     "file": "<home>/.CFUserTextEncoding",
+     "sha256": "bd605d2eae2bc28178ba94d69e189242f971d699c5846addae706d7e52bc69fd"
+    }
+   },
+   {
+    "observed_length": 21,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+       "listing",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-cohort",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-cohort-outcomes",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-tmp-cohort",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-c17-cohort.readback.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback-listing.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback-listing.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback-listing.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback-listing.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback-listing.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback-listing.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback-listing.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "listing",
+    "ok": true,
+    "rule": {
+     "equals": "listing",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback.json",
+     "pointer": "/command"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback.json",
+     "pointer": "/boot_before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback.json",
+     "pointer": "/boot_after"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback.json",
+     "length": 0,
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+    "ok": true,
+    "rule": {
+     "equals": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.readback.json",
+     "pointer": "/tool/sha256"
+    }
+   },
+   {
+    "observed_length": 24,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+       "probe",
+       "--pair",
+       "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/preflight.json",
+       "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-positive/started.json",
+       "--pair",
+       "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/preflight.json",
+       "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q03-positive/started.json",
+       "--pair",
+       "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/preflight.json",
+       "<local>/c271-p35/evidence/s7-001-cohort/run/provider-ledgers/Q01-changed-reference/started.json",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "probe",
+    "ok": true,
+    "rule": {
+     "equals": "probe",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.json",
+     "pointer": "/command"
+    }
+   },
+   {
+    "observed_length": 3,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.json",
+     "length": 3,
+     "pointer": "/targets"
+    }
+   },
+   {
+    "observed_length": 3,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "absent",
+      "pointer": "/state"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.json",
+     "pointer": "/targets"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.json",
+     "pointer": "/boot_after"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c17-cohort.probes.json",
+     "length": 0,
+     "pointer": "/process_events"
+    }
+   }
+  ]
+ },
+ "command": "C17",
+ "failed": [],
+ "phase": "expect",
+ "predicate_set": "expect",
+ "python_flags": {
+  "dont_write_bytecode": 1,
+  "isolated": 1,
+  "no_site": 1
+ },
+ "schema": "ontokin.c271.p35-s7-check/1",
+ "state": "MET"
+}

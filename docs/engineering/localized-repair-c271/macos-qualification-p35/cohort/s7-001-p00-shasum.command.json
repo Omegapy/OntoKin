@@ -1,0 +1,50 @@
+{
+  "schema": "ontokin.c271.p35-command-record/1",
+  "name": "s7-001-p00-shasum",
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "/usr/bin/shasum",
+    "-a",
+    "256",
+    "--strict",
+    "-c",
+    "SHA256SUMS.txt",
+    "s7/p00-freeze-001-rebound.sha256sums.txt"
+  ],
+  "cwd": "<local>/c271-p35/workers/W2-freeze-002",
+  "environment": {
+    "file": "<local>/c271-p35/workers/W2-freeze-001/env/runner.environment.json",
+    "sha256": "a1ca9887ea41a6731d478da52443af57262b1ef79a6d8edcebba1e3d0b99f3ed"
+  },
+  "started_at_utc": "2026-11-27T10:05:55Z",
+  "ended_at_utc": "2026-11-27T10:05:55Z",
+  "start_epoch_s": "1795773955.274557",
+  "end_epoch_s": "1795773955.309734",
+  "wall_time_s": "0.035177",
+  "boot": {
+    "before": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "after": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "exit": {
+    "status": 0
+  },
+  "streams": {
+    "stdout": {
+      "path": "<local>/c271-p35/evidence/s7-001-p00-shasum.stdout.txt",
+      "sha256": "455ef110bf4a9c5c73a33eeb42917e93ac2016e37e898ed35727ee2cabfb5b16",
+      "size_bytes": 9782
+    },
+    "stderr": {
+      "path": "<local>/c271-p35/evidence/s7-001-p00-shasum.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "exit": {
+      "path": "<local>/c271-p35/evidence/s7-001-p00-shasum.exit.txt"
+    }
+  },
+  "retries": 0,
+  "written_by": "director/run/run_once_v2.sh"
+}

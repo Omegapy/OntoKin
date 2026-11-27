@@ -1,0 +1,283 @@
+{
+ "checks": {
+  "predicates": [
+   {
+    "observed_length": 20,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "PYTHONDONTWRITEBYTECODE=1",
+       "PYTHONNOUSERSITE=1",
+       "TZ=UTC",
+       "<worktree>/.venv/bin/python",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/control_harness.py",
+       "host-state",
+       "--root",
+       "<worktree>",
+       "--host",
+       "<local>/c271-p35/evidence/observe-001/HOST.json",
+       "--host-sha256",
+       "34e94f29ea1b7d9d60b389598b4ce5bc7eaf6fcaa58f3798fc3df021a8f28a92",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-host-state.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<worktree>",
+    "ok": true,
+    "rule": {
+     "equals": "<worktree>",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "31da85189f6812b92d2f3114abd4ed6b3224391a4bf378759d1e636c6b94644c",
+    "ok": true,
+    "rule": {
+     "equals": "31da85189f6812b92d2f3114abd4ed6b3224391a4bf378759d1e636c6b94644c",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "EXPECTED",
+    "ok": true,
+    "rule": {
+     "equals": "EXPECTED",
+     "file": "<local>/c271-p35/evidence/s7-001-host-state.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-host-state.json",
+     "pointer": "/checks/boundary_real"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-host-state.json",
+     "pointer": "/checks/state_equals_host"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-host-state.json",
+     "pointer": "/checks/zero_process_starts"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-host-state.json",
+     "pointer": "/boot_record/boot_session_uuid"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-host-state.json",
+     "length": 0,
+     "pointer": "/substituted"
+    }
+   },
+   {
+    "observed_length": 17,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+       "listing",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-host-state.json",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-c02-host-state.readback.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback-listing.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback-listing.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback-listing.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback-listing.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback-listing.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback-listing.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback-listing.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "listing",
+    "ok": true,
+    "rule": {
+     "equals": "listing",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback.json",
+     "pointer": "/command"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback.json",
+     "pointer": "/boot_before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback.json",
+     "pointer": "/boot_after"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback.json",
+     "length": 0,
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+    "ok": true,
+    "rule": {
+     "equals": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+     "file": "<local>/c271-p35/evidence/s7-001-c02-host-state.readback.json",
+     "pointer": "/tool/sha256"
+    }
+   }
+  ]
+ },
+ "command": "C02",
+ "failed": [],
+ "phase": "expect",
+ "predicate_set": "expect",
+ "python_flags": {
+  "dont_write_bytecode": 1,
+  "isolated": 1,
+  "no_site": 1
+ },
+ "schema": "ontokin.c271.p35-s7-check/1",
+ "state": "MET"
+}

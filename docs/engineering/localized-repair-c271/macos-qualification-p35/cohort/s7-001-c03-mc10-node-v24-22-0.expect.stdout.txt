@@ -1,0 +1,440 @@
+{
+ "checks": {
+  "predicates": [
+   {
+    "observed_length": 35,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/control_harness.py",
+       "mc10",
+       "--root",
+       "<worktree>",
+       "--plan",
+       "<local>/c271-p35/workers/W2-freeze-001/mc10/observation-plan-mc10-a.json",
+       "--plan-sha256",
+       "2f2134a380580b550da79b43627bf4f3de5ce5d71961ab820901da2c3763b6b1",
+       "--bind",
+       "prototypes/__init__.py=84edcdc6554cf9f1e2b7b5f10729866fa31e6ba3d389043e716a751ea5271fc2",
+       "--bind",
+       "prototypes/static_tray_v01/__init__.py=f63210895af2901371763f24f7ddb301c2a7c1f73f4133335ae85bbb559832e8",
+       "--bind",
+       "prototypes/static_tray_v01/supervisor.py=c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+       "--bind",
+       "prototypes/static_tray_v01/current_host_observation_v02.py=471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+       "--git-stdout-hex",
+       "6769742076657273696f6e20322e35302e3120284170706c65204769742d313535290a",
+       "--node-stdout-hex",
+       "7632342e32322e300a",
+       "--expect",
+       "refused-output",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "EXPECTED",
+    "ok": true,
+    "rule": {
+     "equals": "EXPECTED",
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/checks/zero_process_starts"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/checks/both_commands_reached_the_boundary"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/checks/only_the_harness_row_excluded"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/checks/labelled_mocked"
+    }
+   },
+   {
+    "observed_length": 2,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "__main__",
+      "pointer": "/name"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/excluded_loaded_module_rows"
+    }
+   },
+   {
+    "observed_length": 2,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/control_harness.py",
+      "pointer": "/file"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/excluded_loaded_module_rows"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "length": 0,
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "a54fb85d757e2908bfe36e1b77a9e7fc4afd7ae38a7faf4111432960996c9674",
+    "ok": true,
+    "rule": {
+     "equals": "a54fb85d757e2908bfe36e1b77a9e7fc4afd7ae38a7faf4111432960996c9674",
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/tool/sha256"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/checks/refused_with_output"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/checks/no_host"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/checks/not_observed"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/checks/not_finalized"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+     "pointer": "/checks/no_host_or_completion_file"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": false,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/HOST.json"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": false,
+     "file": "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/completion.json"
+    }
+   },
+   {
+    "observed_length": 67,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+       "listing",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/HOST.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/completion.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/failure.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/git_version",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/git_version/failure.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/git_version/host-git-version.process.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/git_version/host-git-version.stderr.log",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/git_version/host-git-version.stdout.log",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/git_version/inspection.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/git_version/intent.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/git_version/postflight.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/git_version/started.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/node_version",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/node_version/failure.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/node_version/host-node-version.process.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/node_version/host-node-version.stderr.log",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/node_version/host-node-version.stdout.log",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/node_version/inspection.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/node_version/intent.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/node_version/postflight.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/node_version/started.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/preflight.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/reserved.json",
+       "--path",
+       "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0/result.json",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback-listing.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback-listing.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback-listing.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback-listing.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback-listing.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback-listing.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback-listing.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "listing",
+    "ok": true,
+    "rule": {
+     "equals": "listing",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback.json",
+     "pointer": "/command"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback.json",
+     "pointer": "/boot_before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback.json",
+     "pointer": "/boot_after"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback.json",
+     "length": 0,
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+    "ok": true,
+    "rule": {
+     "equals": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+     "file": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.readback.json",
+     "pointer": "/tool/sha256"
+    }
+   }
+  ]
+ },
+ "command": "C03",
+ "failed": [],
+ "phase": "expect",
+ "predicate_set": "expect",
+ "python_flags": {
+  "dont_write_bytecode": 1,
+  "isolated": 1,
+  "no_site": 1
+ },
+ "schema": "ontokin.c271.p35-s7-check/1",
+ "state": "MET"
+}

@@ -1,0 +1,19 @@
+(node:33379) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("<local>/c271-macos/reader-c195/tools/three_loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+file://<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs:123
+    const error = Error('CH-SELECTION: ' + message);
+                  ^
+
+Error [CurrentHostBindingError]: CH-SELECTION: manifest digest is not external approval
+    at requireSelection (file://<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs:123:19)
+    at approvedEnvelope (file://<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs:626:3)
+    at file://<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs:704:18
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  code: 'CH-SELECTION'
+}
+
+Node.js v24.22.1

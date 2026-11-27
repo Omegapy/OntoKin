@@ -1,0 +1,131 @@
+{
+  "schema": "ontokin.c271.p35-review-disposition/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "stage": "S6",
+  "recorded_at_utc": "2026-11-27T08:31:40Z",
+  "review": {
+    "record": "FREEZE-REVIEW-001.md",
+    "structured": "FREEZE-REVIEW-001.json",
+    "sha256": {
+      "FREEZE-REVIEW-001.md": "af2ea72c6ee74520916ba350a1eeb93150b9f6b9dc79f2e7a41cc3943bf28ccc",
+      "FREEZE-REVIEW-001.json": "282188cc416f3a959951083dfbe65cfa7a32b78a7ede6a6bc749cbcb342965d4"
+    },
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model, with no earlier review in its context; it wrote none of the freeze, the tooling, the observer, the provider, the probe, the contract or MP's preparation",
+    "written_at_utc": "2026-11-27T08:26:52Z",
+    "subject": "operational freeze 001: FREEZE-001.json a5d994ea2db61262bf851379b9289ec028242bb7943d63df1992b3f386b634e6 (884,666 bytes) and the 85 files of its SHA256SUMS.txt in <local>/c271-p35/workers/W2-freeze-001/",
+    "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+    "mandatory": [
+      "FR-01",
+      "FR-02"
+    ],
+    "nonmandatory": [
+      "FR-03",
+      "FR-04",
+      "FR-05",
+      "FR-06",
+      "FR-07",
+      "FR-08",
+      "FR-09",
+      "FR-10",
+      "FR-11",
+      "FR-12"
+    ]
+  },
+  "freeze_001": {
+    "sha256": "a5d994ea2db61262bf851379b9289ec028242bb7943d63df1992b3f386b634e6",
+    "status": "REJECTED. Never run: no command of S7 has started and no s7-001 path exists. Kept unchanged in <local>/c271-p35/workers/W2-freeze-001/."
+  },
+  "mc11_reviewed_list": {
+    "path": "<local>/c271-p35/workers/W3-freeze-001/MC11-REVIEWED-LIST-001.json",
+    "sha256": "aade03ac64a506678ce7ade184ecedcd10c5f6a58077d1f01aa7d0d70db63800",
+    "size_bytes": 344283,
+    "mode": "0o644",
+    "schema": "ontokin.c271.p35-mc11-reviewed/2",
+    "status": "REVIEWED",
+    "reviewer": "W3, freeze review 001 of gate MH (C271-P35): a Claude Code subagent in a fresh context with the session's model, independent of the freeze's author (W2); it wrote none of the tooling, the probe, the readers or the candidate list",
+    "disposition": "Accepted as reviewed. Every candidate entry was reviewed; no route to process creation was found, within a name scan's limit; scan_mc11.py at C exits 0 with it. It stays unchanged at its path until C01. Freeze 002 binds it as an ordinary binding by path, SHA-256, size and mode, no longer as a deferred input. That binding holds only while the probe, the dependencies inventory and the reader tree are unchanged, as the review states."
+  },
+  "director_checks": [
+    "Read the verdict, all twelve findings, answers 1 to 12, section 4 on the reviewed list, and the JSON record's findings, answers and starts.",
+    "At 08:27:50Z: the boot is C90010BA-4DA9-475D-BBAB-CF1A9C40175A; the freeze directory is unchanged (85 of 85 files verify, nothing newer than its SHA256SUMS.txt); nothing in the evidence parent is newer than S5's last record; the review's MD and JSON and the reviewed list hold no run-time-derived private term (its scripts do, and need labels in any portable copy).",
+    "Confirmed FR-02 in the checker's source: phase expect evaluates only commands[ID].expect, or audit_expect; phases prepared and post evaluate only the precondition, preparation and post commands.",
+    "Confirmed FR-01's supervisor fact: run_process's except BaseException turns any exception, KeyboardInterrupt included, into a Stop and cleans up, so one SIGINT ends the current supervised start, not C17.",
+    "The Director's shell tool, as observed and as the tool documents it: each command runs as a zsh session and process-group leader without a terminal (07:27:50Z). The foreground mode blocks the Director and ends a command at its timeout of at most 600 s, by a means the Director does not choose. The background mode has no timeout and notifies the Director when the command exits. The tool's way to be notified when a condition holds is a background command that exits at that condition, such as an until loop over test, /bin/date and /bin/sleep; a foreground sleep is refused. The tool's task stop ends a background task by a means the Director does not choose."
+  ],
+  "dispositions": [
+    {
+      "id": "FR-01",
+      "severity": "mandatory",
+      "disposition": "Adopted. Freeze 002 freezes the launch and replaces stop rule 9. (a) Launch: every command runs as its shell member alone, read raw from the bound freeze with jq -r, with only its named placeholders replaced by their 64-hex values, in the shell tool's background mode with no tool timeout; one call per command, never retried. (b) The bound: in the same message the Director starts a frozen bound timer in the background, which exits at the first of the command's exit file existing or its outer_bound_s passing, prints which, starts only shell builtins, /bin/date and /bin/sleep, and writes nothing; its exact text is frozen, by digest if it is a file. (c) Stop rule 9 becomes FR-01's six steps: at the bound, record the overrun with its time, and the command's outcome is UNKNOWN; start one frozen capture_probe.py probe on every start pair the command has recorded so far (the runner's intent.json and started-<n>.json, the provider's preflight.json and started.json), the freeze listing every candidate pair and the rule that selects the recorded ones; run FC-P6's capture_probe.py stop only for a target in state 'present, identity established'; send nothing to the wrapper, the tool's task or its group (no kill, no task stop); wait for the wrapper to exit, then apply FAILURE-CAPTURE section 6, steps 5 to 7; if it never exits, the attempt stays UNKNOWN and the owner is told. (d) For C17, an FC-P6 stop of one case may be followed by the remaining CPU starts within C17 (FR-04). The review's further option, interrupting the overrunning tool itself, is not taken: it needs new procedure and tooling."
+    },
+    {
+      "id": "FR-02",
+      "severity": "mandatory",
+      "disposition": "Adopted. Every predicate of each .L and .P command is evaluated by a frozen step before anything later runs. The preferred route appends them to the main command's expect, which the .X evaluates after the .L and the .P, so the checker stays unchanged. A target of a .P in any state other than absent stops S7."
+    },
+    {
+      "id": "FR-03",
+      "severity": "nonmandatory",
+      "disposition": "Adopted. C17's, C06's and C07's expect bound every recorded process event: each event is subprocess.Popen, and each argv[0] is the bound Node or the bound Git (for C06 and C07, the bound Git only), so a start of any other program stops S7 before C19."
+    },
+    {
+      "id": "FR-04",
+      "severity": "nonmandatory",
+      "disposition": "Adopted. C17's three CPU starts are one indivisible row: P07 section 6 runs the complete module, so within C17 an unmet case does not stop the remaining CPU starts, and any unmet expectation of C17 stops C18 and C19. The freeze states this under MH-PLAN section 8."
+    },
+    {
+      "id": "FR-05",
+      "severity": "nonmandatory",
+      "disposition": "Adopted. The records use 25 directories, 18 files and 43 entries. The Director's brief for this review repeated the author's 26 and 44; this disposition corrects it."
+    },
+    {
+      "id": "FR-06",
+      "severity": "nonmandatory",
+      "disposition": "Adopted, each as the review states: C19 (MC30-probe refusing after the environment check with another message is PLAN unless a bound input changed, and MC36 is then NOT_RUN); C17's positive case (a refusal at another bootstrap check is IMPLEMENTATION); C17's setup (an EVIDENCE refusal at setUpClass is PLAN); C02 (state_equals_host false after P02 to P04 passed is IMPLEMENTATION); C03 to C05 (a SOURCE or PYTHON refusal is PLAN for the harness or IMPLEMENTATION for the observer, never an input change); C13 (a difference caused by exporting C rather than by the source is PLAN)."
+    },
+    {
+      "id": "FR-07",
+      "severity": "nonmandatory",
+      "disposition": "Adopted. A frozen step P00 runs immediately before P01, through the wrapper: the system's /usr/bin/shasum -a 256 -c on freeze 002's SHA256SUMS.txt, and on freeze 001's for every document that freeze 002 rebinds from there. S7 begins only if P00 exits 0. P00 is the one step whose outcome the Director reads from the wrapper's exit file alone, since nothing can check the checker before the checker runs."
+    },
+    {
+      "id": "FR-08",
+      "severity": "nonmandatory",
+      "disposition": "Recorded for the auditor; no change. No predicate of the freeze relies on these semantics."
+    },
+    {
+      "id": "FR-09",
+      "severity": "nonmandatory",
+      "disposition": "Adopted. The freeze's limits state that MH does not exercise the driver's default temporary-cohort path (_OwnedTemporaryCohort, its preserved copy and its cleanup). The seven methods and every provider check are unchanged."
+    },
+    {
+      "id": "FR-10",
+      "severity": "nonmandatory",
+      "disposition": "Recorded; no change. The self-check record is author material, unused in S7, and the freeze's own texts are right."
+    },
+    {
+      "id": "FR-11",
+      "severity": "nonmandatory",
+      "disposition": "Recorded as a risk; the exact empty-stderr predicate of C09 and C11 stays, classed PLAN. A warning would stop S7 before any Node start."
+    },
+    {
+      "id": "FR-12",
+      "severity": "nonmandatory",
+      "disposition": "Adopted. N-04's assumption names the same user and an unchanged <home>/.CFUserTextEncoding. Freeze 002 checks the CF file after C17 and before C19, in C17's expect, with the checker's existing predicate kinds; if they cannot express it, the freeze records the gap."
+    }
+  ],
+  "correction_recorded": "Q1 and TR2-06: tooling disposition 002's text says that MC29's configuration case is refused by the facade's 0.1.0 code. At C the facade keeps the version bound at setup (D-20), so the refusal is the 0.2.0 provider's CH-SELECTION, as freeze 001 froze and freeze review 001 confirmed. Disposition 002 stays unchanged; this record corrects it.",
+  "revision_rules": [
+    "W2, the author of freeze 001, revises under these dispositions only; any other change it finds necessary is stated with its reason and reviewed.",
+    "Freeze 001 stays unchanged in workers/W2-freeze-001/. Freeze 002 goes to a new directory, workers/W2-freeze-002/.",
+    "A document that needs no change is rebound at its path in workers/W2-freeze-001/ with its digest, so that every reviewed argv stays byte-identical where nothing changes. A changed or new document goes in workers/W2-freeze-002/.",
+    "Attempt s7-001's paths may be kept, since none exists and nothing of S7 has run. If they are kept, the freeze says so.",
+    "The checker and the preparation script stay unchanged unless a disposition requires otherwise. Any change to them, and any new script, such as a bound timer, is reviewed as tooling.",
+    "The MC11 reviewed list is bound directly (aade03ac..., 344,283 bytes, 0o644). Freeze 002's own digest stays a deferred value, from the record of freeze review 002.",
+    "A difference record lists every change from freeze 001, each with the finding or rule that requires it."
+  ],
+  "acceptance": "A6 not met. The freeze has mandatory findings; S7 waits for a review of freeze 002 without mandatory findings.",
+  "next": "W2 revises the freeze into freeze 002 under these dispositions; a fresh W3, which took no part in freeze review 001, reviews freeze 002 (every change, and the bindings again) before S7."
+}

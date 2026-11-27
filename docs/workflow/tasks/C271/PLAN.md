@@ -656,3 +656,24 @@ Ordered steps:
 7. Run the cohort and the MH controls exactly as frozen, counting every start.
 8. Have an independent auditor, W4, recompute the results.
 9. Record, push without force, read the push back, comment once on PR274 and issue273, and stop.
+
+### P35 qualification outcome (2026-11-27, UTC)
+
+Every step ran as planned:
+- the declaration `16d4f9f4a13bb7edef709a1ac050b81469fb3063`;
+- N34-M at `c81cf07b5386ea7eba7904f3ef5700709b84b366`;
+- the tooling, after three reviews, at commit C `0eb9a5517f4e19705178a2c59b8d8d33fb87867a`;
+- the reviewed observation plan;
+- M0 and M1 with the reviewed HOST;
+- the operational freeze, rejected once and accepted as freeze 002;
+- the cohort and the MH controls exactly as frozen;
+- the independent audit;
+- these outcome records.
+
+Recorded failures and deviations:
+- tooling review 001 rejected the first tooling;
+- freeze review 001 rejected freeze 001, whose time-limit rule could not be carried out with the Director's shell tool;
+- the Director's first wrapper left an empty command record;
+- one launch message held a third call.
+
+The [outcome](../../../engineering/localized-repair-c271/macos-qualification-p35/OUTCOME.json) lists each. Each push was without force and read back. The next phase, not begun here, is MR (R03). Then come R04 and R05, each a separate phase.

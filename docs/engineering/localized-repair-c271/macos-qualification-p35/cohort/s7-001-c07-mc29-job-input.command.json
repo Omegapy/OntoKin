@@ -1,0 +1,80 @@
+{
+  "schema": "ontokin.c271.p35-command-record/1",
+  "name": "s7-001-c07-mc29-job-input",
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "LANG=C.UTF-8",
+    "LC_ALL=C.UTF-8",
+    "ONTOKIN_CURRENT_HOST_READBACK_CONFIG=<local>/c271-p35/evidence/s7-001-mc29-inputs/job-input-config.json",
+    "ONTOKIN_CURRENT_HOST_READBACK_CONFIG_SHA256=b283fa1f5684fa53f5ca338ad7a379bca5d43ff033b294d20013e58a1615623f",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONNOUSERSITE=1",
+    "STATIC_TRAY_READBACK_CPU_OUTPUT=<local>/c271-p35/evidence/s7-001-mc29-job-input/run",
+    "TMPDIR=<local>/c271-p35/evidence/s7-001-tmp-mc29-job-input",
+    "TZ=UTC",
+    "<worktree>/.venv/bin/python",
+    "-B",
+    "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/control_harness.py",
+    "mc29",
+    "--root",
+    "<worktree>",
+    "--config",
+    "<local>/c271-p35/evidence/s7-001-mc29-inputs/job-input-config.json",
+    "--config-sha256",
+    "b283fa1f5684fa53f5ca338ad7a379bca5d43ff033b294d20013e58a1615623f",
+    "--glb",
+    "<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic.glb",
+    "--glb-sha256",
+    "d00a73622924f025ee7a1620de0104eac3013a5e27210f9842292bb32eacd0f5",
+    "--audit",
+    "<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic-audit.json",
+    "--audit-sha256",
+    "7f10f355d8bac0a6120159d3478cf28b8646755fb50fc240f0e36ad6b403a42e",
+    "--environment",
+    "<local>/c271-p35/workers/W2-freeze-001/env/mc29-job-input.environment.json",
+    "--environment-sha256",
+    "3dcd16bb115349919d9f9ebfb5d4036b3aa23683cba5661d9eb38c924d0cc65a",
+    "--change",
+    "job-input",
+    "--expect-code",
+    "CH-JOB",
+    "--output",
+    "<local>/c271-p35/evidence/s7-001-mc29-job-input.json"
+  ],
+  "cwd": "<worktree>",
+  "environment": {
+    "file": "<local>/c271-p35/workers/W2-freeze-001/env/mc29-job-input.environment.json",
+    "sha256": "3dcd16bb115349919d9f9ebfb5d4036b3aa23683cba5661d9eb38c924d0cc65a"
+  },
+  "started_at_utc": "2026-11-27T10:16:23Z",
+  "ended_at_utc": "2026-11-27T10:16:26Z",
+  "start_epoch_s": "1795774583.274422",
+  "end_epoch_s": "1795774586.252318",
+  "wall_time_s": "2.977896",
+  "boot": {
+    "before": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "after": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "exit": {
+    "status": 0
+  },
+  "streams": {
+    "stdout": {
+      "path": "<local>/c271-p35/evidence/s7-001-c07-mc29-job-input.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "stderr": {
+      "path": "<local>/c271-p35/evidence/s7-001-c07-mc29-job-input.stderr.txt",
+      "sha256": "1bd5a86a0fd1251bdda65ace38070cc1b35ef28757a8be6b36e848a90159fa13",
+      "size_bytes": 73
+    },
+    "exit": {
+      "path": "<local>/c271-p35/evidence/s7-001-c07-mc29-job-input.exit.txt"
+    }
+  },
+  "retries": 0,
+  "written_by": "director/run/run_once_v2.sh"
+}

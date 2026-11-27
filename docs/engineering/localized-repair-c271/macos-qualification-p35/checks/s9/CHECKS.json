@@ -1,0 +1,90 @@
+{
+  "schema": "ontokin.c271.p35-commit-checks/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "commit": "the S9 outcome records commit of the MH plan: the commit that carries this record",
+  "parent": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
+  "recorded_at_utc": "2026-11-27T11:39:40Z",
+  "executor": "The owner's prepared environment, run by the Director: <worktree>/.venv/bin/python with -B; Git from the developer tools for the whitespace checks.",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "stdout": "workflow.stdout",
+      "stdout_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293",
+      "stderr": "workflow.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "Workflow structure passed (13 tasks).",
+      "when": "on the staged records, after this record's path existed; repeated on the final staged commit with the same output"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "stdout": "documentation.stdout",
+      "stdout_sha256": "f2e1b5e40ec1e87176588bb3fb775aa73f696caf4210e0d749df6a6b4ec48b5d",
+      "stderr": "documentation.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "passed: 1,748 documents, 6,962 local links, no failure",
+      "when": "on the staged records; repeated on the final staged commit with the same output"
+    },
+    {
+      "name": "full_staged_whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "when": "on the staged records before this directory's outputs were added",
+      "exit_code": 2,
+      "status": "failed_preserved",
+      "stdout": "whitespace-full-staged.stdout",
+      "stdout_sha256": "6bf7f83c13d7774b814b21396d78fd5a73f164afad5b205597574edfab4b9225",
+      "stderr": "whitespace-full-staged.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnostic_count": 1,
+      "affected_paths": {
+        "cohort/s7-001-mc29-inputs/configuration-config.json": 1
+      },
+      "disposition": "Preserved. The file is the portable copy of MC29's consumed configuration copy, which C06 changed by appending exactly one space after preflight, as freeze 002 froze it; the trailing space is the control's mutation, and the audit verified it. Removing it would change the record. Every authored file passes (authored_whitespace)."
+    },
+    {
+      "name": "authored_whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)docs/engineering/localized-repair-c271/macos-qualification-p35/cohort/s7-001-mc29-inputs/configuration-config.json",
+        ":(exclude)docs/engineering/localized-repair-c271/macos-qualification-p35/checks/s9/whitespace-full-staged.stdout"
+      ],
+      "exit_code": 0,
+      "stdout": "whitespace-authored.stdout",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "whitespace-authored.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "when": "on the staged records; repeated on the final staged commit, empty"
+    },
+    {
+      "name": "privacy",
+      "command": "grep -i -F -f over every staged file with the private strings derived at run time (home, account name and its parts, the clone's ancestors, the interpreter prefix and its ancestors, the Git identity) and with the owner's installed applications; the same terms in each staged Python file's joined and squeezed string constants",
+      "exit_code": 0,
+      "observed": "no private string. The remaining hits are of accepted classes only: python@3.12 inside the labelled <prefix>/Cellar/... paths, as in P33's and P34's committed records; /System/Volumes/... system paths; /Users/runner, a public build path inside a reader library; the public repository's name; the agent's name and the contract's own term for the Codex Node build; generic words; and application names already present in the committed task records. The joined-constant hits are word fragments.",
+      "excluded_from_copies": "three privacy-scan scripts whose search terms exist to find private items, and workers' raw outputs; see EXACT-RECORDS.json"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "ontokin.c271.p35-command-record/1",
+  "name": "s7-001-p01-check-pre",
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "LANG=C.UTF-8",
+    "LC_ALL=C.UTF-8",
+    "PATH=/usr/bin:/bin",
+    "TZ=UTC",
+    "UV_THREADPOOL_SIZE=2",
+    "<worktree>/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "<local>/c271-p35/workers/W2-freeze-001/s7/w2f_s7_check.py",
+    "--freeze",
+    "<local>/c271-p35/workers/W2-freeze-002/FREEZE-002.json",
+    "--freeze-sha256",
+    "bc35d6347608f7e04d9968957fa9888bee983c51ff12f2a3799e02733a82a621",
+    "pre"
+  ],
+  "cwd": "<local>/c271-p35/evidence",
+  "environment": {
+    "file": "<local>/c271-p35/workers/W2-freeze-001/env/declared.environment.json",
+    "sha256": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7"
+  },
+  "started_at_utc": "2026-11-27T10:06:17Z",
+  "ended_at_utc": "2026-11-27T10:06:17Z",
+  "start_epoch_s": "1795773977.485127",
+  "end_epoch_s": "1795773977.719033",
+  "wall_time_s": "0.233906",
+  "boot": {
+    "before": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "after": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "exit": {
+    "status": 0
+  },
+  "streams": {
+    "stdout": {
+      "path": "<local>/c271-p35/evidence/s7-001-p01-check-pre.stdout.txt",
+      "sha256": "2dc1b0bbe6d974897ac31f82280eab94e9ad829fa0fc272172f47bf40df71fdb",
+      "size_bytes": 51866
+    },
+    "stderr": {
+      "path": "<local>/c271-p35/evidence/s7-001-p01-check-pre.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "exit": {
+      "path": "<local>/c271-p35/evidence/s7-001-p01-check-pre.exit.txt"
+    }
+  },
+  "retries": 0,
+  "written_by": "director/run/run_once_v2.sh"
+}

@@ -1,0 +1,75 @@
+{
+  "schema": "ontokin.c271.p35-command-record/1",
+  "name": "s7-001-c03-mc10-node-v24-22-0",
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "LANG=C.UTF-8",
+    "LC_ALL=C.UTF-8",
+    "PATH=/usr/bin:/bin",
+    "TZ=UTC",
+    "UV_THREADPOOL_SIZE=2",
+    "<worktree>/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/control_harness.py",
+    "mc10",
+    "--root",
+    "<worktree>",
+    "--plan",
+    "<local>/c271-p35/workers/W2-freeze-001/mc10/observation-plan-mc10-a.json",
+    "--plan-sha256",
+    "2f2134a380580b550da79b43627bf4f3de5ce5d71961ab820901da2c3763b6b1",
+    "--bind",
+    "prototypes/__init__.py=84edcdc6554cf9f1e2b7b5f10729866fa31e6ba3d389043e716a751ea5271fc2",
+    "--bind",
+    "prototypes/static_tray_v01/__init__.py=f63210895af2901371763f24f7ddb301c2a7c1f73f4133335ae85bbb559832e8",
+    "--bind",
+    "prototypes/static_tray_v01/supervisor.py=c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+    "--bind",
+    "prototypes/static_tray_v01/current_host_observation_v02.py=471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+    "--git-stdout-hex",
+    "6769742076657273696f6e20322e35302e3120284170706c65204769742d313535290a",
+    "--node-stdout-hex",
+    "7632342e32322e300a",
+    "--expect",
+    "refused-output",
+    "--output",
+    "<local>/c271-p35/evidence/s7-001-mc10-node-v24-22-0.json"
+  ],
+  "cwd": "<local>/c271-p35/evidence",
+  "environment": {
+    "file": "<local>/c271-p35/workers/W2-freeze-001/env/declared.environment.json",
+    "sha256": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7"
+  },
+  "started_at_utc": "2026-11-27T10:11:23Z",
+  "ended_at_utc": "2026-11-27T10:11:25Z",
+  "start_epoch_s": "1795774283.219219",
+  "end_epoch_s": "1795774285.142141",
+  "wall_time_s": "1.922922",
+  "boot": {
+    "before": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "after": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "exit": {
+    "status": 0
+  },
+  "streams": {
+    "stdout": {
+      "path": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "stderr": {
+      "path": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.stderr.txt",
+      "sha256": "396a4f209cfcaa4fef6aee5c1071183faa43bebe244db2dc5c70757f07532eae",
+      "size_bytes": 73
+    },
+    "exit": {
+      "path": "<local>/c271-p35/evidence/s7-001-c03-mc10-node-v24-22-0.exit.txt"
+    }
+  },
+  "retries": 0,
+  "written_by": "director/run/run_once_v2.sh"
+}

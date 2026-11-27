@@ -1,0 +1,53 @@
+#!/bin/sh
+# Operational freeze 001 of gate MH (C271-P35): the Director's frozen preparation for attempt s7-001.
+# Run once, through the wrapper, as: /usr/bin/env -i PATH=... /bin/sh <this file>. It creates only absent
+# paths, in this order, and stops at the first refusal or failure (an explicit exit 1, or set -e on a failed
+# mkdir or cp); it never replaces, repairs or removes anything (FC-K1). Afterwards D02
+# (w2f_s7_check.py prepared) verifies every entry. Written by W2, the author of the freeze.
+set -eu
+umask 022
+absent() { if [ -e "$1" ] || [ -L "$1" ]; then echo "prepare-s7-001: present $1" >&2; exit 1; fi; }
+absent '<local>/c271-p35/evidence/s7-001-tmp-cohort'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-tmp-cohort'
+absent '<local>/c271-p35/evidence/s7-001-tmp-mc37'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-tmp-mc37'
+absent '<local>/c271-p35/evidence/s7-001-tmp-discovery-baseline'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-tmp-discovery-baseline'
+absent '<local>/c271-p35/evidence/s7-001-tmp-discovery-current'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-tmp-discovery-current'
+absent '<local>/c271-p35/evidence/s7-001-tmp-mc29-configuration'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-tmp-mc29-configuration'
+absent '<local>/c271-p35/evidence/s7-001-tmp-mc29-job-input'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-tmp-mc29-job-input'
+absent '<local>/c271-p35/evidence/s7-001-cohort'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-cohort'
+absent '<local>/c271-p35/evidence/s7-001-mc29-configuration'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-mc29-configuration'
+absent '<local>/c271-p35/evidence/s7-001-mc29-job-input'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-mc29-job-input'
+absent '<local>/c271-p35/evidence/s7-001-mc29-inputs'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-mc29-inputs'
+absent '<local>/c271-p35/evidence/s7-001-export-1c2f25ba'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-export-1c2f25ba'
+absent '<local>/c271-p35/evidence/s7-001-export-0eb9a551'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-export-0eb9a551'
+absent '<local>/c271-p35/evidence/s7-001-probe-syntax'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-syntax'
+absent '<local>/c271-p35/evidence/s7-001-probe-h01'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-h01'
+absent '<local>/c271-p35/evidence/s7-001-probe-h01/cohort'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-h01/cohort'
+absent '<local>/c271-p35/evidence/s7-001-probe-h01/cohort/Q01-positive'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-h01/cohort/Q01-positive'
+absent '<local>/c271-p35/evidence/s7-001-probe-h02'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-h02'
+absent '<local>/c271-p35/evidence/s7-001-probe-h02/cohort'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-h02/cohort'
+absent '<local>/c271-p35/evidence/s7-001-probe-h02/cohort/Q01-positive'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-h02/cohort/Q01-positive'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc30'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-mc30'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc36'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-mc36'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive'; /bin/mkdir -m 0700 '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive'
+absent '<local>/c271-p35/evidence/s7-001-mc29-inputs/configuration-config.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/config/mc29-configuration-config-001.json' '<local>/c271-p35/evidence/s7-001-mc29-inputs/configuration-config.json'
+absent '<local>/c271-p35/evidence/s7-001-mc29-inputs/job-input-config.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/config/mc29-job-input-config-001.json' '<local>/c271-p35/evidence/s7-001-mc29-inputs/job-input-config.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-h01/cohort/supplemental-cpu.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/probe/h01/supplemental-cpu.json' '<local>/c271-p35/evidence/s7-001-probe-h01/cohort/supplemental-cpu.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-h01/cohort/Q01-positive/job.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/probe/h01/job.json' '<local>/c271-p35/evidence/s7-001-probe-h01/cohort/Q01-positive/job.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-h01/cohort/Q01-positive/synthetic.glb'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic.glb' '<local>/c271-p35/evidence/s7-001-probe-h01/cohort/Q01-positive/synthetic.glb'
+absent '<local>/c271-p35/evidence/s7-001-probe-h01/cohort/Q01-positive/synthetic-audit.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic-audit.json' '<local>/c271-p35/evidence/s7-001-probe-h01/cohort/Q01-positive/synthetic-audit.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-h02/cohort/supplemental-cpu.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/probe/h02/supplemental-cpu.json' '<local>/c271-p35/evidence/s7-001-probe-h02/cohort/supplemental-cpu.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-h02/cohort/Q01-positive/job.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/probe/h02/job.json' '<local>/c271-p35/evidence/s7-001-probe-h02/cohort/Q01-positive/job.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-h02/cohort/Q01-positive/synthetic.glb'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic.glb' '<local>/c271-p35/evidence/s7-001-probe-h02/cohort/Q01-positive/synthetic.glb'
+absent '<local>/c271-p35/evidence/s7-001-probe-h02/cohort/Q01-positive/synthetic-audit.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic-audit.json' '<local>/c271-p35/evidence/s7-001-probe-h02/cohort/Q01-positive/synthetic-audit.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/supplemental-cpu.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/probe/mc30/supplemental-cpu.json' '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/supplemental-cpu.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/job.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/probe/mc30/job.json' '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/job.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/synthetic.glb'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic.glb' '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/synthetic.glb'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/synthetic-audit.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic-audit.json' '<local>/c271-p35/evidence/s7-001-probe-mc30/cohort/Q01-positive/synthetic-audit.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/supplemental-cpu.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/probe/mc36/supplemental-cpu.json' '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/supplemental-cpu.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/job.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/probe/mc36/job.json' '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/job.json'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/synthetic.glb'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic.glb' '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/synthetic.glb'
+absent '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/synthetic-audit.json'; /bin/cp -n '<local>/c271-p35/workers/W2-freeze-001/fixtures/Q01/synthetic-audit.json' '<local>/c271-p35/evidence/s7-001-probe-mc36/cohort/Q01-positive/synthetic-audit.json'
+echo 'prepare-s7-001: done'

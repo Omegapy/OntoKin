@@ -1,0 +1,366 @@
+{
+  "schema": "ontokin.c271.p35-outcome/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "recorded_at_utc": "2026-11-27T11:32:20Z",
+  "status": "qualification_passed_audited",
+  "gate": "MH of ontokin.current-host-readback/0.2.0, profile darwin-arm64-v1, design revision 4 (P33-AMENDMENT-001)",
+  "outcome": "Gate MH passed on this executor (macos-arm64-local: macOS 26.6.2 (25G83), arm64). N34-M accepted the Mach-O parser and closure claim; M0 and M1 observed HOST through the Darwin supervisor with one Git and one Node start, and an independent review accepted it; the qualifying cohort ran once, exactly as operational freeze 002 froze it (freeze 001 was rejected before anything ran): the probe syntax check, the direct negatives P06-H01 and P06-H02, the original seven methods of tests.test_static_tray_readback_v01 (7 of 7 passed, exactly three real CPU starts, the intended matrix_0_3 negative, the four coordinator seams mocked) and the MH controls. An independent audit recomputed the bindings, the starts and receipts, the method outcomes and every numerical row, and returned PASS_WITH_NONBLOCKING_FINDINGS. It qualifies the seven methods and the direct negatives on this executor only, with contract section 10's labels; it is not MR, R03, R04, R05 or a release.",
+  "starting_revision": "30e00d83df8bd87216b15ec1e4a4f0ca349fc78d",
+  "bound_commit": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
+  "bound_tree": "ea10cd94c05a2ebbb44b3f83d4c96cb0a59baa2b",
+  "commits": [
+    {
+      "commit": "16d4f9f4a13bb7edef709a1ac050b81469fb3063",
+      "subject": "C271-P35: declare gate MH, the host qualification of the readback methods"
+    },
+    {
+      "commit": "c81cf07b5386ea7eba7904f3ef5700709b84b366",
+      "subject": "C271-P35: N34-M review of the Mach-O parser and closure claim, accepted"
+    },
+    {
+      "commit": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
+      "subject": "C271-P35: commit C, the reviewed MH tooling (stage S3)"
+    }
+  ],
+  "downloads": "none needed and none made",
+  "fixed_state": {
+    "boot": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A, unchanged from the observation plan's freeze to the end of the audit",
+    "head": "C, with the worktree clean and no commit from S4 to S8 (P05, Q03 and the audit's own reading of the index)",
+    "python_inventory": "c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633, unchanged at Q01 and at the audit's end: no bytecode was written",
+    "source_inventory": "95abd300edbb9930e67c569b726015964ab98f4ed0ede389da122bbb3f145c4c, unchanged at Q02"
+  },
+  "stages": {
+    "S1": "the declaration 16d4f9f4, pushed and read back (A1)",
+    "S2": "N34-M: ACCEPT_WITH_NONMANDATORY_FINDINGS, N-01 to N-09 (A2); records n34m/",
+    "S3": "the tooling: review 001 rejected revision 1 with five mandatory findings; reviews 002 and 003 accepted revisions 2 and 3 with nonmandatory findings; 91 of 91 tests at the committed place; commit C (A3); records tooling/, reviews/TOOLING-REVIEW-00{1,2,3}",
+    "S4": "observation plan 001, b8cd6449aba958373f68715158402ed2e0e233e08213f3521bbc3d80cfe4c152, accepted by plan review 001 with PR-01 to PR-06 (A4); records plans/observation-plan-001/, reviews/plan-review-001/",
+    "S5": "M0 and M1: observe ran once, 2026-11-27T05:34:37Z to 05:34:41Z, exit 0, OBSERVED_UNAPPROVED, one Git and one Node start; HOST 34e94f29ea1b7d9d60b389598b4ce5bc7eaf6fcaa58f3798fc3df021a8f28a92, accepted by HOST review 001 with HR-01 to HR-07 (A5); records host/, reviews/host-review-001/",
+    "S6": "operational freeze 001 (a5d994ea2db61262bf851379b9289ec028242bb7943d63df1992b3f386b634e6) rejected by freeze review 001 with mandatory FR-01 (the outer-bound rule could not be carried out with the Director's shell tool) and FR-02 (no frozen step evaluated the listing and probe predicates); freeze 002 (bc35d6347608f7e04d9968957fa9888bee983c51ff12f2a3799e02733a82a621) accepted by freeze review 002 with FR2-01 to FR2-06 (A6); records plans/freeze-001/, plans/freeze-002/, reviews/freeze-review-00{1,2}/",
+    "S7": "freeze 002's 72 commands, each once, 2026-11-27T10:05:55Z to 10:32:45Z, in its order, each as its frozen shell member in the shell tool's background mode with its frozen bound timer; every timer printed exit-file, every checker step and Q04 printed MET; no overrun, refusal, retry or capture record (A7); records cohort/, director/",
+    "S8": "audit 001: PASS_WITH_NONBLOCKING_FINDINGS, AU-01 to AU-08 (A8); records audit/",
+    "S9": "these records, the portable copies, the checks, the push and the checkpoint comments (A9, A10)"
+  },
+  "cohort": {
+    "probe_syntax_check": "one Node start, exit 0, empty stdout and stderr",
+    "P06_H01": "one Node start, exit 1, 'CH-SELECTION: manifest digest is not external approval' on stderr, no probe.json, refused before any reader import (source-backed inference, P07 section 5)",
+    "P06_H02": "one Node start, exit 1, 'Current-host binding: wrong configuration contract/schema' on stderr, no probe.json, refused before any reader import",
+    "seven_methods": {
+      "module": "tests.test_static_tray_readback_v01, module 6295e0442ba7e7a1d1236fb5d9148e97ed92cc4db3e77dcd7b2993af5ef0f662",
+      "result": "7 tests, 7 pass, 'Ran 7 tests in 7.827s', OK; collector state ALL_PASSED; no class-level, unplanned or loader event",
+      "cpu_starts": 3,
+      "coordinator_seams": "four, labelled mocked (MC26); no process event in their windows",
+      "readers": "validator 2.0.0-dev.3.10, Three.js 0.186.1 (r186), Node v24.22.1"
+    },
+    "numerical_audit": {
+      "rows_per_case": 2060,
+      "Q01_positive": "0 failed rows",
+      "Q03_positive": "0 failed rows",
+      "Q01_changed_reference": "exactly 1 failed row and 1 finding, equipment-tray/pair/left/base matrix_0_3: actual -0.3, expected -0.299, difference 0.0010000000000000009 (within 1e-9 of 0.001, T-10), threshold 0.000005; every other row passes",
+      "recomputed_by": "C18's audit_numeric.py, and the independent audit's own code, row by row equal"
+    }
+  },
+  "starts": {
+    "counting_rule": "P07 section 4: a subprocess.Popen audit event shows an attempt; a receipt with a positive PID establishes a start",
+    "mh_total": {
+      "node": 9,
+      "other": 2
+    },
+    "rows": [
+      {
+        "row": "M0, Git --version",
+        "where": "S5",
+        "pid": 7994,
+        "kind": "other"
+      },
+      {
+        "row": "M1, Node --version",
+        "where": "S5",
+        "pid": 7995,
+        "kind": "node"
+      },
+      {
+        "row": "probe syntax check",
+        "where": "C16",
+        "pid": 33371,
+        "kind": "node"
+      },
+      {
+        "row": "P06-H01",
+        "where": "C16",
+        "pid": 33379,
+        "kind": "node"
+      },
+      {
+        "row": "P06-H02",
+        "where": "C16",
+        "pid": 33380,
+        "kind": "node"
+      },
+      {
+        "row": "Q01-positive",
+        "where": "C17",
+        "pid": 33806,
+        "kind": "node"
+      },
+      {
+        "row": "Q03-positive",
+        "where": "C17",
+        "pid": 33835,
+        "kind": "node"
+      },
+      {
+        "row": "Q01-changed-reference",
+        "where": "C17",
+        "pid": 33862,
+        "kind": "node"
+      },
+      {
+        "row": "MC30-probe",
+        "where": "C19",
+        "pid": 34541,
+        "kind": "node"
+      },
+      {
+        "row": "MC36",
+        "where": "C19",
+        "pid": 34550,
+        "kind": "node"
+      },
+      {
+        "row": "MC37's Python child",
+        "where": "C15",
+        "pid": null,
+        "kind": "other",
+        "note": "one audit event and the test's own EPERM and ESRCH evidence, no receipt (AU-02)"
+      }
+    ],
+    "against_plan": "MH-PLAN section 7 expected 8 Node and 2 other; the ninth Node start is MC30-probe, the only way to show that __CF_USER_TEXT_ENCODING reached Node (T-04, N-04), stated by the freeze and checked by both freeze reviews",
+    "simulated_not_counted": "the MC10 harness's receipts with PIDs 999990001 and 999990002 are simulated, above Darwin's PID_MAX, labelled mocked, with no audit event (AU-03)",
+    "recorded_not_bounded": {
+      "provider_bound_git_reads": {
+        "C06": 15,
+        "C07": 25,
+        "C17": 60
+      },
+      "director_git_reads_frozen": [
+        "P05",
+        "C08",
+        "C10",
+        "Q03"
+      ],
+      "director_git_reads_outside_s7": "the Director's own reads of HEAD and status during S4 to S9, recorded in director/WORKERS.md",
+      "tar": 2,
+      "python_launchers": "64 in S7, plus the workers' own -I -S -B starts counted in their records"
+    },
+    "never_started": [
+      "ldd",
+      "codesign",
+      "otool",
+      "Node outside M1, C16, C17 and C19"
+    ],
+    "cleanup": "every receipt cleanup passed; C16.P, C17.P and C19.P found every target absent (ESRCH on kill and killpg); nothing UNKNOWN or interrupted"
+  },
+  "controls": [
+    {
+      "id": "MC10",
+      "label": "mocked command boundary, real static bindings",
+      "commands": "C03-C05",
+      "outcome": "v24.22.0 and v24.22.1 without newline refused at OUTPUT; v24.22.1 accepted; zero starts"
+    },
+    {
+      "id": "MC11",
+      "label": "real static scan (a name scan cannot exclude every dynamic route)",
+      "commands": "C01",
+      "outcome": "no process creation; the reviewed list matches (628 dynamic hits, 23 call names, 53 specifiers)"
+    },
+    {
+      "id": "MC24",
+      "label": "real",
+      "commands": "C17, C18",
+      "outcome": "Q01 and Q03 exit 0, every row passes"
+    },
+    {
+      "id": "MC25",
+      "label": "real",
+      "commands": "C17, C18",
+      "outcome": "exit 1, exactly the intended matrix_0_3 finding"
+    },
+    {
+      "id": "MC26",
+      "label": "mocked (the original seams)",
+      "commands": "C17",
+      "outcome": "the four seams pass, no process event"
+    },
+    {
+      "id": "MC27",
+      "label": "real",
+      "commands": "C16",
+      "outcome": "the direct negatives as above"
+    },
+    {
+      "id": "MC28",
+      "label": "real",
+      "commands": "C08-C14",
+      "outcome": "5,994 current IDs = 5,587 baseline + exactly the 407 approved additions; each export's tree equals its commit's tree"
+    },
+    {
+      "id": "MC29",
+      "label": "mocked supervisor recorder with the real detectors",
+      "commands": "C06, C07",
+      "outcome": "configuration case CH-SELECTION (attempt and accounting); job-input case CH-JOB, accounting CH-EVIDENCE; Git reads 15 and 25; zero Node starts"
+    },
+    {
+      "id": "MC30",
+      "label": "real; the value by elimination only",
+      "commands": "C17, C19",
+      "outcome": "the positive starts admitted HOST's value and MC30-probe refused under a null copy: the variable reached Node with 0x1F5:0x0:0x0"
+    },
+    {
+      "id": "MC36",
+      "label": "real, after MC30-probe",
+      "commands": "C19",
+      "outcome": "a wrong CF value refused at the environment check, before any reader"
+    },
+    {
+      "id": "MC37",
+      "label": "real",
+      "commands": "C15",
+      "outcome": "unreaped child EPERM, reaped ESRCH; one other start"
+    },
+    {
+      "id": "F-04",
+      "label": "real",
+      "commands": "C02, C17",
+      "outcome": "the provider's host_state equals HOST, nothing substituted"
+    }
+  ],
+  "not_run_at_mh": "MC01 to MC08, MC12 to MC17, MC20 to MC23, MC31, MC33 to MC35, MC38 and MC39; MC18, MC19 and MC32 as controls (their positive direction runs); MC29's source, runtime, dependency and OS-build cases (MI's simulated cases); MC30's case without the variable (MI's mocked case)",
+  "labels": {
+    "executor": "macos-arm64-local",
+    "contract": "ontokin.current-host-readback/0.2.0, design revision 4, P33-AMENDMENT-001, profile darwin-arm64-v1",
+    "os": "macOS 26.6.2 (25G83), cryptex 26.6.2 (25G83)",
+    "node": "node-v24.22.1-darwin-arm64.tar.gz 89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7; bin/node 6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329",
+    "python_inventory": "c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633",
+    "run_kind": "qualifying, boundary real",
+    "refused_results": "the labels of the refused results (MC30-probe, MC36) are reported as found and unverified"
+  },
+  "never_claimed": [
+    "contract section 10's items: a Linux x86-64 qualification; the C199/C225 replay; P05's Gate H for the Codex Node build; the ELF policies of /0.1.1 to /0.1.5 on a real host; N34 for the Linux loader or N57; the original supervisor's Linux descendant reaping or any enforcement against descendants; a per-file closure of the macOS system libraries; durability beyond fsync; a binding of files that libraries load at run time",
+    "HOST's four claims as complete (HR-06)",
+    "a verified signature of the Node archive",
+    "Node behaviour beyond these cases",
+    "MR, R03, R04, R05, integration or a release"
+  ],
+  "limits": [
+    "a name scan cannot exclude every dynamic route (MC11)",
+    "the audit hooks do not see _posixsubprocess.fork_exec, ctypes calls or earlier lookups (FC-P7, AU-05)",
+    "the no-reader-import conclusion for the direct negatives is a source-backed inference",
+    "the CF value follows only by elimination",
+    "the driver's default temporary-cohort path is not exercised (FR-09)",
+    "the CF file's mode, link and user are only partly checked",
+    "the overrun procedure was never needed and is not exercised",
+    "the 1e-9 tolerance for 'about 0.001' is the harness's own (T-10)"
+  ],
+  "deviations_recorded": [
+    "worker starts beyond MH-PLAN section 3's 'as W1': the tooling, freeze and audit briefs allowed named tools, each by a recorded Director decision",
+    "W1 (N34-M) made 5 read-only Git starts and 4 bare python3 starts under PYTHONDONTWRITEBYTECODE=1; W2 (tooling) made 10 python3 starts without -B under PYTHONDONTWRITEBYTECODE=1 and 6 read-only Git starts; the inventory stayed unchanged",
+    "W2 (freeze 002) wrote one shell call with a Git start; the tool refused the whole call and nothing ran",
+    "the Director's first wrapper left S5's static command record empty; it is kept, and a hand-written record stands beside it (HR-01)",
+    "the C01 launch message held a third call, a log append that finished before the launch pair (AU-01); no effect",
+    "MH-PLAN section 9 names four reviews; MH had seven: three tooling reviews, the plan review, the HOST review and two freeze reviews"
+  ],
+  "corrections_recorded": [
+    "MI's OUTCOME.json says 'the 401 additions'; INVENTORY-ADDITIONS.json lists 407, which MH used and C14 confirmed (MH-PLAN section 6 note)",
+    "tooling disposition 002's TR2-06 attributes MC29's configuration refusal to the facade's 0.1.0 code; at C it is the 0.2.0 provider's CH-SELECTION (D-20), as FREEZE-REVIEW-DISPOSITION-001 records"
+  ],
+  "audit": {
+    "record": "audit/AUDIT-001.md",
+    "verdict": "PASS_WITH_NONBLOCKING_FINDINGS",
+    "findings": [
+      "AU-01",
+      "AU-02",
+      "AU-03",
+      "AU-04",
+      "AU-05",
+      "AU-06",
+      "AU-07",
+      "AU-08"
+    ],
+    "auditor": "W4, a Claude Code subagent in a fresh context with the session's model; it took no part in any earlier stage"
+  },
+  "reviews": {
+    "n34m": "n34m/N34-M-REVIEW.md, ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "tooling": "reviews/TOOLING-REVIEW-001.md REJECT_WITH_MANDATORY_FINDINGS; 002 and 003 ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "plan": "reviews/plan-review-001/PLAN-REVIEW-001.md, ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "host": "reviews/host-review-001/HOST-REVIEW-001.md, ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "freeze_001": "reviews/freeze-review-001/FREEZE-REVIEW-001.md, REJECT_WITH_MANDATORY_FINDINGS",
+    "freeze_002": "reviews/freeze-review-002/FREEZE-REVIEW-002.md, ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "dispositions": "reviews/*-DISPOSITION-*.json"
+  },
+  "acceptance": [
+    {
+      "id": "A1",
+      "met": true,
+      "evidence": "16d4f9f4, pushed and read back"
+    },
+    {
+      "id": "A2",
+      "met": true,
+      "evidence": "n34m/, at c81cf07b, before any execution plan"
+    },
+    {
+      "id": "A3",
+      "met": true,
+      "evidence": "commit C 0eb9a551, pushed and read back"
+    },
+    {
+      "id": "A4",
+      "met": true,
+      "evidence": "plan review 001 and its disposition; the plan's digest taken from the review record"
+    },
+    {
+      "id": "A5",
+      "met": true,
+      "evidence": "host/ and HOST review 001; nothing retried"
+    },
+    {
+      "id": "A6",
+      "met": true,
+      "evidence": "freeze 002 and freeze review 002; freeze 001 rejected and never run"
+    },
+    {
+      "id": "A7",
+      "met": true,
+      "evidence": "cohort/ and director/s7/LAUNCH-LINES.json"
+    },
+    {
+      "id": "A8",
+      "met": true,
+      "evidence": "audit/AUDIT-001.md"
+    },
+    {
+      "id": "A9",
+      "met": true,
+      "evidence": "no ldd start; Node only through the bounded routes, counted; the .venv only with -B; one boot, HEAD at C and no commit from S4 to S8; the workflow, documentation and scoped whitespace checks of checks/s9/CHECKS.json"
+    },
+    {
+      "id": "A10",
+      "met": "recorded in CLOSING.json, after the push, the readback and the comments",
+      "evidence": "CLOSING.json"
+    }
+  ],
+  "status_kept_separate": {
+    "environment_readiness": "the runtime, reader tree and .venv as MP prepared them, unchanged",
+    "test_qualification": "the seven methods and the direct negatives are qualified on this executor only (gate MH)",
+    "integration": "none; nothing of C271 is integrated into main",
+    "product_completion": "no"
+  },
+  "retained_for_mr": [
+    "the exact records beside the clone, under <local>/c271-p35/, unchanged, with EXACT-RECORDS.json's digests",
+    "HOST 34e94f29... stays valid only while the Python inventory and the CF settings stay as observed: if MR binds this HOST, keep every start of the framework interpreter with -B and the language and region settings unchanged; otherwise MR observes again",
+    "AU-07: Node prints an ExperimentalWarning that --experimental-loader may be removed; the contract's argv keeps the flag, a note for MR and R04"
+  ],
+  "next_action": "MR (R03), the complete routine of gate R on this executor, then R04 and R05, each a separate phase that needs the owner's selection."
+}

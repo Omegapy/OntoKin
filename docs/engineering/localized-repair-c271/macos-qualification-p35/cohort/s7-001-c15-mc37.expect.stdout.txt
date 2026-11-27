@@ -1,0 +1,351 @@
+{
+ "checks": {
+  "predicates": [
+   {
+    "observed_length": 25,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "PYTHONDONTWRITEBYTECODE=1",
+       "PYTHONNOUSERSITE=1",
+       "TMPDIR=<local>/c271-p35/evidence/s7-001-tmp-mc37",
+       "TZ=UTC",
+       "<worktree>/.venv/bin/python",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/collect_outcomes.py",
+       "controls",
+       "--root",
+       "<worktree>",
+       "--environment",
+       "<local>/c271-p35/workers/W2-freeze-001/env/mc37.environment.json",
+       "--environment-sha256",
+       "2bb3f77ad62225cf80fd8e2bcec4346a32ca6808afa02372ac808bc24857d9e7",
+       "--module-sha256",
+       "3b8c91b7767c2db0ac3dd5c7dd48d035eb6dd602dc8c01e08bb0e49ac21bd618",
+       "--test",
+       "tests.test_current_host_readback_controls_v02.SupervisorProcessControls.test_mc37_exited_unreaped_direct_child_counts_as_present_until_it_is_reaped",
+       "--output-dir",
+       "<local>/c271-p35/evidence/s7-001-mc37-outcomes"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<worktree>",
+    "ok": true,
+    "rule": {
+     "equals": "<worktree>",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "2bb3f77ad62225cf80fd8e2bcec4346a32ca6808afa02372ac808bc24857d9e7",
+    "ok": true,
+    "rule": {
+     "equals": "2bb3f77ad62225cf80fd8e2bcec4346a32ca6808afa02372ac808bc24857d9e7",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "ALL_PASSED",
+    "ok": true,
+    "rule": {
+     "equals": "ALL_PASSED",
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed_length": 1,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "length": 1,
+     "pointer": "/tests"
+    }
+   },
+   {
+    "observed": "tests.test_current_host_readback_controls_v02.SupervisorProcessControls.test_mc37_exited_unreaped_direct_child_counts_as_present_until_it_is_reaped",
+    "ok": true,
+    "rule": {
+     "equals": "tests.test_current_host_readback_controls_v02.SupervisorProcessControls.test_mc37_exited_unreaped_direct_child_counts_as_present_until_it_is_reaped",
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "pointer": "/tests/0/raw_id"
+    }
+   },
+   {
+    "observed": "pass",
+    "ok": true,
+    "rule": {
+     "equals": "pass",
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "pointer": "/tests/0/outcome"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "length": 0,
+     "pointer": "/class_level_events"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "length": 0,
+     "pointer": "/unplanned_events"
+    }
+   },
+   {
+    "observed": "3b8c91b7767c2db0ac3dd5c7dd48d035eb6dd602dc8c01e08bb0e49ac21bd618",
+    "ok": true,
+    "rule": {
+     "equals": "3b8c91b7767c2db0ac3dd5c7dd48d035eb6dd602dc8c01e08bb0e49ac21bd618",
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "pointer": "/module/sha256"
+    }
+   },
+   {
+    "observed_length": 1,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "length": 1,
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "subprocess.Popen",
+    "ok": true,
+    "rule": {
+     "equals": "subprocess.Popen",
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "pointer": "/process_events/0/event"
+    }
+   },
+   {
+    "observed": "<worktree>/.venv/bin/python",
+    "ok": true,
+    "rule": {
+     "equals": "<worktree>/.venv/bin/python",
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "pointer": "/process_events/0/argv/0"
+    }
+   },
+   {
+    "observed": "-I",
+    "ok": true,
+    "rule": {
+     "equals": "-I",
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "pointer": "/process_events/0/argv/1"
+    }
+   },
+   {
+    "observed": "0x1F5:0x0:0x0",
+    "ok": true,
+    "rule": {
+     "equals": "0x1F5:0x0:0x0",
+     "file": "<local>/c271-p35/evidence/s7-001-mc37-outcomes/outcomes.json",
+     "pointer": "/environment/admitted_cf_user_text_encoding"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.stderr.txt",
+     "text_includes": "CONTROL-EVIDENCE {\"case\": \"MC37\", \"raw_reaped\": \"ESRCH\""
+    }
+   },
+   {
+    "observed_length": 19,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+       "listing",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-mc37-outcomes",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-tmp-mc37",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-c15-mc37.readback.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback-listing.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback-listing.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback-listing.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback-listing.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback-listing.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback-listing.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback-listing.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "listing",
+    "ok": true,
+    "rule": {
+     "equals": "listing",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback.json",
+     "pointer": "/command"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback.json",
+     "pointer": "/boot_before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback.json",
+     "pointer": "/boot_after"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback.json",
+     "length": 0,
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+    "ok": true,
+    "rule": {
+     "equals": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+     "file": "<local>/c271-p35/evidence/s7-001-c15-mc37.readback.json",
+     "pointer": "/tool/sha256"
+    }
+   }
+  ]
+ },
+ "command": "C15",
+ "failed": [],
+ "phase": "expect",
+ "predicate_set": "expect",
+ "python_flags": {
+  "dont_write_bytecode": 1,
+  "isolated": 1,
+  "no_site": 1
+ },
+ "schema": "ontokin.c271.p35-s7-check/1",
+ "state": "MET"
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "ontokin.c271.p35-review-disposition/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "stage": "S6",
+  "recorded_at_utc": "2026-11-27T10:04:51Z",
+  "review": {
+    "record": "FREEZE-REVIEW-002.md",
+    "structured": "FREEZE-REVIEW-002.json",
+    "sha256": {
+      "FREEZE-REVIEW-002.md": "ca98ee6e06bb25a1b22883f0b1e74ea09c95ce7a7cd283b7329a68ba287f6428",
+      "FREEZE-REVIEW-002.json": "70f074ae1a6b2d23b59846fb5996af106ed68a9b8a2f0428bb1b6109d5182bc9"
+    },
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; it wrote none of the freezes, the tooling, the observer, the provider, the probe, the contract or MP's preparation, and took no part in freeze review 001",
+    "written_at_utc": "2026-11-27T10:00:27Z",
+    "subject": "operational freeze 002, the revision of freeze 001 under FREEZE-REVIEW-DISPOSITION-001: FREEZE-002.json and the 82 files of its SHA256SUMS.txt in <local>/c271-p35/workers/W2-freeze-002/, with the 44 documents it rebinds from <local>/c271-p35/workers/W2-freeze-001/ and the MC11 reviewed list",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "mandatory": [],
+    "nonmandatory": [
+      "FR2-01",
+      "FR2-02",
+      "FR2-03",
+      "FR2-04",
+      "FR2-05",
+      "FR2-06"
+    ]
+  },
+  "freeze_002": {
+    "sha256": "bc35d6347608f7e04d9968957fa9888bee983c51ff12f2a3799e02733a82a621",
+    "size_bytes": 1329283,
+    "sha256_source": "freeze review 002's record, member freeze_sha256; this is the value of the deferred argument <FREEZE-002.json SHA-256>",
+    "sha256sums_sha256": "0f441f5f9c4246c4422d5d67fb9365e476958d5f51ac7b7eabf8be587409ca4b",
+    "configuration_sha256": "83c8b1582c1ea4263d60014ca6b4cd22130e57b3fb65e06ff60a78768a5d7a3c",
+    "status": "ACCEPTED for S7, with the readings and launch rules below, which the Director applies without changing the freeze's bytes"
+  },
+  "director_checks": [
+    "Read the verdict, all six findings, answers 1 to 8 and section 8's list for the Director.",
+    "At 10:02:04Z: the boot is C90010BA-4DA9-475D-BBAB-CF1A9C40175A; freeze 002's 82 files and freeze 001's 85 verify, and nothing in either directory is newer than its SHA256SUMS.txt; the MC11 list is aade03ac...; nothing in the evidence parent is newer than S5's last record; the review's MD holds no run-time-derived private term, and its JSON holds one (a component of the interpreter's prefix inside an already labelled path), which any portable copy must label.",
+    "The reviewer's FREEZE-002.json digest and the cohort configuration's digest equal the Director's."
+  ],
+  "dispositions": [
+    {
+      "id": "FR2-01",
+      "severity": "nonmandatory",
+      "disposition": "Adopted as the reading of overrun step 3, before S7. For a probe <ID>.O<d1...dm>, /targets/<j-1> of its record is candidate d_j, and that target's stop is <ID>.S<d_j>; the Director confirms it by checking that the target's pair.started.path equals candidate d_j's 'after' path, and runs no stop for a target that fails that check. No tool or byte of the freeze changes."
+    },
+    {
+      "id": "FR2-02",
+      "severity": "nonmandatory",
+      "disposition": "Adopted as the classification reading, before S7. A .P target whose state is 'unknown' only because its pair's records do not exist does not by itself make the outcome UNKNOWN, provided the main command's own records show that the start never happened: for C16 and C19, the runner's NOT_RUN row, or REFUSED_BEFORE_START with PROVEN_ZERO; for C17, a case with no started.json and zero starts in its ledger. The main command's own class then applies, n04's CONTRACT outcome for C19 among them. A target that is 'unknown' for any other reason stays UNKNOWN. S7 stops either way, since that .X is NOT_MET."
+    },
+    {
+      "id": "FR2-03",
+      "severity": "nonmandatory",
+      "disposition": "Adopted as launch rules, before S7. (a) Order and approval: each launch message holds exactly two calls, the command's first and its timer's second. The session runs in the auto permission mode; so far every Director wrapper call of MH (S5's four, and the reads of S6) started without a prompt. If either call of a launch waits for an approval or is refused, the launch has deviated: a refused or never-started command did not run and S7 stops before it, class HOST (the Director's executor), with no retry; if the command started, the Director waits for its task, runs its .L, its .P where it has one, and its .X as frozen, decides any overrun from the records under (b), and stops S7 after them. (b) Timing: an 'outer-bound' line has effect only if the command's task had not ended when the line was printed, decided from the records: if the wrapper's command record shows end_epoch_s - start_epoch_s not above outer_bound_s, the line had no effect; if the task is still running when the Director reads the line, the overrun procedure begins at once. After an 'exit-file' line, the wrapper's tail (jq, shasum, stat and printf on local files) is unbounded; if its task has not ended when the Director next acts, the Director tells the owner, starts nothing and keeps waiting, as step 6. (c) The tool reports a timer's status 1 as failed; that is the frozen 'outer-bound' result, and the printed line decides."
+    },
+    {
+      "id": "FR2-04",
+      "severity": "nonmandatory",
+      "disposition": "Recorded, no change. (a) The .P rows' text on an unfrozen stop is superseded by stop rule 4 and overrun step 3: a stop is only <ID>.S<k>, with output <name>.stop-<k>.json; the Director never builds the stale argv. (b) Wrapper exits 91 and 92 come after the exit file is written, so the timer prints 'exit-file' for them; stop rule 11 governs them. (c) The tool's zsh leads the group and the command runs beneath it; no step signals that group. (d) The difference record's where lists miss /trees (A-4) and /limits/this_freeze/7; its other sections cover both."
+    },
+    {
+      "id": "FR2-05",
+      "severity": "nonmandatory",
+      "disposition": "Adopted. Immediately before P00, in one read, the Director compares the SHA-256 of FREEZE-002.json and of SHA256SUMS.txt with review 002's record (bc35d634... and 0f441f5f...), and the wrapper's with HR-01's value (3c24f923...), and records the result. S7 begins only if all three are equal."
+    },
+    {
+      "id": "FR2-06",
+      "severity": "nonmandatory",
+      "disposition": "Recorded for S8. If the capture path runs, its wrapper's /bin/sh, /usr/bin/env, jq, shasum, date, sysctl, cut and stat starts and its timers' zsh, date and sleep starts are recorded starts. None starts Node, and none is bounded."
+    }
+  ],
+  "s7_preconditions_now": [
+    "This disposition records a freeze review without mandatory findings (A6) and FREEZE-002.json's digest.",
+    "The same boot since S4; the volume mounted; keep-awake requested for S7; no other MH command running; no Finder; the Director's umask 022.",
+    "HEAD at C and the worktree clean, the owner's launchd job as it is, and the CF file unchanged: P01 to P05 check them.",
+    "FR2-05's read immediately before P00."
+  ],
+  "acceptance": "A6 met: operational freeze 002 has a review without mandatory findings; freeze 001's mandatory findings are resolved, as review 002 confirms.",
+  "next": "S7: the Director runs freeze 002 exactly as frozen, P00 first, with the readings and launch rules above."
+}

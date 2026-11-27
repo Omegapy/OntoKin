@@ -1,0 +1,58 @@
+{
+  "schema": "ontokin.c271.p35-command-record/1",
+  "name": "observe-001.static",
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "LANG=C.UTF-8",
+    "LC_ALL=C.UTF-8",
+    "TZ=UTC",
+    "UV_THREADPOOL_SIZE=2",
+    "<worktree>/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py",
+    "static",
+    "--plan",
+    "<local>/c271-p35/workers/W2-plan-001/observation-plan-001.json",
+    "--plan-sha256",
+    "b8cd6449aba958373f68715158402ed2e0e233e08213f3521bbc3d80cfe4c152"
+  ],
+  "cwd": "<local>/c271-p35/evidence",
+  "environment": {
+    "file": "<local>/c271-p35/evidence/observe-001.environment.json",
+    "sha256": "0ed78f47b1929634d65b6407b8e8daf047aeb2daa6b5c194c24e91a7b91ebcf2"
+  },
+  "started_at_utc": "2026-11-27T05:32:56Z",
+  "ended_at_utc": "2026-11-27T05:32:56Z",
+  "start_epoch_s": "1795757576.252278032 (birth time of the stdout file, created by the wrapper immediately before the exec)",
+  "end_epoch_s": "1795757576.724821017 (birth time of the exit file, written immediately after the command ended)",
+  "wall_time_s": "0.469473 (measured by the wrapper around the command and printed by it)",
+  "boot": {
+    "before": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "after": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "exit": {
+    "status": 0
+  },
+  "streams": {
+    "stdout": {
+      "path": "<local>/c271-p35/evidence/observe-001.static.stdout.txt",
+      "sha256": "4e44510d876a39d721f41431ab67ec134b4eb312fc8d540b79ccd63373a752e0",
+      "size_bytes": 1650
+    },
+    "stderr": {
+      "path": "<local>/c271-p35/evidence/observe-001.static.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "exit": {
+      "path": "<local>/c271-p35/evidence/observe-001.static.exit.txt"
+    }
+  },
+  "retries": 0,
+  "written_by": "the Director, by hand, after the run",
+  "reconstruction": "The wrapper director/run/run_once.sh did not write its record: its jq call read the argv member -i as one of its own options, and left the empty file observe-001.static.command.json, which is kept unchanged (FAILURE-CAPTURE FC-K1). The command itself had run once and ended with status 0. This record takes the wall time and both boot readings from the line the wrapper printed, and the times from the files birth and modification times. The wrapper was corrected before observe."
+}

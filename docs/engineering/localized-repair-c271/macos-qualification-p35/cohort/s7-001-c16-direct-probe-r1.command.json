@@ -1,0 +1,76 @@
+{
+  "schema": "ontokin.c271.p35-command-record/1",
+  "name": "s7-001-c16-direct-probe-r1",
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "<worktree>/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/run_direct_probe.py",
+    "--root",
+    "<worktree>",
+    "--bind",
+    "prototypes/__init__.py=84edcdc6554cf9f1e2b7b5f10729866fa31e6ba3d389043e716a751ea5271fc2",
+    "--bind",
+    "prototypes/static_tray_v01/__init__.py=f63210895af2901371763f24f7ddb301c2a7c1f73f4133335ae85bbb559832e8",
+    "--bind",
+    "prototypes/static_tray_v01/supervisor.py=c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+    "--bind",
+    "prototypes/static_tray_v01/supervisor_darwin_v01.py=bd4a5e3fcdfb5367994bfeeb93d211dd627b830017b17f607cd94d71ade2bd2b",
+    "--rows",
+    "<local>/c271-p35/workers/W2-freeze-001/probe/rows-r1.json",
+    "--rows-sha256",
+    "318154b3d51c6f0e65367cf027790d575a2ec6238c99e91e4d496df705c23d5f",
+    "--node",
+    "<local>/c271-macos/node-v24.22.1-darwin-arm64/bin/node",
+    "--node-sha256",
+    "6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329",
+    "--probe",
+    "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs",
+    "--probe-sha256",
+    "bca11b2ab3acfb818fd6b43636a51056a60b4af888d77fefa0b1214fec4054cd",
+    "--loader",
+    "<local>/c271-macos/reader-c195/tools/three_loader.mjs",
+    "--loader-sha256",
+    "927190e6d34940b2c7f9586c72459c24dc5fad497268bded628acd459ec9235e",
+    "--output-dir",
+    "<local>/c271-p35/evidence/s7-001-r1"
+  ],
+  "cwd": "<local>/c271-p35/evidence",
+  "environment": {
+    "file": "<local>/c271-p35/workers/W2-freeze-001/env/runner.environment.json",
+    "sha256": "a1ca9887ea41a6731d478da52443af57262b1ef79a6d8edcebba1e3d0b99f3ed"
+  },
+  "started_at_utc": "2026-11-27T10:25:56Z",
+  "ended_at_utc": "2026-11-27T10:25:56Z",
+  "start_epoch_s": "1795775156.086438",
+  "end_epoch_s": "1795775156.482052",
+  "wall_time_s": "0.395614",
+  "boot": {
+    "before": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "after": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "exit": {
+    "status": 0
+  },
+  "streams": {
+    "stdout": {
+      "path": "<local>/c271-p35/evidence/s7-001-c16-direct-probe-r1.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "stderr": {
+      "path": "<local>/c271-p35/evidence/s7-001-c16-direct-probe-r1.stderr.txt",
+      "sha256": "5a9ec54d410681cee50087487ba5eb4b1fe67a10c8a349c504ff8787daaed95b",
+      "size_bytes": 600
+    },
+    "exit": {
+      "path": "<local>/c271-p35/evidence/s7-001-c16-direct-probe-r1.exit.txt"
+    }
+  },
+  "retries": 0,
+  "written_by": "director/run/run_once_v2.sh"
+}

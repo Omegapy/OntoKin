@@ -1,0 +1,68 @@
+{
+  "schema": "ontokin.c271.p35-command-record/1",
+  "name": "s7-001-c01-mc11-scan",
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "LANG=C.UTF-8",
+    "LC_ALL=C.UTF-8",
+    "PATH=/usr/bin:/bin",
+    "TZ=UTC",
+    "UV_THREADPOOL_SIZE=2",
+    "<worktree>/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/scan_mc11.py",
+    "--probe",
+    "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs",
+    "--probe-sha256",
+    "bca11b2ab3acfb818fd6b43636a51056a60b4af888d77fefa0b1214fec4054cd",
+    "--dependencies-root",
+    "<local>/c271-macos/reader-c195",
+    "--dependencies-inventory",
+    "<local>/c271-p35/workers/W2-plan-001/dependencies-inventory-001.json",
+    "--dependencies-inventory-sha256",
+    "3545d5f920ac840804a9e25d28a87d623f96af71537fd3f020a0c1d743f82fb4",
+    "--reviewed",
+    "<local>/c271-p35/workers/W3-freeze-001/MC11-REVIEWED-LIST-001.json",
+    "--reviewed-sha256",
+    "aade03ac64a506678ce7ade184ecedcd10c5f6a58077d1f01aa7d0d70db63800",
+    "--output",
+    "<local>/c271-p35/evidence/s7-001-mc11-scan.json"
+  ],
+  "cwd": "<local>/c271-p35/evidence",
+  "environment": {
+    "file": "<local>/c271-p35/workers/W2-freeze-001/env/declared.environment.json",
+    "sha256": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7"
+  },
+  "started_at_utc": "2026-11-27T10:09:12Z",
+  "ended_at_utc": "2026-11-27T10:09:14Z",
+  "start_epoch_s": "1795774152.163565",
+  "end_epoch_s": "1795774154.163171",
+  "wall_time_s": "1.999606",
+  "boot": {
+    "before": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "after": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "exit": {
+    "status": 0
+  },
+  "streams": {
+    "stdout": {
+      "path": "<local>/c271-p35/evidence/s7-001-c01-mc11-scan.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "stderr": {
+      "path": "<local>/c271-p35/evidence/s7-001-c01-mc11-scan.stderr.txt",
+      "sha256": "1de21579136c5dbb1a5e7a74ef7e3d92c7b8e9bd49ec432de9baeabb0991d790",
+      "size_bytes": 183
+    },
+    "exit": {
+      "path": "<local>/c271-p35/evidence/s7-001-c01-mc11-scan.exit.txt"
+    }
+  },
+  "retries": 0,
+  "written_by": "director/run/run_once_v2.sh"
+}

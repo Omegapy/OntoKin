@@ -1,0 +1,636 @@
+{
+ "checks": {
+  "predicates": [
+   {
+    "observed_length": 36,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "PATH=/usr/bin:/bin",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/run_direct_probe.py",
+       "--root",
+       "<worktree>",
+       "--bind",
+       "prototypes/__init__.py=84edcdc6554cf9f1e2b7b5f10729866fa31e6ba3d389043e716a751ea5271fc2",
+       "--bind",
+       "prototypes/static_tray_v01/__init__.py=f63210895af2901371763f24f7ddb301c2a7c1f73f4133335ae85bbb559832e8",
+       "--bind",
+       "prototypes/static_tray_v01/supervisor.py=c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+       "--bind",
+       "prototypes/static_tray_v01/supervisor_darwin_v01.py=bd4a5e3fcdfb5367994bfeeb93d211dd627b830017b17f607cd94d71ade2bd2b",
+       "--rows",
+       "<local>/c271-p35/workers/W2-freeze-001/probe/rows-r2.json",
+       "--rows-sha256",
+       "c3e57a9674638384444ac6a9c448591099286bf8695d3935f876802a8da4bfed",
+       "--node",
+       "<local>/c271-macos/node-v24.22.1-darwin-arm64/bin/node",
+       "--node-sha256",
+       "6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329",
+       "--probe",
+       "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs",
+       "--probe-sha256",
+       "bca11b2ab3acfb818fd6b43636a51056a60b4af888d77fefa0b1214fec4054cd",
+       "--loader",
+       "<local>/c271-macos/reader-c195/tools/three_loader.mjs",
+       "--loader-sha256",
+       "927190e6d34940b2c7f9586c72459c24dc5fad497268bded628acd459ec9235e",
+       "--output-dir",
+       "<local>/c271-p35/evidence/s7-001-r2"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "a1ca9887ea41a6731d478da52443af57262b1ef79a6d8edcebba1e3d0b99f3ed",
+    "ok": true,
+    "rule": {
+     "equals": "a1ca9887ea41a6731d478da52443af57262b1ef79a6d8edcebba1e3d0b99f3ed",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "ALL_ROWS_MET",
+    "ok": true,
+    "rule": {
+     "equals": "ALL_ROWS_MET",
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed": 2,
+    "ok": true,
+    "rule": {
+     "equals": 2,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "pointer": "/node_starts/exact"
+    }
+   },
+   {
+    "observed_length": 2,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "length": 2,
+     "pointer": "/rows"
+    }
+   },
+   {
+    "observed_length": 2,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "COMPLETED",
+      "pointer": "/state"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "pointer": "/rows"
+    }
+   },
+   {
+    "observed_length": 2,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": true,
+      "pointer": "/expectation_met"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "pointer": "/rows"
+    }
+   },
+   {
+    "observed_length": 2,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "OBSERVED_ONE",
+      "pointer": "/start_count_state"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "pointer": "/rows"
+    }
+   },
+   {
+    "observed": false,
+    "ok": true,
+    "rule": {
+     "equals": false,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "pointer": "/interrupted"
+    }
+   },
+   {
+    "observed": false,
+    "ok": true,
+    "rule": {
+     "equals": false,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "pointer": "/rows_independent"
+    }
+   },
+   {
+    "observed": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/run_direct_probe.py",
+    "ok": true,
+    "rule": {
+     "equals": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/run_direct_probe.py",
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "pointer": "/own_main_admitted/path"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "pointer": "/boot_session_uuid_before_rows"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "pointer": "/boot_session_uuid_after_rows"
+    }
+   },
+   {
+    "observed_length": 2,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-r2/run.json",
+     "length": 2,
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "COMPLETED",
+    "ok": true,
+    "rule": {
+     "equals": "COMPLETED",
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC30-probe/outcome.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC30-probe/outcome.json",
+     "pointer": "/expectation_met"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC30-probe/outcome.json",
+     "pointer": "/boot_unchanged"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC30-probe/outcome.json",
+     "pointer": "/cleanup_complete"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC30-probe/outcome.json",
+     "pointer": "/receipt_file_matches_record"
+    }
+   },
+   {
+    "observed": 1,
+    "ok": true,
+    "rule": {
+     "equals": 1,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC30-probe/outcome.json",
+     "pointer": "/process/returncode"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": true,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC30-probe/started-1.json"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": false,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC30-probe/started-2.json"
+    }
+   },
+   {
+    "observed": "COMPLETED",
+    "ok": true,
+    "rule": {
+     "equals": "COMPLETED",
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC36/outcome.json",
+     "pointer": "/state"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC36/outcome.json",
+     "pointer": "/expectation_met"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC36/outcome.json",
+     "pointer": "/boot_unchanged"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC36/outcome.json",
+     "pointer": "/cleanup_complete"
+    }
+   },
+   {
+    "observed": true,
+    "ok": true,
+    "rule": {
+     "equals": true,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC36/outcome.json",
+     "pointer": "/receipt_file_matches_record"
+    }
+   },
+   {
+    "observed": 1,
+    "ok": true,
+    "rule": {
+     "equals": 1,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC36/outcome.json",
+     "pointer": "/process/returncode"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": true,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC36/started-1.json"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "exists": false,
+     "file": "<local>/c271-p35/evidence/s7-001-r2/MC36/started-2.json"
+    }
+   },
+   {
+    "observed_length": 21,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+       "listing",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-r2",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-probe-mc30",
+       "--dir",
+       "<local>/c271-p35/evidence/s7-001-probe-mc36",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback-listing.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback-listing.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback-listing.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback-listing.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback-listing.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback-listing.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback-listing.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "listing",
+    "ok": true,
+    "rule": {
+     "equals": "listing",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback.json",
+     "pointer": "/command"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback.json",
+     "pointer": "/boot_before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback.json",
+     "pointer": "/boot_after"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback.json",
+     "length": 0,
+     "pointer": "/process_events"
+    }
+   },
+   {
+    "observed": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+    "ok": true,
+    "rule": {
+     "equals": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.readback.json",
+     "pointer": "/tool/sha256"
+    }
+   },
+   {
+    "observed_length": 21,
+    "ok": true,
+    "rule": {
+     "argv_equals_except": {
+      "argv": [
+       "/usr/bin/env",
+       "-i",
+       "LANG=C.UTF-8",
+       "LC_ALL=C.UTF-8",
+       "PATH=/usr/bin:/bin",
+       "TZ=UTC",
+       "UV_THREADPOOL_SIZE=2",
+       "<worktree>/.venv/bin/python",
+       "-I",
+       "-S",
+       "-B",
+       "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/capture_probe.py",
+       "probe",
+       "--pair",
+       "<local>/c271-p35/evidence/s7-001-r2/MC30-probe/intent.json",
+       "<local>/c271-p35/evidence/s7-001-r2/MC30-probe/started-1.json",
+       "--pair",
+       "<local>/c271-p35/evidence/s7-001-r2/MC36/intent.json",
+       "<local>/c271-p35/evidence/s7-001-r2/MC36/started-1.json",
+       "--output",
+       "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.json"
+      ],
+      "indices": []
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.command.json",
+     "pointer": "/argv"
+    }
+   },
+   {
+    "observed": "<local>/c271-p35/evidence",
+    "ok": true,
+    "rule": {
+     "equals": "<local>/c271-p35/evidence",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.command.json",
+     "pointer": "/cwd"
+    }
+   },
+   {
+    "observed": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+    "ok": true,
+    "rule": {
+     "equals": "b5f9cae89e49f3ee98714f368cee64c188f4165772c01706ef7fe0e4928defc7",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.command.json",
+     "pointer": "/environment/sha256"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.command.json",
+     "pointer": "/boot/before"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.command.json",
+     "pointer": "/boot/after"
+    }
+   },
+   {
+    "observed": 0,
+    "ok": true,
+    "rule": {
+     "equals": 0,
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.command.json",
+     "pointer": "/retries"
+    }
+   },
+   {
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.exit.txt",
+     "text_equals": "0\n"
+    }
+   },
+   {
+    "observed": "probe",
+    "ok": true,
+    "rule": {
+     "equals": "probe",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.json",
+     "pointer": "/command"
+    }
+   },
+   {
+    "observed_length": 2,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.json",
+     "length": 2,
+     "pointer": "/targets"
+    }
+   },
+   {
+    "observed_length": 2,
+    "ok": true,
+    "rule": {
+     "each": {
+      "equals": "absent",
+      "pointer": "/state"
+     },
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.json",
+     "pointer": "/targets"
+    }
+   },
+   {
+    "observed": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "ok": true,
+    "rule": {
+     "equals": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.json",
+     "pointer": "/boot_after"
+    }
+   },
+   {
+    "observed_length": 0,
+    "ok": true,
+    "rule": {
+     "file": "<local>/c271-p35/evidence/s7-001-c19-direct-probe-r2.probes.json",
+     "length": 0,
+     "pointer": "/process_events"
+    }
+   }
+  ]
+ },
+ "command": "C19",
+ "failed": [],
+ "phase": "expect",
+ "predicate_set": "expect",
+ "python_flags": {
+  "dont_write_bytecode": 1,
+  "isolated": 1,
+  "no_site": 1
+ },
+ "schema": "ontokin.c271.p35-s7-check/1",
+ "state": "MET"
+}

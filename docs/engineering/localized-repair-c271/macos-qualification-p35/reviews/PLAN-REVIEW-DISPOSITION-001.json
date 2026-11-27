@@ -1,0 +1,67 @@
+{
+  "schema": "ontokin.c271.p35-review-disposition/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "stage": "S4",
+  "recorded_at_utc": "2026-11-27T05:31:37Z",
+  "review": {
+    "record": "PLAN-REVIEW-001.md",
+    "structured": "PLAN-REVIEW-001.json",
+    "sha256": {
+      "PLAN-REVIEW-001.md": "fa55a2116a6670d6fe32d8b96024d9959fe44e9b8782515e0d80d077e6b451da",
+      "PLAN-REVIEW-001.json": "3b0c50a7296317edbb22223454a4c3707388dc1fd732ad5db72c84bdbc152fd1"
+    },
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model, with no earlier review in its context",
+    "launched_at_utc": "2026-11-27T04:45:26Z",
+    "written_at_utc": "2026-11-27T05:29:36Z, the modification time of both records; its final recheck ended at about 05:15Z",
+    "subject": "Observation plan 001 for M0 and M1, written by W2 at commit C (0eb9a551), with its three inventories and M0-LAUNCH.json",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS"
+  },
+  "plan": {
+    "path": "../OntoKin-local/c271-p35/workers/W2-plan-001/observation-plan-001.json",
+    "sha256_from_the_review_record": "b8cd6449aba958373f68715158402ed2e0e233e08213f3521bbc3d80cfe4c152",
+    "size_bytes": 9017,
+    "mode": "0o644",
+    "note": "The Director passes this digest to static and observe. It is taken from the review record (MH-PLAN stage S4), and the Director's own hash of the file at 05:31Z equals it."
+  },
+  "director_checks": [
+    "Read the verdict and the six findings with their locations.",
+    "The review record lists the plan and the three inventories with the digests of W2's SHA256SUMS.txt, which still verifies (49 files, 0 mismatches).",
+    "The review's Markdown and JSON records and its scripts hold no private string derived at run time, apart from the public repository's name."
+  ],
+  "dispositions": [
+    {
+      "id": "PR-01",
+      "severity": "nonmandatory",
+      "disposition": "Recorded. The observation plan's schema is closed and cannot bind the adoption record of P33-AMENDMENT-001 separately. For the observation plan, MH-PLAN section 6's row is met by this review's static binding: SHA-256 872312ed80a63fbb196c17ace42e786b7fe757b710eff41139b125dfaa507937, 5,396 bytes, 0o644, equal to its blob at C. M0 and M1 do not read the record. The S6 configuration binds its bytes through amendment_adoption, and that review compares them with this binding."
+    },
+    {
+      "id": "PR-02",
+      "severity": "nonmandatory",
+      "disposition": "Adopted as a classification made before the run. A refusal of either --version start for a non-empty stderr (OUTPUT-STDERR) cannot be corrected by a plan, because the environments and the predicates are fixed by the implementation and the contract. Under MH-PLAN section 8, MH then stops with that refusal kept. No corrected plan and no new attempt follow in this phase; the cause goes to a later implementation phase or an amendment."
+    },
+    {
+      "id": "PR-03",
+      "severity": "nonmandatory",
+      "disposition": "Recorded, and left as it is. A launchd job of the owner, outside the project, has run the bound framework interpreter since 2026-11-23T12:21:13Z, 44 s after boot, with PYTHONDONTWRITEBYTECODE=1 and without -B. The installation inventory has been unchanged throughout its lifetime so far. The Director's static immediately before observe, and M0's own checks, fail closed if a bytecode file appears. The run record names the process without its arguments."
+    },
+    {
+      "id": "PR-04",
+      "severity": "nonmandatory",
+      "disposition": "Adopted as a run condition, with no change to the plan. observe runs with the volume mounted, the host awake (the session's keep-awake is on), and no other heavy work started by MH. M1 is the first execution of the prepared bin/node: it carries no quarantine attribute, the volume allows execution, and its bytes are the pinned official ones."
+    },
+    {
+      "id": "PR-05",
+      "severity": "nonmandatory",
+      "disposition": "Adopted. The Director's static run uses fresh absent siblings of the attempt, ../OntoKin-local/c271-p35/evidence/observe-001.static.{stdout,stderr,exit}.txt. Each of the two runs gets an FC-K3 command record beside the attempt, with the exact argv, the cwd, the environment as a file whose canonical SHA-256 is 0ed78f47b1929634d65b6407b8e8daf047aeb2daa6b5c194c24e91a7b91ebcf2, the UTC times, the wall time and kern.bootsessionuuid before and after. Neither changes the plan or its digest."
+    },
+    {
+      "id": "PR-06",
+      "severity": "nonmandatory",
+      "disposition": "Adopted for S9. Only PLAN-REVIEW-001.md, PLAN-REVIEW-001.json and the review's scripts are committed. The raw outputs, which hold machine paths and the owner's processes, stay beside the clone, with the SHA-256 values that the review's section 5 lists."
+    }
+  ],
+  "acceptance": "A4: the observation plan at C is outside Git, and its review has no mandatory finding. The plan's digest comes from the review record.",
+  "next": "S5: the Director checks the preconditions, runs static once and then observe once, exactly as M0-LAUNCH.json gives them with PR-05's records, writes the FC-K5 readback, and then a fresh W3 reviews HOST."
+}

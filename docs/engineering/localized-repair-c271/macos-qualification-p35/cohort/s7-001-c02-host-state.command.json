@@ -1,0 +1,60 @@
+{
+  "schema": "ontokin.c271.p35-command-record/1",
+  "name": "s7-001-c02-host-state",
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "LANG=C.UTF-8",
+    "LC_ALL=C.UTF-8",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONNOUSERSITE=1",
+    "TZ=UTC",
+    "<worktree>/.venv/bin/python",
+    "-B",
+    "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/control_harness.py",
+    "host-state",
+    "--root",
+    "<worktree>",
+    "--host",
+    "<local>/c271-p35/evidence/observe-001/HOST.json",
+    "--host-sha256",
+    "34e94f29ea1b7d9d60b389598b4ce5bc7eaf6fcaa58f3798fc3df021a8f28a92",
+    "--output",
+    "<local>/c271-p35/evidence/s7-001-host-state.json"
+  ],
+  "cwd": "<worktree>",
+  "environment": {
+    "file": "<local>/c271-p35/workers/W2-freeze-001/env/host-state.environment.json",
+    "sha256": "31da85189f6812b92d2f3114abd4ed6b3224391a4bf378759d1e636c6b94644c"
+  },
+  "started_at_utc": "2026-11-27T10:10:23Z",
+  "ended_at_utc": "2026-11-27T10:10:23Z",
+  "start_epoch_s": "1795774223.025156",
+  "end_epoch_s": "1795774223.121761",
+  "wall_time_s": "0.096605",
+  "boot": {
+    "before": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A",
+    "after": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+  },
+  "exit": {
+    "status": 0
+  },
+  "streams": {
+    "stdout": {
+      "path": "<local>/c271-p35/evidence/s7-001-c02-host-state.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "stderr": {
+      "path": "<local>/c271-p35/evidence/s7-001-c02-host-state.stderr.txt",
+      "sha256": "5281891d87fb8d85952134b4c4245484565e64edec2d10bb961b2c1bdb48342d",
+      "size_bytes": 79
+    },
+    "exit": {
+      "path": "<local>/c271-p35/evidence/s7-001-c02-host-state.exit.txt"
+    }
+  },
+  "retries": 0,
+  "written_by": "director/run/run_once_v2.sh"
+}
