@@ -1,0 +1,979 @@
+MH tooling focused tests, revision 3, run against the rejected tooling of review 001
+date (UTC): 2026-11-27T03:15:10Z to 2026-11-27T03:15:41Z
+command, from the tooling directory: env -i PATH=/usr/bin:/bin LANG=C.UTF-8 TMPDIR=<tmp>/ MH_TOOLING_ROOT=<worktree> MH_TOOLING_UNDER_TEST=<local>/c271-p35/workers/W2/rejected-001/tooling <worktree>/.venv/bin/python -B -m unittest discover -s tests -v
+interpreter: CPython 3.12.13, the qualification .venv; worktree HEAD c81cf07b
+tools under test: rejected-001/tooling, unchanged (its SHA256SUMS.txt verifies); tests: this revision's
+exit status: 1; 91 tests: FAILED (failures=42, errors=27), counted with subtests
+children of the test process: 125 starts of the interpreter, each with -B; /usr/bin/true 1
+started by the tools under test: /bin/sh 5, /usr/bin/true 8, stand-in scripts run by the interpreter with -B 9 (one of them forked once); no Node, Git, ldd, codesign, otool or observe start
+note: in the SIGTERM case the rejected runner was killed by the signal, and its started stand-in (a 20-second sleep) outlived it and ended by itself: the behaviour TR-18's test checks
+
+Each mandatory fix's tests, and what the rejected tooling does there (details below):
+TR-01  discover, collector, runner: test_it_runs_from_its_committed_place_inside_the_root (three)
+       -> each refuses its own __main__ ("A module of the root is already loaded" / other_project_modules ["__main__"])
+TR-02  runner: test_a_remaining_descendant_misses_the_row_although_the_child_exited_zero,
+       test_a_staged_link_misses_the_row_although_the_child_exited_zero -> ALL_ROWS_MET although the supervisor refused;
+       test_bound_inputs_and_row_shapes_refuse_before_any_start [supervisor error not implied by the status (TR-02)]
+TR-03  runner: test_a_target_that_exists_before_the_start_refuses_the_row_before_any_start -> met from the stale probe.json;
+       test_inputs_and_stage_entries_are_verified_again_immediately_before_each_start -> all three rows started;
+       test_bound_inputs_and_row_shapes_refuse_before_any_start [input digest], [unbound stage file], [stage entries], and its ROW-TARGET part
+TR-04  hygiene: test_no_machine_path_package_manager_or_account_name_in_any_tooling_file -> flags the rejected
+       tests/test_zz_hygiene.py: the package manager's name, two parts of the account name, a component of the worktree's parent
+TR-05  capture probe: every ProbeTests, StopTests and ListingTests test -> no capture_probe.py exists;
+       test_identity_comes_before_any_signal_and_the_probes_are_code -> FC-P3 names no code and FC-P6 signals without identity
+IP-01  runner: test_one_start_through_the_real_darwin_supervisor_with_its_receipt_and_started_record -> the rejected runner
+       records no own_main_admitted at all (KeyError), as before
+Nonmandatory: TR-06, TR-07, TR-09, TR-10, TR-11, TR-12, TR-13 (attempt listing), TR-15, TR-17 and TR-18 tests fail there too;
+the tests that pass there check behaviour that review 001 did not change.
+machine paths are replaced by the labels <worktree>, <local>, <prefix>, <home> and <tmp>
+----
+test_a_missing_stage_refuses (test_audit_numeric.AuditTests.test_a_missing_stage_refuses) ... ok
+test_a_report_error_is_not_a_scientific_rejection (test_audit_numeric.AuditTests.test_a_report_error_is_not_a_scientific_rejection) ... ok
+test_a_second_failed_row_in_the_negative_is_not_the_intended_negative (test_audit_numeric.AuditTests.test_a_second_failed_row_in_the_negative_is_not_the_intended_negative) ... ok
+test_a_start_without_dash_b_refuses (test_audit_numeric.AuditTests.test_a_start_without_dash_b_refuses)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started. ... FAIL
+test_duplicate_missing_and_altered_rows_are_found (test_audit_numeric.AuditTests.test_duplicate_missing_and_altered_rows_are_found) ... ok
+test_non_finite_values_and_spurious_findings_fail_the_positive (test_audit_numeric.AuditTests.test_non_finite_values_and_spurious_findings_fail_the_positive) ... ok
+test_retained_bounds_that_are_not_those_of_the_vertices_fail (test_audit_numeric.AuditTests.test_retained_bounds_that_are_not_those_of_the_vertices_fail) ... FAIL
+test_retained_vertices_that_are_not_the_matrix_applied_to_the_positions_fail (test_audit_numeric.AuditTests.test_retained_vertices_that_are_not_the_matrix_applied_to_the_positions_fail) ... FAIL
+test_the_negative_must_use_q01s_glb_and_an_otherwise_identical_reference (test_audit_numeric.AuditTests.test_the_negative_must_use_q01s_glb_and_an_otherwise_identical_reference) ... ok
+test_the_three_cases_pass_with_2060_rows_each_and_one_intended_negative_row (test_audit_numeric.AuditTests.test_the_three_cases_pass_with_2060_rows_each_and_one_intended_negative_row) ... ERROR
+test_a_start_without_dash_b_refuses (test_capture_probe.ListingTests.test_a_start_without_dash_b_refuses)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started. ... ERROR
+test_the_readback_listing_never_follows_a_link (test_capture_probe.ListingTests.test_the_readback_listing_never_follows_a_link) ... ERROR
+test_a_present_process_with_an_established_identity (test_capture_probe.ProbeTests.test_a_present_process_with_an_established_identity) ... ERROR
+test_a_start_outside_the_window_does_not_establish_identity (test_capture_probe.ProbeTests.test_a_start_outside_the_window_does_not_establish_identity) ... ERROR
+test_absence_is_established_by_esrch_and_a_malformed_record_is_unknown (test_capture_probe.ProbeTests.test_absence_is_established_by_esrch_and_a_malformed_record_is_unknown) ... ERROR
+test_an_image_that_is_not_the_recorded_argv0_does_not_establish_identity (test_capture_probe.ProbeTests.test_an_image_that_is_not_the_recorded_argv0_does_not_establish_identity) ... ERROR
+test_identity_comes_before_any_signal_and_the_probes_are_code (test_capture_probe.ProcedureTextTests.test_identity_comes_before_any_signal_and_the_probes_are_code) ... FAIL
+test_an_established_identity_is_ended_through_its_group (test_capture_probe.StopTests.test_an_established_identity_is_ended_through_its_group) ... ERROR
+test_nothing_is_sent_when_identity_is_not_established (test_capture_probe.StopTests.test_nothing_is_sent_when_identity_is_not_established)
+TR-05: a present process whose identity is not established is recorded, and never signalled. ... ERROR
+test_sigkill_follows_only_continuous_presence_and_a_second_established_identity (test_capture_probe.StopTests.test_sigkill_follows_only_continuous_presence_and_a_second_established_identity) ... ERROR
+test_a_cohort_without_selection_refuses (test_collect_outcomes.CohortTests.test_a_cohort_without_selection_refuses) ... ok
+test_a_driver_removed_name_in_the_frozen_environment_refuses (test_collect_outcomes.CohortTests.test_a_driver_removed_name_in_the_frozen_environment_refuses) ... ok
+test_a_host_launcher_that_is_not_this_process_refuses (test_collect_outcomes.CohortTests.test_a_host_launcher_that_is_not_this_process_refuses) ... ok
+test_all_seven_pass_gives_exit_zero (test_collect_outcomes.CohortTests.test_all_seven_pass_gives_exit_zero) ... ERROR
+test_an_environment_other_than_the_frozen_one_refuses_before_any_test (test_collect_outcomes.CohortTests.test_an_environment_other_than_the_frozen_one_refuses_before_any_test) ... ok
+test_an_interruption_is_unknown_and_keeps_the_journal (test_collect_outcomes.CohortTests.test_an_interruption_is_unknown_and_keeps_the_journal) ... ok
+test_an_isolated_launch_refuses (test_collect_outcomes.CohortTests.test_an_isolated_launch_refuses) ... ok
+test_every_outcome_kind_is_recorded_raw (test_collect_outcomes.CohortTests.test_every_outcome_kind_is_recorded_raw) ... ok
+test_setup_error_is_kept_and_the_three_cpu_methods_are_not_run (test_collect_outcomes.CohortTests.test_setup_error_is_kept_and_the_three_cpu_methods_are_not_run) ... ok
+test_a_control_rerun_refuses_a_selection_and_another_module (test_collect_outcomes.ControlTests.test_a_control_rerun_refuses_a_selection_and_another_module) ... ok
+test_a_named_control_runs_alone_and_its_child_is_recorded (test_collect_outcomes.ControlTests.test_a_named_control_runs_alone_and_its_child_is_recorded) ... ERROR
+test_a_body_that_differs_from_the_frozen_original_bodies_is_not_all_passed (test_collect_outcomes.RevisionTests.test_a_body_that_differs_from_the_frozen_original_bodies_is_not_all_passed) ... FAIL
+test_a_skip_inside_a_subtest_is_the_parents_skip (test_collect_outcomes.RevisionTests.test_a_skip_inside_a_subtest_is_the_parents_skip) ... FAIL
+test_events_of_an_unplanned_test_are_kept_by_name (test_collect_outcomes.RevisionTests.test_events_of_an_unplanned_test_are_kept_by_name) ... FAIL
+test_git_names_are_refused_unless_they_are_exactly_the_drivers_own (test_collect_outcomes.RevisionTests.test_git_names_are_refused_unless_they_are_exactly_the_drivers_own) ... FAIL
+test_it_runs_from_its_committed_place_inside_the_root (test_collect_outcomes.RevisionTests.test_it_runs_from_its_committed_place_inside_the_root)
+TR-01: its own __main__ lies under the root; it is admitted by realpath and recorded. ... FAIL
+test_the_module_digest_is_required_for_a_cohort_too (test_collect_outcomes.RevisionTests.test_the_module_digest_is_required_for_a_cohort_too) ... FAIL
+test_job_bytes_are_the_supervisors_json_bytes_and_the_recorder_starts_nothing (test_control_harness.CommandBoundaryTests.test_job_bytes_are_the_supervisors_json_bytes_and_the_recorder_starts_nothing) ... ok
+test_the_simulated_receipt_meets_the_observers_own_rules_and_starts_nothing (test_control_harness.CommandBoundaryTests.test_the_simulated_receipt_meets_the_observers_own_rules_and_starts_nothing) ... ok
+test_a_childs_environment_is_recorded_by_names_and_a_digest (test_control_harness.CommonTests.test_a_childs_environment_is_recorded_by_names_and_a_digest)
+TR-06: the audit hook writes no value of a child's environment. ... ERROR
+test_every_command_refuses_a_start_without_dash_b (test_control_harness.CommonTests.test_every_command_refuses_a_start_without_dash_b)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started. ... ok
+test_another_boot_identity_is_refused_by_the_providers_own_comparison (test_control_harness.HostStateTests.test_another_boot_identity_is_refused_by_the_providers_own_comparison) ... ok
+test_the_providers_real_host_state_equals_a_host_of_this_boot (test_control_harness.HostStateTests.test_the_providers_real_host_state_equals_a_host_of_this_boot) ... ok
+test_a_plan_digest_from_outside_the_plan_is_required (test_control_harness.MC10Tests.test_a_plan_digest_from_outside_the_plan_is_required) ... ok
+test_launch_bindings_and_environment_are_preconditions (test_control_harness.MC10Tests.test_launch_bindings_and_environment_are_preconditions) ... ok
+test_the_attempt_listing_never_follows_a_link (test_control_harness.MC10Tests.test_the_attempt_listing_never_follows_a_link)
+TR-13: the listing opens files with O_NOFOLLOW and records a link as a link. ... FAIL
+test_the_loaded_module_rule_is_reached_with_and_without_the_exclusion (test_control_harness.MC10Tests.test_the_loaded_module_rule_is_reached_with_and_without_the_exclusion)
+TR-13: without the exclusion of its own __main__ row the harness meets PYTHON-MODULE; with it, the ... ok
+test_the_real_static_checks_run_with_only_the_command_boundary_substituted (test_control_harness.MC10Tests.test_the_real_static_checks_run_with_only_the_command_boundary_substituted) ... ok
+test_a_configuration_change_after_preflight_is_refused_with_zero_starts (test_control_harness.MC29Tests.test_a_configuration_change_after_preflight_is_refused_with_zero_starts) ... ERROR
+test_a_job_input_change_after_preflight_is_refused_with_zero_starts (test_control_harness.MC29Tests.test_a_job_input_change_after_preflight_is_refused_with_zero_starts) ... ERROR
+test_the_process_environment_must_be_exactly_the_frozen_one (test_control_harness.MC29Tests.test_the_process_environment_must_be_exactly_the_frozen_one)
+TR-06: an exact frozen environment, without HOME; refused before the provider is imported. ... 
+  test_the_process_environment_must_be_exactly_the_frozen_one (test_control_harness.MC29Tests.test_the_process_environment_must_be_exactly_the_frozen_one) [an extra name]
+TR-06: an exact frozen environment, without HOME; refused before the provider is imported. ... FAIL
+  test_the_process_environment_must_be_exactly_the_frozen_one (test_control_harness.MC29Tests.test_the_process_environment_must_be_exactly_the_frozen_one) [HOME in the frozen environment]
+TR-06: an exact frozen environment, without HOME; refused before the provider is imported. ... FAIL
+test_a_digest_mismatch_refuses (test_discover_inventory.CompareTests.test_a_digest_mismatch_refuses) ... ok
+test_a_duplicate_inside_the_baseline_is_not_an_exact_match (test_discover_inventory.CompareTests.test_a_duplicate_inside_the_baseline_is_not_an_exact_match)
+TR-07: counts and duplicates are recomputed from the IDs of both documents. ... FAIL
+test_an_inconsistent_additions_record_is_not_an_exact_match (test_discover_inventory.CompareTests.test_an_inconsistent_additions_record_is_not_an_exact_match) ... ok
+test_compare_refuses_a_start_without_dash_b (test_discover_inventory.CompareTests.test_compare_refuses_a_start_without_dash_b)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started. ... FAIL
+test_exact_match_of_baseline_plus_approved_additions (test_discover_inventory.CompareTests.test_exact_match_of_baseline_plus_approved_additions) ... FAIL
+test_missing_and_extra_ids_are_reported (test_discover_inventory.CompareTests.test_missing_and_extra_ids_are_reported) ... ok
+test_a_symlinked_root_is_refused (test_discover_inventory.DiscoverTests.test_a_symlinked_root_is_refused) ... ok
+test_an_existing_output_is_never_replaced (test_discover_inventory.DiscoverTests.test_an_existing_output_is_never_replaced) ... ok
+test_an_isolated_launch_is_refused (test_discover_inventory.DiscoverTests.test_an_isolated_launch_is_refused) ... ok
+test_import_failures_and_a_refused_process_start_are_findings (test_discover_inventory.DiscoverTests.test_import_failures_and_a_refused_process_start_are_findings) ... ERROR
+test_interpreter_flags_other_than_dash_b_in_build_plan_refuse (test_discover_inventory.DiscoverTests.test_interpreter_flags_other_than_dash_b_in_build_plan_refuse)
+TR-07: the flag comes from build_plan's add(), so a different flag set refuses. ... FAIL
+test_lists_ids_as_unittest_discovers_them_and_runs_no_test (test_discover_inventory.DiscoverTests.test_lists_ids_as_unittest_discovers_them_and_runs_no_test) ... ERROR
+test_the_unit_stage_argv_must_be_the_one_reproduced (test_discover_inventory.DiscoverTests.test_the_unit_stage_argv_must_be_the_one_reproduced) ... ok
+test_every_other_preloaded_root_module_still_refuses (test_discover_inventory.PlaceAndEnvironmentTests.test_every_other_preloaded_root_module_still_refuses) ... ok
+test_it_runs_from_its_committed_place_inside_the_root (test_discover_inventory.PlaceAndEnvironmentTests.test_it_runs_from_its_committed_place_inside_the_root)
+TR-01: its own __main__ lies under the root; it is admitted by realpath and recorded. ... FAIL
+test_the_process_environment_must_be_exactly_the_frozen_one (test_discover_inventory.PlaceAndEnvironmentTests.test_the_process_environment_must_be_exactly_the_frozen_one)
+TR-06: an exact frozen environment, recorded by name; HOME is never part of one. ... ERROR
+test_a_target_that_exists_before_the_start_refuses_the_row_before_any_start (test_run_direct_probe.FrozenStateTests.test_a_target_that_exists_before_the_start_refuses_the_row_before_any_start) ... FAIL
+test_inputs_and_stage_entries_are_verified_again_immediately_before_each_start (test_run_direct_probe.FrozenStateTests.test_inputs_and_stage_entries_are_verified_again_immediately_before_each_start) ... FAIL
+test_sigint_and_sigterm_after_a_start (test_run_direct_probe.InterruptionTests.test_sigint_and_sigterm_after_a_start) ... 
+  test_sigint_and_sigterm_after_a_start (test_run_direct_probe.InterruptionTests.test_sigint_and_sigterm_after_a_start) (signal='SIGINT') ... FAIL
+  test_sigint_and_sigterm_after_a_start (test_run_direct_probe.InterruptionTests.test_sigint_and_sigterm_after_a_start) (signal='SIGTERM') ... FAIL
+test_a_supervisor_without_json_bytes_is_not_the_original (test_run_direct_probe.PlaceAndLoadingTests.test_a_supervisor_without_json_bytes_is_not_the_original)
+TR-10: json_bytes_is_the_original needs 'is not None'; such a supervisor refuses before any row. ... FAIL
+test_it_runs_from_its_committed_place_inside_the_root (test_run_direct_probe.PlaceAndLoadingTests.test_it_runs_from_its_committed_place_inside_the_root)
+TR-01: its own __main__ lies under the root; it is admitted by realpath and recorded. ... FAIL
+test_exact_streams_and_json_members_equal_or_absent (test_run_direct_probe.PredicateTests.test_exact_streams_and_json_members_equal_or_absent) ... FAIL
+test_a_nonzero_exit_is_kept_raw_and_an_unmet_row_stops_the_later_rows (test_run_direct_probe.RunnerTests.test_a_nonzero_exit_is_kept_raw_and_an_unmet_row_stops_the_later_rows) ... ERROR
+test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) ... 
+  test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) [supervisor error not implied by the status (TR-02)] ... FAIL
+  test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) [shared stage (TR-10)] ... FAIL
+  test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) [input digest (TR-03)] ... FAIL
+  test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) [unbound stage file (TR-03)] ... FAIL
+  test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) [stage entries (TR-03)] ... FAIL
+test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) ... FAIL
+test_independent_rows_all_run (test_run_direct_probe.RunnerTests.test_independent_rows_all_run) ... ok
+test_one_start_through_the_real_darwin_supervisor_with_its_receipt_and_started_record (test_run_direct_probe.RunnerTests.test_one_start_through_the_real_darwin_supervisor_with_its_receipt_and_started_record) ... ERROR
+test_a_remaining_descendant_misses_the_row_although_the_child_exited_zero (test_run_direct_probe.SupervisorRefusalTests.test_a_remaining_descendant_misses_the_row_although_the_child_exited_zero) ... FAIL
+test_a_staged_link_misses_the_row_although_the_child_exited_zero (test_run_direct_probe.SupervisorRefusalTests.test_a_staged_link_misses_the_row_although_the_child_exited_zero) ... FAIL
+test_a_clean_tree_with_its_reviewed_list_is_none_found (test_scan_mc11.ScanTests.test_a_clean_tree_with_its_reviewed_list_is_none_found) ... ERROR
+test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses (test_scan_mc11.ScanTests.test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses)
+TR-12: an unreviewed candidate list cannot decide MC11. ... 
+  test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses (test_scan_mc11.ScanTests.test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses) [candidate]
+TR-12: an unreviewed candidate list cannot decide MC11. ... ERROR
+  test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses (test_scan_mc11.ScanTests.test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses) [no reviewer]
+TR-12: an unreviewed candidate list cannot decide MC11. ... ERROR
+  test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses (test_scan_mc11.ScanTests.test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses) [empty reviewer]
+TR-12: an unreviewed candidate list cannot decide MC11. ... ERROR
+test_a_start_without_dash_b_refuses (test_scan_mc11.ScanTests.test_a_start_without_dash_b_refuses)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started. ... FAIL
+test_every_pattern_is_found_with_its_line_and_view (test_scan_mc11.ScanTests.test_every_pattern_is_found_with_its_line_and_view) ... FAIL
+test_the_forms_of_review_001_are_found_on_every_view (test_scan_mc11.ScanTests.test_the_forms_of_review_001_are_found_on_every_view)
+TR-11: binding names, bracket and parenthesized forms, every require that is not a plain call. ... FAIL
+test_the_frozen_rules_verdict_is_reported_separately (test_scan_mc11.ScanTests.test_the_frozen_rules_verdict_is_reported_separately)
+TR-12: MC11 is decided by MI's frozen rule; the wider scan is reported beside it. ... ERROR
+test_the_tree_and_the_bindings_are_checked_before_any_scan (test_scan_mc11.ScanTests.test_the_tree_and_the_bindings_are_checked_before_any_scan) ... ok
+test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b (test_zz_hygiene.HygieneTests.test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b) ... 
+  test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b (test_zz_hygiene.HygieneTests.test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b) (tool='audit_numeric.py') ... FAIL
+  test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b (test_zz_hygiene.HygieneTests.test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b) (tool='scan_mc11.py') ... FAIL
+test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b (test_zz_hygiene.HygieneTests.test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b) ... ERROR
+test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file) ... 
+  test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file) (file='tests/test_zz_hygiene.py', kind='part of the account name 2') ... FAIL
+  test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file) (file='tests/test_zz_hygiene.py', kind='part of the account name 3') ... FAIL
+  test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file) (file='tests/test_zz_hygiene.py', kind='worktree parent component 7') ... FAIL
+  test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file) (file='tests/test_zz_hygiene.py', kind='interpreter prefix component 16') ... FAIL
+test_the_derivation_finds_a_split_literal (test_zz_hygiene.HygieneTests.test_the_derivation_finds_a_split_literal) ... ok
+test_tools_import_the_standard_library_only_and_never_subprocess (test_zz_hygiene.HygieneTests.test_tools_import_the_standard_library_only_and_never_subprocess) ... ERROR
+test_zz_report_the_starts_of_this_run (test_zz_hygiene.HygieneTests.test_zz_report_the_starts_of_this_run) ... 
+MH-TOOLING-TEST-STARTS direct children: {'/usr/bin/true': 1, 'python -B': 125}; started by the tools under test: {'/bin/sh': 5, '/usr/bin/true': 8, 'fork of a stand-in': 1, 'stand-in python -B via the supervisor': 9}
+ok
+
+======================================================================
+ERROR: test_the_three_cases_pass_with_2060_rows_each_and_one_intended_negative_row (test_audit_numeric.AuditTests.test_the_three_cases_pass_with_2060_rows_each_and_one_intended_negative_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_audit_numeric.py", line 172, in test_the_three_cases_pass_with_2060_rows_each_and_one_intended_negative_row
+    geometry = record["cases"][label]["geometry_recomputation"]
+               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'geometry_recomputation'
+
+======================================================================
+ERROR: test_a_start_without_dash_b_refuses (test_capture_probe.ListingTests.test_a_start_without_dash_b_refuses)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 207, in test_a_start_without_dash_b_refuses
+    tool = S.load_module("mh_capture_under_test", str(S.TOOLING / "capture_probe.py"))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py", line 209, in load_module
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1132, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1190, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: '<local>/c271-p35/workers/W2/rejected-001/tooling/capture_probe.py'
+
+======================================================================
+ERROR: test_the_readback_listing_never_follows_a_link (test_capture_probe.ListingTests.test_the_readback_listing_never_follows_a_link)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 192, in test_the_readback_listing_never_follows_a_link
+    code, _, record = world.run("listing", "--dir", attempt, "--path", attempt + "/HOST.json",
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 84, in run
+    return tool.returncode, stderr, S.read_json(output)
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py", line 187, in read_json
+    with open(path, "rb") as stream:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/mh-tooling-3vgn56xd/capture-2.json'
+
+======================================================================
+ERROR: test_a_present_process_with_an_established_identity (test_capture_probe.ProbeTests.test_a_present_process_with_an_established_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 91, in test_a_present_process_with_an_established_identity
+    code, stderr, record = world.run("probe", "--pair", intent, started)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 84, in run
+    return tool.returncode, stderr, S.read_json(output)
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py", line 187, in read_json
+    with open(path, "rb") as stream:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/mh-tooling-07iezfbi/capture-2.json'
+
+======================================================================
+ERROR: test_a_start_outside_the_window_does_not_establish_identity (test_capture_probe.ProbeTests.test_a_start_outside_the_window_does_not_establish_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 120, in test_a_start_outside_the_window_does_not_establish_identity
+    code, _, record = world.run("probe", "--pair", intent, started)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 84, in run
+    return tool.returncode, stderr, S.read_json(output)
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py", line 187, in read_json
+    with open(path, "rb") as stream:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/mh-tooling-b5tzwkgf/capture-2.json'
+
+======================================================================
+ERROR: test_absence_is_established_by_esrch_and_a_malformed_record_is_unknown (test_capture_probe.ProbeTests.test_absence_is_established_by_esrch_and_a_malformed_record_is_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 134, in test_absence_is_established_by_esrch_and_a_malformed_record_is_unknown
+    code, _, record = world.run("probe", "--pair", intent, started, "--pair", intent, malformed)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 84, in run
+    return tool.returncode, stderr, S.read_json(output)
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py", line 187, in read_json
+    with open(path, "rb") as stream:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/mh-tooling-g4g_dmt9/capture-3.json'
+
+======================================================================
+ERROR: test_an_image_that_is_not_the_recorded_argv0_does_not_establish_identity (test_capture_probe.ProbeTests.test_an_image_that_is_not_the_recorded_argv0_does_not_establish_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 110, in test_an_image_that_is_not_the_recorded_argv0_does_not_establish_identity
+    code, _, record = world.run("probe", "--pair", intent, started)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 84, in run
+    return tool.returncode, stderr, S.read_json(output)
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py", line 187, in read_json
+    with open(path, "rb") as stream:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/mh-tooling-lvdr21iw/capture-2.json'
+
+======================================================================
+ERROR: test_an_established_identity_is_ended_through_its_group (test_capture_probe.StopTests.test_an_established_identity_is_ended_through_its_group)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 146, in test_an_established_identity_is_ended_through_its_group
+    code, stderr, record = world.run("stop", "--pair", intent, started, reap=[child])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 84, in run
+    return tool.returncode, stderr, S.read_json(output)
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py", line 187, in read_json
+    with open(path, "rb") as stream:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/mh-tooling-wh_v08c0/capture-2.json'
+
+======================================================================
+ERROR: test_nothing_is_sent_when_identity_is_not_established (test_capture_probe.StopTests.test_nothing_is_sent_when_identity_is_not_established)
+TR-05: a present process whose identity is not established is recorded, and never signalled.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 176, in test_nothing_is_sent_when_identity_is_not_established
+    code, _, record = world.run("stop", "--pair", intent, started, reap=[child])
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 84, in run
+    return tool.returncode, stderr, S.read_json(output)
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py", line 187, in read_json
+    with open(path, "rb") as stream:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/mh-tooling-tvbd9rjm/capture-2.json'
+
+======================================================================
+ERROR: test_sigkill_follows_only_continuous_presence_and_a_second_established_identity (test_capture_probe.StopTests.test_sigkill_follows_only_continuous_presence_and_a_second_established_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 160, in test_sigkill_follows_only_continuous_presence_and_a_second_established_identity
+    code, stderr, record = world.run("stop", "--pair", intent, started, reap=[child])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 84, in run
+    return tool.returncode, stderr, S.read_json(output)
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py", line 187, in read_json
+    with open(path, "rb") as stream:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/mh-tooling-k2x63n26/capture-2.json'
+
+======================================================================
+ERROR: test_all_seven_pass_gives_exit_zero (test_collect_outcomes.CohortTests.test_all_seven_pass_gives_exit_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py", line 214, in test_all_seven_pass_gives_exit_zero
+    self.assertTrue(all(row["equal"] for row in record["original_bodies"].values()))
+                                                ~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'original_bodies'
+
+======================================================================
+ERROR: test_a_named_control_runs_alone_and_its_child_is_recorded (test_collect_outcomes.ControlTests.test_a_named_control_runs_alone_and_its_child_is_recorded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py", line 341, in test_a_named_control_runs_alone_and_its_child_is_recorded
+    self.assertEqual(record["process_events"][0]["environment"]["names"], ["MH_VALUE_NAME"])
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'names'
+
+======================================================================
+ERROR: test_a_childs_environment_is_recorded_by_names_and_a_digest (test_control_harness.CommonTests.test_a_childs_environment_is_recorded_by_names_and_a_digest)
+TR-06: the audit hook writes no value of a child's environment.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py", line 438, in test_a_childs_environment_is_recorded_by_names_and_a_digest
+    self.assertEqual(row["environment"]["names"], ["MH_VALUE_NAME"])
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'names'
+
+======================================================================
+ERROR: test_a_configuration_change_after_preflight_is_refused_with_zero_starts (test_control_harness.MC29Tests.test_a_configuration_change_after_preflight_is_refused_with_zero_starts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py", line 365, in test_a_configuration_change_after_preflight_is_refused_with_zero_starts
+    checks, record = self.run_mc29("configuration", "CH-SELECTION")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py", line 350, in run_mc29
+    self.assertEqual(record["environment"]["names"], sorted(frozen), "the frozen environment, by its names")
+                     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'names'
+
+======================================================================
+ERROR: test_a_job_input_change_after_preflight_is_refused_with_zero_starts (test_control_harness.MC29Tests.test_a_job_input_change_after_preflight_is_refused_with_zero_starts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py", line 370, in test_a_job_input_change_after_preflight_is_refused_with_zero_starts
+    checks, record = self.run_mc29("job-input", "CH-JOB")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py", line 350, in run_mc29
+    self.assertEqual(record["environment"]["names"], sorted(frozen), "the frozen environment, by its names")
+                     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'names'
+
+======================================================================
+ERROR: test_import_failures_and_a_refused_process_start_are_findings (test_discover_inventory.DiscoverTests.test_import_failures_and_a_refused_process_start_are_findings)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py", line 123, in test_import_failures_and_a_refused_process_start_are_findings
+    self.assertEqual(event["environment"]["names"], ["MH_VALUE_NAME"])
+                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'names'
+
+======================================================================
+ERROR: test_lists_ids_as_unittest_discovers_them_and_runs_no_test (test_discover_inventory.DiscoverTests.test_lists_ids_as_unittest_discovers_them_and_runs_no_test)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py", line 99, in test_lists_ids_as_unittest_discovers_them_and_runs_no_test
+    self.assertEqual(record["unit_stage"]["derived_from"], "build_plan.add, by its AST")
+                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'derived_from'
+
+======================================================================
+ERROR: test_the_process_environment_must_be_exactly_the_frozen_one (test_discover_inventory.PlaceAndEnvironmentTests.test_the_process_environment_must_be_exactly_the_frozen_one)
+TR-06: an exact frozen environment, recorded by name; HOME is never part of one.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py", line 198, in test_the_process_environment_must_be_exactly_the_frozen_one
+    self.assertIn("MH_FROZEN_NAME", record["environment"]["names"])
+                                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'names'
+
+======================================================================
+ERROR: test_a_nonzero_exit_is_kept_raw_and_an_unmet_row_stops_the_later_rows (test_run_direct_probe.RunnerTests.test_a_nonzero_exit_is_kept_raw_and_an_unmet_row_stops_the_later_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 213, in test_a_nonzero_exit_is_kept_raw_and_an_unmet_row_stops_the_later_rows
+    self.assertEqual(h01["receipt_error"], h01["supervisor_failure"])
+                     ~~~^^^^^^^^^^^^^^^^^
+KeyError: 'receipt_error'
+
+======================================================================
+ERROR: test_one_start_through_the_real_darwin_supervisor_with_its_receipt_and_started_record (test_run_direct_probe.RunnerTests.test_one_start_through_the_real_darwin_supervisor_with_its_receipt_and_started_record)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 176, in test_one_start_through_the_real_darwin_supervisor_with_its_receipt_and_started_record
+    self.assertEqual(record["own_main_admitted"], S.expected_admission("run_direct_probe.py", world.root),
+                     ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'own_main_admitted'
+
+======================================================================
+ERROR: test_a_clean_tree_with_its_reviewed_list_is_none_found (test_scan_mc11.ScanTests.test_a_clean_tree_with_its_reviewed_list_is_none_found)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 168, in test_a_clean_tree_with_its_reviewed_list_is_none_found
+    self.assertFalse(record["frozen_rule"]["passed"], "the frozen rule needs the reviewed list too")
+                     ~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'frozen_rule'
+
+======================================================================
+ERROR: test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses (test_scan_mc11.ScanTests.test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses) [candidate]
+TR-12: an unreviewed candidate list cannot decide MC11.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 207, in test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses
+    listed = reviewed_from(record, world.base + "/reviewed-%s.json" % name.replace(" ", "-"), **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 100, in reviewed_from
+    "frozen_rule": {"dynamic": entry["frozen_rule"]["found"]["dynamic"],
+                               ~~~~~^^^^^^^^^^^^^^^
+KeyError: 'frozen_rule'
+
+======================================================================
+ERROR: test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses (test_scan_mc11.ScanTests.test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses) [no reviewer]
+TR-12: an unreviewed candidate list cannot decide MC11.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 207, in test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses
+    listed = reviewed_from(record, world.base + "/reviewed-%s.json" % name.replace(" ", "-"), **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 100, in reviewed_from
+    "frozen_rule": {"dynamic": entry["frozen_rule"]["found"]["dynamic"],
+                               ~~~~~^^^^^^^^^^^^^^^
+KeyError: 'frozen_rule'
+
+======================================================================
+ERROR: test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses (test_scan_mc11.ScanTests.test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses) [empty reviewer]
+TR-12: an unreviewed candidate list cannot decide MC11.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 207, in test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses
+    listed = reviewed_from(record, world.base + "/reviewed-%s.json" % name.replace(" ", "-"), **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 100, in reviewed_from
+    "frozen_rule": {"dynamic": entry["frozen_rule"]["found"]["dynamic"],
+                               ~~~~~^^^^^^^^^^^^^^^
+KeyError: 'frozen_rule'
+
+======================================================================
+ERROR: test_the_frozen_rules_verdict_is_reported_separately (test_scan_mc11.ScanTests.test_the_frozen_rules_verdict_is_reported_separately)
+TR-12: MC11 is decided by MI's frozen rule; the wider scan is reported beside it.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 184, in test_the_frozen_rules_verdict_is_reported_separately
+    completed, record = world.scan(reviewed=reviewed_from(record, world.base + "/reviewed.json"))
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 100, in reviewed_from
+    "frozen_rule": {"dynamic": entry["frozen_rule"]["found"]["dynamic"],
+                               ~~~~~^^^^^^^^^^^^^^^
+KeyError: 'frozen_rule'
+
+======================================================================
+ERROR: test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b (test_zz_hygiene.HygieneTests.test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py", line 150, in test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b
+    text = (S.TOOLING / name).read_text(encoding="utf-8")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<prefix>/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<prefix>/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<local>/c271-p35/workers/W2/rejected-001/tooling/capture_probe.py'
+
+======================================================================
+ERROR: test_tools_import_the_standard_library_only_and_never_subprocess (test_zz_hygiene.HygieneTests.test_tools_import_the_standard_library_only_and_never_subprocess)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py", line 136, in test_tools_import_the_standard_library_only_and_never_subprocess
+    tree = ast.parse((S.TOOLING / name).read_bytes())
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<prefix>/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<prefix>/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<local>/c271-p35/workers/W2/rejected-001/tooling/capture_probe.py'
+
+======================================================================
+FAIL: test_a_start_without_dash_b_refuses (test_audit_numeric.AuditTests.test_a_start_without_dash_b_refuses)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_audit_numeric.py", line 319, in test_a_start_without_dash_b_refuses
+    self.assertEqual(code, 2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_retained_bounds_that_are_not_those_of_the_vertices_fail (test_audit_numeric.AuditTests.test_retained_bounds_that_are_not_those_of_the_vertices_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_audit_numeric.py", line 307, in test_retained_bounds_that_are_not_those_of_the_vertices_fail
+    self.assertEqual(completed.returncode, 1, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 1 : MH-NUMERICAL-AUDIT {"cases": {"Q01-changed-reference": {"failed_checks": [], "passed": true}, "Q01-positive": {"failed_checks": [], "passed": true}, "Q03-positive": {"failed_checks": [], "passed": true}}, "passed": true}
+
+
+======================================================================
+FAIL: test_retained_vertices_that_are_not_the_matrix_applied_to_the_positions_fail (test_audit_numeric.AuditTests.test_retained_vertices_that_are_not_the_matrix_applied_to_the_positions_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_audit_numeric.py", line 289, in test_retained_vertices_that_are_not_the_matrix_applied_to_the_positions_fail
+    self.assertEqual(completed.returncode, 1, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 1 : MH-NUMERICAL-AUDIT {"cases": {"Q01-changed-reference": {"failed_checks": [], "passed": true}, "Q01-positive": {"failed_checks": [], "passed": true}, "Q03-positive": {"failed_checks": [], "passed": true}}, "passed": true}
+
+
+======================================================================
+FAIL: test_identity_comes_before_any_signal_and_the_probes_are_code (test_capture_probe.ProcedureTextTests.test_identity_comes_before_any_signal_and_the_probes_are_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py", line 227, in test_identity_comes_before_any_signal_and_the_probes_are_code
+    self.assertIn("capture_probe.py probe", p3)
+AssertionError: 'capture_probe.py probe' not found in '- **FC-P3. The probes.** One process is started for them all, and recorded like every command: `<worktree>/.venv/bin/python -I -S -B -c PROBE`, with the PIDs and groups as arguments. It records the errno of each probe in the readback record. - `os.killpg(G, 0)` for each group G. `ESRCH` means that no member of G exists, so the group is absent. Success or `EPERM` means a member exists. `EPERM` includes an exited, unreaped member (P33-AMENDMENT-001). - `os.kill(P, 0)` for each PID P. `ESRCH` means that no process with that PID exists. Success or `EPERM` means that some process has that PID. It is the recorded process only if its start time is the recorded one; a later start time shows that the PID was reused.'
+
+======================================================================
+FAIL: test_a_body_that_differs_from_the_frozen_original_bodies_is_not_all_passed (test_collect_outcomes.RevisionTests.test_a_body_that_differs_from_the_frozen_original_bodies_is_not_all_passed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py", line 312, in test_a_body_that_differs_from_the_frozen_original_bodies_is_not_all_passed
+    self.assertEqual(completed.returncode, 1, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 1 : test_q01_actual_synthetic_meshes_load_in_both_libraries (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries) ... ok
+test_q03_actual_synthetic_rotations_load_in_both_libraries (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries) ... ok
+test_three_rejects_changed_synthetic_reference (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference) ... ok
+test_host_alarm_cannot_interrupt_supervisor_cleanup (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup) ... ok
+test_result_write_failure_leaves_predecessor_gate_blocked (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked) ... ok
+test_success_finalization_uses_remaining_outer_alarm (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm) ... ok
+test_uncertain_marker_removal_recreates_pending (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+OK
+MH-OUTCOMES {"class_level_events": 0, "outcome_counts": {"pass": 7}, "process_events": 0, "state": "ALL_PASSED"}
+
+
+======================================================================
+FAIL: test_a_skip_inside_a_subtest_is_the_parents_skip (test_collect_outcomes.RevisionTests.test_a_skip_inside_a_subtest_is_the_parents_skip)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py", line 285, in test_a_skip_inside_a_subtest_is_the_parents_skip
+    self.assertEqual(row["outcome"], "skip")
+AssertionError: 'unknown' != 'skip'
+- unknown
++ skip
+
+
+======================================================================
+FAIL: test_events_of_an_unplanned_test_are_kept_by_name (test_collect_outcomes.RevisionTests.test_events_of_an_unplanned_test_are_kept_by_name)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py", line 293, in test_events_of_an_unplanned_test_are_kept_by_name
+    self.assertEqual(completed.returncode, 1, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 1 : test_q01_actual_synthetic_meshes_load_in_both_libraries (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries) ... ok
+test_q03_actual_synthetic_rotations_load_in_both_libraries (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries) ... ok
+test_three_rejects_changed_synthetic_reference (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference) ... ok
+test_host_alarm_cannot_interrupt_supervisor_cleanup (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup) ... ok
+test_result_write_failure_leaves_predecessor_gate_blocked (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked) ... ok
+test_success_finalization_uses_remaining_outer_alarm (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm) ... ok
+test_uncertain_marker_removal_recreates_pending (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending) ... test_inner (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending.<locals>.Inner.test_inner) ... ok
+test_uncertain_marker_removal_recreates_pending (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+OK
+MH-OUTCOMES {"class_level_events": 0, "outcome_counts": {"pass": 7}, "process_events": 0, "state": "ALL_PASSED"}
+
+
+======================================================================
+FAIL: test_git_names_are_refused_unless_they_are_exactly_the_drivers_own (test_collect_outcomes.RevisionTests.test_git_names_are_refused_unless_they_are_exactly_the_drivers_own)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py", line 320, in test_git_names_are_refused_unless_they_are_exactly_the_drivers_own
+    self.assertEqual(completed.returncode, 2, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 2 : test_q01_actual_synthetic_meshes_load_in_both_libraries (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries) ... ok
+test_q03_actual_synthetic_rotations_load_in_both_libraries (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries) ... ok
+test_three_rejects_changed_synthetic_reference (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference) ... ok
+test_host_alarm_cannot_interrupt_supervisor_cleanup (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup) ... ok
+test_result_write_failure_leaves_predecessor_gate_blocked (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked) ... ok
+test_success_finalization_uses_remaining_outer_alarm (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm) ... ok
+test_uncertain_marker_removal_recreates_pending (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+OK
+MH-OUTCOMES {"class_level_events": 0, "outcome_counts": {"pass": 7}, "process_events": 0, "state": "ALL_PASSED"}
+
+
+======================================================================
+FAIL: test_it_runs_from_its_committed_place_inside_the_root (test_collect_outcomes.RevisionTests.test_it_runs_from_its_committed_place_inside_the_root)
+TR-01: its own __main__ lies under the root; it is admitted by realpath and recorded.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py", line 274, in test_it_runs_from_its_committed_place_inside_the_root
+    self.assertEqual(completed.returncode, 0, completed.stderr.decode()[-3000:])
+AssertionError: 2 != 0 : MH-OUTCOMES {"refusal": {"details": {"modules": ["__main__"]}, "reason": "A module of the root is already loaded", "rule": "PYTHON"}, "state": "REFUSED"}
+
+
+======================================================================
+FAIL: test_the_module_digest_is_required_for_a_cohort_too (test_collect_outcomes.RevisionTests.test_the_module_digest_is_required_for_a_cohort_too)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py", line 302, in test_the_module_digest_is_required_for_a_cohort_too
+    self.assertEqual(completed.returncode, 2, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 2 : test_q01_actual_synthetic_meshes_load_in_both_libraries (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries) ... ok
+test_q03_actual_synthetic_rotations_load_in_both_libraries (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries) ... ok
+test_three_rejects_changed_synthetic_reference (tests.test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference) ... ok
+test_host_alarm_cannot_interrupt_supervisor_cleanup (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup) ... ok
+test_result_write_failure_leaves_predecessor_gate_blocked (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked) ... ok
+test_success_finalization_uses_remaining_outer_alarm (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm) ... ok
+test_uncertain_marker_removal_recreates_pending (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+OK
+MH-OUTCOMES {"class_level_events": 0, "outcome_counts": {"pass": 7}, "process_events": 0, "state": "ALL_PASSED"}
+
+
+======================================================================
+FAIL: test_the_attempt_listing_never_follows_a_link (test_control_harness.MC10Tests.test_the_attempt_listing_never_follows_a_link)
+TR-13: the listing opens files with O_NOFOLLOW and records a link as a link.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py", line 251, in test_the_attempt_listing_never_follows_a_link
+    self.assertEqual(listing["HOST.json"], {"kind": "symlink", "target": outside})
+AssertionError: {'sha256': 'b4dd6f70338694629b1353138118f77[48 chars]: 27} != {'kind': 'symlink', 'target': '/private/var[73 chars]txt'}
+- {'sha256': 'b4dd6f70338694629b1353138118f7772cbc4111378e4ab5d6fa72a6e3e8341e',
+-  'size_bytes': 27}
++ {'kind': 'symlink',
++  'target': '<tmp>/mh-tooling-h5z6fcus/outside.txt'}
+
+======================================================================
+FAIL: test_the_process_environment_must_be_exactly_the_frozen_one (test_control_harness.MC29Tests.test_the_process_environment_must_be_exactly_the_frozen_one) [an extra name]
+TR-06: an exact frozen environment, without HOME; refused before the provider is imported.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py", line 386, in test_the_process_environment_must_be_exactly_the_frozen_one
+    with self.assertRaises(HARNESS.Refusal) as caught:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refusal not raised
+
+======================================================================
+FAIL: test_the_process_environment_must_be_exactly_the_frozen_one (test_control_harness.MC29Tests.test_the_process_environment_must_be_exactly_the_frozen_one) [HOME in the frozen environment]
+TR-06: an exact frozen environment, without HOME; refused before the provider is imported.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py", line 386, in test_the_process_environment_must_be_exactly_the_frozen_one
+    with self.assertRaises(HARNESS.Refusal) as caught:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refusal not raised
+
+======================================================================
+FAIL: test_a_duplicate_inside_the_baseline_is_not_an_exact_match (test_discover_inventory.CompareTests.test_a_duplicate_inside_the_baseline_is_not_an_exact_match)
+TR-07: counts and duplicates are recomputed from the IDs of both documents.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py", line 285, in test_a_duplicate_inside_the_baseline_is_not_an_exact_match
+    self.assertEqual(completed.returncode, 1, completed.stderr.decode())
+AssertionError: 0 != 1 : 
+
+======================================================================
+FAIL: test_compare_refuses_a_start_without_dash_b (test_discover_inventory.CompareTests.test_compare_refuses_a_start_without_dash_b)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py", line 306, in test_compare_refuses_a_start_without_dash_b
+    self.assertEqual(code, 2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_exact_match_of_baseline_plus_approved_additions (test_discover_inventory.CompareTests.test_exact_match_of_baseline_plus_approved_additions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py", line 259, in test_exact_match_of_baseline_plus_approved_additions
+    self.assertEqual(record["inputs_clean"], {"current_clean": True, "baseline_clean": True})
+AssertionError: {'baseline_without_failed_imports': True, '[184 chars]True} != {'current_clean': True, 'baseline_clean': True}
++ {'baseline_clean': True, 'current_clean': True}
+- {'baseline_without_failed_imports': True,
+-  'baseline_without_process_events': True,
+-  'current_without_bytecode': True,
+-  'current_without_duplicates': True,
+-  'current_without_failed_imports': True,
+-  'current_without_process_events': True}
+
+======================================================================
+FAIL: test_interpreter_flags_other_than_dash_b_in_build_plan_refuse (test_discover_inventory.DiscoverTests.test_interpreter_flags_other_than_dash_b_in_build_plan_refuse)
+TR-07: the flag comes from build_plan's add(), so a different flag set refuses.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py", line 137, in test_interpreter_flags_other_than_dash_b_in_build_plan_refuse
+    self.assertEqual(completed.returncode, 2, completed.stderr.decode())
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_it_runs_from_its_committed_place_inside_the_root (test_discover_inventory.PlaceAndEnvironmentTests.test_it_runs_from_its_committed_place_inside_the_root)
+TR-01: its own __main__ lies under the root; it is admitted by realpath and recorded.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py", line 173, in test_it_runs_from_its_committed_place_inside_the_root
+    self.assertEqual(completed.returncode, 0, completed.stderr.decode()[-3000:])
+AssertionError: 2 != 0 : {"finished_at_utc": "2026-11-27T03:15:17.760994Z", "invocation": {"argv": ["<tmp>/mh-tooling-v7qs9bso/root/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/discover_inventory.py", "discover", "--root", "<tmp>/mh-tooling-v7qs9bso/root", "--output", "<tmp>/mh-tooling-v7qs9bso/out-1.json"], "cwd": "<local>/c271-p35/workers/W2/tooling", "orig_argv": ["<prefix>/Resources/Python.app/Contents/MacOS/Python", "-B", "<tmp>/mh-tooling-v7qs9bso/root/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/discover_inventory.py", "discover", "--root", "<tmp>/mh-tooling-v7qs9bso/root", "--output", "<tmp>/mh-tooling-v7qs9bso/out-1.json"], "pid": 78968, "python": {"build_string": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]", "executable": "<worktree>/.venv/bin/python", "flags": {"bytes_warning": 0, "debug": 0, "dev_mode": false, "dont_write_bytecode": 1, "hash_randomization": 1, "ignore_environment": 0, "inspect": 0, "int_max_str_digits": 4300, "interactive": 0, "isolated": 0, "no_site": 0, "no_user_site": 0, "optimize": 0, "quiet": 0, "safe_path": false, "utf8_mode": 0, "verbose": 0, "warn_default_encoding": 0}, "implementation": "cpython", "version": "3.12.13"}}, "refusal": {"details": {"modules": ["__main__"]}, "reason": "A module of the root is already loaded", "rule": "PYTHON"}, "schema": "ontokin.c271.p35-tool-refusal/1", "state": "REFUSED", "tool": "discover_inventory.py"}
+
+
+======================================================================
+FAIL: test_a_target_that_exists_before_the_start_refuses_the_row_before_any_start (test_run_direct_probe.FrozenStateTests.test_a_target_that_exists_before_the_start_refuses_the_row_before_any_start)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 322, in test_a_target_that_exists_before_the_start_refuses_the_row_before_any_start
+    self.assertEqual(completed.returncode, 2, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 2 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": true, "id": "MC36", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ALL_ROWS_MET"}
+
+
+======================================================================
+FAIL: test_inputs_and_stage_entries_are_verified_again_immediately_before_each_start (test_run_direct_probe.FrozenStateTests.test_inputs_and_stage_entries_are_verified_again_immediately_before_each_start)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 338, in test_inputs_and_stage_entries_are_verified_again_immediately_before_each_start
+    self.assertEqual(completed.returncode, 1, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 1 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": true, "id": "probe-syntax-check", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}, {"actual_starts": 1, "expectation_met": true, "id": "P06-H01", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}, {"actual_starts": 1, "expectation_met": true, "id": "P06-H02", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ALL_ROWS_MET"}
+
+
+======================================================================
+FAIL: test_sigint_and_sigterm_after_a_start (test_run_direct_probe.InterruptionTests.test_sigint_and_sigterm_after_a_start) (signal='SIGINT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 439, in test_sigint_and_sigterm_after_a_start
+    self.assertEqual(code, 3, stderr.decode()[-3000:])
+AssertionError: 1 != 3 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": false, "id": "probe-syntax-check", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}, {"actual_starts": 1, "expectation_met": true, "id": "P06-H01", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ROWS_UNMET"}
+
+
+======================================================================
+FAIL: test_sigint_and_sigterm_after_a_start (test_run_direct_probe.InterruptionTests.test_sigint_and_sigterm_after_a_start) (signal='SIGTERM')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 439, in test_sigint_and_sigterm_after_a_start
+    self.assertEqual(code, 3, stderr.decode()[-3000:])
+AssertionError: -15 != 3 : 
+
+======================================================================
+FAIL: test_a_supervisor_without_json_bytes_is_not_the_original (test_run_direct_probe.PlaceAndLoadingTests.test_a_supervisor_without_json_bytes_is_not_the_original)
+TR-10: json_bytes_is_the_original needs 'is not None'; such a supervisor refuses before any row.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 403, in test_a_supervisor_without_json_bytes_is_not_the_original
+    self.assertEqual(completed.returncode, 2, completed.stderr.decode()[-3000:])
+AssertionError: 3 != 2 : {"error": {"reason": "module 'prototypes.static_tray_v01.supervisor_darwin_v01' has no attribute 'darwin_precondition'", "type": "AttributeError"}, "schema": "ontokin.c271.p35-tool-failure/1", "state": "UNKNOWN", "tool": "run_direct_probe.py"}
+
+
+======================================================================
+FAIL: test_it_runs_from_its_committed_place_inside_the_root (test_run_direct_probe.PlaceAndLoadingTests.test_it_runs_from_its_committed_place_inside_the_root)
+TR-01: its own __main__ lies under the root; it is admitted by realpath and recorded.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 383, in test_it_runs_from_its_committed_place_inside_the_root
+    self.assertEqual(completed.returncode, 0, completed.stderr.decode()[-3000:])
+AssertionError: 2 != 0 : MH-DIRECT-PROBE {"refusal": {"details": {"checks": {"clock_is_the_original": true, "json_bytes_is_the_original": true, "run_process_from_bound_file": true, "stop_is_the_original": true}, "other_project_modules": ["__main__"]}, "reason": "The loaded supervisor is not exactly the bound files", "rule": "SUPERVISOR"}, "state": "REFUSED"}
+
+
+======================================================================
+FAIL: test_exact_streams_and_json_members_equal_or_absent (test_run_direct_probe.PredicateTests.test_exact_streams_and_json_members_equal_or_absent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 365, in test_exact_streams_and_json_members_equal_or_absent
+    self.assertEqual(completed.returncode, 1, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 1 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": true, "id": "P06-H01", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}, {"actual_starts": 1, "expectation_met": true, "id": "P06-H02", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ALL_ROWS_MET"}
+
+
+======================================================================
+FAIL: test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) [supervisor error not implied by the status (TR-02)]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 273, in test_bound_inputs_and_row_shapes_refuse_before_any_start
+    self.assertEqual(completed.returncode, 2, completed.stderr.decode())
+AssertionError: 1 != 2 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": false, "id": "probe-syntax-check", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ROWS_UNMET"}
+
+
+======================================================================
+FAIL: test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) [shared stage (TR-10)]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 273, in test_bound_inputs_and_row_shapes_refuse_before_any_start
+    self.assertEqual(completed.returncode, 2, completed.stderr.decode())
+AssertionError: 0 != 2 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": true, "id": "probe-syntax-check", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}, {"actual_starts": 1, "expectation_met": true, "id": "P06-H01", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ALL_ROWS_MET"}
+
+
+======================================================================
+FAIL: test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) [input digest (TR-03)]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 273, in test_bound_inputs_and_row_shapes_refuse_before_any_start
+    self.assertEqual(completed.returncode, 2, completed.stderr.decode())
+AssertionError: 0 != 2 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": true, "id": "P06-H01", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ALL_ROWS_MET"}
+
+
+======================================================================
+FAIL: test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) [unbound stage file (TR-03)]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 273, in test_bound_inputs_and_row_shapes_refuse_before_any_start
+    self.assertEqual(completed.returncode, 2, completed.stderr.decode())
+AssertionError: 0 != 2 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": true, "id": "P06-H01", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ALL_ROWS_MET"}
+
+
+======================================================================
+FAIL: test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) [stage entries (TR-03)]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 273, in test_bound_inputs_and_row_shapes_refuse_before_any_start
+    self.assertEqual(completed.returncode, 2, completed.stderr.decode())
+AssertionError: 0 != 2 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": true, "id": "MC36", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ALL_ROWS_MET"}
+
+
+======================================================================
+FAIL: test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 279, in test_bound_inputs_and_row_shapes_refuse_before_any_start
+    self.assertEqual((completed.returncode, record["refusal"]["rule"]), (2, "ROW-TARGET"))
+AssertionError: Tuples differ: (2, 'ROWS') != (2, 'ROW-TARGET')
+
+First differing element 1:
+'ROWS'
+'ROW-TARGET'
+
+- (2, 'ROWS')
++ (2, 'ROW-TARGET')
+
+======================================================================
+FAIL: test_a_remaining_descendant_misses_the_row_although_the_child_exited_zero (test_run_direct_probe.SupervisorRefusalTests.test_a_remaining_descendant_misses_the_row_although_the_child_exited_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 290, in test_a_remaining_descendant_misses_the_row_although_the_child_exited_zero
+    self.assertEqual(completed.returncode, 1, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 1 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": true, "id": "probe-syntax-check", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ALL_ROWS_MET"}
+
+
+======================================================================
+FAIL: test_a_staged_link_misses_the_row_although_the_child_exited_zero (test_run_direct_probe.SupervisorRefusalTests.test_a_staged_link_misses_the_row_although_the_child_exited_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py", line 305, in test_a_staged_link_misses_the_row_although_the_child_exited_zero
+    self.assertEqual(completed.returncode, 1, completed.stderr.decode()[-3000:])
+AssertionError: 0 != 1 : MH-DIRECT-PROBE {"rows": [{"actual_starts": 1, "expectation_met": true, "id": "probe-syntax-check", "observed_starts_lower_bound": 1, "start_count_state": "OBSERVED_ONE", "state": "COMPLETED"}], "state": "ALL_ROWS_MET"}
+
+
+======================================================================
+FAIL: test_a_start_without_dash_b_refuses (test_scan_mc11.ScanTests.test_a_start_without_dash_b_refuses)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 238, in test_a_start_without_dash_b_refuses
+    self.assertEqual(code, 2)
+AssertionError: 1 != 2
+
+======================================================================
+FAIL: test_every_pattern_is_found_with_its_line_and_view (test_scan_mc11.ScanTests.test_every_pattern_is_found_with_its_line_and_view)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 121, in test_every_pattern_is_found_with_its_line_and_view
+    self.assertEqual(patterns(bad, "process_creation"),
+AssertionError: Lists differ: [('Wo[151 chars]raw'), ('process.binding', 7, 'raw')] != [('Wo[151 chars]raw'), ('process.binding', 7, 'raw'), ('spawn_sync', 7, 'raw')]
+
+Second list contains 1 additional elements.
+First extra element 7:
+('spawn_sync', 7, 'raw')
+
+  [('Worker', 6, 'raw'),
+   ('child_process', 3, 'raw'),
+   ('child_process', 4, 'decoded'),
+   ('child_process', 5, 'joined'),
+   ('cluster', 15, 'raw'),
+   ('dlopen', 8, 'raw'),
+-  ('process.binding', 7, 'raw')]
+?                               ^
+
++  ('process.binding', 7, 'raw'),
+?                               ^
+
++  ('spawn_sync', 7, 'raw')]
+
+======================================================================
+FAIL: test_the_forms_of_review_001_are_found_on_every_view (test_scan_mc11.ScanTests.test_the_forms_of_review_001_are_found_on_every_view)
+TR-11: binding names, bracket and parenthesized forms, every require that is not a plain call.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py", line 149, in test_the_forms_of_review_001_are_found_on_every_view
+    self.assertEqual(patterns(forms, "process_creation"),
+AssertionError: Lists differ: [('pr[20 chars]raw')] != [('pr[20 chars]raw'), ('process_wrap', 5, 'raw'), ('spawn_syn[13 chars]ed')]
+
+Second list contains 2 additional elements.
+First extra element 1:
+('process_wrap', 5, 'raw')
+
+- [('process.binding', 5, 'raw')]
+?                               ^
+
++ [('process.binding', 5, 'raw'),
+?                               ^
+
++  ('process_wrap', 5, 'raw'),
++  ('spawn_sync', 6, 'decoded')]
+
+======================================================================
+FAIL: test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b (test_zz_hygiene.HygieneTests.test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b) (tool='audit_numeric.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py", line 156, in test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b
+    self.assertIn("flags.dont_write_bytecode", text)
+AssertionError: 'flags.dont_write_bytecode' not found in '#!/usr/bin/env python3\n"""Numerical-audit harness for gate MH of C271-P35 (P07 section 6).\n\nAn independent reimplementation of the probe\'s comparison: it imports nothing of the project, the\nprobe or the provider. For each of the three CPU stages of a retained cohort, it reads the retained\nreference (synthetic-audit.json), the probe\'s report (probe.json), the GLB and the job, and\nrecomputes from those values:\n\n* the expected row inventory: for every reference node, the 16 world-matrix terms; for every mesh\n  node, one world-position row and one normal row per vertex and axis, then the minimum, maximum and\n  size of the world bounds per axis;\n* each row\'s difference |actual - expected|, its threshold (5e-6 m for positions, bounds and the\n  translational matrix terms [0..2][3]; 1e-6 for the other matrix terms and the normals) and its\n  decision (both values finite and the difference within the threshold);\n* that the report\'s rows are exactly that inventory, with no row missing, extra or duplicated, and\n  that every reported actual, expected, difference, threshold and decision equals the recomputation;\n* the exact comparisons the retained values allow (names, identities, relationships, indices and\n  materials), and the report\'s findings as a multiset;\n* that Q01 and Q03 pass every row, and that the negative has exactly one failed row and exactly one\n  finding, at equipment-tray/pair/left/base matrix_0_3, with a difference of 0.001 within 1e-9, on a\n  GLB byte-identical to Q01\'s and a reference that differs from Q01\'s only there and in its scope.\n\nLaunch:  <worktree>/.venv/bin/python -I -S -B audit_numeric.py --cohort-root DIR --output OUT\nIt starts no process and writes only its absent output file.\n"""\nfrom __future__ import annotations\n\nimport argparse\nfrom collections import Counter\nfrom datetime import datetime, timezone\nimport hashlib\nimport json\nimport math\nimport os\nimport stat\nimport sys\nimport time\n\nSCHEMA = "ontokin.c271.p35-numerical-audit/1"\nREPORT_SCHEMA = "ontokin.current-host-readback-result/0.2.0"\nREFERENCE_SCHEMA = "ontokin.static-tray.independent-audit/0.1.0"\nCONTRACT = "ontokin.current-host-readback/0.2.0"\nCASES = {"Q01-positive": ("Q01", False), "Q03-positive": ("Q03", False), "Q01-changed-reference": ("Q01", True)}\nPOSITION_THRESHOLD, MATRIX_THRESHOLD = 5e-6, 1e-6\nNEGATIVE_NODE, NEGATIVE_FIELD = "equipment-tray/pair/left/base", "matrix_0_3"\nNEGATIVE_DIFFERENCE, NEGATIVE_DIFFERENCE_TOLERANCE = 0.001, 1e-9\nCHANGED_SCOPE = ("Intentionally changed synthetic reference for a negative importer comparison control; "\n                 "not native evidence")\nHISTORICAL_ROWS, NODE_COUNT, MESH_COUNT, VERTICES_PER_MESH = 2060, 14, 12, 24\nVALIDATOR_VERSION, THREE_VERSION, THREE_REVISION, NODE_VERSION = "2.0.0-dev.3.10", "0.186.1", "186", "v24.22.1"\nROW_KEYS = {"semantic_id", "field", "actual", "expected", "difference", "threshold", "passed"}\nFLAG_NAMES = ("debug", "inspect", "interactive", "optimize", "dont_write_bytecode", "no_user_site", "no_site",\n              "ignore_environment", "verbose", "bytes_warning", "quiet", "hash_randomization", "isolated",\n              "dev_mode", "utf8_mode", "warn_default_encoding", "safe_path", "int_max_str_digits")\nEXIT_PASSED, EXIT_FAILED, EXIT_REFUSED, EXIT_UNKNOWN = 0, 1, 2, 3\n\n\n# ---------------------------------------------------------------------------\n# Common helpers (each MH tool carries its own copy; no tool imports another)\n# ---------------------------------------------------------------------------\n\ndef utc_now():\n    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")\n\n\nclass Refusal(Exception):\n    """A precondition the tool refuses, with the rule it applies."""\n\n    def __init__(self, rule, reason, **details):\n        super().__init__(reason)\n        self.rule, self.reason, self.details = rule, reason, details\n\n    def as_dict(self):\n        return {"rule": self.rule, "reason": self.reason, "details": self.details}\n\n\ndef mode_text(st_mode):\n    return "0o%03o" % stat.S_IMODE(st_mode)\n\n\ndef canonical_path(value, *, kind=None, rule="PATH"):\n    """An absolute path in normal form that is its own realpath, so no component is a symbolic link."""\n    if type(value) is not str or not value.startswith("/") or "\\0" in value:\n        raise Refusal(rule, "Expected an absolute path", path=repr(value))\n    if os.path.normpath(value) != value:\n        raise Refusal(rule, "The path is not in normal form", path=value)\n    if os.path.realpath(value) != value:\n        raise Refusal(rule, "The path is not canonical: a component is a symbolic link", path=value)\n    if kind is not None:\n        try:\n            info = os.lstat(value)\n        except OSError as exc:\n            raise Refusal(rule, "The path is absent or unreadable", path=value, error=str(exc)) from exc\n        if kind == "dir" and not stat.S_ISDIR(info.st_mode):\n            raise Refusal(rule, "Expected a directory", path=value)\n        if kind == "file" and not stat.S_ISREG(info.st_mode):\n            raise Refusal(rule, "Expected a regular file", path=value)\n    return value\n\n\ndef read_regular(path, maximum, *, rule="INPUT"):\n    """The bytes and binding of a regular file, opened without following a final link; a change during the read refuses."""\n    canonical_path(path, rule=rule)\n    try:\n        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | getattr(os, "O_CLOEXEC", 0))\n    except OSError as exc:\n        raise Refusal(rule, "Cannot open the input", path=path, error=str(exc)) from exc\n    try:\n        before = os.fstat(fd)\n        if not stat.S_ISREG(before.st_mode):\n            raise Refusal(rule, "The input is not a regular file", path=path)\n        if before.st_size > maximum:\n            raise Refusal(rule, "The input exceeds its byte bound", path=path, size_bytes=before.st_size,\n                          maximum=maximum)\n        chunks, total = [], 0\n        while True:\n            block = os.read(fd, min(1 << 20, maximum + 1 - total))\n            if not block:\n                break\n            chunks.append(block)\n            total += len(block)\n            if total > maximum:\n                raise Refusal(rule, "The input grew beyond its byte bound", path=path)\n        after = os.fstat(fd)\n    finally:\n        os.close(fd)\n    named = os.lstat(path)\n\n    def identity(info):\n        return info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_mode\n    if identity(before) != identity(after) or identity(after) != identity(named) or total != before.st_size:\n        raise Refusal(rule, "The input changed while it was read", path=path)\n    data = b"".join(chunks)\n    return data, {"sha256": hashlib.sha256(data).hexdigest(), "size_bytes": total, "mode": mode_text(before.st_mode)}\n\n\ndef strict_json(raw, *, rule="INPUT", what="document"):\n    """JSON with duplicate members and non-finite constants refused."""\n    def pairs(items):\n        result = {}\n        for key, value in items:\n            if key in result:\n                raise Refusal(rule, "Duplicate JSON member in the " + what, member=key)\n            result[key] = value\n        return result\n\n    def constant(text):\n        raise Refusal(rule, "Non-finite JSON constant in the " + what, constant=text)\n    try:\n        return json.loads(raw.decode("utf-8"), object_pairs_hook=pairs, parse_constant=constant)\n    except Refusal:\n        raise\n    except (UnicodeError, ValueError, RecursionError) as exc:\n        raise Refusal(rule, "Invalid JSON in the " + what, error=str(exc)) from exc\n\n\ndef json_text(value):\n    return (json.dumps(value, sort_keys=True, indent=1, ensure_ascii=True, allow_nan=False) + "\\n").encode("ascii")\n\n\ndef fsync_directory(path):\n    fd = os.open(path, os.O_RDONLY | os.O_DIRECTORY)\n    try:\n        os.fsync(fd)\n    finally:\n        os.close(fd)\n\n\ndef prepare_output_file(path):\n    """An absent output path in an existing canonical directory; an existing path is never replaced."""\n    canonical_path(path, rule="OUTPUT")\n    canonical_path(os.path.dirname(path), kind="dir", rule="OUTPUT")\n    if os.path.lexists(path):\n        raise Refusal("OUTPUT", "The output path exists; it is never replaced", path=path)\n    return path\n\n\ndef write_new(path, data):\n    """Exclusive creation of one absent file, fsynced together with its directory."""\n    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | getattr(os, "O_CLOEXEC", 0), 0o644)\n    try:\n        view = memoryview(data)\n        while view:\n            view = view[os.write(fd, view):]\n        os.fsync(fd)\n    finally:\n        os.close(fd)\n    fsync_directory(os.path.dirname(path))\n    return {"path": path, "sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data)}\n\n\ndef tool_record():\n    path = os.path.realpath(__file__)\n    with open(path, "rb") as stream:\n        data = stream.read()\n    return {"path": path, "sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data),\n            "mode": mode_text(os.stat(path).st_mode)}\n\n\ndef invocation_record():\n    return {"argv": list(sys.argv), "orig_argv": list(getattr(sys, "orig_argv", [])), "cwd": os.getcwd(),\n            "pid": os.getpid(),\n            "python": {"implementation": sys.implementation.name, "version": "%d.%d.%d" % sys.version_info[:3],\n                       "build_string": sys.version, "executable": sys.executable,\n                       "flags": {name: getattr(sys.flags, name) for name in FLAG_NAMES}}}\n\n\n# ---------------------------------------------------------------------------\n# JavaScript value semantics that the comparison depends on\n# ---------------------------------------------------------------------------\n\ndef is_number(value):\n    return type(value) in (int, float)\n\n\ndef number(value):\n    """A JSON number as a double; anything else (null for NaN, a string, a boolean, a missing value) is None."""\n    return float(value) if is_number(value) else None\n\n\ndef finite(value):\n    return value is not None and math.isfinite(value)\n\n\ndef recorded(value):\n    """A number as the record can hold it: a non-finite double (JSON\'s 1e999) is written as text."""\n    return value if value is None or math.isfinite(value) else repr(value)\n\n\ndef js_truthy(value):\n    return not (value is None or value is False or value == "" or (is_number(value) and (value == 0 or value != value)))\n\n\ndef js_equal(first, second):\n    """stable(first) === stable(second) for JSON values: numbers by value, -0 equal to 0, booleans not numbers."""\n    if type(first) is bool or type(second) is bool:\n        return type(first) is type(second) and first == second\n    if is_number(first) and is_number(second):\n        return float(first) == float(second)\n    if first is None or second is None:\n        return first is None and second is None\n    if isinstance(first, str) or isinstance(second, str):\n        return type(first) is type(second) and first == second\n    if isinstance(first, list) and isinstance(second, list):\n        return len(first) == len(second) and all(js_equal(a, b) for a, b in zip(first, second))\n    if isinstance(first, dict) and isinstance(second, dict):\n        return set(first) == set(second) and all(js_equal(first[key], second[key]) for key in first)\n    return False\n\n\ndef normalized(value):\n    """A comparable form of a JSON value: every number a double, -0 as 0."""\n    if type(value) is bool or value is None or isinstance(value, str):\n        return value\n    if is_number(value):\n        value = float(value)\n        return 0.0 if value == 0 else value\n    if isinstance(value, list):\n        return [normalized(item) for item in value]\n    if isinstance(value, dict):\n        return {key: normalized(item) for key, item in value.items()}\n    return repr(value)\n\n\ndef finding_key(row):\n    return json.dumps(normalized(row), sort_keys=True, allow_nan=True)\n\n\ndef js_sorted(values):\n    return sorted(values, key=lambda item: "null" if item is None else str(item))\n\n\ndef element(container, *path):\n    """container[path...] when every step exists; None (JavaScript\'s undefined) otherwise."""\n    for step in path:\n        if isinstance(step, int):\n            if not isinstance(container, list) or not 0 <= step < len(container):\n                return None\n        elif not isinstance(container, dict) or step not in container:\n            return None\n        container = container[step]\n    return container\n\n\n# ---------------------------------------------------------------------------\n# The recomputation\n# ---------------------------------------------------------------------------\n\ndef threshold_for(field):\n    """The thresholds of P07 section 6: positions and translational matrix terms 5e-6 m, the rest 1e-6."""\n    if field.startswith("matrix_"):\n        _, i, j = field.split("_")\n        return POSITION_THRESHOLD if int(j) == 3 and int(i) < 3 else MATRIX_THRESHOLD\n    if field.startswith(("world_vertex_", "world_min_", "world_max_", "world_size_")):\n        return POSITION_THRESHOLD\n    if field.startswith("normal_"):\n        return MATRIX_THRESHOLD\n    raise ValueError("unknown row field " + field)\n\n\ndef bound_values(vertices, axis):\n    values = [number(element(vertex, axis)) for vertex in vertices] if isinstance(vertices, list) else []\n    if not values or any(value is None for value in values):\n        return None, None\n    return min(values), max(values)\n\n\ndef expected_inventory(reference):\n    """The rows in the probe\'s order, each with its expected value from the reference."""\n    rows = []\n    nodes = reference["nodes"]\n    for ident in sorted(nodes):\n        node = nodes[ident]\n        for i in range(4):\n            for j in range(4):\n                rows.append((ident, "matrix_%d_%d" % (i, j), number(element(node, "world_matrix", i, j))))\n        vertices = node.get("world_vertices")\n        if not js_truthy(vertices):\n            continue\n        for i in range(len(vertices) if isinstance(vertices, list) else 0):\n            for axis in range(3):\n                rows.append((ident, "world_vertex_%d_%d" % (i, axis), number(element(vertices, i, axis))))\n                rows.append((ident, "normal_%d_%d" % (i, axis), number(element(node, "normals", i, axis))))\n        for axis in range(3):\n            low, high = bound_values(vertices, axis)\n            rows.append((ident, "world_min_%d" % axis, low))\n            rows.append((ident, "world_max_%d" % axis, high))\n            rows.append((ident, "world_size_%d" % axis, None if low is None else high - low))\n    return rows\n\n\ndef actual_value(retained, ident, field):\n    node = retained.get(ident) if isinstance(retained, dict) else None\n    parts = field.split("_")\n    if field.startswith("matrix_"):\n        return number(element(node, "world_matrix", int(parts[1]), int(parts[2])))\n    if field.startswith("world_vertex_"):\n        return number(element(node, "world_vertices", int(parts[2]), int(parts[3])))\n    if field.startswith("normal_"):\n        return number(element(node, "normals", int(parts[1]), int(parts[2])))\n    axis = int(parts[2])\n    low, high = number(element(node, "world_bounds", 0, axis)), number(element(node, "world_bounds", 1, axis))\n    if field.startswith("world_min_"):\n        return low\n    if field.startswith("world_max_"):\n        return high\n    return None if low is None or high is None else high - low\n\n\ndef decide(actual, expected, threshold):\n    difference = abs(actual - expected) if actual is not None and expected is not None else None\n    if difference is not None and not math.isfinite(difference):\n        difference = None\n    return difference, finite(actual) and finite(expected) and difference is not None and difference <= threshold\n\n\ndef same_number(first, second):\n    if first is None or second is None:\n        return first is None and second is None\n    return first == second\n\n\ndef exact_findings(reference, three):\n    """The exact comparisons that the retained report values allow, as the probe makes them."""\n    findings, limits = [], []\n    nodes, retained = reference["nodes"], three.get("nodes") if isinstance(three.get("nodes"), dict) else {}\n\n    def exact(ident, field, actual, expected):\n        if not js_equal(actual, expected):\n            findings.append({"semantic_id": ident, "field": field, "actual": actual, "expected": expected})\n    imported = three.get("node_count")\n    if imported == len(retained) and set(retained) == set(nodes):\n        pass  # the imported identity inventory equals the reference\'s: no node_identity_inventory finding\n    elif set(retained) <= set(nodes):\n        limits.append("node_identity_inventory: the imported nodes are not all retained, so the probe\'s actual "\n                      "inventory cannot be rebuilt; only the finding\'s presence is compared")\n        findings.append({"semantic_id": "", "field": "node_identity_inventory", "actual": "<not retained>",\n                         "expected": sorted(nodes)})\n    exact("", "node_count", imported, NODE_COUNT)\n    meshes = 0\n    for ident in sorted(set(retained) & set(nodes)):\n        node, data = nodes[ident], retained[ident]\n        if not isinstance(data, dict) or not isinstance(node, dict):\n            limits.append("node " + ident + ": malformed retained or reference record")\n            continue\n        extras = node.get("extras") if isinstance(node.get("extras"), dict) else {}\n        exact(ident, "original_name", data.get("original_name"), ident)\n        exact(ident, "semantic_role_relationships", data.get("extras"), node.get("extras"))\n        exact(ident, "children", data.get("children"), js_sorted(node.get("children") or []))\n        owner = extras.get("owner_id")\n        expected_parent = None if extras.get("role") == "tray-root" else (\n            "/".join(str(part) for part in owner) if isinstance(owner, list) else "<undefined owner>")\n        exact(ident, "parent", data.get("parent"), expected_parent)\n        if not js_truthy(node.get("world_vertices")):\n            limits.append("empty_root of " + ident + ": whether Three.js made it a mesh is not retained")\n            continue\n        meshes += 1\n        positions = data.get("positions")\n        exact(ident, "vertex_count", len(positions) if isinstance(positions, list) else None,\n              len(node["world_vertices"]))\n        exact(ident, "actual_triangle_indices", data.get("indices"), node.get("indices"))\n        exact(ident, "material", data.get("material"), node.get("material"))\n    exact("", "mesh_count", three.get("mesh_count"), MESH_COUNT)\n    return findings, limits, meshes\n\n\ndef reference_structure(reference):\n    nodes = reference.get("nodes")\n    if not isinstance(nodes, dict):\n        return {"nodes_object": False}\n    meshes = {ident: node for ident, node in nodes.items()\n              if isinstance(node, dict) and js_truthy(node.get("world_vertices"))}\n    return {"nodes_object": True, "node_count": len(nodes), "mesh_count": len(meshes),\n            "matrices_4x4": all(isinstance(element(node, "world_matrix"), list) and len(node["world_matrix"]) == 4\n                                and all(isinstance(row, list) and len(row) == 4 and all(is_number(v) for v in row)\n                                        for row in node["world_matrix"]) for node in nodes.values()),\n            "vertices_per_mesh": sorted({len(node["world_vertices"]) for node in meshes.values()\n                                         if isinstance(node["world_vertices"], list)}),\n            "normals_match_vertices": all(isinstance(node.get("normals"), list)\n                                          and len(node["normals"]) == len(node["world_vertices"])\n                                          for node in meshes.values())}\n\n\ndef audit_case(label, directory):\n    case, negative = CASES[label]\n    reference_raw, reference_binding = read_regular(directory + "/synthetic-audit.json", 4 * 1024 * 1024)\n    report_raw, report_binding = read_regular(directory + "/probe.json", 4 * 1024 * 1024)\n    glb_raw, glb_binding = read_regular(directory + "/synthetic.glb", 8 * 1024 * 1024)\n    job_raw, job_binding = read_regular(directory + "/job.json", 32 * 1024)\n    reference = strict_json(reference_raw, what="reference")\n    report = strict_json(report_raw, what="report")\n    job = strict_json(job_raw, what="job")\n    result = {"label": label, "case": case, "negative": negative,\n              "inputs": {"reference": {"path": directory + "/synthetic-audit.json", **reference_binding},\n                         "report": {"path": directory + "/probe.json", **report_binding},\n                         "glb": {"path": directory + "/synthetic.glb", **glb_binding},\n                         "job": {"path": directory + "/job.json", **job_binding}}}\n    checks = {}\n    if not isinstance(reference, dict) or not isinstance(reference.get("nodes"), dict):\n        raise Refusal("REFERENCE", "The reference has no node table", label=label)\n    if not isinstance(report, dict) or not isinstance(report.get("three"), dict):\n        checks["report_has_three"] = False\n        result.update(checks=checks, passed=False)\n        return result, reference, glb_binding\n    three = report["three"]\n    khronos = report.get("khronos") if isinstance(report.get("khronos"), dict) else {}\n    issues = element(khronos, "report", "issues") or {}\n    structure = reference_structure(reference)\n    result["reference_structure"] = structure\n    checks.update({\n        "reference_schema": reference.get("schema") == REFERENCE_SCHEMA,\n        "reference_case": reference.get("case") == case,\n        "reference_passed": reference.get("passed") is True,\n        "reference_binds_glb": reference.get("artifact_sha256") == glb_binding["sha256"],\n        "reference_14_nodes_12_meshes": structure.get("node_count") == NODE_COUNT\n        and structure.get("mesh_count") == MESH_COUNT,\n        "reference_24_vertices_per_mesh": structure.get("vertices_per_mesh") == [VERTICES_PER_MESH],\n        "reference_matrices_and_normals": bool(structure.get("matrices_4x4") and structure.get("normals_match_vertices")),\n        "report_schema": report.get("schema") == REPORT_SCHEMA and report.get("contract") == CONTRACT\n        and report.get("design_revision") == 4 and report.get("amendments") == ["P33-AMENDMENT-001"],\n        "report_case_and_slot": report.get("case") == case and report.get("slot") == "CPU-" + label,\n        "report_input_lock": report.get("input_lock_sha256") == "CPU-ONLY-SYNTHETIC-NOT-NATIVE",\n        "report_binds_glb": report.get("artifact_sha256") == glb_binding["sha256"] == job.get("artifact_sha256"),\n        "report_binds_reference": report.get("audit_sha256") == reference_binding["sha256"] == job.get("audit_sha256"),\n        "report_binds_manifest": report.get("supplemental_manifest_sha256") == job.get("supplemental_manifest_sha256"),\n        "report_node_version": report.get("node") == NODE_VERSION,\n        "report_no_native_start_or_export": report.get("native_starts") == 0 and report.get("exports") == 0,\n        "report_without_error": "error" not in report,\n        "validator_version": khronos.get("version") == VALIDATOR_VERSION,\n        "validator_zero_errors_warnings_untruncated": khronos.get("passed") is True\n        and issues.get("numErrors") == 0 and issues.get("numWarnings") == 0 and issues.get("truncated") is False,\n        "three_version": three.get("version") == THREE_VERSION and three.get("revision") == THREE_REVISION,\n        "three_counts": three.get("node_count") == NODE_COUNT and three.get("mesh_count") == MESH_COUNT\n        and three.get("animations") == 0,\n        "three_tolerances": three.get("position_tolerance_m") == POSITION_THRESHOLD\n        and three.get("matrix_tolerance") == MATRIX_THRESHOLD,\n        "input_preserved": report.get("input_preserved") is True})\n    retained = three.get("nodes") if isinstance(three.get("nodes"), dict) else {}\n    inventory = expected_inventory(reference)\n    expected_keys = [(ident, field) for ident, field, _ in inventory]\n    measurements = three.get("measurements") if isinstance(three.get("measurements"), list) else []\n    malformed = [index for index, row in enumerate(measurements)\n                 if not isinstance(row, dict) or set(row) != ROW_KEYS\n                 or not isinstance(row.get("semantic_id"), str) or not isinstance(row.get("field"), str)]\n    reported = Counter((row["semantic_id"], row["field"]) for row in measurements if isinstance(row, dict)\n                       and isinstance(row.get("semantic_id"), str) and isinstance(row.get("field"), str))\n    report_rows = {}\n    for row in measurements:\n        if isinstance(row, dict) and isinstance(row.get("semantic_id"), str) and isinstance(row.get("field"), str):\n            report_rows.setdefault((row["semantic_id"], row["field"]), row)\n    duplicates = sorted("%s %s" % key for key, count in reported.items() if count > 1)\n    missing = sorted("%s %s" % key for key in set(expected_keys) - set(reported))\n    extra = sorted("%s %s" % key for key in set(reported) - set(expected_keys))\n    table, mismatches, failed = [], [], []\n    for ident, field, expected in inventory:\n        threshold = threshold_for(field)\n        actual = actual_value(retained, ident, field)\n        difference, passed = decide(actual, expected, threshold)\n        entry = {"semantic_id": ident, "field": field, "threshold": threshold, "expected": recorded(expected),\n                 "actual": recorded(actual), "difference": recorded(difference), "passed": passed}\n        row = report_rows.get((ident, field))\n        if row is None:\n            entry["report"] = "missing"\n        else:\n            matches = {"actual": same_number(number(row.get("actual")), actual) and not isinstance(row.get("actual"), bool),\n                       "expected": same_number(number(row.get("expected")), expected),\n                       "difference": same_number(number(row.get("difference")), difference),\n                       "threshold": type(row.get("threshold")) in (int, float) and row.get("threshold") == threshold,\n                       "passed": row.get("passed") is passed}\n            entry["report"] = "matches" if all(matches.values()) else "differs"\n            if not all(matches.values()):\n                entry["report_values"] = {key: row.get(key) for key in ("actual", "expected", "difference",\n                                                                         "threshold", "passed")}\n                mismatches.append("%s %s: %s" % (ident, field, ", ".join(k for k, v in matches.items() if not v)))\n        if not passed:\n            failed.append(entry)\n        table.append(entry)\n    order = [(row.get("semantic_id"), row.get("field")) for row in measurements if isinstance(row, dict)]\n    near = [{"semantic_id": row["semantic_id"], "field": row["field"], "actual": row["actual"],\n             "expected": row["expected"], "difference": row["difference"], "threshold": row["threshold"]}\n            for row in failed]\n    exact, limits, mesh_rows = exact_findings(reference, three)\n    recomputed = Counter(finding_key(row) for row in near + exact)\n    findings = three.get("findings") if isinstance(three.get("findings"), list) else None\n    reported_findings = Counter(finding_key(row) for row in findings or [])\n    checks.update({\n        "rows_well_formed": not malformed and isinstance(three.get("measurements"), list),\n        "rows_complete": not missing, "rows_without_extra": not extra, "rows_without_duplicates": not duplicates,\n        "rows_match_recomputation": not mismatches,\n        "row_order_is_the_probe_order": order == expected_keys,\n        "row_count_is_historical_2060": len(expected_keys) == HISTORICAL_ROWS,\n        "findings_equal_recomputation": findings is not None and recomputed == reported_findings,\n        "three_passed_consistent": three.get("passed") is (not (near + exact)),\n        "exact_comparisons_pass": not exact})\n    if negative:\n        target = [row for row in failed if (row["semantic_id"], row["field"]) == (NEGATIVE_NODE, NEGATIVE_FIELD)]\n        checks.update({\n            "negative_exactly_one_failed_row": len(failed) == 1 and len(target) == 1,\n            "negative_threshold_5e-6": bool(target) and target[0]["threshold"] == POSITION_THRESHOLD,\n            "negative_difference_about_0.001": bool(target) and target[0]["difference"] is not None\n            and abs(target[0]["difference"] - NEGATIVE_DIFFERENCE) <= NEGATIVE_DIFFERENCE_TOLERANCE,\n            "negative_exactly_one_finding": findings is not None and len(findings) == 1\n            and bool(target) and reported_findings == Counter([finding_key(near[0])]) if near else False,\n            "negative_report_failed": report.get("passed") is False and three.get("passed") is False\n            and khronos.get("passed") is True})\n        if target:\n            result["negative_row"] = dict(target[0], difference_minus_0_001=target[0]["difference"] - NEGATIVE_DIFFERENCE\n                                          if target[0]["difference"] is not None else None)\n    else:\n        checks.update({\n            "positive_every_row_passes": not failed,\n            "positive_no_finding": findings == [],\n            "positive_report_passed": report.get("passed") is True and three.get("passed") is True})\n    result.update(\n        counts={"expected_rows": len(expected_keys), "reported_rows": len(measurements),\n                "failed_rows": len(failed), "missing": len(missing), "extra": len(extra), "duplicates": len(duplicates),\n                "mismatches": len(mismatches), "malformed": len(malformed), "mesh_nodes_compared": mesh_rows,\n                "reported_findings": None if findings is None else len(findings),\n                "recomputed_findings": len(near) + len(exact)},\n        missing=missing, extra=extra, duplicates=duplicates, mismatches=mismatches, malformed_rows=malformed,\n        failed_rows=failed, recomputed_exact_findings=exact, limits=limits, checks=checks,\n        passed=all(checks.values()), rows=table)\n    return result, reference, glb_binding\n\n\ndef negative_fixture(positive_reference, negative_reference, positive_glb, negative_glb):\n    """The negative\'s GLB is Q01\'s, byte for byte; its reference differs only at the one term and the scope."""\n    same_glb = positive_glb["sha256"] == negative_glb["sha256"] and positive_glb["size_bytes"] == negative_glb["size_bytes"]\n    positive_value = element(positive_reference, "nodes", NEGATIVE_NODE, "world_matrix", 0, 3)\n    negative_value = element(negative_reference, "nodes", NEGATIVE_NODE, "world_matrix", 0, 3)\n    changed = is_number(positive_value) and is_number(negative_value) and \\\n        float(negative_value) == float(positive_value) + 0.001\n    rest_equal = False\n    if isinstance(positive_reference, dict) and isinstance(negative_reference, dict) and changed:\n        first, second = json.loads(json.dumps(positive_reference)), json.loads(json.dumps(negative_reference))\n        first["nodes"][NEGATIVE_NODE]["world_matrix"][0][3] = None\n        second["nodes"][NEGATIVE_NODE]["world_matrix"][0][3] = None\n        first.pop("scope", None)\n        second_scope = second.pop("scope", None)\n        rest_equal = js_equal(first, second) and second_scope == CHANGED_SCOPE\n    return {"glb_byte_identical": same_glb, "term_increased_by_0.001": changed,\n            "otherwise_identical_with_the_changed_scope": rest_equal,\n            "positive_value": positive_value, "negative_value": negative_value,\n            "passed": bool(same_glb and changed and rest_equal)}\n\n\ndef run(args):\n    started, monotonic = utc_now(), time.monotonic()\n    root = canonical_path(args.cohort_root, kind="dir", rule="INPUT")\n    labels = args.case or list(CASES)\n    if len(set(labels)) != len(labels) or not set(labels) <= set(CASES):\n        raise Refusal("USAGE", "Cases are Q01-positive, Q03-positive and Q01-changed-reference, each once")\n    results, references, glbs = {}, {}, {}\n    for label in labels:\n        directory = canonical_path(root + "/" + label, kind="dir", rule="INPUT")\n        results[label], references[label], glbs[label] = audit_case(label, directory)\n    record = {"schema": SCHEMA, "tool": tool_record(), "invocation": invocation_record(), "started_at_utc": started,\n              "cohort_root": root, "cases": results, "loaded_project_files": [],\n              "thresholds": {"position_m": POSITION_THRESHOLD, "matrix_and_normal": MATRIX_THRESHOLD},\n              "negative_rule": {"semantic_id": NEGATIVE_NODE, "field": NEGATIVE_FIELD,\n                                "difference": NEGATIVE_DIFFERENCE, "tolerance": NEGATIVE_DIFFERENCE_TOLERANCE}}\n    if "Q01-positive" in results and "Q01-changed-reference" in results:\n        record["negative_fixture"] = negative_fixture(references["Q01-positive"], references["Q01-changed-reference"],\n                                                      glbs["Q01-positive"], glbs["Q01-changed-reference"])\n    passed = all(row["passed"] for row in results.values()) and record.get("negative_fixture", {}).get("passed", True) \\\n        and set(labels) == set(CASES)\n    record.update(all_three_cases=set(labels) == set(CASES), passed=passed, finished_at_utc=utc_now(),\n                  elapsed_s=time.monotonic() - monotonic)\n    write_new(args.output, json_text(record))\n    sys.stderr.write("MH-NUMERICAL-AUDIT " + json.dumps({"passed": passed, "cases": {\n        label: {"passed": row["passed"], "failed_checks": sorted(k for k, v in row.get("checks", {}).items() if not v)}\n        for label, row in results.items()}}, sort_keys=True) + "\\n")\n    return EXIT_PASSED if passed else EXIT_FAILED\n\n\nclass _Parser(argparse.ArgumentParser):\n    def error(self, message):\n        raise Refusal("USAGE", "Invalid arguments: " + message)\n\n\ndef main(argv=None):\n    parser = _Parser(prog="audit_numeric.py", allow_abbrev=False, description=__doc__.splitlines()[0])\n    parser.add_argument("--cohort-root", required=True)\n    parser.add_argument("--case", action="append")\n    parser.add_argument("--output", required=True)\n    output = None\n    try:\n        args = parser.parse_args(argv)\n        output = prepare_output_file(args.output)\n        return run(args)\n    except Refusal as exc:\n        return report_end(output, {"schema": "ontokin.c271.p35-tool-refusal/1", "tool": "audit_numeric.py",\n                                   "state": "REFUSED", "refusal": exc.as_dict()}, EXIT_REFUSED)\n    except BaseException as exc:  # an unexpected failure is reported as unknown, never as a result\n        return report_end(output, {"schema": "ontokin.c271.p35-tool-failure/1", "tool": "audit_numeric.py",\n                                   "state": "UNKNOWN", "error": {"type": type(exc).__name__, "reason": str(exc)}},\n                          EXIT_UNKNOWN)\n\n\ndef report_end(output, document, code):\n    """A refusal or failure goes to stderr, and to the output path while that path is still absent."""\n    document.update(finished_at_utc=utc_now(), invocation=invocation_record())\n    sys.stderr.write(json.dumps(document, sort_keys=True) + "\\n")\n    if output is not None and not os.path.lexists(output):\n        try:\n            write_new(output, json_text(document))\n        except OSError:\n            pass\n    return code\n\n\nif __name__ == "__main__":\n    raise SystemExit(main())\n'
+
+======================================================================
+FAIL: test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b (test_zz_hygiene.HygieneTests.test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b) (tool='scan_mc11.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py", line 156, in test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b
+    self.assertIn("flags.dont_write_bytecode", text)
+AssertionError: 'flags.dont_write_bytecode' not found in '#!/usr/bin/env python3\n"""MC11 scanner for gate MH of C271-P35: a static scan for process-creation calls.\n\nIt scans the 0.2.0 probe, the module loader the probe uses (tools/three_loader.mjs) and the 24\nreader files, after checking every file\'s bytes: the probe against a SHA-256 supplied as an\nargument, the reader tree against the dependencies inventory (also bound by a supplied SHA-256),\nas an exact set of files with no link and no .DS_Store. It reads files only and starts nothing.\n\nEach file is scanned as raw text, and once more with JavaScript escapes (\\\\xHH, \\\\uHHHH, \\\\u{H})\ndecoded and with adjacent string literals joined across "+", so that a name spelled through\nescapes or concatenation on one line is found too. It reports, with line, column, an advisory\nlexical context (code, comment, string, template or regular expression) and a snippet:\n\n* process creation: child_process and worker_threads in any letter case, cluster as a name, Worker\n  as a name, dlopen, process.binding, _linkedBinding, internalBinding and execve;\n* process call names: calls of spawn, spawnSync, exec, execSync, execFile, execFileSync and fork,\n  with the receiver, for review (RegExp.prototype.exec shares the name);\n* dynamic constructs: every eval and Function substring (MI\'s frozen rule), classified, createRequire,\n  require( and import( whose argument is not one string literal, Module._load, module.constructor,\n  process.mainModule, module.require, and a vm module specifier;\n* static module specifiers of import, export, require and import(), including statements that span\n  lines, each resolved within the reader tree, to a node: builtin, or marked bare.\n\nThe control\'s result is "none found" when no process-creation hit occurs. Every process call name\nand dynamic construct must appear in the independently reviewed list given with --reviewed; without\none, they are listed as pending review. A scan of names cannot exclude every dynamic route; the\nresult states that limit (contract section 5).\n\nLaunch:  <worktree>/.venv/bin/python -I -S -B scan_mc11.py --probe P --probe-sha256 H \\\n             --dependencies-root D --dependencies-inventory I --dependencies-inventory-sha256 H \\\n             [--reviewed R --reviewed-sha256 H] --output OUT\n"""\nfrom __future__ import annotations\n\nimport argparse\nimport bisect\nfrom datetime import datetime, timezone\nimport hashlib\nimport json\nimport os\nimport posixpath\nimport re\nimport stat\nimport sys\nimport time\n\nSCHEMA = "ontokin.c271.p35-mc11-scan/1"\nREVIEWED_SCHEMA = "ontokin.c271.p35-mc11-reviewed/1"\nDEPENDENCIES_SCHEMA = "ontokin.current-host-readback-dependencies/0.2.0"\nINSTALL_SCHEMA = "ontokin.current-host-readback-install/0.2.0"\nLOADER = "tools/three_loader.mjs"\nPROBE_KEY = "<probe>"\nREADER_FILES = 24\nLIMIT = ("A scan of names cannot exclude every dynamic route (contract section 5). It finds names and "\n         "call shapes in the bytes of the bound files; a construct that computes a module name or a "\n         "property name at run time, or code that a dynamic construct evaluates, is found only as that "\n         "construct, and every such hit needs an independent review. The lexical context is advisory.")\nFLAG_NAMES = ("debug", "inspect", "interactive", "optimize", "dont_write_bytecode", "no_user_site", "no_site",\n              "ignore_environment", "verbose", "bytes_warning", "quiet", "hash_randomization", "isolated",\n              "dev_mode", "utf8_mode", "warn_default_encoding", "safe_path", "int_max_str_digits")\nEXIT_NONE_FOUND, EXIT_FOUND_OR_UNREVIEWED, EXIT_REFUSED, EXIT_UNKNOWN = 0, 1, 2, 3\nIDENT = r"[\\w$]"\n\nPROCESS_CREATION = (\n    ("child_process", re.compile(r"child_process", re.IGNORECASE), True),\n    ("worker_threads", re.compile(r"worker_threads", re.IGNORECASE), True),\n    ("cluster", re.compile(r"(?<!" + IDENT + r")cluster(?!" + IDENT + r")"), True),\n    ("Worker", re.compile(r"(?<!" + IDENT + r")Worker(?!" + IDENT + r")"), True),\n    ("dlopen", re.compile(r"dlopen"), True),\n    ("process.binding", re.compile(r"process\\s*(?:\\.|\\[\\s*[\'\\"`])\\s*(?:binding|_linkedBinding)(?!" + IDENT + r")"), False),\n    ("_linkedBinding", re.compile(r"_linkedBinding"), True),\n    ("internalBinding", re.compile(r"internalBinding"), True),\n    ("execve", re.compile(r"(?<!" + IDENT + r")execve(?!" + IDENT + r")"), True))\nCALL_NAMES = re.compile(r"(?<!" + IDENT + r")(spawn|spawnSync|exec|execSync|execFile|execFileSync|fork)\\s*\\(")\nDYNAMIC = (\n    ("eval", re.compile(r"eval")),\n    ("Function", re.compile(r"Function")),\n    ("createRequire", re.compile(r"createRequire")),\n    ("module-loading", re.compile(r"(?<!" + IDENT + r")(?:Module\\s*\\.\\s*_load|_load\\s*\\(|module\\s*\\.\\s*constructor"\n                                  r"|process\\s*\\.\\s*mainModule|module\\s*\\.\\s*require\\s*\\()")),\n    ("vm-specifier", re.compile(r"""([\'"`])(?:node:)?vm\\1""")))\nCALLS = (("require", re.compile(r"(?<![\\w$.])require\\s*\\(")), ("import", re.compile(r"(?<![\\w$.])import\\s*\\(")))\nLITERAL_ARGUMENT = re.compile(r"""\\s*([\'"])((?:[^\'"\\\\\\n])*)\\1\\s*\\)""")\nFROM_SPECIFIER = re.compile(r"""(?<![\\w$.])from\\s*([\'"])([^\'"\\\\\\n]+)\\1""")\nBARE_IMPORT = re.compile(r"""(?<![\\w$.])import\\s*([\'"])([^\'"\\\\\\n]+)\\1""")\nESCAPE = re.compile(r"\\\\x([0-9A-Fa-f]{2})|\\\\u([0-9A-Fa-f]{4})|\\\\u\\{([0-9A-Fa-f]{1,6})\\}")\nSTRING = r"""\'(?:[^\'\\\\\\n]|\\\\.)*\'|"(?:[^"\\\\\\n]|\\\\.)*\\""""\nCONCATENATION = re.compile(r"(" + STRING + r")\\s*\\+\\s*(" + STRING + r")")\nREGEX_PRECEDING_WORDS = frozenset(("return", "typeof", "instanceof", "in", "of", "new", "delete", "void", "throw",\n                                   "case", "do", "else", "yield", "await"))\n\n\n# ---------------------------------------------------------------------------\n# Common helpers (each MH tool carries its own copy; no tool imports another)\n# ---------------------------------------------------------------------------\n\ndef utc_now():\n    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")\n\n\nclass Refusal(Exception):\n    """A precondition the tool refuses, with the rule it applies."""\n\n    def __init__(self, rule, reason, **details):\n        super().__init__(reason)\n        self.rule, self.reason, self.details = rule, reason, details\n\n    def as_dict(self):\n        return {"rule": self.rule, "reason": self.reason, "details": self.details}\n\n\ndef mode_text(st_mode):\n    return "0o%03o" % stat.S_IMODE(st_mode)\n\n\ndef canonical_path(value, *, kind=None, rule="PATH"):\n    """An absolute path in normal form that is its own realpath, so no component is a symbolic link."""\n    if type(value) is not str or not value.startswith("/") or "\\0" in value:\n        raise Refusal(rule, "Expected an absolute path", path=repr(value))\n    if os.path.normpath(value) != value:\n        raise Refusal(rule, "The path is not in normal form", path=value)\n    if os.path.realpath(value) != value:\n        raise Refusal(rule, "The path is not canonical: a component is a symbolic link", path=value)\n    if kind is not None:\n        try:\n            info = os.lstat(value)\n        except OSError as exc:\n            raise Refusal(rule, "The path is absent or unreadable", path=value, error=str(exc)) from exc\n        if kind == "dir" and not stat.S_ISDIR(info.st_mode):\n            raise Refusal(rule, "Expected a directory", path=value)\n        if kind == "file" and not stat.S_ISREG(info.st_mode):\n            raise Refusal(rule, "Expected a regular file", path=value)\n    return value\n\n\ndef read_regular(path, maximum, *, rule="INPUT"):\n    """The bytes and binding of a regular file, opened without following a final link; a change during the read refuses."""\n    canonical_path(path, rule=rule)\n    try:\n        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | getattr(os, "O_CLOEXEC", 0))\n    except OSError as exc:\n        raise Refusal(rule, "Cannot open the input", path=path, error=str(exc)) from exc\n    try:\n        before = os.fstat(fd)\n        if not stat.S_ISREG(before.st_mode):\n            raise Refusal(rule, "The input is not a regular file", path=path)\n        if before.st_size > maximum:\n            raise Refusal(rule, "The input exceeds its byte bound", path=path, size_bytes=before.st_size,\n                          maximum=maximum)\n        chunks, total = [], 0\n        while True:\n            block = os.read(fd, min(1 << 20, maximum + 1 - total))\n            if not block:\n                break\n            chunks.append(block)\n            total += len(block)\n            if total > maximum:\n                raise Refusal(rule, "The input grew beyond its byte bound", path=path)\n        after = os.fstat(fd)\n    finally:\n        os.close(fd)\n    named = os.lstat(path)\n\n    def identity(info):\n        return info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_mode\n    if identity(before) != identity(after) or identity(after) != identity(named) or total != before.st_size:\n        raise Refusal(rule, "The input changed while it was read", path=path)\n    data = b"".join(chunks)\n    return data, {"sha256": hashlib.sha256(data).hexdigest(), "size_bytes": total, "mode": mode_text(before.st_mode)}\n\n\ndef strict_json(raw, *, rule="INPUT", what="document"):\n    """JSON with duplicate members and non-finite constants refused."""\n    def pairs(items):\n        result = {}\n        for key, value in items:\n            if key in result:\n                raise Refusal(rule, "Duplicate JSON member in the " + what, member=key)\n            result[key] = value\n        return result\n\n    def constant(text):\n        raise Refusal(rule, "Non-finite JSON constant in the " + what, constant=text)\n    try:\n        return json.loads(raw.decode("utf-8"), object_pairs_hook=pairs, parse_constant=constant)\n    except Refusal:\n        raise\n    except (UnicodeError, ValueError, RecursionError) as exc:\n        raise Refusal(rule, "Invalid JSON in the " + what, error=str(exc)) from exc\n\n\ndef json_text(value):\n    return (json.dumps(value, sort_keys=True, indent=1, ensure_ascii=True, allow_nan=False) + "\\n").encode("ascii")\n\n\ndef fsync_directory(path):\n    fd = os.open(path, os.O_RDONLY | os.O_DIRECTORY)\n    try:\n        os.fsync(fd)\n    finally:\n        os.close(fd)\n\n\ndef prepare_output_file(path):\n    """An absent output path in an existing canonical directory; an existing path is never replaced."""\n    canonical_path(path, rule="OUTPUT")\n    canonical_path(os.path.dirname(path), kind="dir", rule="OUTPUT")\n    if os.path.lexists(path):\n        raise Refusal("OUTPUT", "The output path exists; it is never replaced", path=path)\n    return path\n\n\ndef write_new(path, data):\n    """Exclusive creation of one absent file, fsynced together with its directory."""\n    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | getattr(os, "O_CLOEXEC", 0), 0o644)\n    try:\n        view = memoryview(data)\n        while view:\n            view = view[os.write(fd, view):]\n        os.fsync(fd)\n    finally:\n        os.close(fd)\n    fsync_directory(os.path.dirname(path))\n    return {"path": path, "sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data)}\n\n\ndef tool_record():\n    path = os.path.realpath(__file__)\n    with open(path, "rb") as stream:\n        data = stream.read()\n    return {"path": path, "sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data),\n            "mode": mode_text(os.stat(path).st_mode)}\n\n\ndef invocation_record():\n    return {"argv": list(sys.argv), "orig_argv": list(getattr(sys, "orig_argv", [])), "cwd": os.getcwd(),\n            "pid": os.getpid(),\n            "python": {"implementation": sys.implementation.name, "version": "%d.%d.%d" % sys.version_info[:3],\n                       "build_string": sys.version, "executable": sys.executable,\n                       "flags": {name: getattr(sys.flags, name) for name in FLAG_NAMES}}}\n\n\n# ---------------------------------------------------------------------------\n# An advisory lexical map: comments, strings, templates and regular expressions\n# ---------------------------------------------------------------------------\n\ndef _skip_string(text, i):\n    quote, j, n = text[i], i + 1, len(text)\n    while j < n:\n        ch = text[j]\n        if ch == "\\\\":\n            j += 2\n            continue\n        if ch == quote or ch == "\\n":\n            return j + 1\n        j += 1\n    return n\n\n\ndef _skip_comment(text, i):\n    if text.startswith("//", i):\n        end = text.find("\\n", i)\n        return len(text) if end < 0 else end\n    end = text.find("*/", i + 2)\n    return len(text) if end < 0 else end + 2\n\n\ndef _skip_template(text, i, depth=0):\n    j, n = i + 1, len(text)\n    while j < n:\n        ch = text[j]\n        if ch == "\\\\":\n            j += 2\n            continue\n        if ch == "`":\n            return j + 1\n        if ch == "$" and text.startswith("${", j):\n            j = _skip_substitution(text, j + 2, depth + 1)\n            continue\n        j += 1\n    return n\n\n\ndef _skip_substitution(text, j, depth):\n    n, braces = len(text), 1\n    if depth > 64:\n        return n\n    while j < n:\n        ch = text[j]\n        if ch in "\'\\"":\n            j = _skip_string(text, j)\n            continue\n        if ch == "`":\n            j = _skip_template(text, j, depth)\n            continue\n        if text.startswith("//", j) or text.startswith("/*", j):\n            j = _skip_comment(text, j)\n            continue\n        if ch == "{":\n            braces += 1\n        elif ch == "}":\n            braces -= 1\n            if braces == 0:\n                return j + 1\n        j += 1\n    return n\n\n\ndef lexical_ranges(text):\n    """Sorted (start, end, kind) ranges; everything outside them is code. Heuristic, and advisory only."""\n    ranges, i, n, previous = [], 0, len(text), None\n    while i < n:\n        ch = text[i]\n        if text.startswith("//", i) or text.startswith("/*", i):\n            j = _skip_comment(text, i)\n            ranges.append((i, j, "comment"))\n            i = j\n            continue\n        if ch in "\'\\"":\n            j = _skip_string(text, i)\n            ranges.append((i, j, "string"))\n            i, previous = j, "value"\n            continue\n        if ch == "`":\n            j = _skip_template(text, i)\n            ranges.append((i, j, "template"))\n            i, previous = j, "value"\n            continue\n        if ch == "/" and previous in (None, "operator", "keyword"):\n            j, in_class = i + 1, False\n            while j < n and text[j] != "\\n":\n                c = text[j]\n                if c == "\\\\":\n                    j += 2\n                    continue\n                if in_class:\n                    in_class = c != "]"\n                elif c == "[":\n                    in_class = True\n                elif c == "/":\n                    break\n                j += 1\n            if j < n and text[j] == "/":\n                j += 1\n                while j < n and (text[j].isalnum() or text[j] in "$_"):\n                    j += 1\n                ranges.append((i, j, "regex"))\n                i, previous = j, "value"\n                continue\n        if ch.isspace():\n            i += 1\n            continue\n        if ch.isalnum() or ch in "$_":\n            j = i\n            while j < n and (text[j].isalnum() or text[j] in "$_"):\n                j += 1\n            previous = "keyword" if text[i:j] in REGEX_PRECEDING_WORDS else "value"\n            i = j\n            continue\n        previous = "value" if ch in ")]}" else "operator"\n        i += 1\n    return ranges\n\n\nclass Locator:\n    def __init__(self, text):\n        self.text = text\n        self.starts = [0] + [m.end() for m in re.finditer("\\n", text)]\n        self.ranges = lexical_ranges(text)\n        self.range_starts = [row[0] for row in self.ranges]\n\n    def line_column(self, offset):\n        line = bisect.bisect_right(self.starts, offset) - 1\n        return line + 1, offset - self.starts[line] + 1\n\n    def context(self, offset):\n        index = bisect.bisect_right(self.range_starts, offset) - 1\n        if index >= 0 and self.ranges[index][0] <= offset < self.ranges[index][1]:\n            return self.ranges[index][2]\n        return "code"\n\n    def snippet(self, start, end, width=60):\n        line = bisect.bisect_right(self.starts, start) - 1\n        line_end = self.text.find("\\n", start)\n        line_end = len(self.text) if line_end < 0 else line_end\n        left = max(self.starts[line], start - width)\n        right = min(line_end, end + width)\n        return ("..." if left > self.starts[line] else "") + self.text[left:right] + ("..." if right < line_end else "")\n\n\ndef hit(locator, kind, start, end, **fields):\n    line, column = locator.line_column(start)\n    return {"pattern": kind, "line": line, "column": column, "context": locator.context(start),\n            "text": locator.text[start:end], "snippet": locator.snippet(start, end), **fields}\n\n\n# ---------------------------------------------------------------------------\n# The scan of one file\n# ---------------------------------------------------------------------------\n\ndef decode_escapes(line):\n    def replace(match):\n        value = match.group(1) or match.group(2) or match.group(3)\n        try:\n            return chr(int(value, 16))\n        except ValueError:\n            return match.group(0)\n    return ESCAPE.sub(replace, line)\n\n\ndef join_concatenations(line):\n    def replace(match):\n        first, second = match.group(1), match.group(2)\n        return first[0] + first[1:-1] + second[1:-1] + first[0]\n    previous = None\n    while previous != line:\n        previous, line = line, CONCATENATION.sub(replace, line)\n    return line\n\n\ndef function_class(text, start):\n    before, after = text[max(0, start - 16):start], text[start + len("Function"):start + len("Function") + 16]\n    word = re.search(IDENT + r"$", before) is None and re.match(IDENT, after) is None\n    if not word:\n        return "identifier-substring"\n    if re.search(r"(?<!" + IDENT + r")new\\s+$", before) or (re.match(r"\\s*\\(", after) and not before.endswith(".")):\n        return "constructor-call"\n    return "word"\n\n\ndef scan_text(text, kind):\n    locator = Locator(text)\n    result = {"process_creation": [], "process_call_names": [], "dynamic": [], "specifiers": []}\n    for name, pattern, other_views in PROCESS_CREATION:\n        for match in pattern.finditer(text):\n            result["process_creation"].append(hit(locator, name, match.start(), match.end(), view="raw"))\n    # Names spelled through escapes or concatenation on one line.\n    for number, start in enumerate(locator.starts, 1):\n        end = text.find("\\n", start)\n        line = text[start:len(text) if end < 0 else end]\n        if "\\\\" not in line and "+" not in line:\n            continue\n        decoded = decode_escapes(line)\n        # Each view reports only the hits that the view before it does not show: raw, decoded, joined.\n        for view, before, transformed in (("decoded", line, decoded), ("joined", decoded, join_concatenations(decoded))):\n            if transformed == before:\n                continue\n            for name, pattern, other_views in PROCESS_CREATION:\n                if not other_views:\n                    continue\n                if len(pattern.findall(transformed)) > len(pattern.findall(before)):\n                    result["process_creation"].append({"pattern": name, "line": number, "column": None, "view": view,\n                                                       "context": "transformed line",\n                                                       "text": transformed[:400], "snippet": line[:400]})\n    for match in CALL_NAMES.finditer(text):\n        start = match.start()\n        receiver = text[max(0, start - 40):start]\n        result["process_call_names"].append(hit(locator, match.group(1), start, match.end(),\n                                                method_call=receiver.rstrip().endswith("."),\n                                                receiver=receiver.splitlines()[-1] if receiver.strip() else ""))\n    for name, pattern in DYNAMIC:\n        for match in pattern.finditer(text):\n            fields = {}\n            if name == "Function":\n                fields["classification"] = function_class(text, match.start())\n            elif name == "eval":\n                before, after = text[max(0, match.start() - 1):match.start()], text[match.end():match.end() + 1]\n                fields["classification"] = "identifier-substring" if (re.match(IDENT, before or " ") or\n                                                                       re.match(IDENT, after or " ")) else "word"\n            result["dynamic"].append(hit(locator, name, match.start(), match.end(), **fields))\n    for name, pattern in CALLS:\n        for match in pattern.finditer(text):\n            literal = LITERAL_ARGUMENT.match(text, match.end())\n            if literal is not None:\n                result["specifiers"].append(dict(hit(locator, name + "-literal", match.start(), literal.end()),\n                                                 specifier=literal.group(2)))\n            else:\n                result["dynamic"].append(hit(locator, name + "-computed", match.start(), match.end()))\n    for name, pattern in (("from", FROM_SPECIFIER), ("import-statement", BARE_IMPORT)):\n        for match in pattern.finditer(text):\n            result["specifiers"].append(dict(hit(locator, name, match.start(), match.end()), specifier=match.group(2)))\n    for key in result:\n        result[key].sort(key=lambda row: (row["line"], row["column"] or 0, row["pattern"]))\n    result["lines"] = len(locator.starts)\n    return result\n\n\ndef resolve(specifier, rel, files):\n    if specifier.startswith("node:"):\n        return "node-builtin"\n    if specifier.startswith(("./", "../")) and rel is not None:\n        target = posixpath.normpath(posixpath.join(posixpath.dirname(rel), specifier))\n        return "reader-file:" + target if target in files else "unresolved:" + target\n    return "bare"\n\n\n# ---------------------------------------------------------------------------\n# Inputs\n# ---------------------------------------------------------------------------\n\ndef read_bound(path, sha256, what, maximum):\n    if type(sha256) is not str or re.fullmatch(r"[0-9a-f]{64}", sha256) is None:\n        raise Refusal("DIGEST", "Expected a lowercase SHA-256 for the " + what)\n    raw, binding = read_regular(canonical_path(path, kind="file", rule="INPUT"), maximum)\n    if binding["sha256"] != sha256:\n        raise Refusal("DIGEST", "The " + what + " differs from its supplied SHA-256", path=path,\n                      observed=binding["sha256"])\n    return raw, {"path": path, **binding}\n\n\ndef inventory_files(document):\n    if type(document) is not dict:\n        raise Refusal("INVENTORY", "The dependencies inventory is not an object")\n    schema = document.get("schema")\n    if schema == INSTALL_SCHEMA and document.get("purpose") != "retained-dependencies":\n        raise Refusal("INVENTORY", "An install plan serves only with purpose retained-dependencies")\n    if schema not in (DEPENDENCIES_SCHEMA, INSTALL_SCHEMA):\n        raise Refusal("INVENTORY", "The inventory is neither " + DEPENDENCIES_SCHEMA + " nor " + INSTALL_SCHEMA)\n    files = document.get("files")\n    if type(files) is not dict or len(files) != READER_FILES:\n        raise Refusal("INVENTORY", "The inventory does not list exactly 24 reader files")\n    for rel, binding in files.items():\n        if (type(rel) is not str or rel.startswith("/") or posixpath.normpath(rel) != rel or ".." in rel.split("/")\n                or type(binding) is not dict or set(binding) != {"sha256", "size_bytes", "mode"}):\n            raise Refusal("INVENTORY", "A reader-file entry is malformed", file=rel)\n    if LOADER not in files:\n        raise Refusal("INVENTORY", "The module loader " + LOADER + " is not among the reader files")\n    return schema, files\n\n\ndef tree_files(root):\n    found, refused = [], []\n    for parent, directories, names in os.walk(root, followlinks=False):\n        for name in directories + names:\n            path = os.path.join(parent, name)\n            info = os.lstat(path)\n            if stat.S_ISLNK(info.st_mode) or not (stat.S_ISDIR(info.st_mode) or stat.S_ISREG(info.st_mode)):\n                refused.append(os.path.relpath(path, root))\n            elif name == ".DS_Store":\n                refused.append(os.path.relpath(path, root))\n            elif stat.S_ISREG(info.st_mode):\n                found.append(os.path.relpath(path, root))\n    return sorted(found), sorted(refused)\n\n\ndef load_reviewed(path, sha256):\n    raw, binding = read_bound(path, sha256, "reviewed list", 16 * 1024 * 1024)\n    document = strict_json(raw, what="reviewed list")\n    if type(document) is not dict or document.get("schema") != REVIEWED_SCHEMA or type(document.get("files")) is not dict:\n        raise Refusal("REVIEWED", "The reviewed list is not a " + REVIEWED_SCHEMA + " document")\n    return document["files"], binding\n\n\ndef reviewed_key(row):\n    return [row["pattern"], row["line"], row["column"]]\n\n\ndef compare_reviewed(scan, reviewed):\n    entry = reviewed if type(reviewed) is dict else {}\n    rows = {}\n    for key in ("process_call_names", "dynamic"):\n        actual = sorted(reviewed_key(row) for row in scan[key])\n        expected = sorted(list(item) for item in entry.get(key, []))\n        rows[key] = {"unreviewed": [item for item in actual if item not in expected],\n                     "reviewed_but_absent": [item for item in expected if item not in actual]}\n    specifiers = sorted(row["specifier"] for row in scan["specifiers"])\n    rows["specifiers"] = {"equal": specifiers == sorted(entry.get("specifiers", [])) if type(reviewed) is dict else False,\n                          "found": specifiers}\n    rows["matches"] = (type(reviewed) is dict and rows["specifiers"]["equal"]\n                       and not any(rows[key]["unreviewed"] or rows[key]["reviewed_but_absent"]\n                                   for key in ("process_call_names", "dynamic")))\n    return rows\n\n\ndef run(args, output):\n    started, monotonic = utc_now(), time.monotonic()\n    probe_raw, probe_binding = read_bound(args.probe, args.probe_sha256, "probe", 4 * 1024 * 1024)\n    root = canonical_path(args.dependencies_root, kind="dir", rule="INPUT")\n    inventory_raw, inventory_binding = read_bound(args.dependencies_inventory, args.dependencies_inventory_sha256,\n                                                  "dependencies inventory", 4 * 1024 * 1024)\n    schema, files = inventory_files(strict_json(inventory_raw, what="dependencies inventory"))\n    found, refused = tree_files(root)\n    if refused or found != sorted(files):\n        raise Refusal("TREE", "The reader tree is not exactly the inventory\'s 24 regular files",\n                      missing=sorted(set(files) - set(found)), extra=sorted(set(found) - set(files)), refused=refused)\n    reviewed, reviewed_binding = (load_reviewed(args.reviewed, args.reviewed_sha256) if args.reviewed\n                                  else (None, None))\n    scans, total = {}, {"process_creation": 0, "process_call_names": 0, "dynamic": 0, "specifiers": 0}\n    targets = [(PROBE_KEY, args.probe, probe_raw, probe_binding, None)]\n    for rel in sorted(files):\n        raw, binding = read_regular(root + "/" + rel, 16 * 1024 * 1024)\n        if binding != {key: files[rel][key] for key in ("sha256", "size_bytes", "mode")}:\n            raise Refusal("TREE", "A reader file differs from the inventory", file=rel, observed=binding)\n        targets.append((rel, root + "/" + rel, raw, binding, rel))\n    for key, path, raw, binding, rel in targets:\n        text = raw.decode("utf-8", "surrogateescape")\n        extension = posixpath.splitext(path)[1].lower()\n        scan = scan_text(text, extension)\n        for row in scan["specifiers"]:\n            row["resolution"] = resolve(row["specifier"], rel, files)\n        role = "probe" if key == PROBE_KEY else "module loader" if rel == LOADER else "reader file"\n        entry = {"path": path, "role": role, "kind": "javascript" if extension in (".js", ".mjs", ".cjs") else\n                 "json" if extension == ".json" else "text", **binding, **scan}\n        if reviewed is not None:\n            entry["review"] = compare_reviewed(scan, reviewed.get(key))\n        scans[key] = entry\n        for name in total:\n            total[name] += len(scan[name])\n    unresolved = sorted({row["resolution"] for entry in scans.values() for row in entry["specifiers"]\n                         if row["resolution"].startswith("unresolved:")})\n    none_found = total["process_creation"] == 0\n    reviewed_ok = reviewed is not None and all(entry["review"]["matches"] for entry in scans.values()) and \\\n        set(reviewed) <= set(scans)\n    record = {"schema": SCHEMA, "tool": tool_record(), "invocation": invocation_record(), "started_at_utc": started,\n              "inputs": {"probe": probe_binding, "dependencies_root": root, "dependencies_inventory":\n                         dict(inventory_binding, schema=schema), "reviewed": reviewed_binding},\n              "files": scans, "totals": total, "unresolved_relative_specifiers": unresolved,\n              "none_found": none_found, "reviewed_list_given": reviewed is not None,\n              "reviewed_list_matches": reviewed_ok if reviewed is not None else None,\n              "reviewed_keys_not_scanned": sorted(set(reviewed) - set(scans)) if reviewed is not None else [],\n              "limit": LIMIT, "loaded_project_files": [], "finished_at_utc": utc_now(),\n              "elapsed_s": time.monotonic() - monotonic}\n    write_new(output, json_text(record))\n    sys.stderr.write("MH-MC11 " + json.dumps({"none_found": none_found, "totals": total,\n                                             "reviewed_list_matches": record["reviewed_list_matches"]},\n                                            sort_keys=True) + "\\n")\n    return EXIT_NONE_FOUND if none_found and reviewed_ok and not unresolved else EXIT_FOUND_OR_UNREVIEWED\n\n\nclass _Parser(argparse.ArgumentParser):\n    def error(self, message):\n        raise Refusal("USAGE", "Invalid arguments: " + message)\n\n\ndef main(argv=None):\n    parser = _Parser(prog="scan_mc11.py", allow_abbrev=False, description=__doc__.splitlines()[0])\n    for name in ("probe", "dependencies-inventory"):\n        parser.add_argument("--" + name, required=True)\n        parser.add_argument("--" + name + "-sha256", required=True)\n    parser.add_argument("--dependencies-root", required=True)\n    parser.add_argument("--reviewed")\n    parser.add_argument("--reviewed-sha256")\n    parser.add_argument("--output", required=True)\n    output = None\n    try:\n        args = parser.parse_args(argv)\n        if (args.reviewed is None) != (args.reviewed_sha256 is None):\n            raise Refusal("USAGE", "--reviewed and --reviewed-sha256 go together")\n        output = prepare_output_file(args.output)\n        return run(args, output)\n    except Refusal as exc:\n        return report_end(output, {"schema": "ontokin.c271.p35-tool-refusal/1", "tool": "scan_mc11.py",\n                                   "state": "REFUSED", "refusal": exc.as_dict()}, EXIT_REFUSED)\n    except BaseException as exc:  # an unexpected failure is reported as unknown, never as a result\n        return report_end(output, {"schema": "ontokin.c271.p35-tool-failure/1", "tool": "scan_mc11.py",\n                                   "state": "UNKNOWN", "error": {"type": type(exc).__name__, "reason": str(exc)}},\n                          EXIT_UNKNOWN)\n\n\ndef report_end(output, document, code):\n    """A refusal or failure goes to stderr, and to the output path while that path is still absent."""\n    document.update(finished_at_utc=utc_now(), invocation=invocation_record())\n    sys.stderr.write(json.dumps(document, sort_keys=True) + "\\n")\n    if output is not None and not os.path.lexists(output):\n        try:\n            write_new(output, json_text(document))\n        except OSError:\n            pass\n    return code\n\n\nif __name__ == "__main__":\n    raise SystemExit(main())\n'
+
+======================================================================
+FAIL: test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file) (file='tests/test_zz_hygiene.py', kind='part of the account name 2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py", line 122, in test_no_machine_path_package_manager_or_account_name_in_any_tooling_file
+    self.assertFalse(any(found(view, item, word) for view in views),
+AssertionError: True is not false : a derived private string occurs in this file
+
+======================================================================
+FAIL: test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file) (file='tests/test_zz_hygiene.py', kind='part of the account name 3')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py", line 122, in test_no_machine_path_package_manager_or_account_name_in_any_tooling_file
+    self.assertFalse(any(found(view, item, word) for view in views),
+AssertionError: True is not false : a derived private string occurs in this file
+
+======================================================================
+FAIL: test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file) (file='tests/test_zz_hygiene.py', kind='worktree parent component 7')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py", line 122, in test_no_machine_path_package_manager_or_account_name_in_any_tooling_file
+    self.assertFalse(any(found(view, item, word) for view in views),
+AssertionError: True is not false : a derived private string occurs in this file
+
+======================================================================
+FAIL: test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file) (file='tests/test_zz_hygiene.py', kind='interpreter prefix component 16')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py", line 122, in test_no_machine_path_package_manager_or_account_name_in_any_tooling_file
+    self.assertFalse(any(found(view, item, word) for view in views),
+AssertionError: True is not false : a derived private string occurs in this file
+
+----------------------------------------------------------------------
+Ran 91 tests in 30.638s
+
+FAILED (failures=42, errors=27)

@@ -1,0 +1,76 @@
+{
+  "schema": "ontokin.c271.p35-review-disposition/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "recorded_at_utc": "2026-11-27T03:05:25Z",
+  "review": {
+    "record": "TOOLING-REVIEW-002.md",
+    "structured": "TOOLING-REVIEW-002.json",
+    "sha256": {
+      "TOOLING-REVIEW-002.md": "0859acada2527937db37f88ff299f2859b3f7788bee4779001a4d4cea7333439",
+      "TOOLING-REVIEW-002.json": "ea91354b43fcf0c236b0ecb4a71fad3794d47569ae22d75681464a8999586549"
+    },
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; it took no part in review 001, which it read only as a document",
+    "launched_at_utc": "2026-11-27T02:16:26Z",
+    "written_at_utc": "2026-11-27T03:02:05Z, the modification time of the structured record (the Markdown record's is 03:01:49Z)",
+    "subject": "W2's revision 2 of the tooling of MH-PLAN section 4: 20 files, every digest matching W2's SHA256SUMS.txt; the rejected first version for comparison",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS"
+  },
+  "director_checks": [
+    "Read the verdict, the method, the start counts and the six findings with their locations. The structured record gives TR-01 to TR-13 and TR-15 to TR-18 as met, and TR-14 as carried.",
+    "The review's list of reviewed files holds the 20 files of tooling/ with exactly the paths and SHA-256 values of W2's SHA256SUMS.txt. After the review, W2's files still verify, with 0 mismatches.",
+    "Before the review, the Director verified both of W2's SHA256SUMS lists (20 and 17 files, no unlisted file) and found all 17 digests of the rejected first version in TOOLING-REVIEW-001.json. The Director also searched the files bound for the repository for private strings derived at run time, both directly and in each Python file's joined string constants. The only hit was one false positive, two adjacent constants that join to the account name's first part. The same search finds nothing in the two records of review 002.",
+    "The Node processes that the review saw belong to other software installed on this host, and none descends from a shell of MH. MH counts starts by audit events and process lineage, never by image name."
+  ],
+  "dispositions": [
+    {
+      "id": "TR2-01",
+      "severity": "nonmandatory",
+      "disposition": "Carried to the S6 freeze, without a code change at C. The freeze states that the Director records any interrupted runner command as UNKNOWN under FAILURE-CAPTURE section 2, whatever the runner's own verdict, and keeps a row's own outcome.json. The runner's fix, with a test that interrupts before a start, is carried to a later implementation phase."
+    },
+    {
+      "id": "TR2-02",
+      "severity": "nonmandatory",
+      "disposition": "Recorded here, without a change to the reviewed bytes. Two of the sub-checks that AUTHOR-NOTES section 6 and TEST-RUN-AGAINST-REJECTED-001.txt list against the rejected version fail there for other reasons than the defect: one for a renamed rule (ROWS for ROW-TARGET), one for a field that rows schema /1 lacks. The other tests named for TR-02 and TR-03 fail for the defects, as review 002's focused rerun confirms. The S6 freeze cites this evidence with that limit."
+    },
+    {
+      "id": "TR2-03",
+      "severity": "nonmandatory",
+      "disposition": "Carried to the S6 freeze. The notes of the reviewed MC11 list record both route classes, with review 002's cross-check of the real files and under its stated limit: the Function constructor reached through .constructor or Reflect.construct, and computed members of the global objects. Widening the scan is carried to a later implementation phase."
+    },
+    {
+      "id": "TR2-04",
+      "severity": "nonmandatory",
+      "disposition": "Carried to the S6 freeze. The freeze states two limits of the failure readback: it can leave out an unreadable directory's entries, and it cannot tell an exited, unreaped process from a live process whose identity is not established. In either case the outcome stays UNKNOWN, and nothing is sent. The code change is carried to a later implementation phase."
+    },
+    {
+      "id": "TR2-05",
+      "severity": "nonmandatory",
+      "disposition": "Carried to the S6 freeze. Every frozen command line carries -B, and the freeze's review checks it. The tools' refusal of a start without -B detects the mistake but relies on the frozen framework's bytecode set; review 002 measured that no module-level import would write today. The installation inventory, taken before and after, detects any write. Moving the check to each tool's first statement is carried to a later implementation phase."
+    },
+    {
+      "id": "TR2-06",
+      "severity": "nonmandatory",
+      "disposition": "Carried to the S6 freeze. MC29's expected outcome states each case's error. In the configuration case, finish_error is CH-SELECTION, from the facade's unchanged 0.1.0 code (F-07). In the job-input case it is CH-EVIDENCE, from v02."
+    }
+  ],
+  "accepted_tooling": {
+    "location": "docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/",
+    "files": 20,
+    "sha256_list": "authoring/TOOLING-SHA256SUMS.txt is W2's SHA256SUMS.txt, with paths relative to tooling/; SHA-256 c45d150ec4ef7d14c996e88fa9050a4a8a09511946fbdc766dbef3ab8b3d8137",
+    "author_notes": "authoring/TOOLING-AUTHOR-NOTES.md is W2's AUTHOR-NOTES.md of revision 2; SHA-256 2a9bb361f309e4bee23b75e1bd4e6b8f34594ad9de9d123ff89ad6d9dfbe7485",
+    "rejected_first_version": "Kept unchanged beside the clone, in ../OntoKin-local/c271-p35/workers/W2/rejected-001/. Its SHA256SUMS.txt has SHA-256 d0b77df70a225f2cbbf02935d32c17b95a6449ff486e68a67b06644a4d29b4cf, its AUTHOR-NOTES.md 319ed338689f9f378d387b35efe1968266cac7c42edf97ac3f1e4b5f3c9dd145, and TOOLING-REVIEW-001.json records its 17 files. It is not committed, because its hygiene test holds the split private literals of TR-04."
+  },
+  "acceptance": "Not yet A3. Review 002 has no mandatory finding, but the Director's run from the committed place found IP-01. A3 waits for the corrected test, its review, and a passing run from the committed place.",
+  "next": "W2 corrects the test under IP-01, and nothing else. A fresh W3 carries out review 003 of the change. Then the Director runs the suite from the committed place, and commit C carries the reviewed tooling, the three reviews and their dispositions, pushed and read back.",
+  "amended_at_utc": "2026-11-27T03:08:19Z",
+  "director_in_place_run": {
+    "id": "IP-01",
+    "severity": "mandatory for commit C",
+    "when_utc": "2026-11-27T03:06:20Z to 03:06:34Z, after review 002",
+    "what": "The Director copied the 20 accepted files to their committed place in the worktree, uncommitted, with every digest equal, and ran W2's suite there once: from the tooling directory, env -i with PATH=/usr/bin:/bin, LANG=C.UTF-8 and a resolved TMPDIR, without MH_TOOLING_ROOT, as the README allows at that place, then <worktree>/.venv/bin/python -B -m unittest discover -s tests -v.",
+    "result": "Exit 1: 91 tests, 90 passed and 1 failed. test_run_direct_probe.RunnerTests.test_one_start_through_the_real_darwin_supervisor_with_its_receipt_and_started_record asserts that own_main_admitted is None, with the message that this copy of the runner lies outside the root. At the committed place the runner lies inside the root and admits its own __main__, as TR-01 requires. The test's premise is wrong there, and its later assertions did not run in place. No bytecode was written, no process was left, and the worktree status was unchanged. The copies were then removed, so the worktree is clean at c81cf07b again.",
+    "disposition": "W2 corrects that test, and any other test with the same premise, so that each test states the expected admission in both places: none outside the root, and exactly the running tool inside it. No tool changes. A fresh W3 reviews the change (review 003), and the Director runs the suite again from the committed place before commit C."
+  }
+}

@@ -1637,7 +1637,7 @@
     "record": "docs/engineering/localized-repair-c271/macos-qualification-p35/PHASE.json",
     "plan": "docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P35-SESSION.md",
-    "status": "declared_qualification_pending"
+    "status": "tooling_committed_qualification_pending"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8379,7 +8379,7 @@
     "plan": "docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P35-SESSION.md",
     "declared_at_utc": "2026-11-26T23:08:24Z",
-    "status": "declared_qualification_pending",
+    "status": "tooling_committed_qualification_pending",
     "owner_direction": [
       {
         "date": "2026-11-26 (America/Denver and UTC)",
@@ -8391,7 +8391,15 @@
     ],
     "gate": "MH of ontokin.current-host-readback/0.2.0",
     "downloads": "none needed and none approved",
-    "parent_complete": false
+    "parent_complete": false,
+    "stages": {
+      "recorded_at_utc": "2026-11-27T04:13:31Z",
+      "S1": "Declaration 16d4f9f4, pushed and read back at 2026-11-26T23:08:39Z (A1).",
+      "S2": "N34-M accepted with nonmandatory findings N-01 to N-09, recorded at c81cf07b before any execution plan existed (A2).",
+      "S3": "The observational tooling. Review 001 rejected the first version with five mandatory findings. Review 002 accepted revision 2 with nonmandatory findings TR2-01 to TR2-06, carried to the S6 freeze. The Director then ran the suite at its committed place, and one test failed (IP-01). Review 003 accepted revision 3, which corrects that test only, with nonmandatory findings TR3-01 to TR3-03. Revision 3 passes 91 of 91 at its committed place. It is committed unchanged at commit C, the commit that carries this field (A3 once pushed and read back).",
+      "S4_to_S8": "Outside Git, from commit C, under MH-PLAN section 5: one boot, HEAD fixed at C, the worktree clean and no commit until the audit; a reboot restarts at S4.",
+      "records": "docs/engineering/localized-repair-c271/macos-qualification-p35/: n34m/, tooling/, reviews/ and authoring/"
+    }
   },
   "p35_fields_index": {
     "recorded_at_utc": "2026-11-26T23:08:24Z",

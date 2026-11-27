@@ -1,0 +1,127 @@
+MH tooling focused tests, revision 3 (IP-01, after tooling review 002): recorded run
+date (UTC): 2026-11-27T03:14:36Z to 2026-11-27T03:14:50Z
+command, from the tooling directory: env -i PATH=/usr/bin:/bin LANG=C.UTF-8 TMPDIR=<tmp>/ MH_TOOLING_ROOT=<worktree> <worktree>/.venv/bin/python -B -m unittest discover -s tests -v
+interpreter: CPython 3.12.13, the qualification .venv; worktree HEAD c81cf07b
+exit status: 0; 91 tests, all passed
+children of the test process: 135 starts of the interpreter, each with -B; /usr/bin/true 1
+started by the tools under test: /bin/sh 4, /usr/bin/true 3, stand-in scripts run by the interpreter with -B 7 (one of them forked once); no Node, Git, ldd, codesign, otool or observe start
+machine paths are replaced by the labels <worktree>, <local>, <prefix>, <home> and <tmp>
+----
+test_a_missing_stage_refuses (test_audit_numeric.AuditTests.test_a_missing_stage_refuses) ... ok
+test_a_report_error_is_not_a_scientific_rejection (test_audit_numeric.AuditTests.test_a_report_error_is_not_a_scientific_rejection) ... ok
+test_a_second_failed_row_in_the_negative_is_not_the_intended_negative (test_audit_numeric.AuditTests.test_a_second_failed_row_in_the_negative_is_not_the_intended_negative) ... ok
+test_a_start_without_dash_b_refuses (test_audit_numeric.AuditTests.test_a_start_without_dash_b_refuses)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started. ... ok
+test_duplicate_missing_and_altered_rows_are_found (test_audit_numeric.AuditTests.test_duplicate_missing_and_altered_rows_are_found) ... ok
+test_non_finite_values_and_spurious_findings_fail_the_positive (test_audit_numeric.AuditTests.test_non_finite_values_and_spurious_findings_fail_the_positive) ... ok
+test_retained_bounds_that_are_not_those_of_the_vertices_fail (test_audit_numeric.AuditTests.test_retained_bounds_that_are_not_those_of_the_vertices_fail) ... ok
+test_retained_vertices_that_are_not_the_matrix_applied_to_the_positions_fail (test_audit_numeric.AuditTests.test_retained_vertices_that_are_not_the_matrix_applied_to_the_positions_fail) ... ok
+test_the_negative_must_use_q01s_glb_and_an_otherwise_identical_reference (test_audit_numeric.AuditTests.test_the_negative_must_use_q01s_glb_and_an_otherwise_identical_reference) ... ok
+test_the_three_cases_pass_with_2060_rows_each_and_one_intended_negative_row (test_audit_numeric.AuditTests.test_the_three_cases_pass_with_2060_rows_each_and_one_intended_negative_row) ... ok
+test_a_start_without_dash_b_refuses (test_capture_probe.ListingTests.test_a_start_without_dash_b_refuses)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started. ... ok
+test_the_readback_listing_never_follows_a_link (test_capture_probe.ListingTests.test_the_readback_listing_never_follows_a_link) ... ok
+test_a_present_process_with_an_established_identity (test_capture_probe.ProbeTests.test_a_present_process_with_an_established_identity) ... ok
+test_a_start_outside_the_window_does_not_establish_identity (test_capture_probe.ProbeTests.test_a_start_outside_the_window_does_not_establish_identity) ... ok
+test_absence_is_established_by_esrch_and_a_malformed_record_is_unknown (test_capture_probe.ProbeTests.test_absence_is_established_by_esrch_and_a_malformed_record_is_unknown) ... ok
+test_an_image_that_is_not_the_recorded_argv0_does_not_establish_identity (test_capture_probe.ProbeTests.test_an_image_that_is_not_the_recorded_argv0_does_not_establish_identity) ... ok
+test_identity_comes_before_any_signal_and_the_probes_are_code (test_capture_probe.ProcedureTextTests.test_identity_comes_before_any_signal_and_the_probes_are_code) ... ok
+test_an_established_identity_is_ended_through_its_group (test_capture_probe.StopTests.test_an_established_identity_is_ended_through_its_group) ... ok
+test_nothing_is_sent_when_identity_is_not_established (test_capture_probe.StopTests.test_nothing_is_sent_when_identity_is_not_established)
+TR-05: a present process whose identity is not established is recorded, and never signalled. ... ok
+test_sigkill_follows_only_continuous_presence_and_a_second_established_identity (test_capture_probe.StopTests.test_sigkill_follows_only_continuous_presence_and_a_second_established_identity) ... ok
+test_a_cohort_without_selection_refuses (test_collect_outcomes.CohortTests.test_a_cohort_without_selection_refuses) ... ok
+test_a_driver_removed_name_in_the_frozen_environment_refuses (test_collect_outcomes.CohortTests.test_a_driver_removed_name_in_the_frozen_environment_refuses) ... ok
+test_a_host_launcher_that_is_not_this_process_refuses (test_collect_outcomes.CohortTests.test_a_host_launcher_that_is_not_this_process_refuses) ... ok
+test_all_seven_pass_gives_exit_zero (test_collect_outcomes.CohortTests.test_all_seven_pass_gives_exit_zero) ... ok
+test_an_environment_other_than_the_frozen_one_refuses_before_any_test (test_collect_outcomes.CohortTests.test_an_environment_other_than_the_frozen_one_refuses_before_any_test) ... ok
+test_an_interruption_is_unknown_and_keeps_the_journal (test_collect_outcomes.CohortTests.test_an_interruption_is_unknown_and_keeps_the_journal) ... ok
+test_an_isolated_launch_refuses (test_collect_outcomes.CohortTests.test_an_isolated_launch_refuses) ... ok
+test_every_outcome_kind_is_recorded_raw (test_collect_outcomes.CohortTests.test_every_outcome_kind_is_recorded_raw) ... ok
+test_setup_error_is_kept_and_the_three_cpu_methods_are_not_run (test_collect_outcomes.CohortTests.test_setup_error_is_kept_and_the_three_cpu_methods_are_not_run) ... ok
+test_a_control_rerun_refuses_a_selection_and_another_module (test_collect_outcomes.ControlTests.test_a_control_rerun_refuses_a_selection_and_another_module) ... ok
+test_a_named_control_runs_alone_and_its_child_is_recorded (test_collect_outcomes.ControlTests.test_a_named_control_runs_alone_and_its_child_is_recorded) ... ok
+test_a_body_that_differs_from_the_frozen_original_bodies_is_not_all_passed (test_collect_outcomes.RevisionTests.test_a_body_that_differs_from_the_frozen_original_bodies_is_not_all_passed) ... ok
+test_a_skip_inside_a_subtest_is_the_parents_skip (test_collect_outcomes.RevisionTests.test_a_skip_inside_a_subtest_is_the_parents_skip) ... ok
+test_events_of_an_unplanned_test_are_kept_by_name (test_collect_outcomes.RevisionTests.test_events_of_an_unplanned_test_are_kept_by_name) ... ok
+test_git_names_are_refused_unless_they_are_exactly_the_drivers_own (test_collect_outcomes.RevisionTests.test_git_names_are_refused_unless_they_are_exactly_the_drivers_own) ... ok
+test_it_runs_from_its_committed_place_inside_the_root (test_collect_outcomes.RevisionTests.test_it_runs_from_its_committed_place_inside_the_root)
+TR-01: its own __main__ lies under the root; it is admitted by realpath and recorded. ... ok
+test_the_module_digest_is_required_for_a_cohort_too (test_collect_outcomes.RevisionTests.test_the_module_digest_is_required_for_a_cohort_too) ... ok
+test_job_bytes_are_the_supervisors_json_bytes_and_the_recorder_starts_nothing (test_control_harness.CommandBoundaryTests.test_job_bytes_are_the_supervisors_json_bytes_and_the_recorder_starts_nothing) ... ok
+test_the_simulated_receipt_meets_the_observers_own_rules_and_starts_nothing (test_control_harness.CommandBoundaryTests.test_the_simulated_receipt_meets_the_observers_own_rules_and_starts_nothing) ... ok
+test_a_childs_environment_is_recorded_by_names_and_a_digest (test_control_harness.CommonTests.test_a_childs_environment_is_recorded_by_names_and_a_digest)
+TR-06: the audit hook writes no value of a child's environment. ... ok
+test_every_command_refuses_a_start_without_dash_b (test_control_harness.CommonTests.test_every_command_refuses_a_start_without_dash_b)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started. ... ok
+test_another_boot_identity_is_refused_by_the_providers_own_comparison (test_control_harness.HostStateTests.test_another_boot_identity_is_refused_by_the_providers_own_comparison) ... ok
+test_the_providers_real_host_state_equals_a_host_of_this_boot (test_control_harness.HostStateTests.test_the_providers_real_host_state_equals_a_host_of_this_boot) ... ok
+test_a_plan_digest_from_outside_the_plan_is_required (test_control_harness.MC10Tests.test_a_plan_digest_from_outside_the_plan_is_required) ... ok
+test_launch_bindings_and_environment_are_preconditions (test_control_harness.MC10Tests.test_launch_bindings_and_environment_are_preconditions) ... ok
+test_the_attempt_listing_never_follows_a_link (test_control_harness.MC10Tests.test_the_attempt_listing_never_follows_a_link)
+TR-13: the listing opens files with O_NOFOLLOW and records a link as a link. ... ok
+test_the_loaded_module_rule_is_reached_with_and_without_the_exclusion (test_control_harness.MC10Tests.test_the_loaded_module_rule_is_reached_with_and_without_the_exclusion)
+TR-13: without the exclusion of its own __main__ row the harness meets PYTHON-MODULE; with it, the ... ok
+test_the_real_static_checks_run_with_only_the_command_boundary_substituted (test_control_harness.MC10Tests.test_the_real_static_checks_run_with_only_the_command_boundary_substituted) ... ok
+test_a_configuration_change_after_preflight_is_refused_with_zero_starts (test_control_harness.MC29Tests.test_a_configuration_change_after_preflight_is_refused_with_zero_starts) ... ok
+test_a_job_input_change_after_preflight_is_refused_with_zero_starts (test_control_harness.MC29Tests.test_a_job_input_change_after_preflight_is_refused_with_zero_starts) ... ok
+test_the_process_environment_must_be_exactly_the_frozen_one (test_control_harness.MC29Tests.test_the_process_environment_must_be_exactly_the_frozen_one)
+TR-06: an exact frozen environment, without HOME; refused before the provider is imported. ... ok
+test_a_digest_mismatch_refuses (test_discover_inventory.CompareTests.test_a_digest_mismatch_refuses) ... ok
+test_a_duplicate_inside_the_baseline_is_not_an_exact_match (test_discover_inventory.CompareTests.test_a_duplicate_inside_the_baseline_is_not_an_exact_match)
+TR-07: counts and duplicates are recomputed from the IDs of both documents. ... ok
+test_an_inconsistent_additions_record_is_not_an_exact_match (test_discover_inventory.CompareTests.test_an_inconsistent_additions_record_is_not_an_exact_match) ... ok
+test_compare_refuses_a_start_without_dash_b (test_discover_inventory.CompareTests.test_compare_refuses_a_start_without_dash_b)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started. ... ok
+test_exact_match_of_baseline_plus_approved_additions (test_discover_inventory.CompareTests.test_exact_match_of_baseline_plus_approved_additions) ... ok
+test_missing_and_extra_ids_are_reported (test_discover_inventory.CompareTests.test_missing_and_extra_ids_are_reported) ... ok
+test_a_symlinked_root_is_refused (test_discover_inventory.DiscoverTests.test_a_symlinked_root_is_refused) ... ok
+test_an_existing_output_is_never_replaced (test_discover_inventory.DiscoverTests.test_an_existing_output_is_never_replaced) ... ok
+test_an_isolated_launch_is_refused (test_discover_inventory.DiscoverTests.test_an_isolated_launch_is_refused) ... ok
+test_import_failures_and_a_refused_process_start_are_findings (test_discover_inventory.DiscoverTests.test_import_failures_and_a_refused_process_start_are_findings) ... ok
+test_interpreter_flags_other_than_dash_b_in_build_plan_refuse (test_discover_inventory.DiscoverTests.test_interpreter_flags_other_than_dash_b_in_build_plan_refuse)
+TR-07: the flag comes from build_plan's add(), so a different flag set refuses. ... ok
+test_lists_ids_as_unittest_discovers_them_and_runs_no_test (test_discover_inventory.DiscoverTests.test_lists_ids_as_unittest_discovers_them_and_runs_no_test) ... ok
+test_the_unit_stage_argv_must_be_the_one_reproduced (test_discover_inventory.DiscoverTests.test_the_unit_stage_argv_must_be_the_one_reproduced) ... ok
+test_every_other_preloaded_root_module_still_refuses (test_discover_inventory.PlaceAndEnvironmentTests.test_every_other_preloaded_root_module_still_refuses) ... ok
+test_it_runs_from_its_committed_place_inside_the_root (test_discover_inventory.PlaceAndEnvironmentTests.test_it_runs_from_its_committed_place_inside_the_root)
+TR-01: its own __main__ lies under the root; it is admitted by realpath and recorded. ... ok
+test_the_process_environment_must_be_exactly_the_frozen_one (test_discover_inventory.PlaceAndEnvironmentTests.test_the_process_environment_must_be_exactly_the_frozen_one)
+TR-06: an exact frozen environment, recorded by name; HOME is never part of one. ... ok
+test_a_target_that_exists_before_the_start_refuses_the_row_before_any_start (test_run_direct_probe.FrozenStateTests.test_a_target_that_exists_before_the_start_refuses_the_row_before_any_start) ... ok
+test_inputs_and_stage_entries_are_verified_again_immediately_before_each_start (test_run_direct_probe.FrozenStateTests.test_inputs_and_stage_entries_are_verified_again_immediately_before_each_start) ... ok
+test_sigint_and_sigterm_after_a_start (test_run_direct_probe.InterruptionTests.test_sigint_and_sigterm_after_a_start) ... ok
+test_a_supervisor_without_json_bytes_is_not_the_original (test_run_direct_probe.PlaceAndLoadingTests.test_a_supervisor_without_json_bytes_is_not_the_original)
+TR-10: json_bytes_is_the_original needs 'is not None'; such a supervisor refuses before any row. ... ok
+test_it_runs_from_its_committed_place_inside_the_root (test_run_direct_probe.PlaceAndLoadingTests.test_it_runs_from_its_committed_place_inside_the_root)
+TR-01: its own __main__ lies under the root; it is admitted by realpath and recorded. ... ok
+test_exact_streams_and_json_members_equal_or_absent (test_run_direct_probe.PredicateTests.test_exact_streams_and_json_members_equal_or_absent) ... ok
+test_a_nonzero_exit_is_kept_raw_and_an_unmet_row_stops_the_later_rows (test_run_direct_probe.RunnerTests.test_a_nonzero_exit_is_kept_raw_and_an_unmet_row_stops_the_later_rows) ... ok
+test_bound_inputs_and_row_shapes_refuse_before_any_start (test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start) ... ok
+test_independent_rows_all_run (test_run_direct_probe.RunnerTests.test_independent_rows_all_run) ... ok
+test_one_start_through_the_real_darwin_supervisor_with_its_receipt_and_started_record (test_run_direct_probe.RunnerTests.test_one_start_through_the_real_darwin_supervisor_with_its_receipt_and_started_record) ... ok
+test_a_remaining_descendant_misses_the_row_although_the_child_exited_zero (test_run_direct_probe.SupervisorRefusalTests.test_a_remaining_descendant_misses_the_row_although_the_child_exited_zero) ... ok
+test_a_staged_link_misses_the_row_although_the_child_exited_zero (test_run_direct_probe.SupervisorRefusalTests.test_a_staged_link_misses_the_row_although_the_child_exited_zero) ... ok
+test_a_clean_tree_with_its_reviewed_list_is_none_found (test_scan_mc11.ScanTests.test_a_clean_tree_with_its_reviewed_list_is_none_found) ... ok
+test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses (test_scan_mc11.ScanTests.test_a_list_that_is_not_reviewed_or_names_no_reviewer_refuses)
+TR-12: an unreviewed candidate list cannot decide MC11. ... ok
+test_a_start_without_dash_b_refuses (test_scan_mc11.ScanTests.test_a_start_without_dash_b_refuses)
+TR-17, in this process with sys.flags as a start without -B shows them; nothing is started. ... ok
+test_every_pattern_is_found_with_its_line_and_view (test_scan_mc11.ScanTests.test_every_pattern_is_found_with_its_line_and_view) ... ok
+test_the_forms_of_review_001_are_found_on_every_view (test_scan_mc11.ScanTests.test_the_forms_of_review_001_are_found_on_every_view)
+TR-11: binding names, bracket and parenthesized forms, every require that is not a plain call. ... ok
+test_the_frozen_rules_verdict_is_reported_separately (test_scan_mc11.ScanTests.test_the_frozen_rules_verdict_is_reported_separately)
+TR-12: MC11 is decided by MI's frozen rule; the wider scan is reported beside it. ... ok
+test_the_tree_and_the_bindings_are_checked_before_any_scan (test_scan_mc11.ScanTests.test_the_tree_and_the_bindings_are_checked_before_any_scan) ... ok
+test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b (test_zz_hygiene.HygieneTests.test_every_tool_writes_exclusively_identifies_itself_and_requires_dash_b) ... ok
+test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file) ... ok
+test_the_derivation_finds_a_split_literal (test_zz_hygiene.HygieneTests.test_the_derivation_finds_a_split_literal) ... ok
+test_tools_import_the_standard_library_only_and_never_subprocess (test_zz_hygiene.HygieneTests.test_tools_import_the_standard_library_only_and_never_subprocess) ... ok
+test_zz_report_the_starts_of_this_run (test_zz_hygiene.HygieneTests.test_zz_report_the_starts_of_this_run) ... 
+MH-TOOLING-TEST-STARTS direct children: {'/usr/bin/true': 1, 'python -B': 135}; started by the tools under test: {'/bin/sh': 4, '/usr/bin/true': 3, 'fork of a stand-in': 1, 'stand-in python -B via the supervisor': 7}
+ok
+
+----------------------------------------------------------------------
+Ran 91 tests in 14.096s
+
+OK

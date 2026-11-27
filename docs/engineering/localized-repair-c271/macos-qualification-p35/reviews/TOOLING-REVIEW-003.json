@@ -1,0 +1,913 @@
+{
+ "schema": "ontokin.c271.p35-tooling-review/1",
+ "phase": "C271-P35",
+ "gate": "MH",
+ "stage": "S3",
+ "review": "TOOLING-REVIEW-003",
+ "reviewer": "W3, a Claude Code subagent in a fresh context; it wrote none of the tooling and took no part in reviews 001 and 002, which it read only as documents",
+ "written_at_utc": "2026-11-27T04:10:00.366132Z",
+ "worktree": {
+  "head": "c81cf07b5386ea7eba7904f3ef5700709b84b366",
+  "read_from": "the Git files, without a Git start",
+  "state": "unchanged between the snapshots before my first run and after my last run: every entry, the Git directory, the interpreter installation (414 bytecode files), W2's directory and the Director's checks; compared again at the end in outputs/state-compare-after-final.json"
+ },
+ "subject": "W2's revision 3 of the MH tooling (21 files) against revision 2 (20 files, as review 002 reviewed it): the correction of the Director's IP-01",
+ "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+ "verdict_text": "Revision 3 may become commit C. There is no mandatory finding; TR3-01 to TR3-03 need no code change at C.",
+ "findings": [
+  {
+   "id": "TR3-01",
+   "severity": "nonmandatory",
+   "title": "inplace-run-002 does not record its command",
+   "location": "<local>/c271-p35/director/checks/inplace-run-002/",
+   "issue": "No file gives the run's argv, working directory, environment or interpreter flags. The output is a complete pass and the status files show the copy in the worktree during the run, but the output equals TEST-RUN.txt's (from W2's directory) apart from timing, so it cannot show that the suite ran at the committed place without MH_TOOLING_ROOT.",
+   "effect": "A3's passing run from the committed place rests on the Director's statement and the status files; this review's clone run shows the in-place behaviour independently.",
+   "recommendation": "Before commit C, the disposition of this review, or a file beside the output, records run 002's exact command line, cwd, environment names and flags (PROTOCOL section 5)."
+  },
+  {
+   "id": "TR3-02",
+   "severity": "nonmandatory",
+   "title": "AUTHOR-NOTES section 1 keeps revision 2's record of the runs",
+   "location": "AUTHOR-NOTES.md section 1: TEST-RUN.txt at 2026-11-27T02:07:54Z, the rejected run at 02:08:08Z, and the tests/ row without TEST-RUN-IN-PLACE.txt",
+   "issue": "The records now carry 03:14:36Z and 03:15:10Z, and tests/ holds the new record. The header paragraph says section 8 replaces section 1's record of the runs, so the notes are consistent as a whole, but section 1 read alone disagrees with the files it names.",
+   "effect": "None on the code or the evidence.",
+   "recommendation": "Keep the reviewed bytes at C; where the disposition or the S6 freeze cites the notes, it says that section 8 supersedes section 1's times and file list."
+  },
+  {
+   "id": "TR3-03",
+   "severity": "nonmandatory",
+   "title": "Letter case: a shared limit of the admission rule, outside the change",
+   "location": "tests/mh_support.py line 141; run_direct_probe.py 364-372, 461-467 and 140-157; discover_inventory.py 222-244 and 95-112; collect_outcomes.py 694-706",
+   "issue": "All compare realpath strings by prefix. os.path.realpath does not establish the on-disk letter case, and this volume is case-insensitive, so canonical_path accepts a --root spelled in another case; the tool and the helper then both say outside the root, and the same rule would not see another preloaded root module spelled as on disk.",
+   "effect": "None at C: the helper mirrors the tools, so the test is right in both places.",
+   "recommendation": "Carry to S6: the freeze gives every --root in its on-disk spelling, as the observation plan binds the worktree, and its review checks it. A code change belongs to a later phase."
+  }
+ ],
+ "answers": {
+  "Q1_scope": {
+   "exactly_the_correction": true,
+   "identical_outside_tests": [
+    "FAILURE-CAPTURE.md",
+    "README.md",
+    "audit_numeric.py",
+    "capture_probe.py",
+    "collect_outcomes.py",
+    "control_harness.py",
+    "discover_inventory.py",
+    "run_direct_probe.py",
+    "scan_mc11.py"
+   ],
+   "identical_in_tests": [
+    "test_audit_numeric.py",
+    "test_capture_probe.py",
+    "test_collect_outcomes.py",
+    "test_control_harness.py",
+    "test_discover_inventory.py",
+    "test_scan_mc11.py",
+    "test_zz_hygiene.py"
+   ],
+   "changes": {
+    "tests/mh_support.py": "inserted lines 134-155: ADMISSION_REASON, admission_place, expected_admission",
+    "tests/test_run_direct_probe.py": "line 172 -> 172-177: assertIsNone becomes place = S.admission_place(...) and assertEqual(record['own_main_admitted'], S.expected_admission(...), 'the runner lies ' + place)",
+    "tests/TEST-RUN.txt": "header lines 1-2 and 7 (otool), and line 125 (the run's time)",
+    "tests/TEST-RUN-AGAINST-REJECTED-001.txt": "header lines 1-2 and 8, IP-01's row inserted at 24-25, and 37 body ranges: frame line numbers (+5, +22), temporary names, times, PIDs and the IP-01 traceback's two lines",
+    "tests/TEST-RUN-IN-PLACE.txt": "new, 293 lines",
+    "SHA256SUMS.txt": "four digests changed, one line added",
+    "AUTHOR-NOTES.md": "86 lines added, none removed: the Revision 3 paragraph (14-19) and section 8 (379-458)"
+   },
+   "author_notes_only_section_8_and_required_facts": true
+  },
+  "Q2_correctness": {
+   "exact_in_both_places": true,
+   "outside": "None (from W2's directory with MH_TOOLING_ROOT=<worktree>)",
+   "inside": {
+    "module": "__main__",
+    "path": "<the running tool's realpath>",
+    "admitted": true,
+    "reason": "the running tool itself, identified by realpath equality with its own file"
+   },
+   "reason_equal_to_each_tool": {
+    "run_direct_probe.py": 370,
+    "discover_inventory.py": 228,
+    "collect_outcomes.py": 702
+   },
+   "rule_right": true,
+   "cases": [
+    {
+     "case": "tool at the committed place inside the root",
+     "helper": "inside the root",
+     "runner": "admitted",
+     "agree": true
+    },
+    {
+     "case": "root given with a trailing slash",
+     "helper": "inside the root",
+     "runner": "refused ROOT",
+     "agree": true
+    },
+    {
+     "case": "root given through a symbolic link",
+     "helper": "inside the root",
+     "runner": "refused ROOT",
+     "agree": true
+    },
+    {
+     "case": "tool under a sibling whose name has the root's name as a prefix",
+     "helper": "outside the root",
+     "runner": "None",
+     "agree": true
+    },
+    {
+     "case": "tool outside the root",
+     "helper": "outside the root",
+     "runner": "None",
+     "agree": true
+    },
+    {
+     "case": "tool path a link outside the root to a file inside it",
+     "helper": "inside the root",
+     "runner": "admitted",
+     "agree": true
+    },
+    {
+     "case": "tool path a link inside the root to a file outside it",
+     "helper": "outside the root",
+     "runner": "None",
+     "agree": true
+    },
+    {
+     "case": "root spelled in another letter case",
+     "helper": "outside the root",
+     "runner": "None",
+     "agree": true
+    },
+    {
+     "case": "the file-system root as the root",
+     "helper": "outside the root",
+     "runner": "None",
+     "agree": true
+    }
+   ],
+   "independent_of_the_tool": true
+  },
+  "Q3_nothing_weakened": {
+   "statements": [
+    28,
+    29
+   ],
+   "unchanged_statements": 27,
+   "other_assertions_kept": 22
+  },
+  "Q4_location": {
+   "w2_reasons_right": true,
+   "other_location_dependent_expectations": "none on the tooling's place; the MC10 real-static test needs <root>/.venv and <root>/.git, and the hygiene test treats the root's parent's components as private; both hold in W2's directory and in the worktree, and fail only in a clone under workers/"
+  },
+  "Q5_records": {
+   "records_match": true,
+   "header_claims": {
+    "TEST-RUN.txt": {
+     "ok": 91,
+     "children": [
+      135,
+      1
+     ],
+     "by_tools": [
+      4,
+      3,
+      7,
+      1
+     ]
+    },
+    "TEST-RUN-AGAINST-REJECTED-001.txt": {
+     "failures": 42,
+     "errors": 27,
+     "children": [
+      125,
+      1
+     ],
+     "by_tools": [
+      5,
+      8,
+      9,
+      1
+     ]
+    },
+    "TEST-RUN-IN-PLACE.txt": {
+     "ok": 89,
+     "failures": 14,
+     "errors": 1,
+     "children": [
+      133,
+      1
+     ],
+     "by_tools": [
+      4,
+      3,
+      7,
+      1
+     ]
+    }
+   },
+   "traceback_frames_checked": {
+    "TEST-RUN-AGAINST-REJECTED-001.txt": 96,
+    "TEST-RUN-IN-PLACE.txt": 20,
+    "mismatches": 0,
+    "unresolved": 0
+   },
+   "labelled_records_equal_labelled_raw_outputs": true,
+   "clone_explanations_right": true,
+   "both_passed_in_inplace_run_002_rightly": true,
+   "inplace_run_002_complete_pass": true,
+   "my_clone_run": {
+    "ok": 89,
+    "failures": 13,
+    "errors": 1,
+    "hygiene_components": {
+     "12 (c271-p35)": 11,
+     "13 (workers)": 2
+    },
+    "ip01_test": "passed in place"
+   }
+  },
+  "Q6_privacy": {
+   "private_string_in_changed_or_new_files": false,
+   "derived_strings": 56,
+   "false_positives": [
+    "squashed CPython version and lib/python3.x in the three run records",
+    "unittest's elided temporary path on line 651 of the rejected-run record (unchanged since revision 2): the generic temporary root only"
+   ],
+   "unchanged_files": [
+    "joined literals actual + expected in audit_numeric.py and test_audit_numeric.py",
+    "README line 30: macOS's generic temporary root"
+   ]
+  }
+ },
+ "method": {
+  "runs": {
+   "suite_rerun": {
+    "from": "<local>/c271-p35/workers/W2/tooling",
+    "command": "env -i PATH=/usr/bin:/bin LANG=C.UTF-8 TMPDIR=<local>/c271-p35/workers/W3-tooling-003/runs/tmp-suite/ MH_TOOLING_ROOT=<worktree> <worktree>/.venv/bin/python -B -m unittest discover -s tests -v",
+    "utc": [
+     "2026-11-27T03:42:59Z",
+     "2026-11-27T03:43:14Z"
+    ],
+    "exit": 0,
+    "ok": 91,
+    "children": {
+     "python -B": 135,
+     "/usr/bin/true": 1
+    },
+    "by_tools": {
+     "/bin/sh": 4,
+     "/usr/bin/true": 3,
+     "stand-ins": 7,
+     "forks": 1
+    }
+   },
+   "clone_run": {
+    "clone": "<local>/c271-p35/workers/W3-tooling-003/clone-003 (removed)",
+    "made": "cp -cR of the worktree's 28 top-level entries other than .git and .venv; a copy of the .git pointer; W2's tooling/ with cp -pR at its committed place; verified 24,994 entries",
+    "command": "from the committed place, env -i PATH=/usr/bin:/bin LANG=C.UTF-8 TMPDIR=<local>/c271-p35/workers/W3-tooling-003/runs/tmp-clone/ <worktree>/.venv/bin/python -B -m unittest discover -s tests -v",
+    "utc": [
+     "2026-11-27T03:45:35Z",
+     "2026-11-27T03:45:48Z"
+    ],
+    "exit": 1,
+    "children": {
+     "python -B": 133,
+     "/usr/bin/true": 1
+    },
+    "by_tools": {
+     "/bin/sh": 4,
+     "/usr/bin/true": 3,
+     "stand-ins": 7,
+     "forks": 1
+    }
+   }
+  },
+  "starts": {
+   "bash_tool_calls": 30,
+   "interpreter_with_-I_-S_-B": 41,
+   "of_which_script_runs": 31,
+   "of_which_-c_reads": 10,
+   "interpreter_with_-B_only_via_env": 2,
+   "children_of_the_suite_runs": {
+    "python -B": 268,
+    "/usr/bin/true": 2
+   },
+   "started_by_the_tools_under_test": {
+    "/bin/sh": 8,
+    "/usr/bin/true": 6,
+    "stand-ins": 14,
+    "forks": 2
+   },
+   "utilities": {
+    "date": 16,
+    "ls": 6,
+    "grep": 9,
+    "head": 5,
+    "cat": 3,
+    "cut": 4,
+    "tail": 2,
+    "wc": 2,
+    "sed": 1,
+    "mkdir": 2,
+    "find": 1,
+    "xargs": 1,
+    "cp": 3,
+    "rm": 1,
+    "env": 2
+   },
+   "utilities_total": 58,
+   "node_git_ldd_codesign_otool_observe_finder": 0,
+   "shell_profiles": "the harness's shell may source the account's profile; not observable, not counted"
+  },
+  "notes": [
+   "The first assembly refused to write: the report then gave 92 checked and four unresolved frames, counted before <prefix> was labelled as W2's records label it; with that label all 96 resolve. The report was corrected and the assembly run again.",
+   "The first scan of this review's own files found the interpreter installation's relative paths, which name the package manager's directory, in the first two state snapshots; w3r3_state.py redact rekeyed them by the SHA-256 of each path, as the final snapshot is written.",
+   "The scanner's earlier versions cut a context window before masking it, which could leave a piece of a machine path from the raw runs in their record. The last version masks the whole line before cutting it and quotes nothing from the raw runs; the three privacy records were rewritten with it, and this record assembled again.",
+   "The remaining hits in this review's own files are false positives and generic roots: squashed version forms; 32 repository file names in the worktree listing, ordinary words that happen to contain one of the short pieces; a TRDs file name that squashes to the local root's name; two adjacent constants in the analysis script; and the generic roots that the scripts name.",
+   "This record was assembled a fifth time after the report's last edit. That edit removed example words which, quoted as false positives of the piece check, would have hinted at a component of the interpreter installation, and corrected the start counts. The final scan of this review's files and the last process check followed; the final state comparison came one call before."
+  ],
+  "processes": "no process of mine alive at the end (outputs/proc-final.json, and outputs/proc-last.json as the very last start); after my runs, five other processes had started, none a descendant of my shells: a /bin/bash and two Node processes of another parent, and two framework-interpreter processes descending from a long-running process alive since 2026-11-23; at the final check the others also included a /bin/zsh of that other parent with an interpreter child, Node processes of a third parent, and new children of the long-running process"
+ },
+ "outputs": [
+  "outputs/digests.json",
+  "outputs/diffs/",
+  "outputs/analysis.json",
+  "outputs/clone-check.json",
+  "outputs/privacy-delivery.json",
+  "outputs/privacy-own.json",
+  "outputs/privacy-runs.json",
+  "outputs/proc-baseline.json",
+  "outputs/proc-after-runs.json",
+  "outputs/proc-final.json",
+  "outputs/proc-last.json",
+  "outputs/state-compare-before-after.json",
+  "outputs/state-compare-after-final.json",
+  "outputs/suite-rerun.labelled.txt",
+  "outputs/suite-in-place-clone.labelled.txt",
+  "state/before.json",
+  "state/after.json",
+  "state/final.json"
+ ],
+ "reviewed_files": {
+  "<local>/c271-p35/workers/W2/tooling/FAILURE-CAPTURE.md": {
+   "sha256": "f387fb3ec0ed306366f6d3f22820ec344f1ac843008775475258c5de9634c99c",
+   "size_bytes": 13147,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/README.md": {
+   "sha256": "60d9298f36a4170f8a610995e2b34cdfe2f70ed806683966a6556a0f1f7c6084",
+   "size_bytes": 35797,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/audit_numeric.py": {
+   "sha256": "9140379c61bc70f29939bd7b216ef5ca5e2f5e6cab5b4a452e50018651bac4e3",
+   "size_bytes": 40667,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/capture_probe.py": {
+   "sha256": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+   "size_bytes": 29076,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/collect_outcomes.py": {
+   "sha256": "510bcf3e5b6ce473707f2c0e6f49357983ab2c0964760bf388969d0e12cc2fdf",
+   "size_bytes": 46010,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/control_harness.py": {
+   "sha256": "a54fb85d757e2908bfe36e1b77a9e7fc4afd7ae38a7faf4111432960996c9674",
+   "size_bytes": 48562,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/discover_inventory.py": {
+   "sha256": "980c80883f3106706a3ecd3b03e908efe31a5c572a67a0d71dc650f85cfb695e",
+   "size_bytes": 35270,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/run_direct_probe.py": {
+   "sha256": "4b30ac5bb633f4c82079c830f4c09720e57e944c51da44fe063b3b2f8f6be5a2",
+   "size_bytes": 56139,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/scan_mc11.py": {
+   "sha256": "31cc6e35df6fc92b428310aedd71fb3c0c16f504424197ce69b30cbc8f6cd0c5",
+   "size_bytes": 42833,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/TEST-RUN-AGAINST-REJECTED-001.txt": {
+   "sha256": "cebda1d4c9d241c38717f2aea588bedc8a449f275c3c372649cd83dc694a177c",
+   "size_bytes": 158255,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/TEST-RUN-IN-PLACE.txt": {
+   "sha256": "25f053ab431e66b1325d2d8c932dccce4b988f12f2d9207a8ab7894c27d9d4ca",
+   "size_bytes": 35087,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/TEST-RUN.txt": {
+   "sha256": "9ee06701c2de73d395cfa0cfabf7471a9a6179384fcd2b25d150fd2d326adb87",
+   "size_bytes": 17118,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py": {
+   "sha256": "4ee731f6fcbc23b18451db5e0d2e96520e08a436525d59454b7f423bcdc91c5d",
+   "size_bytes": 8912,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_audit_numeric.py": {
+   "sha256": "c3c91f3508af855ecd7bacdf3a58267dfc77f9f03761532b639a05e66aa172f8",
+   "size_bytes": 18402,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py": {
+   "sha256": "c4f40ef3b078a494f0ccf5ff596f4715121973fef3a19ba5b2c76403912168a2",
+   "size_bytes": 12245,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py": {
+   "sha256": "a03e96def66c768a49209b2fdc4875233d0489503f05182e8d64929964b4ad33",
+   "size_bytes": 22025,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py": {
+   "sha256": "0151d0fbeb777bda669a6f7545d327f3bd6b9b7e420862222f09f6ed8f02d217",
+   "size_bytes": 28349,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py": {
+   "sha256": "d3f6732f089564acb1a0589617a7702937b43d9fb70ffb15cccdd9f41acf18eb",
+   "size_bytes": 18696,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py": {
+   "sha256": "0974ca78b1b3b229fa454dacc257d11b539578d1d6391acaddde4407c3bb0c5c",
+   "size_bytes": 26379,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py": {
+   "sha256": "da70787a66704562eb88eb6c7325b341d1fcde23f936212f86d84c4db76f9e6f",
+   "size_bytes": 13637,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py": {
+   "sha256": "53b5122ab2b1452b8dcea2ca14d6a5bbb1bade96dc4b7f74fd715b0fc5d0fe07",
+   "size_bytes": 8680,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/SHA256SUMS.txt": {
+   "sha256": "a4e62b8684a1a1b70e810d9d2873b4eb8ffc67597d1e287749bf7e51c7607424",
+   "size_bytes": 1880,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/AUTHOR-NOTES.md": {
+   "sha256": "1789e6aca8b3a9fe845d060a549805daeb69531b2811e5253e389569fd59cd1a",
+   "size_bytes": 38662,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/AUTHOR-NOTES.md": {
+   "sha256": "2a9bb361f309e4bee23b75e1bd4e6b8f34594ad9de9d123ff89ad6d9dfbe7485",
+   "size_bytes": 31873,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/SHA256SUMS.txt": {
+   "sha256": "c45d150ec4ef7d14c996e88fa9050a4a8a09511946fbdc766dbef3ab8b3d8137",
+   "size_bytes": 1786,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/FAILURE-CAPTURE.md": {
+   "sha256": "f387fb3ec0ed306366f6d3f22820ec344f1ac843008775475258c5de9634c99c",
+   "size_bytes": 13147,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/README.md": {
+   "sha256": "60d9298f36a4170f8a610995e2b34cdfe2f70ed806683966a6556a0f1f7c6084",
+   "size_bytes": 35797,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/audit_numeric.py": {
+   "sha256": "9140379c61bc70f29939bd7b216ef5ca5e2f5e6cab5b4a452e50018651bac4e3",
+   "size_bytes": 40667,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/capture_probe.py": {
+   "sha256": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+   "size_bytes": 29076,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/collect_outcomes.py": {
+   "sha256": "510bcf3e5b6ce473707f2c0e6f49357983ab2c0964760bf388969d0e12cc2fdf",
+   "size_bytes": 46010,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/control_harness.py": {
+   "sha256": "a54fb85d757e2908bfe36e1b77a9e7fc4afd7ae38a7faf4111432960996c9674",
+   "size_bytes": 48562,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/discover_inventory.py": {
+   "sha256": "980c80883f3106706a3ecd3b03e908efe31a5c572a67a0d71dc650f85cfb695e",
+   "size_bytes": 35270,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/run_direct_probe.py": {
+   "sha256": "4b30ac5bb633f4c82079c830f4c09720e57e944c51da44fe063b3b2f8f6be5a2",
+   "size_bytes": 56139,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/scan_mc11.py": {
+   "sha256": "31cc6e35df6fc92b428310aedd71fb3c0c16f504424197ce69b30cbc8f6cd0c5",
+   "size_bytes": 42833,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/TEST-RUN-AGAINST-REJECTED-001.txt": {
+   "sha256": "d76b297ff748c720d9828f987ebbd3c289c6eb9e73168baf1c549f82daf57cd9",
+   "size_bytes": 158053,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/TEST-RUN.txt": {
+   "sha256": "4e8f812f415698929f70beb46f4cb4419e3ae9acf1cc8806047c3f60f4350704",
+   "size_bytes": 17104,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/mh_support.py": {
+   "sha256": "51eb867279b4add78ce808492734825add2cc26b2414a4ed3e562049ad839929",
+   "size_bytes": 7761,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/test_audit_numeric.py": {
+   "sha256": "c3c91f3508af855ecd7bacdf3a58267dfc77f9f03761532b639a05e66aa172f8",
+   "size_bytes": 18402,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/test_capture_probe.py": {
+   "sha256": "c4f40ef3b078a494f0ccf5ff596f4715121973fef3a19ba5b2c76403912168a2",
+   "size_bytes": 12245,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/test_collect_outcomes.py": {
+   "sha256": "a03e96def66c768a49209b2fdc4875233d0489503f05182e8d64929964b4ad33",
+   "size_bytes": 22025,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/test_control_harness.py": {
+   "sha256": "0151d0fbeb777bda669a6f7545d327f3bd6b9b7e420862222f09f6ed8f02d217",
+   "size_bytes": 28349,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/test_discover_inventory.py": {
+   "sha256": "d3f6732f089564acb1a0589617a7702937b43d9fb70ffb15cccdd9f41acf18eb",
+   "size_bytes": 18696,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/test_run_direct_probe.py": {
+   "sha256": "5342ffaa455e1d3442a93a6b8f41da641f01ff106786996e9ac681e622ecf0a7",
+   "size_bytes": 25986,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/test_scan_mc11.py": {
+   "sha256": "da70787a66704562eb88eb6c7325b341d1fcde23f936212f86d84c4db76f9e6f",
+   "size_bytes": 13637,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/revision-002/tooling/tests/test_zz_hygiene.py": {
+   "sha256": "53b5122ab2b1452b8dcea2ca14d6a5bbb1bade96dc4b7f74fd715b0fc5d0fe07",
+   "size_bytes": 8680,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-002/TOOLING-REVIEW-002.md": {
+   "sha256": "0859acada2527937db37f88ff299f2859b3f7788bee4779001a4d4cea7333439",
+   "size_bytes": 44474,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-002/TOOLING-REVIEW-002.json": {
+   "sha256": "ea91354b43fcf0c236b0ecb4a71fad3794d47569ae22d75681464a8999586549",
+   "size_bytes": 49956,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/reviews/TOOLING-REVIEW-DISPOSITION-002.json": {
+   "sha256": "32e5cf9652301b7a889babe7d81e07a162e63e5b296cf354802b8b391548d0f0",
+   "size_bytes": 8031,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-001/end.txt": {
+   "sha256": "39cd31f28df29c04f5f7650001aba0c4668b0e6377fa7091a76f76b2bab24e40",
+   "size_bytes": 21,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-001/exit.txt": {
+   "sha256": "cf205dbb8cea84897b488abcc281bf96698d5e94b1096b16657b4caba9082a22",
+   "size_bytes": 7,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-001/start.txt": {
+   "sha256": "ad6b244512fcdab2e563e50a498cb201d8059dc2235264a9325eb4ed0ffd3ba8",
+   "size_bytes": 21,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-001/status-after.txt": {
+   "sha256": "7cb604e12ac984156d10d14611ff5c8c728a6ad2c2a9b3f95fbd82abc729ff92",
+   "size_bytes": 237,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-001/status-before.txt": {
+   "sha256": "7cb604e12ac984156d10d14611ff5c8c728a6ad2c2a9b3f95fbd82abc729ff92",
+   "size_bytes": 237,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-001/suite.raw.txt": {
+   "sha256": "2b6e66035f2c0f58daaa80deb410f9efb9381a37bc741267fb98c495429eaa7c",
+   "size_bytes": 17426,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-002/digest-mismatches.txt": {
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "size_bytes": 2,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-002/end.txt": {
+   "sha256": "1d1c509622d0b41facd5e7dcdc77b30c347896ffdd0cc091cca2ad6b376d381d",
+   "size_bytes": 21,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-002/exit.txt": {
+   "sha256": "19eaf43821a7660ec323a87c8457bf74823beb296c39f5e01aa8a683aa50f061",
+   "size_bytes": 7,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-002/start.txt": {
+   "sha256": "319597bfb6ab430c3d221b0770e364c9948b756c52377ffda3535a50419253cb",
+   "size_bytes": 21,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-002/status-after.txt": {
+   "sha256": "b9e52401d40f26459cf968c47fa988f7e877accaa0ee3c2de4e56f9df5d25159",
+   "size_bytes": 85,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-002/status-before-copy.txt": {
+   "sha256": "16e61b2c555263b0a15355bc0ea98a5da1f8eb9445472b44bbe14c98cddd9401",
+   "size_bytes": 10,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-002/status-before.txt": {
+   "sha256": "b9e52401d40f26459cf968c47fa988f7e877accaa0ee3c2de4e56f9df5d25159",
+   "size_bytes": 85,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/director/checks/inplace-run-002/suite.raw.txt": {
+   "sha256": "0785f9a4d2833a957af0fee42c34af211bdc8e50dd37b6f836bd3241ac30417e",
+   "size_bytes": 16305,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/TEST-RUN-revised-3.raw.txt": {
+   "sha256": "74796d11b072467cc64bbffa4e20f7631de36897feded5ea754d2fb781dd51af",
+   "size_bytes": 16585,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/TEST-RUN-revised-4.raw.txt": {
+   "sha256": "1f58a7857af3bfde530d3a173fb27689b86ebceb49eef703661c3e30aee316e0",
+   "size_bytes": 16657,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/TEST-RUN-against-rejected-001-3.raw.txt": {
+   "sha256": "a5f82b61aa55c0782f83c45b44b11d5eb3fb441caa1ff3dbb369477ee4995e0d",
+   "size_bytes": 159419,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/TEST-RUN-against-rejected-001-4.raw.txt": {
+   "sha256": "2f1fbeb99d70655612e529adbbc9e0c078624b52963275d9f61682df870598a8",
+   "size_bytes": 159497,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/TEST-RUN-in-place-clone-1.raw.txt": {
+   "sha256": "94f256e3e6469b51a188b0b7058febb9564386e43d884ea11022f04dd94f924b",
+   "size_bytes": 34617,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/helpers-003/header-revised-4.txt": {
+   "sha256": "45190c87b309a813919c19d5e0779168e9903c2dd2c9169b09e14fb8aa407b88",
+   "size_bytes": 808,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/helpers-003/header-rejected-4.txt": {
+   "sha256": "f4f557ce289cb5adf76449a539c67881400898ac38480adeb3798b30a9f065ee",
+   "size_bytes": 3084,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/helpers-003/header-in-place-1.txt": {
+   "sha256": "07cc1f854cdbf700fc9df0f924031d9e37d29b7a8a6205e2d2607a86f5d14edd",
+   "size_bytes": 2215,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/helpers-003/run_suite.py": {
+   "sha256": "f28c9bc7f283879eff8566b2e417cc5ba2704a2d4a6a6fe31f80f8b4dea9a06b",
+   "size_bytes": 1553,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/helpers-003/label.py": {
+   "sha256": "85a64372eb18f014e247a534ffd81f508461bfa4e26baa6ef582c5a75052f053",
+   "size_bytes": 1239,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W2/test-runs/helpers-003/count_starts.py": {
+   "sha256": "a53c664fb37d9b824f98cd9cf1ca3781e362f7baac8df6264a935ae31258992c",
+   "size_bytes": 1417,
+   "mode": "0o644"
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md": {
+   "sha256": "02da913c198118fc356cccdb60e78a3a2fef3b7ba7115d77d794a85f9e22fc49",
+   "size_bytes": 16420,
+   "mode": "0o644"
+  },
+  "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py": {
+   "sha256": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+   "size_bytes": 162557,
+   "mode": "0o644"
+  }
+ },
+ "own_files_at_assembly": {
+  "<local>/c271-p35/workers/W3-tooling-003/scripts/w3r3_analysis.py": {
+   "sha256": "7e7657daca9a2eb7681bd1aaf14b89c7b046aacf1a78bd762fc3b13a3128acb4",
+   "size_bytes": 36509,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/scripts/w3r3_assemble.py": {
+   "sha256": "0c938146c007ac2d330c878e30d3f3802fafee2830f012cb795cf091160aa793",
+   "size_bytes": 28431,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/scripts/w3r3_clone_check.py": {
+   "sha256": "491a89b0d1bb9489f786391036c60db0411138f181d11499df59889b2a756eb7",
+   "size_bytes": 5104,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/scripts/w3r3_common.py": {
+   "sha256": "105ff414fa0ec727a644e529fef6d15a4a34f4e9a10e889fe23e020c598dbe53",
+   "size_bytes": 5312,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/scripts/w3r3_digests.py": {
+   "sha256": "d4b154aeb34d6116c9f62b480829b0f6ef41a5343da443bb1617e40a90ba2b66",
+   "size_bytes": 8490,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/scripts/w3r3_privacy.py": {
+   "sha256": "78c1194a1c1266f79e414903703193449ac5a11136c11612454c4770f249e4b9",
+   "size_bytes": 14171,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/scripts/w3r3_proc.py": {
+   "sha256": "f0ab0a2a2045d49d41a7b34a8a26e243f94c5d6fe1a923fadf55de32d33acad7",
+   "size_bytes": 5927,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/scripts/w3r3_state.py": {
+   "sha256": "0e7ad5bd4cefa544870d14a1cd2f467342b10d05bd3e3b01cb01184338726481",
+   "size_bytes": 10046,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/analysis-summary.txt": {
+   "sha256": "f05cc203b2541ccd3ab38298657f0c4e422258b1ef7073eb432e7b0835f93052",
+   "size_bytes": 14130,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/analysis.json": {
+   "sha256": "fd7c465a08f4795cb60c5c3d183d640f7eb6c80df31b977aa4d25db9f78ab398",
+   "size_bytes": 104312,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/clone-check.json": {
+   "sha256": "4f2320d19631d60593e3dcf39b435b44edbb54d22df8202164b9187f9fc17f67",
+   "size_bytes": 645,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/diffs/AUTHOR-NOTES.md.diff": {
+   "sha256": "12d9295de5332f7804b9c4b679e4d6e5c6876ccf3ed36a808358dfa57d69d6a3",
+   "size_bytes": 7515,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/diffs/SHA256SUMS.txt.diff": {
+   "sha256": "2ba3e0282767b8eb374fbc82f9c7daeec1f97399b137a62f95693ef4d617e0bb",
+   "size_bytes": 1844,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/diffs/tests__TEST-RUN-AGAINST-REJECTED-001.txt.diff": {
+   "sha256": "795dde38f2d0c2a3fee01e589c47a137d56d4c07ba5db4d65256e6ee9b69d060",
+   "size_bytes": 30683,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/diffs/tests__TEST-RUN-IN-PLACE.txt.diff": {
+   "sha256": "ddc02776210680288ab2b6d3e10412a8c0b5c338d7169e0844ce9be0fcb6b7ad",
+   "size_bytes": 35491,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/diffs/tests__TEST-RUN.txt.diff": {
+   "sha256": "290b3f8965d8f1f77272e5dc270c07f78cc4868320469172dab74d9d21c438bd",
+   "size_bytes": 1488,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/diffs/tests__mh_support.py.diff": {
+   "sha256": "c5aeee74326ce7529f9de8333cc264c53efb9bf5943ea72444714adc5777e20f",
+   "size_bytes": 1421,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/diffs/tests__test_run_direct_probe.py.diff": {
+   "sha256": "08bd42c56229994f05caae153c4638bce18eaaa1fed35bb45f1e542a7fd06330",
+   "size_bytes": 1262,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/digests.json": {
+   "sha256": "662175e3881731a992af052399bcafa2252a42d587c87119c611bd2243ea454f",
+   "size_bytes": 97404,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/privacy-delivery.json": {
+   "sha256": "9e634fe2da86fde7eacedf07cfe80a08dadc2e052275d1011160896d923dbbbc",
+   "size_bytes": 9588,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/proc-after-runs.json": {
+   "sha256": "fcd42174123c25ec1aa11c167b97941508126537b78d352232181b4a7da9392d",
+   "size_bytes": 14408,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/proc-baseline.json": {
+   "sha256": "2012d3d507898130ff31546a2248e2cda9f2fed6e1837a5b58d0b1f0d4da645a",
+   "size_bytes": 12785,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/state-compare-before-after.json": {
+   "sha256": "bc0646d9059c53ff5063221a01e69571df975a6acfc75a50fca3923e715e79bf",
+   "size_bytes": 898,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/suite-in-place-clone.labelled.txt": {
+   "sha256": "7b1e057c6af82cf48e72b22bd2a268e4a4ecc7f63fe5f2641766732832295bb3",
+   "size_bytes": 31850,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/outputs/suite-rerun.labelled.txt": {
+   "sha256": "acb8cfe1b80fe9b9b471cadfc269453c39718b85aeeb95951521b7af6ff57fa9",
+   "size_bytes": 16305,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/state/after.json": {
+   "sha256": "cab24c77eeccea9aa944dc8738fbfc95f24b3c21da798d8109ba4c3519d7e59d",
+   "size_bytes": 4239315,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/state/before.json": {
+   "sha256": "0f6e5c13a07a92c2b7a3a0a3462192bdce6b28bf0a690a20e6336d23ab6935fd",
+   "size_bytes": 4239316,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/runs/suite-in-place-clone.end.txt": {
+   "sha256": "d2a9bd5ceeb938797406fb3e4712245344512660a85c850332f2fd2b7e64cc26",
+   "size_bytes": 21,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/runs/suite-in-place-clone.exit.txt": {
+   "sha256": "cf205dbb8cea84897b488abcc281bf96698d5e94b1096b16657b4caba9082a22",
+   "size_bytes": 7,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/runs/suite-in-place-clone.raw.txt": {
+   "sha256": "6ac14a3c308903f8f8aba9a16dc734ab34debc0adf096ae14d3e84da59a1c5e7",
+   "size_bytes": 33341,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/runs/suite-in-place-clone.start.txt": {
+   "sha256": "6b6c1b5fe3094c125d4c833163fdca3ea2c7b18e0e5a2504e383bf0078adb16d",
+   "size_bytes": 21,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/runs/suite-rerun.end.txt": {
+   "sha256": "d1305b03982660f1a90b143d634d4e76f844c952802120b8db62c47d2d9ffac7",
+   "size_bytes": 21,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/runs/suite-rerun.exit.txt": {
+   "sha256": "19eaf43821a7660ec323a87c8457bf74823beb296c39f5e01aa8a683aa50f061",
+   "size_bytes": 7,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/runs/suite-rerun.raw.txt": {
+   "sha256": "acb8cfe1b80fe9b9b471cadfc269453c39718b85aeeb95951521b7af6ff57fa9",
+   "size_bytes": 16305,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/runs/suite-rerun.start.txt": {
+   "sha256": "3556016b538cf37a5966b1a97ca09dc1636dee28b7c0f51a1fd9acc21f0d7693",
+   "size_bytes": 21,
+   "mode": "0o644"
+  },
+  "<local>/c271-p35/workers/W3-tooling-003/TOOLING-REVIEW-003.md": {
+   "sha256": "315a467a920917b027a06d53b4e9fd3986d9ecec1e7ab6d0e973981bed61382b",
+   "size_bytes": 35174,
+   "mode": "0o644"
+  }
+ }
+}

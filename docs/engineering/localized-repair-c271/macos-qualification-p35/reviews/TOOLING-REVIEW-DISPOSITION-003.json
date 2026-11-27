@@ -1,0 +1,112 @@
+{
+  "schema": "ontokin.c271.p35-review-disposition/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "recorded_at_utc": "2026-11-27T04:12:55Z",
+  "review": {
+    "record": "TOOLING-REVIEW-003.md",
+    "structured": "TOOLING-REVIEW-003.json",
+    "sha256": {
+      "TOOLING-REVIEW-003.md": "315a467a920917b027a06d53b4e9fd3986d9ecec1e7ab6d0e973981bed61382b",
+      "TOOLING-REVIEW-003.json": "00f2a4f1518d3597a47745f0f29170f9ebb1b8a74a6bbf2e6f7b25a5006e092a"
+    },
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; it took no part in reviews 001 and 002, which it read only as documents",
+    "launched_at_utc": "2026-11-27T03:23:15Z",
+    "written_at_utc": "2026-11-27T04:10:00Z, the modification time of the structured record (the Markdown record's is 04:09:51Z)",
+    "subject": "The change from revision 2 to revision 3 of the tooling, which corrects IP-01: 21 files, every digest matching W2's SHA256SUMS.txt",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS"
+  },
+  "director_checks": [
+    "Read the verdict and the three findings with their locations.",
+    "The review's list of reviewed files holds the 21 files of tooling/ with exactly the paths and SHA-256 values of W2's SHA256SUMS.txt of revision 3. After the review, W2's files still verify, with 0 mismatches.",
+    "Before the review, the Director verified that revision-002/ equals the list that review 002 reviewed (20 of 20), that revision 3 verifies 21 of 21 with no unlisted file, and that exactly five test-side files differ from revision 2: tests/mh_support.py, tests/test_run_direct_probe.py, the two earlier run records, and the new TEST-RUN-IN-PLACE.txt. The search for private strings derived at run time finds nothing in revision 3 or in the two records of review 003, apart from the known false positive of joined constants."
+  ],
+  "dispositions": [
+    {
+      "id": "TR3-01",
+      "severity": "nonmandatory",
+      "disposition": "Adopted now. The commands of the Director's runs 001 and 002 are recorded below and in a COMMAND.json beside each run's output, reconstructed from the Director's session transcript, which holds the exact command. Run 003, made at the committed place immediately before commit C, recorded its own working directory, argv and environment as it ran."
+    },
+    {
+      "id": "TR3-02",
+      "severity": "nonmandatory",
+      "disposition": "Recorded here, without a change to the reviewed bytes. Section 8 of authoring/TOOLING-AUTHOR-NOTES.md supersedes section 1's run times and file list, as the notes' header says. Any citation of the notes says so."
+    },
+    {
+      "id": "TR3-03",
+      "severity": "nonmandatory",
+      "disposition": "Carried to the S6 freeze. Every --root and every bound path is given in its on-disk spelling, as the observation plan binds the worktree, and the freeze's review checks it. A code change belongs to a later implementation phase."
+    }
+  ],
+  "director_in_place_runs": [
+    {
+      "id": "inplace-run-001",
+      "tooling": "revision 2, 20 files, uncommitted at the committed place, every digest equal",
+      "started_utc": "2026-11-27T03:06:20Z",
+      "ended_utc": "2026-11-27T03:06:34Z",
+      "result": "exit 1, 90 of 91; the failure is IP-01 (disposition 002)",
+      "output_sha256": "2b6e66035f2c0f58daaa80deb410f9efb9381a37bc741267fb98c495429eaa7c"
+    },
+    {
+      "id": "inplace-run-002",
+      "tooling": "revision 3, 21 files, uncommitted at the committed place, every digest equal",
+      "started_utc": "2026-11-27T03:22:15Z",
+      "ended_utc": "2026-11-27T03:22:30Z",
+      "result": "exit 0, 91 of 91",
+      "output_sha256": "0785f9a4d2833a957af0fee42c34af211bdc8e50dd37b6f836bd3241ac30417e"
+    },
+    {
+      "id": "inplace-run-003",
+      "tooling": "revision 3, 21 files, at the committed place with the other files of commit C, every digest equal (checked by the same shell immediately before the run)",
+      "started_utc": "2026-11-27T04:12:12Z",
+      "ended_utc": "2026-11-27T04:12:26Z",
+      "result": "exit 0, 91 of 91",
+      "output_sha256": "8f45d8d5b58c657a4333083410983d4117f04acb0591acdb4b83c9e359c974b6"
+    }
+  ],
+  "in_place_command": {
+    "cwd": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling",
+    "argv": [
+      "env",
+      "-i",
+      "PATH=/usr/bin:/bin",
+      "LANG=C.UTF-8",
+      "TMPDIR=<tmp>/",
+      "<worktree>/.venv/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "environment_names": [
+      "PATH",
+      "LANG",
+      "TMPDIR"
+    ],
+    "not_set": [
+      "MH_TOOLING_ROOT",
+      "MH_TOOLING_UNDER_TEST",
+      "HOME",
+      "PYTHONDONTWRITEBYTECODE"
+    ],
+    "same_for": [
+      "inplace-run-001",
+      "inplace-run-002",
+      "inplace-run-003"
+    ],
+    "each_run": "From the same Bash call: the worktree's status before and after, which was unchanged; no bytecode in the worktree, the .venv or the interpreter's installation; no process left; the temporary directory empty afterwards. The raw outputs and records stay beside the clone in ../OntoKin-local/c271-p35/director/checks/."
+  },
+  "accepted_tooling": {
+    "location": "docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/",
+    "files": 21,
+    "sha256_list": "authoring/TOOLING-SHA256SUMS.txt is W2's SHA256SUMS.txt of revision 3, with paths relative to tooling/; SHA-256 a4e62b8684a1a1b70e810d9d2873b4eb8ffc67597d1e287749bf7e51c7607424",
+    "author_notes": "authoring/TOOLING-AUTHOR-NOTES.md is W2's AUTHOR-NOTES.md of revision 3; SHA-256 1789e6aca8b3a9fe845d060a549805daeb69531b2811e5253e389569fd59cd1a",
+    "earlier_versions": "Kept unchanged beside the clone, in ../OntoKin-local/c271-p35/workers/W2/: rejected-001/ (the first version, which review 001 rejected) and revision-002/ (revision 2, which review 002 accepted before IP-01). Their SHA256SUMS lists have SHA-256 d0b77df70a225f2cbbf02935d32c17b95a6449ff486e68a67b06644a4d29b4cf and c45d150ec4ef7d14c996e88fa9050a4a8a09511946fbdc766dbef3ab8b3d8137."
+  },
+  "acceptance": "A3: the tooling has a review without mandatory findings, and its suite passes at the committed place. Revision 3 is committed unchanged at commit C, whose history holds the N34-M records (c81cf07b). A3 is met once commit C is pushed and read back.",
+  "next": "Commit C, pushed and read back. Then S4: W2 writes the observation plan at C, outside Git, and a fresh W3 reviews it."
+}

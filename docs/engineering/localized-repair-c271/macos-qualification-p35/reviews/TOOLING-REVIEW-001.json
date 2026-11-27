@@ -1,0 +1,659 @@
+{
+ "answers": {
+  "Q1": "Each piece corresponds to MH-PLAN section 4 and P07 sections 3-6, with defects TR-01..TR-03, TR-05 and nonmandatory TR-06..TR-18. None is a general runner, changes a test, implementation, contract, amendment or frozen control, or redesigns the result protocol; scan_mc11's process-creation set is wider than the frozen rule (TR-12).",
+  "Q10": "Rerun once: 48 of 48 ok, identical IDs and start counts (75 / 4 / 2), no new file or bytecode. Coverage gaps (TR-18); one test asserts TR-03's behaviour.",
+  "Q2": "Same discovery as the unit stage (argv parsed from check_local.py line 449; start tests, pattern test*.py, implicit top; unittest.TestLoader; root as cwd and sys.path[0]; -B; no -I/-S/-E/-P). Reproduced: 5,994 IDs in 388 modules, order digest 32b2b861..., all 407 additions present, 5,994 - 407 = 5,587. Comparison exact by sets with missing and extra; duplicates taken from the documents (TR-07). Refusal of process creation sound for audited events (TR-08). In place it refuses (TR-01).",
+  "Q3": "Runs the complete module unchanged; keeps every planned raw ID, outcome and class-level event, except a skip inside a subTest (TR-09); no non-pass becomes a pass. Environment: the driver's removal list, PYTHONDONTWRITEBYTECODE=1, PYTHONNOUSERSITE=1, both selection variables, and an exact frozen environment; the provider's _check_python mirrored exactly. T-05 right. Blocked in place (TR-01).",
+  "Q4": "One start per row through the real Darwin run_process compiled from verified bytes; keeps stdout, stderr, exit, receipt and started record; counts by P07 section 4. Predicates insufficient (TR-02, TR-03, TR-10). T-03 right. It can start Node for a row whose fixtures differ (TR-03).",
+  "Q5": "Independent (standard library only) and faithful to the probe's lines 749-821 and the test's 119-161: inventory of 2,060 rows, differences, thresholds (5e-6 for [0..2][3], positions and bounds; 1e-6 otherwise), decisions, completeness, no duplicates, order; Q01/Q03 pass every row; the negative has exactly one failed row and finding at left/base matrix_0_3. T-10's 1e-9 bound is sound for these fixtures. Retained bounds and vertices not recomputed (TR-15).",
+  "Q6": "Covers child_process, worker_threads, cluster, Worker, dlopen, process.binding (raw only), _linkedBinding, internalBinding, execve, computed require/import, createRequire, Module._load, module.constructor and process.mainModule (dot forms), vm, eval and Function; misses binding names, bracket forms, receiver-qualified and parenthesized calls (TR-11); wasi is not a process route. Real files: none_found, equal to W2's scan; one missed call shape in the validator preamble. Links and inventory handling sound. The module loader is correctly tools/three_loader.mjs, one of the 24.",
+  "Q7": "T-01 acceptable as a stated, labelled substitution; T-02's claim right with a nuance; the recorder cannot let a real start through; host-state and T-08 right.",
+  "Q8": "Complete for refused, failed and unknown outcomes; no retry; absence by ESRCH only, never by name; presence handling unsafe (TR-05); probe code not fixed (TR-16).",
+  "Q9": "Node only from frozen rows and the cohort's provider; Git only as the provider's HOST-bound reads (T-07); no ldd or codesign. Writes only outputs and by-design evidence; -B enforced except in three entry points (TR-17). One public file leaks private strings (TR-04). discover and mc29 record ambient environments, and the hooks record children's (TR-06)."
+ },
+ "digest_check": {
+  "bytecode": 0,
+  "links": 0,
+  "listed": 17,
+  "mismatches": 0,
+  "record": "digests.json",
+  "unlisted": 0
+ },
+ "findings": [
+  {
+   "change": "Admit exactly the running tool's own __main__ (realpath equal to its __file__), record it, keep refusing every other preloaded root module; add an in-place test for each tool.",
+   "effect": "The collector cannot run the cohort as its README launches it (the provider's root must be the worktree); the runner and the current discovery refuse with --root <worktree>. Fail-closed, but S7 would stop; a byte-identical copy outside the worktree would be an unstated path change against P07 section 3.",
+   "evidence": "discover_inventory.py run from that path inside a verified copy, --root the copy: exit 2, REFUSED, rule PYTHON, modules ['__main__'] (discovery-inplace-w3.json); the collector and runner hold the same check.",
+   "id": "TR-01",
+   "issue": "Each tool refuses when a module of --root is already loaded; the tool itself is sys.modules['__main__'] and lies under the root once the tooling sits in docs/.../macos-qualification-p35/tooling/ and --root is the worktree.",
+   "location": [
+    "tooling/discover_inventory.py:354-358",
+    "tooling/collect_outcomes.py:635-639",
+    "tooling/run_direct_probe.py:374-380",
+    "tooling/README.md:74-76,155-157"
+   ],
+   "severity": "mandatory",
+   "title": "Three tools refuse to run from their committed place against the worktree"
+  },
+  {
+   "change": "Add the expected supervisor error to each row (exactly 'Child exited with status N' with code OTRAY-E-BACKEND and state REJECTED for N != 0; null for 0), require equality for the raised Stop and the receipt's error; test with a descendant-leaving stand-in and a staged link.",
+   "effect": "A row that exits with the expected status and text is COMPLETED and met although the supervisor refused it: a failed run shown as a pass.",
+   "id": "TR-02",
+   "issue": "expectation_met checks exit status, substrings and paths but not supervisor_failure or the receipt's error. After the child exits, the supervisor can raise a remaining-descendant Stop, an inventory Stop (link, non-private file, byte ceilings, 2,048 entries), a deadline Stop, a log-ceiling Stop or a converted KeyboardInterrupt, each with the child's real returncode and usually a passed cleanup.",
+   "location": [
+    "tooling/run_direct_probe.py:510-519,545-551,570-573",
+    "<worktree>/prototypes/static_tray_v01/supervisor_darwin_v01.py:188-206"
+   ],
+   "severity": "mandatory",
+   "title": "The direct-probe runner ignores the supervisor's own refusal"
+  },
+  {
+   "change": "Require every file_includes and present_paths target absent at intent; add each row's frozen input descriptors and the stage's exact entry set, verified immediately before the start; change the test.",
+   "effect": "A failed or unfrozen run can be recorded as met; a Node start can be made on unfrozen fixtures.",
+   "id": "TR-03",
+   "issue": "A file_includes or present_paths target that exists before the start satisfies the predicate. With a stale probe.json in MC36's stage, the probe refuses at approvedEnvelope ('output freshness') on stderr with exit 1, and the stale file meets MC36's predicate; W2's test asserts a row met from a pre-existing probe.json. The rows schema has no input descriptors (P07 section 3 item 7), so Node can start on unfrozen job, configuration, manifest, HOST-copy, GLB or reference bytes.",
+   "location": [
+    "tooling/run_direct_probe.py:408,449-452,561-569",
+    "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs:644-645",
+    "tooling/tests/test_run_direct_probe.py:93-107"
+   ],
+   "severity": "mandatory",
+   "title": "File predicates are not tied to the start, and a row's fixtures are not bound"
+  },
+  {
+   "change": "Derive the forbidden strings at run time (home directory, account name, path components, sys.base_prefix ancestors); commit none.",
+   "evidence": "privacy-scan-w3.json: no other file of tooling/ holds such a string, plain or split.",
+   "id": "TR-04",
+   "issue": "FORBIDDEN holds, each split into two string literals, the package manager's name, two parts of the account name, and the volume and folder names; they are plainly readable, and tooling/ is public.",
+   "location": [
+    "tooling/tests/test_zz_hygiene.py:19-21"
+   ],
+   "severity": "mandatory",
+   "title": "Private strings in a public test file"
+  },
+  {
+   "change": "Signal only after identity is established (proc_pidinfo PROC_PIDTBSDINFO start time within the intent-to-started window, proc_pidpath equal to argv[0]); otherwise record 'present, identity not established', send nothing, keep the outcome unknown. The procedure is bound at S4, so before commit C.",
+   "id": "TR-05",
+   "issue": "Presence is a successful or EPERM probe of a recorded PID or group; after the recorded child exits and is reaped its PID can be reused, and killpg then reaches an unrelated group of the same user. FC-P3's start-time rule names no way to read the kernel's start time, and the records hold no comparable one.",
+   "location": [
+    "tooling/FAILURE-CAPTURE.md:97-105 (FC-P3)",
+    "tooling/FAILURE-CAPTURE.md:112-114 (FC-P6)"
+   ],
+   "severity": "mandatory",
+   "title": "FAILURE-CAPTURE FC-P6 signals a recorded group without establishing identity"
+  },
+  {
+   "change": "Enforce an exact frozen environment or record names only; launch both under env -i in S6; keep HOME out of frozen environments (the collector writes the observed environment into outcomes.json).",
+   "id": "TR-06",
+   "issue": "discover and mc29 write dict(os.environ) and enforce no exact environment; the audit hooks write every child's environment values (in mc29 each Git child inherits the harness's environment).",
+   "location": [
+    "tooling/discover_inventory.py:359",
+    "tooling/control_harness.py:593,602",
+    "describe_process_event in each tool"
+   ],
+   "severity": "nonmandatory",
+   "title": "Ambient environments are recorded"
+  },
+  {
+   "change": "Recompute duplicates and counts from ids_in_discovery_order for both inputs; derive the flag from the add() body.",
+   "id": "TR-07",
+   "issue": "Duplicates and counts come from each document; baseline duplicates and states are not checked; the -B of build_plan is asserted, not derived.",
+   "location": [
+    "tooling/discover_inventory.py:283,427-438,472-478"
+   ],
+   "severity": "nonmandatory",
+   "title": "The comparison trusts the discovery documents' own fields"
+  },
+  {
+   "change": "State the limit in README and FAILURE-CAPTURE; optionally record ctypes.dlsym of fork, vfork, posix_spawn, execve and system.",
+   "id": "TR-08",
+   "issue": "_posixsubprocess.fork_exec (multiprocessing spawn and forkserver) and ctypes calls raise none of the listed events.",
+   "location": [
+    "PROCESS_EVENTS in each tool",
+    "<prefix>/.../lib/python3.12/multiprocessing/util.py:456"
+   ],
+   "severity": "nonmandatory",
+   "title": "The audit hook's blind spots are not stated"
+  },
+  {
+   "change": "Keep unplanned events by name; require --module-sha256; compare the digests or state that the audit does.",
+   "id": "TR-09",
+   "issue": "A skip inside a subTest is keyed by the subtest's ID and dropped from outcomes.json (kept in the journal; the parent reads unknown); --module-sha256 is optional; body digests are not compared with ORIGINAL_BODIES; ambient GIT_* names in a frozen environment are not refused.",
+   "location": [
+    "tooling/collect_outcomes.py:558-560,630-631,687-709"
+   ],
+   "severity": "nonmandatory",
+   "title": "Collector details"
+  },
+  {
+   "change": "Record kern.bootsessionuuid before and after each row; add exact and absence predicates; refuse shared stages; S6 orders MC30-probe before MC36.",
+   "id": "TR-10",
+   "issue": "No boot identity per row; no exact or negative predicates (stdout empty, probe.json passed false, no khronos member); rows may share a stage; json_bytes identity check lacks 'is not None'; MC36's dependence on MC30-probe is expressible only by order with rows_independent false.",
+   "location": [
+    "tooling/run_direct_probe.py:373,437-456"
+   ],
+   "severity": "nonmandatory",
+   "title": "Runner details"
+  },
+  {
+   "change": "Apply every pattern to every view; add binding names and bracket forms; flag any require that is not a plain call or declaration. The reviewer adds 'url' and reviews the preamble.",
+   "id": "TR-11",
+   "issue": "process.binding is excluded from the decoded and joined views; spawn_sync and process_wrap are not searched; module-loading patterns match dot forms only; CALLS skips receiver-qualified and parenthesized calls. The validator preamble's (...:require)('url') is absent from its specifier list (empty), and self.require=require exposes require.",
+   "location": [
+    "tooling/scan_mc11.py:70,79-82",
+    "<local>/c271-macos/reader-c195/validator/package/gltf_validator.dart.js:1"
+   ],
+   "severity": "nonmandatory",
+   "title": "MC11 scan coverage, with one concrete miss on the real files"
+  },
+  {
+   "change": "Report the frozen rule's verdict separately; require a reviewed status and reviewer identity.",
+   "id": "TR-12",
+   "issue": "none_found counts more patterns than MI's mc11_rule; load_reviewed ignores status, so W2's candidate list ('CANDIDATE, NOT REVIEWED') would make MC11 exit 0.",
+   "location": [
+    "tooling/scan_mc11.py:64-73,546-551",
+    "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-FROZEN.json:5248-5256"
+   ],
+   "severity": "nonmandatory",
+   "title": "The scanner's verdict is wider than the frozen rule, and an unreviewed list passes"
+  },
+  {
+   "change": "Add a test that reaches PYTHON-MODULE with and without the exclusion; open with O_NOFOLLOW.",
+   "id": "TR-13",
+   "issue": "The tests refuse at check_source, before check_loaded_modules runs; attempt_listing opens files without O_NOFOLLOW.",
+   "location": [
+    "tooling/tests/test_control_harness.py:158-170",
+    "tooling/control_harness.py:462-472,506-513"
+   ],
+   "severity": "nonmandatory",
+   "title": "The mc10 exclusion is untested; the attempt listing follows links"
+  },
+  {
+   "change": "List the Git reads as recorded, unbounded starts (about 60 per cohort, about 15 or 25 per mc29 case); state MC29's scope; give each mc29 case its own configuration copy at its own path.",
+   "id": "TR-14",
+   "issue": "MH-PLAN section 7 lists the provider's Git reads neither as bounded nor as uncounted starts; a real source change for MC29 is possible through a derived workspace; mc29 appends to the configuration it is given and cannot tell a copy from the cohort's.",
+   "severity": "nonmandatory",
+   "title": "S6 obligations from T-02, T-07 and T-11"
+  },
+  {
+   "change": "Recompute bounds from retained vertices (and optionally vertices from positions and world_matrix); keep T-10's bound or derive it from Q01's own difference.",
+   "id": "TR-15",
+   "issue": "world_bounds and world_vertices are taken as the probe retained them.",
+   "location": [
+    "tooling/audit_numeric.py:332-347"
+   ],
+   "severity": "nonmandatory",
+   "title": "Retained bounds and vertices are not recomputed"
+  },
+  {
+   "change": "Bind the probe's exact text or file; name the process.",
+   "id": "TR-16",
+   "issue": "FC-P3's probe code is described, not fixed; FC-K5 does not say which process computes the listing.",
+   "location": [
+    "tooling/FAILURE-CAPTURE.md FC-P3, FC-K5"
+   ],
+   "severity": "nonmandatory",
+   "title": "Procedure parts not fixed"
+  },
+  {
+   "change": "Refuse without -B, as N-09 asks of every start.",
+   "id": "TR-17",
+   "issue": "They accept a start without -B; observed: every framework module they import has cached bytecode or is frozen (stdlib-bytecode-check.json), so nothing would be written today.",
+   "location": [
+    "tooling/scan_mc11.py",
+    "tooling/audit_numeric.py",
+    "tooling/discover_inventory.py compare"
+   ],
+   "severity": "nonmandatory",
+   "title": "Three entry points do not require -B"
+  },
+  {
+   "change": "Add tests with each mandatory fix that fail on today's code; change the stale-file test.",
+   "id": "TR-18",
+   "issue": "No test of the in-place layout, a non-exit-status supervisor Stop, an interrupted runner row, mc10's exclusion, a subtest skip, or a duplicate inside a baseline; one test asserts TR-03's behaviour.",
+   "severity": "nonmandatory",
+   "title": "Test coverage"
+  }
+ ],
+ "gate": "MH",
+ "mandatory": [
+  "TR-01",
+  "TR-02",
+  "TR-03",
+  "TR-04",
+  "TR-05"
+ ],
+ "nonmandatory": [
+  "TR-06",
+  "TR-07",
+  "TR-08",
+  "TR-09",
+  "TR-10",
+  "TR-11",
+  "TR-12",
+  "TR-13",
+  "TR-14",
+  "TR-15",
+  "TR-16",
+  "TR-17",
+  "TR-18"
+ ],
+ "outputs": {
+  "TOOLING-REVIEW-001.md": {
+   "sha256": "40377ef3cd60f66204753f03988513258b506e9bf69d9b492c054829160984c0",
+   "size_bytes": 41670
+  },
+  "analyze_discovery.py": {
+   "sha256": "d4ac4d0e2b4ef9e30e73cfe31793b7e7b918f701f287baa0c8a23862ce8834da",
+   "size_bytes": 3744
+  },
+  "assemble_review_json.py": {
+   "sha256": "898c0fb4bbf471554ab557383368491986134c6d35f45b94d947a3a2143c06cf",
+   "size_bytes": 27459
+  },
+  "compare_scans.py": {
+   "sha256": "c62c6b817c35d87fd878cba2ae083ac56707767c9a98c43508f2951854a35bef",
+   "size_bytes": 1538
+  },
+  "copy-verification.json": {
+   "sha256": "07628f171f4f531cdc6929281fd5fb2cdbebbe3bb7864b1e54a551c489f103cc",
+   "size_bytes": 194
+  },
+  "devruns-summary.json": {
+   "sha256": "bfec1aeb0ea58e9fc61af2bbc0abfb517b3d08c56c55b6e7a612e23203d2f326",
+   "size_bytes": 5610
+  },
+  "digests.json": {
+   "sha256": "960f0a936bfdbbe6e3c9556e66e667bab3ecf8e1877bacb751d6eca85d33eea1",
+   "size_bytes": 5266
+  },
+  "discovery-analysis.json": {
+   "sha256": "611b4e061dceb9024a0970c4abdc60d8d8d6eb941618630238d5537fb1672bcf",
+   "size_bytes": 2643
+  },
+  "discovery-copy-w3.json": {
+   "sha256": "ab197c2fac538e908d714b2214fb733a2782f4c45150f1776b412e987dac2dc1",
+   "size_bytes": 858032
+  },
+  "discovery-inplace-w3.json": {
+   "sha256": "afbce269c458600a0c78f862c15ffafc7f60a810e107347fb5942cfc8803220d",
+   "size_bytes": 1943
+  },
+  "discovery-inplace-w3.stderr.txt": {
+   "sha256": "bd796e60038d0b885ba031d70000c740f277506d1473dbe829d13bcaf44e5d66",
+   "size_bytes": 1751
+  },
+  "extended-scan-w3.json": {
+   "sha256": "1c7210d2b9814f554e1726b499bbfb7c18acbb4cc853580c761fb5671f241c3b",
+   "size_bytes": 11288
+  },
+  "extended_scan.py": {
+   "sha256": "04db9abd38b4e299b8eb629b562d3283e3cfa3b6a076615d5e5ca9c59d499787",
+   "size_bytes": 5326
+  },
+  "inspect_devruns.py": {
+   "sha256": "05c2d384bf3aff04ae527df72a4b1eea0d8b51809582a8b6c1b4a6aa3d6f1fdf",
+   "size_bytes": 5692
+  },
+  "mc11-scan-comparison.json": {
+   "sha256": "90714fb729fac4048f289e0e55c5fc2ea56354bde8a0e636e9d4228ed9a73591",
+   "size_bytes": 569
+  },
+  "mc11-scan-w3.json": {
+   "sha256": "428b31991318fe60c88735c89c7fc18ca2eed9af9426b23b653da5aafee67cfd",
+   "size_bytes": 191164
+  },
+  "privacy-scan-w3-coarse.json": {
+   "sha256": "6993f64de38180127297063a25b06d441a8c796d50a3c8e83d4c9fa7979a0f2d",
+   "size_bytes": 7886
+  },
+  "privacy-scan-w3.json": {
+   "sha256": "f27d91901c33af0089366ec308b3c2a08077a3fd70a046b63c9af0e6fa52f136",
+   "size_bytes": 2194
+  },
+  "privacy_scan.py": {
+   "sha256": "f400d5c128a099ed1608778228464d999ec5b05da0397e5c048bf3772d1f3354",
+   "size_bytes": 3036
+  },
+  "require-contexts-w3.json": {
+   "sha256": "64894a42bafe2072cf987d2dd8a72d4b965664c5494fcc7342a35dfe2cf84c83",
+   "size_bytes": 75653
+  },
+  "require_contexts.py": {
+   "sha256": "ec858a12a09c552531384121f6b8bc1d7873d619bc9f3a1f2466d098f28b3b45",
+   "size_bytes": 2774
+  },
+  "stdlib-bytecode-check.json": {
+   "sha256": "b273f5650c059a931150d8d6945bd5c74370ae1d2200e916f061bfd1cbd575aa",
+   "size_bytes": 256
+  },
+  "stdlib_bytecode_check.py": {
+   "sha256": "013de94339cde7a1c944a8e6bd6f33879764bcf66e5e3d3c05b85689b61a9d5d",
+   "size_bytes": 1813
+  },
+  "test-rerun-exit.txt": {
+   "sha256": "19eaf43821a7660ec323a87c8457bf74823beb296c39f5e01aa8a683aa50f061",
+   "size_bytes": 7
+  },
+  "test-rerun-output.txt": {
+   "sha256": "8d318d9a3d9db0cc8d2615e488592a5af8690a5247b39cb86dad54be970df940",
+   "size_bytes": 7645
+  },
+  "test-rerun-start-utc.txt": {
+   "sha256": "04553f8521ce440657893f240b776b4aeb1c0113ff1fbc2c901c72145a1b5bc1",
+   "size_bytes": 21
+  },
+  "verify_copy.py": {
+   "sha256": "fd2f69935748334c8f3f2f879d7c7df73e970ea0ca708092f2c46519b48fbf16",
+   "size_bytes": 3064
+  },
+  "verify_digests.py": {
+   "sha256": "09c9a4becc2e7fd432b351fb45f54ba0117d2cc31d45161ac95570e5797366d7",
+   "size_bytes": 3156
+  }
+ },
+ "phase": "C271-P35",
+ "review": "TOOLING-REVIEW-001",
+ "reviewed_files": {
+  "<local>/c271-macos/reader-c195/tools/three_loader.mjs": {
+   "sha256": "927190e6d34940b2c7f9586c72459c24dc5fad497268bded628acd459ec9235e",
+   "size_bytes": 564
+  },
+  "<local>/c271-macos/reader-c195/validator/package/gltf_validator.dart.js": {
+   "sha256": "b73a7b2d455ac217567725138b46d826a13d7d1bb0c88c15f7c571bfb349298c",
+   "size_bytes": 307792
+  },
+  "<local>/c271-p34/plans/reader-install-plan.json": {
+   "sha256": "ff5a95da6d349e0bd6ea1d2c79fc02757de48ac9cbb89dc59737b67c6d7a71c8",
+   "size_bytes": 158115
+  },
+  "<local>/c271-p35/workers/W2/AUTHOR-NOTES.md": {
+   "sha256": "319ed338689f9f378d387b35efe1968266cac7c42edf97ac3f1e4b5f3c9dd145",
+   "size_bytes": 15791
+  },
+  "<local>/c271-p35/workers/W2/SHA256SUMS.txt": {
+   "sha256": "d0b77df70a225f2cbbf02935d32c17b95a6449ff486e68a67b06644a4d29b4cf",
+   "size_bytes": 1503
+  },
+  "<local>/c271-p35/workers/W2/dev-runs/discovery-tree-copy-2.json": {
+   "sha256": "4b9022c9c0387b111d44e7afa3aac34640dacf7493cbfabd895eadb90fd913eb",
+   "size_bytes": 857806
+  },
+  "<local>/c271-p35/workers/W2/dev-runs/discovery-tree-copy.json": {
+   "sha256": "8c6145a9d1beb7affb0048d215f3d1cd4eb9b57b08544809ddd15d89f62455cf",
+   "size_bytes": 1105108
+  },
+  "<local>/c271-p35/workers/W2/dev-runs/mc11-candidate-reviewed-list.json": {
+   "sha256": "ec7ff39fdfd0026ef48d5095400766d1e2c1667ce40d6205b46250fab0537f45",
+   "size_bytes": 34851
+  },
+  "<local>/c271-p35/workers/W2/dev-runs/mc11-dev-scan-1.json": {
+   "sha256": "eb841dedc0ab12b6e85aaff3dd19a08bf953e052727d49ad434f111d7c40b9a0",
+   "size_bytes": 191126
+  },
+  "<local>/c271-p35/workers/W2/dev-runs/mc11-dev-scan-2.json": {
+   "sha256": "3765697a458ff6492a20318472072f088e41db1bedb55bd32d41f1f874f26c47",
+   "size_bytes": 191126
+  },
+  "<local>/c271-p35/workers/W2/dev-runs/python-inventory-after-W2.json": {
+   "sha256": "c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633",
+   "size_bytes": 776209
+  },
+  "<local>/c271-p35/workers/W2/tooling/FAILURE-CAPTURE.md": {
+   "sha256": "804e0ae705d7f9a7111fa8eaad09d0159d181e2d5384ab420bab36e72fc4235f",
+   "size_bytes": 9898
+  },
+  "<local>/c271-p35/workers/W2/tooling/README.md": {
+   "sha256": "c81f2110e734355f0a77fc193c4f6348e49b78515e1de091a865a68ca5724f03",
+   "size_bytes": 23957
+  },
+  "<local>/c271-p35/workers/W2/tooling/audit_numeric.py": {
+   "sha256": "5918ea594329222dffcd8edde63e01cb4cbbea609522cc1aadadd15cc08d3745",
+   "size_bytes": 35248
+  },
+  "<local>/c271-p35/workers/W2/tooling/collect_outcomes.py": {
+   "sha256": "69ded87a4f723a9c06747b029b0db6113f2325fcea0e0c6c0ea5cfe1e77e26a0",
+   "size_bytes": 40607
+  },
+  "<local>/c271-p35/workers/W2/tooling/control_harness.py": {
+   "sha256": "708c9be021c15388c98907c214b932bab7119dfcdb6d95e8bd247aa1928500ec",
+   "size_bytes": 44120
+  },
+  "<local>/c271-p35/workers/W2/tooling/discover_inventory.py": {
+   "sha256": "f9a7b25fcf083ab25fddd6c0436f225951ad226a7442ffb3aefde04e8f08762e",
+   "size_bytes": 27386
+  },
+  "<local>/c271-p35/workers/W2/tooling/run_direct_probe.py": {
+   "sha256": "68214ffec390467bf38084ceecd9632288a4c8ce62d7b1a2f26ef7016a2a532a",
+   "size_bytes": 38151
+  },
+  "<local>/c271-p35/workers/W2/tooling/scan_mc11.py": {
+   "sha256": "23720761846b6fff07dad31afa67e2ff6d5ac5a1eb320d859a50b7de88e73c70",
+   "size_bytes": 31917
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/TEST-RUN.txt": {
+   "sha256": "1d07f31570ae12d09a3552d84eabe4410eb2235ba48680c115ff0e80dca26fd9",
+   "size_bytes": 8122
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py": {
+   "sha256": "1276b5126af5d8ec310124040fae45b3355a83b209fca6c7793fe977ad366e58",
+   "size_bytes": 4703
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_audit_numeric.py": {
+   "sha256": "22e1684a9fe1e1f6745b33dea478b2dab17dbb1a657c2a9591f99a21d279a3c6",
+   "size_bytes": 14463
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py": {
+   "sha256": "efe408f971c66688ff6008e25a5c870ab05248138b9c9ec4a73efe6939103289",
+   "size_bytes": 15146
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py": {
+   "sha256": "4e57ac3dbd86025da5dbf4e26d074d4a02cf8df5d8953f5d8ef81fad3b0c256d",
+   "size_bytes": 21266
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py": {
+   "sha256": "224dfb58852425c568ca078df45e9906a8bf9964d837e09ea00f9bc38eee0b6a",
+   "size_bytes": 11093
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py": {
+   "sha256": "0ce2a99fc536638571b5f02dcd37e74117988f543f67a3449f5740446cf87b23",
+   "size_bytes": 9169
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py": {
+   "sha256": "80e531dc824957d246d3b41b4ea7c7b7f54d863ce44452b6106929b2b2d98664",
+   "size_bytes": 7914
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py": {
+   "sha256": "d537e914e5cd3fa1c14d675ec27e36d301517e113384ae14b523f102e46ca697",
+   "size_bytes": 3096
+  },
+  "<prefix>/.../Python.framework/Versions/3.12/lib/python3.12/multiprocessing/util.py": {
+   "sha256": "6752c4515ec69f82e9df64e017da490c3754e51d818c270ea1ad2d64e09268be",
+   "size_bytes": 14261
+  },
+  "<prefix>/.../Python.framework/Versions/3.12/lib/python3.12/subprocess.py": {
+   "sha256": "85d29b2bf0249f5436838298c9a60ee93508b1102e9ac43b001f8a7e7ae8f375",
+   "size_bytes": 88747
+  },
+  "<prefix>/.../Python.framework/Versions/3.12/lib/python3.12/unittest/case.py": {
+   "sha256": "45bac6d80a4fc3a0dea8340a80681e30b263f017b4a5002cb8f489a632e0f987",
+   "size_bytes": 57531
+  },
+  "<prefix>/.../Python.framework/Versions/3.12/lib/python3.12/unittest/main.py": {
+   "sha256": "db58280574389c0d6cba9559cc51e1787f5b418c4e85d354aa55ca43335c487a",
+   "size_bytes": 11991
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md": {
+   "sha256": "cfb4200ea3745cfe590d9059cd272e244a2ba3cd8c9969f8df5982dc58a69bc1",
+   "size_bytes": 23696
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md": {
+   "sha256": "42db98dc6099ee605b0963f3734f7bff2d68c019ff6c00a0ee97bd753c03fdc9",
+   "size_bytes": 42769
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-FROZEN.json": {
+   "sha256": "cd7ae80f93cc28b0a9fa69994a77672611eee2c3127b460a595d745c13230594",
+   "size_bytes": 292673
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/INVENTORY-ADDITIONS.json": {
+   "sha256": "f710dbb55483ca428e641e81c523ee556d422660a2594675be0d790fa3a4c9da",
+   "size_bytes": 49810
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W1-SUPERVISOR.md": {
+   "sha256": "829e4924c7042718d84f24970f7997199022aea494e215fb737402366b6b7ee4",
+   "size_bytes": 17770
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W3-OBSERVER.md": {
+   "sha256": "5e936aa4b46590df710dd13da2c2a2d1ac758aa903470bb5e72ef2143a02018d",
+   "size_bytes": 38426
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W4-DRIVER.md": {
+   "sha256": "0c17384027506eeb1aa7bdd71117877a8e05460bb365fc15f99dd4545f146963",
+   "size_bytes": 20549
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W5-PROVIDER.md": {
+   "sha256": "106ad82aba250df6fba9d048d7c10c8240239f59b779cac9e8e4eba5baa052ea",
+   "size_bytes": 25272
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md": {
+   "sha256": "02da913c198118fc356cccdb60e78a3a2fef3b7ba7115d77d794a85f9e22fc49",
+   "size_bytes": 16420
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/n34m/N34-M-REVIEW.md": {
+   "sha256": "55e4a0568a35201f8064b606af8bcd8eed0f5d3758f72d20a315cc75ffd17547",
+   "size_bytes": 82141
+  },
+  "<worktree>/prototypes/__init__.py": {
+   "sha256": "84edcdc6554cf9f1e2b7b5f10729866fa31e6ba3d389043e716a751ea5271fc2",
+   "size_bytes": 72
+  },
+  "<worktree>/prototypes/static_tray_v01/__init__.py": {
+   "sha256": "f63210895af2901371763f24f7ddb301c2a7c1f73f4133335ae85bbb559832e8",
+   "size_bytes": 85
+  },
+  "<worktree>/prototypes/static_tray_v01/canonical.py": {
+   "sha256": "ce3f67349ade5af1d966ed0f1f240b264278c14f1f77c8ecc5cdeabb12ad6433",
+   "size_bytes": 12078
+  },
+  "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py": {
+   "sha256": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+   "size_bytes": 162557
+  },
+  "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs": {
+   "sha256": "bca11b2ab3acfb818fd6b43636a51056a60b4af888d77fefa0b1214fec4054cd",
+   "size_bytes": 58452
+  },
+  "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.py": {
+   "sha256": "d34ea2f98cf77188750b7819f0b5418d4811d0bfcd8612fdd71be58210f59071",
+   "size_bytes": 81218
+  },
+  "<worktree>/prototypes/static_tray_v01/format_check.py": {
+   "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+   "size_bytes": 15959
+  },
+  "<worktree>/prototypes/static_tray_v01/supervisor.py": {
+   "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+   "size_bytes": 11286
+  },
+  "<worktree>/prototypes/static_tray_v01/supervisor_darwin_v01.py": {
+   "sha256": "bd4a5e3fcdfb5367994bfeeb93d211dd627b830017b17f607cd94d71ade2bd2b",
+   "size_bytes": 10621
+  },
+  "<worktree>/tests/test_current_host_readback_controls_v02.py": {
+   "sha256": "3b8c91b7767c2db0ac3dd5c7dd48d035eb6dd602dc8c01e08bb0e49ac21bd618",
+   "size_bytes": 204751
+  },
+  "<worktree>/tests/test_static_tray_readback_v01.py": {
+   "sha256": "6295e0442ba7e7a1d1236fb5d9148e97ed92cc4db3e77dcd7b2993af5ef0f662",
+   "size_bytes": 9298
+  },
+  "<worktree>/tests/test_static_tray_reader_v01.py": {
+   "sha256": "cb62893652f553d61d55a1d80b9855d16dda3d54a47a8914058b78b6cc6b6706",
+   "size_bytes": 27925
+  },
+  "<worktree>/tools/check_local.py": {
+   "sha256": "4c55033d51bdd33700f6d8a847b3ed44e6b4f7f6489bf11b5f497279a5a4cb70",
+   "size_bytes": 50513
+  }
+ },
+ "reviewer": "W3, fresh context, independent of W2's tooling",
+ "runs": [
+  {
+   "exit": 1,
+   "launch": "env -i PATH LANG LC_ALL TZ; <worktree>/.venv/bin/python -I -S -B",
+   "output": "mc11-scan-w3.json",
+   "result": "none_found true; dynamic 587, call names 23, specifiers 52; equal to W2's mc11-dev-scan-2.json (content 71c79a80...)",
+   "what": "W2 scan_mc11.py on the real probe, reader tree and MP reader install plan ff5a95da..."
+  },
+  {
+   "exit": 0,
+   "launch": "env -i with 6 names; -B",
+   "output": "discovery-copy-w3.json",
+   "result": "COMPLETE; 5,994 IDs in 388 modules; order digest 32b2b861... equal to W2's; 407 of 407 additions present; 5,994 - 407 = 5,587",
+   "what": "W2 discover_inventory.py discover, from W2's directory, --root a verified APFS clone of the worktree's source directories (24,974 entries equal)"
+  },
+  {
+   "exit": 2,
+   "launch": "env -i with 6 names; -B",
+   "output": "discovery-inplace-w3.json",
+   "result": "REFUSED: PYTHON, 'A module of the root is already loaded', modules ['__main__']",
+   "what": "the same tool from its committed path inside the copy, --root the copy"
+  },
+  {
+   "exit": 0,
+   "launch": "env -i with 7 names incl. MH_TOOLING_ROOT; -B -m unittest discover -s tests -v, from W2's tooling/",
+   "output": "test-rerun-output.txt",
+   "result": "48 of 48 ok in 4.92 s; same IDs as TEST-RUN.txt; python -B 75, /bin/sh 4, /usr/bin/true 2",
+   "what": "W2 test suite, once"
+  },
+  {
+   "launch": "-I -S -B",
+   "result": "verify_digests, inspect_devruns, extended_scan, require_contexts, verify_copy, analyze_discovery, compare_scans, privacy_scan, stdlib_bytecode_check, assemble_review_json",
+   "what": "my scripts"
+  }
+ ],
+ "s6_decisions_notes": [
+  "item 5: no HOME in the frozen environment (TR-06)",
+  "item 6: add the supervisor-error and input-descriptor fields (TR-02, TR-03)",
+  "item 7: a reviewed list with a reviewer identity, plus the validator's 'url' specifier (TR-11, TR-12)"
+ ],
+ "schema": "ontokin.c271.p35-tooling-review/1",
+ "stage": "S3",
+ "starts": {
+  "after_checks": "no new entry in <worktree> (venv included) or the framework tree; no __pycache__",
+  "bash_tool_calls": 47,
+  "codesign": 0,
+  "git": 0,
+  "interpreter_B_only_discovery": 2,
+  "interpreter_B_only_test_rerun": 1,
+  "interpreter_I_S_B": 23,
+  "ldd": 0,
+  "node": 0,
+  "observe": 0,
+  "static_read_and_file_utilities_approx": 160,
+  "test_rerun_children_python_B": 75,
+  "tools_under_test_bin_sh": 4,
+  "tools_under_test_usr_bin_true": 2
+ },
+ "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+ "w2_findings": {
+  "T-01": "Agreed and acceptable: one row (__main__, realpath equal to the harness), labelled mocked, MC10's meaning unchanged; MC10 need not stay NOT_RUN if the freeze states both substitutions, binds the harness, and a test exercises the exclusion (TR-13).",
+  "T-02": "Agreed, with a nuance: a derived workspace copy would allow a real source change without editing the worktree (TR-14); the runtime, dependency and OS-build reasons hold.",
+  "T-03": "Agreed: verifyHost's environment binding (probe line 487) runs inside verifyBootstrap within the try (713-719), so MC36's refusal is in probe.json with exit 1.",
+  "T-04": "Agreed: positive starts cannot tell absence from HOST's value; MC30-probe discriminates presence with both refusals before reader imports (487, 720-722); the value follows by elimination; a ninth Node start; order MC36 after it with rows_independent false.",
+  "T-05": "Agreed: _check_python (534-562) and _verify_host check no flags, loaded modules or own environment.",
+  "T-06": "Consistent: the copy with docs/ gave no import failure.",
+  "T-07": "Agreed: 5 reads per selection check, 12 checks per cohort, 15 or 25 in mc29; recorded, at most 5 s each, not supervised; S6 must list them (TR-14).",
+  "T-08": "Agreed: setup.json boot and the ledgers' boot_before and boot_after are the real host_state when the boundary is real.",
+  "T-09": "Recorded properly; the index refresh cannot be checked now (index rewritten at 23:53:39Z by the Director's commit); no new entry in the framework, venv or worktree since my first output.",
+  "T-10": "Sound for these fixtures and fail-closed; a declared bound, not P07's (TR-15).",
+  "T-11": "Agreed; the harness also cannot detect being given the cohort's own configuration (TR-14)."
+ },
+ "worktree": {
+  "branch": "work/c271-missing-import-digest-control",
+  "commit": "c81cf07b5386ea7eba7904f3ef5700709b84b366",
+  "label": "<worktree>",
+  "read_from": "Git files, no Git start"
+ },
+ "written_utc": "2026-11-27"
+}

@@ -1,0 +1,1134 @@
+{
+ "answers": {
+  "A": "Every mandatory finding of review 001 is met by the code; each named test fails on a verified copy of rejected-001 for the defect's reason (TR-01: own __main__ refused; TR-02: ALL_ROWS_MET despite the supervisor's refusal; TR-03: met from a stale probe.json, rows started on changed inputs; TR-04: four derived strings found in the rejected hygiene file; TR-05: no tool, and FC-P3 names no code). Two listed sub-checks fail for a renamed rule or a new field (TR2-02). All adopted nonmandatory findings are met; TR-14 is unchanged, as carried.",
+  "B": "The identity rule is sound: the before-record precedes run_process, the supervisor calls on_started after Popen and before any poll, and file times on the evidence volume are precise wall-clock times (2,000 writes, 30-275 us after the write's start). The ctypes declarations match struct proc_bsdinfo (136 bytes; pid 12, ppid 16, uid 20, pgid 100, start 120/128) on this host, and W2's Kernel class agrees with my own offsets. Wall-clock steps, PID reuse, exited processes, zombies and permission errors all fail closed; every path without an identity sends nothing; no retry; absence only by ESRCH of killpg on a session-leader group. Details: TR2-04.",
+  "C": "The new behaviour stays within MH-PLAN section 4 and P07 sections 3 to 6 and introduces no fail-open path; an interruption before a start is not recorded as UNKNOWN (TR2-01); the -B refusal is detective (TR2-05).",
+  "D": "Fit for MH-PLAN section 4. Discovery equals the unit stage's (real in-place run: 5,994 IDs, 388 modules, order 32b2b861..., 407 of 407 additions, 5,587 base); the comparison is exact by sets; process creation is refused within FC-P7's limits. The collector runs the complete module unchanged, keeps every ID, outcome, class-level and unplanned event, and cannot turn a skip, error or missing method into a pass; its environment rule is the driver's plus an exact frozen environment. The runner makes one start per row through the bound Darwin supervisor, keeps everything, counts by P07 section 4, its predicates state P06-H01, P06-H02 and MC36 exactly, and no Node start follows a failed binding. The audit is independent, with the probe's inventory, thresholds, order and negative; T-10's 1e-9 is sound. The MC11 scan covers the named routes (TR2-03 for two dynamic routes), handles links and the inventory soundly and identifies the loader. The harness: T-01 holds; MC29's coverage is as stated (TR2-06); the recorder cannot let a start through; host-state is real. FAILURE-CAPTURE is complete. The suite reran 91 of 91.",
+  "E": "No machine path, account name, personal name, e-mail address or package-manager name in tooling/, in any of five views (raw, squashed, reversed, joined literals, literal runs); two squashed false positives from 'CPython 3.12.13'. The strings were derived at run time and never written."
+ },
+ "digest_check": {
+  "reader_tree": {
+   "destination_label": "<local>/c271-macos/reader-c195",
+   "files": 24,
+   "plan_purpose": "retained-dependencies",
+   "plan_schema": "ontokin.current-host-readback-install/0.2.0"
+  },
+  "reader_tree_all_equal": true,
+  "rejected_001": {
+   "links_or_bytecode": [],
+   "listed": 17,
+   "matches": 17,
+   "mismatches": [],
+   "unlisted": []
+  },
+  "rejected_001_equals_review_001_record": true,
+  "tooling": {
+   "links_or_bytecode": [],
+   "listed": 20,
+   "matches": 20,
+   "mismatches": [],
+   "unlisted": []
+  },
+  "worktree_files_equal_review_001_record": true
+ },
+ "findings": [
+  {
+   "effect": "Never a pass, and the zero count is right (no Popen event); but the docstring's rule and FAILURE-CAPTURE section 2's 'interrupted, therefore unknown' are not met, and the handler turns the signal into an ordinary exit 1.",
+   "id": "TR2-01",
+   "issue": "A KeyboardInterrupt (SIGINT, or SIGTERM or SIGHUP through the handler) raised in run_row before run_process leaves intent.json without outcome.json, and run() records the row as FAILED_BEFORE_START and PROVEN_ZERO without 'interrupted', so the run is ROWS_UNMET with exit 1. Raised inside run_process before Popen, it gives an outcome.json that says UNKNOWN and interrupted, which run.json contradicts.",
+   "location": [
+    "tooling/run_direct_probe.py:937-952 (per-row except in run)",
+    "tooling/run_direct_probe.py:973",
+    "tooling/run_direct_probe.py:825-835,884-885",
+    "tooling/run_direct_probe.py:46-49 (docstring)"
+   ],
+   "recommendation": "Mark a KeyboardInterrupt or SystemExit in the per-row handler as interrupted (run UNKNOWN); keep the row's own outcome.json state when it was written; add a test that interrupts before a start. Until then S6 notes that any interrupted runner command is unknown by FAILURE-CAPTURE section 2.",
+   "severity": "nonmandatory",
+   "title": "An interruption before a row's start is not recorded as UNKNOWN"
+  },
+  {
+   "effect": "None on the code; the other tests named for TR-02 and TR-03 fail for the defects (confirmed by my rerun).",
+   "id": "TR2-02",
+   "issue": "The ROW-TARGET part of test_bound_inputs_and_row_shapes_refuse_before_any_start fails with (2, 'ROWS') instead of (2, 'ROW-TARGET'): the rejected runner already refused a pre-existing supervisor output, under ROWS. The 'supervisor error not implied by the status' subtest fails because rows schema /1 has no such field; the row simply ran.",
+   "location": [
+    "tooling/tests/TEST-RUN-AGAINST-REJECTED-001.txt: header lines 16 and 19",
+    "AUTHOR-NOTES.md section 6, rows TR-02 and TR-03"
+   ],
+   "recommendation": "Say so where S6 cites this evidence, or correct the header; no code change.",
+   "severity": "nonmandatory",
+   "title": "Two sub-checks listed against rejected-001 fail there for a renamed rule or a new field"
+  },
+  {
+   "effect": "On the real files both are inert: all 61 .constructor( calls are new expressions (three.core.js 42, three.module.js 1, three.webgpu.js 12, BufferGeometryUtils.js 6); Reflect occurs only as Reflect.get in three.webgpu.js's proxies; the validator's five computed globals are dart2js's window[tag] lookups, which return null under Node.",
+   "id": "TR2-03",
+   "issue": "Neither the wider scan nor the frozen rule lists the Function constructor reached through a function's .constructor or Reflect.construct, nor computed members of globalThis, self or window; each can reach process or code from a string without any scanned name.",
+   "location": [
+    "tooling/scan_mc11.py:84-134 (PROCESS_CREATION, DYNAMIC, the frozen patterns)"
+   ],
+   "recommendation": "The S6 reviewed list's notes record both route classes and this cross-check under the stated limit; optionally list .constructor( without new, Reflect.construct and computed global members as dynamic hits for review.",
+   "severity": "nonmandatory",
+   "title": "Neither MC11 verdict flags Function reached through .constructor, or computed global members"
+  },
+  {
+   "effect": "Fail-closed: nothing is sent that should not be; the readback can be incomplete without saying so, and a zombie cannot be told from an unidentifiable live process.",
+   "id": "TR2-04",
+   "issue": "os.walk runs without onerror, so an unreadable directory's entries leave the FC-K5 listing without a record. proc_pidinfo is called with argument 0; by XNU's source this flavor finds an exited, unreaped process only for a non-zero argument (not observed here), so such a process reads success from kill, EPERM from killpg and ESRCH from proc_pidinfo, and is recorded only as 'present, identity not established'.",
+   "location": [
+    "tooling/capture_probe.py:494-503 (directory_listing)",
+    "tooling/capture_probe.py:303-312 (bsdinfo)"
+   ],
+   "recommendation": "Record walk errors; optionally read an unreaped process's facts with a non-zero argument and record its status, still sending nothing.",
+   "severity": "nonmandatory",
+   "title": "capture_probe.py: unreadable directories are omitted silently, and a zombie's facts are not read"
+  },
+  {
+   "effect": "Measured in a -I -S -B process: every module those imports load is frozen or built in (36), an extension (8) or a source with cached bytecode (34), apart from my script's __main__; no write would occur today.",
+   "id": "TR2-05",
+   "issue": "A start without -B has already imported a tool's module-level imports (and, for discover and the collector, site's start-up) when the tool refuses; the refusal detects the mistake, it does not prevent it.",
+   "location": [
+    "every tool, for example tooling/capture_probe.py:48-58 (imports) and 533 (the check)"
+   ],
+   "recommendation": "S6 records that the refusal relies on the frozen framework's bytecode set; optionally check sys.flags.dont_write_bytecode in each tool's first statement.",
+   "severity": "nonmandatory",
+   "title": "The -B refusal comes after each tool's module-level imports, so it cannot prevent a write"
+  },
+  {
+   "effect": "accounting_refused holds through the real code path, but the record's accounting refusal is not the 0.2.0 provider's accounting.",
+   "id": "TR2-06",
+   "issue": "After the real configuration change the configuration no longer matches the selected digest, so facade.finish_cpu_cohort is dispatched to the unchanged 0.1.0 code, which refuses with CH-SELECTION and a 0.1.0 refusal without the 0.2.0 labels; the attempt's refusal is v02's own _job, dispatched before the change.",
+   "location": [
+    "tooling/control_harness.py:751-753,780 (mc29)",
+    "W5-PROVIDER section 4 (dispatch)",
+    "CONTROLS-FROZEN.json F-07"
+   ],
+   "recommendation": "S6 states it in MC29's expected outcome: configuration case finish_error CH-SELECTION from the 0.1.0 code (F-07); job-input case CH-EVIDENCE from v02.",
+   "severity": "nonmandatory",
+   "title": "In MC29's configuration case the accounting refusal is the facade's 0.1.0 code's"
+  }
+ ],
+ "gate": "MH",
+ "kernel_checks": {
+  "capture_probe_kernel": {
+   "boot_session_uuid_shape": true,
+   "equal_to_my_offsets": true,
+   "image_equals_mine": true,
+   "nonexistent_bsdinfo": {
+    "error": "ESRCH",
+    "returned": 0
+   },
+   "own_pid_in_own_group_members": true,
+   "pid_1_image_readable": true,
+   "sizeof": 136,
+   "start_us_consistent": true
+  },
+  "layout": {
+   "comm": "Python",
+   "larger_buffer_returned": 136,
+   "nonexistent_pid": {
+    "errno": "ESRCH",
+    "returned": 0
+   },
+   "own_process": {
+    "pgid": true,
+    "pid": true,
+    "ppid": true,
+    "uid": true
+   },
+   "pid_1": {
+    "errno": "EPERM",
+    "returned": 0
+   },
+   "returned": 136,
+   "smaller_buffer": {
+    "errno": "ENOMEM",
+    "returned": 0
+   },
+   "start_before_now_ms": 18.59,
+   "status": 2
+  },
+  "probe_target_cases": {
+   "grandparent_started_before_the_window": {
+    "identity": null,
+    "kill": "success",
+    "killpg": "ESRCH",
+    "refusal": null,
+    "state": "absent"
+   },
+   "nonexistent": {
+    "identity": null,
+    "kill": "ESRCH",
+    "killpg": "ESRCH",
+    "refusal": null,
+    "state": "absent"
+   },
+   "own_group": {
+    "identity": null,
+    "kill": null,
+    "killpg": null,
+    "refusal": "The recorded process is this probe, its parent or its group",
+    "state": "unknown"
+   },
+   "pid1": {
+    "identity": null,
+    "kill": null,
+    "killpg": null,
+    "refusal": "The started record holds no supervisor record with pid, process_group equal to it, and argv under /process",
+    "state": "unknown"
+   }
+  },
+  "timestamps": {
+   "max_ns_after_start": 274947,
+   "min_ns_after_start": 32538,
+   "mtime_after_write_ended": 0,
+   "mtime_before_write_started": 0,
+   "writes": 2000
+  }
+ },
+ "local_only": "runs/ holds raw outputs of W2's tools with machine paths; they are local evidence, not public copies",
+ "mandatory": [],
+ "nonmandatory": [
+  "TR2-01",
+  "TR2-02",
+  "TR2-03",
+  "TR2-04",
+  "TR2-05",
+  "TR2-06"
+ ],
+ "outputs": {
+  "TOOLING-REVIEW-002.md": {
+   "sha256": "0859acada2527937db37f88ff299f2859b3f7788bee4779001a4d4cea7333439",
+   "size_bytes": 44474
+  },
+  "outputs-inventory.json": {
+   "sha256": "3133e00c005e1ccb396f7f4a96789050eca4b5dcac6803932ff63fbf6e6050a7",
+   "size_bytes": 19052
+  },
+  "outputs/bytecode-and-scan-checks.json": {
+   "sha256": "770020ad44229fdc95b5dff774c14cc5eb5aa85e44ee1a53572c562f11a5b1c5",
+   "size_bytes": 6866
+  },
+  "outputs/digests.json": {
+   "sha256": "4f49ff1e150b78325e39de62b5512e04229a32baf927f708ab8004bc29a42e7b",
+   "size_bytes": 25395
+  },
+  "outputs/discovery-analysis.json": {
+   "sha256": "b2783e1ca00513de49f96df0c844ffacb50e816cda5872d80e6a853451c79b51",
+   "size_bytes": 1051
+  },
+  "outputs/final-w2-inventory.json": {
+   "sha256": "3133e00c005e1ccb396f7f4a96789050eca4b5dcac6803932ff63fbf6e6050a7",
+   "size_bytes": 19052
+  },
+  "outputs/mc11-scan-comparison.json": {
+   "sha256": "da56bae54db304a7f1cdb96aec91cea96508b595bac8be40666854361c8dbbed",
+   "size_bytes": 8219
+  },
+  "outputs/privacy-scan-deliverables.json": {
+   "sha256": "4009dcee160d0f9e7daa6e9bcfa1ce0d65b987d08a1d08aa155439c633030cf7",
+   "size_bytes": 2580
+  },
+  "outputs/privacy-scan-own-scripts-and-outputs.json": {
+   "sha256": "cd861ee06519e4819ceddddb1730e5fc39989aaf355343ffdf86d9a251a8cb8b",
+   "size_bytes": 5558
+  },
+  "outputs/privacy-scan-tooling.json": {
+   "sha256": "0da64c46cbeca69c006fcc778abb9259ccfe930b0a1be57ada817782b1df0e45",
+   "size_bytes": 4058
+  },
+  "outputs/proc-check-after.json": {
+   "sha256": "8b3ef449ec92aa6eeb492de4adefde13a8e4c31e827d5e53173ebdc6323dde86",
+   "size_bytes": 2756
+  },
+  "outputs/proc-check-baseline.json": {
+   "sha256": "f62e113ec8af3dd1894995cd83c3b34260a95789052557ea21f5997a3ce14bbb",
+   "size_bytes": 2514
+  },
+  "outputs/proc-check-final.json": {
+   "sha256": "bd0ded3e0c5b088c0006631bcdd1e8c54a40a56c7fa8e0b7dd1b8103325aad85",
+   "size_bytes": 2706
+  },
+  "runs/discovery-environment.json": {
+   "sha256": "4c8a632549e5b09f3c44a77b69003f63331ad112f261e9be1b05707090edeb8b",
+   "size_bytes": 273
+  },
+  "runs/discovery-inplace-w3.exit.txt": {
+   "sha256": "19eaf43821a7660ec323a87c8457bf74823beb296c39f5e01aa8a683aa50f061",
+   "size_bytes": 7
+  },
+  "runs/discovery-inplace-w3.json": {
+   "sha256": "f63ec0ebaac4fb270aacda4c7355cdd71519c38e9f53aa97ba107c753a90218e",
+   "size_bytes": 859885
+  },
+  "runs/discovery-inplace-w3.stderr.txt": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  "runs/discovery-inplace-w3.stdout.txt": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  "runs/focused-rejected.exit.txt": {
+   "sha256": "cf205dbb8cea84897b488abcc281bf96698d5e94b1096b16657b4caba9082a22",
+   "size_bytes": 7
+  },
+  "runs/focused-rejected.raw.txt": {
+   "sha256": "3e877fabe339360d7258f72cb637a921bd07617e316ad98fe1c6095c87a3f0c1",
+   "size_bytes": 36158
+  },
+  "runs/mc11-scan-w3.exit.txt": {
+   "sha256": "cf205dbb8cea84897b488abcc281bf96698d5e94b1096b16657b4caba9082a22",
+   "size_bytes": 7
+  },
+  "runs/mc11-scan-w3.json": {
+   "sha256": "22d21d2f1735d79498364f64f128b8e10eca596a77cfa732d56d15163e84d6b8",
+   "size_bytes": 547921
+  },
+  "runs/mc11-scan-w3.stderr.txt": {
+   "sha256": "615273d9bd05578cb450ced499df84516ebe3e6d70ea41d44949b9dca4709734",
+   "size_bytes": 184
+  },
+  "runs/suite-rerun.end-utc.txt": {
+   "sha256": "49172c3914b766b19cd6e85f454426b02233b5d4d96d104d408bc6f47a3569d0",
+   "size_bytes": 21
+  },
+  "runs/suite-rerun.exit.txt": {
+   "sha256": "19eaf43821a7660ec323a87c8457bf74823beb296c39f5e01aa8a683aa50f061",
+   "size_bytes": 7
+  },
+  "runs/suite-rerun.raw.txt": {
+   "sha256": "20f4be81d6d92ec62b9d830d9c9be8be29069ef7d93c4ef8310ab775cde94307",
+   "size_bytes": 16305
+  },
+  "runs/suite-rerun.start-utc.txt": {
+   "sha256": "bc0d0920f81ad7fffacff91493777e9b04e40048e1fe1204735ed2f9b8c20e61",
+   "size_bytes": 21
+  },
+  "scripts/w3_assemble_review_json.py": {
+   "sha256": "f98148d368761211297391eefbb01b6e9032b5b9ad84b56532623c23d55cee66",
+   "size_bytes": 20723
+  },
+  "scripts/w3_bytecode_and_scan_checks.py": {
+   "sha256": "45faf9b7979293287a5627506409b6fd367e373b9d9616b2709366dac5bb6ca1",
+   "size_bytes": 6898
+  },
+  "scripts/w3_contexts.py": {
+   "sha256": "50f607fc96a6cb77309f489c6c443de27242e8020e092a46848b37d458b61238",
+   "size_bytes": 1537
+  },
+  "scripts/w3_digests.py": {
+   "sha256": "2fcf18e068415c40e9773218ef8f9a3c6af21f478781bb532e87fc365d3fdfb7",
+   "size_bytes": 8705
+  },
+  "scripts/w3_discovery_helpers.py": {
+   "sha256": "cbbb96738cac8938209c3a4c6104c055425a2807fc6297b3978b47f8c9f72319",
+   "size_bytes": 9735
+  },
+  "scripts/w3_inventory.py": {
+   "sha256": "01285d916df4d002d8fab593ae79bda171bbc27df8e06b39757385d29a4fc83f",
+   "size_bytes": 4088
+  },
+  "scripts/w3_privacy_scan.py": {
+   "sha256": "c84fc4fc147b73162ca6daf894079610a7ae43c9922140f2961d2c7d48e729f8",
+   "size_bytes": 11498
+  },
+  "scripts/w3_proc_check.py": {
+   "sha256": "5a8fbe680b0a1b7cf1f8f11acc9e84a04f9bd5d531a4a1037ff305436dbdaa47",
+   "size_bytes": 10477
+  },
+  "scripts/w3_wt_state.py": {
+   "sha256": "fd225395f7b30f974c2350c3fa68f381ab2c3f8e0bcc4302b3383892f24cde4a",
+   "size_bytes": 8309
+  },
+  "state/wt-snapshot-after.json": {
+   "sha256": "7957a8757a49301994e5cec2eef4af5764cdd4df260bfe27e3df0078e22e243d",
+   "size_bytes": 2687327
+  },
+  "state/wt-snapshot-before.json": {
+   "sha256": "7957a8757a49301994e5cec2eef4af5764cdd4df260bfe27e3df0078e22e243d",
+   "size_bytes": 2687327
+  },
+  "state/wt-snapshot-final.json": {
+   "sha256": "7957a8757a49301994e5cec2eef4af5764cdd4df260bfe27e3df0078e22e243d",
+   "size_bytes": 2687327
+  },
+  "state/wt-state-after.json": {
+   "sha256": "220582a4f38a8c741eb475952765ba5e918e5326277a7052954c2aa1ac5e0f22",
+   "size_bytes": 543
+  },
+  "state/wt-state-before.json": {
+   "sha256": "d30db1504fee9cafde9e3c3a7a036f2e85107ee72658fc365833236bdf1981dc",
+   "size_bytes": 546
+  },
+  "state/wt-state-final.json": {
+   "sha256": "3bfc03f9851bac2de45b17781eaa55ee79f754960fd023716f670fc94785abb4",
+   "size_bytes": 544
+  }
+ },
+ "phase": "C271-P35",
+ "review": "TOOLING-REVIEW-002",
+ "reviewed_files": {
+  "<local>/c271-macos/reader-c195/indexer-view/three/LICENSE": {
+   "mode": "0o644",
+   "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+   "size_bytes": 1081
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/build/three.core.js": {
+   "mode": "0o644",
+   "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+   "size_bytes": 1458113
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/build/three.module.js": {
+   "mode": "0o644",
+   "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+   "size_bytes": 662772
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/build/three.tsl.js": {
+   "mode": "0o644",
+   "sha256": "6e6b92d8ce467818944f73815a96abadc6392fb34de577d479a23810b6aeeed0",
+   "size_bytes": 36854
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/build/three.webgpu.js": {
+   "mode": "0o644",
+   "sha256": "15cfce5c653541704fd9a3463c39d3e8b854bb6265ccd854d7cfe74090625cc6",
+   "size_bytes": 2284850
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/controls/OrbitControls.js": {
+   "mode": "0o644",
+   "sha256": "3d79d07ecb686b4e5d93232eedab255331c1beef711e13164eaa1f68655a5f2b",
+   "size_bytes": 40755
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/gpgpu/CountingSort.js": {
+   "mode": "0o644",
+   "sha256": "e9e90b6940a4da923534c3f249e8e7bd2c7603f8b432c54c62ecdc6db4be47e3",
+   "size_bytes": 8392
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/loaders/GLTFGaussianSplatLoaderExtension.js": {
+   "mode": "0o644",
+   "sha256": "2814d2e49dc31c8ea45a776978fa98bfb425b55265cd6200ef55472f5f3c9aaa",
+   "size_bytes": 9063
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/loaders/GLTFLoader.js": {
+   "mode": "0o644",
+   "sha256": "131c0f78c01d19368ae495caa65b3adaa10487810a36a05bb5901b769a35ac16",
+   "size_bytes": 117570
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/objects/GaussianSplat.js": {
+   "mode": "0o644",
+   "sha256": "ea3f148d39413ef31781cdbb1c97a8972b2dce01ef5eebe6ef800c2b1ba7ab42",
+   "size_bytes": 32105
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/BufferGeometryUtils.js": {
+   "mode": "0o644",
+   "sha256": "9fb63427ce6641fa14fd0baff9cc4d1b5f9c3d85fd084bf2e90e803c44ec1797",
+   "size_bytes": 37712
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/GaussianSplatUtils.js": {
+   "mode": "0o644",
+   "sha256": "4b9b010149b3e1a7673de37638365e937e005a03ba706e4cd81301b717d30f54",
+   "size_bytes": 5586
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/SkeletonUtils.js": {
+   "mode": "0o644",
+   "sha256": "b1632a703206c3d830de9fcbe515696770d04b71a15ee6b50afa6d2c3298c86f",
+   "size_bytes": 11535
+  },
+  "<local>/c271-macos/reader-c195/indexer-view/three/package.json": {
+   "mode": "0o644",
+   "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+   "size_bytes": 3672
+  },
+  "<local>/c271-macos/reader-c195/tools/three_loader.mjs": {
+   "mode": "0o644",
+   "sha256": "927190e6d34940b2c7f9586c72459c24dc5fad497268bded628acd459ec9235e",
+   "size_bytes": 564
+  },
+  "<local>/c271-macos/reader-c195/validator/package/ISSUES.md": {
+   "mode": "0o644",
+   "sha256": "72981a105335964111253e7e5db4e956b8ab3a17fd74c2d02180bffc7f533c20",
+   "size_bytes": 17519
+  },
+  "<local>/c271-macos/reader-c195/validator/package/LICENSE": {
+   "mode": "0o644",
+   "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+   "size_bytes": 11560
+  },
+  "<local>/c271-macos/reader-c195/validator/package/NOTICES": {
+   "mode": "0o644",
+   "sha256": "933f161ca1e7b3ead5a6cf93ebb3bf6cb67f0e79b38e08d2046f8cdc41cb78a3",
+   "size_bytes": 22286
+  },
+  "<local>/c271-macos/reader-c195/validator/package/README.md": {
+   "mode": "0o644",
+   "sha256": "f5f26dc624a62817b356cec631b33af7358d046a4b2c0499a5f55189d986afa5",
+   "size_bytes": 6814
+  },
+  "<local>/c271-macos/reader-c195/validator/package/gltf_validator.dart.js": {
+   "mode": "0o644",
+   "sha256": "b73a7b2d455ac217567725138b46d826a13d7d1bb0c88c15f7c571bfb349298c",
+   "size_bytes": 307792
+  },
+  "<local>/c271-macos/reader-c195/validator/package/index.js": {
+   "mode": "0o644",
+   "sha256": "78deff9ea85743e86461c2d14fae76e7fc3ca0432e652f62948066b55fa16f0d",
+   "size_bytes": 2829
+  },
+  "<local>/c271-macos/reader-c195/validator/package/module.mjs": {
+   "mode": "0o644",
+   "sha256": "d2a88775a8b22f61be8e00644760f0f04b615fad0fc5175fefd40e0da4df2c8f",
+   "size_bytes": 2822
+  },
+  "<local>/c271-macos/reader-c195/validator/package/package.json": {
+   "mode": "0o644",
+   "sha256": "3578d16153fa237c72784588da2e8fcccc9cd3c1c58ef34c7912f0732d2f5fa6",
+   "size_bytes": 618
+  },
+  "<local>/c271-macos/reader-c195/validator/package/validation.schema.json": {
+   "mode": "0o644",
+   "sha256": "e33db4da1e907481a5fc056d2daab40be1a603620d8f4a1c81919120f3340365",
+   "size_bytes": 11107
+  },
+  "<local>/c271-p34/plans/reader-install-plan.json": {
+   "mode": "0o644",
+   "sha256": "ff5a95da6d349e0bd6ea1d2c79fc02757de48ac9cbb89dc59737b67c6d7a71c8",
+   "size_bytes": 158115
+  },
+  "<local>/c271-p35/director/reviews/TOOLING-REVIEW-DISPOSITION-001.json": {
+   "mode": "0o644",
+   "sha256": "362067fa1953b4d54e15c1b60541cf680be69780b953b8a5b4e65bec2d2d03a6",
+   "size_bytes": 6996
+  },
+  "<local>/c271-p35/workers/W2/AUTHOR-NOTES.md": {
+   "mode": "0o644",
+   "sha256": "2a9bb361f309e4bee23b75e1bd4e6b8f34594ad9de9d123ff89ad6d9dfbe7485",
+   "size_bytes": 31873
+  },
+  "<local>/c271-p35/workers/W2/SHA256SUMS.txt": {
+   "mode": "0o644",
+   "sha256": "c45d150ec4ef7d14c996e88fa9050a4a8a09511946fbdc766dbef3ab8b3d8137",
+   "size_bytes": 1786
+  },
+  "<local>/c271-p35/workers/W2/dev-runs/discovery-tree-copy-2.json": {
+   "mode": "0o644",
+   "sha256": "4b9022c9c0387b111d44e7afa3aac34640dacf7493cbfabd895eadb90fd913eb",
+   "size_bytes": 857806
+  },
+  "<local>/c271-p35/workers/W2/dev-runs/mc11-candidate-reviewed-list-2.json": {
+   "mode": "0o644",
+   "sha256": "28dbf44c6186ad8c5eed9e52b693afa4a688f60f5159bd3f5ae5d8aeba74dc93",
+   "size_bytes": 205499
+  },
+  "<local>/c271-p35/workers/W2/dev-runs/mc11-dev-scan-3-revised.json": {
+   "mode": "0o644",
+   "sha256": "d07d2593ef857180115a69eb062e8342150e7cd9fa6115671bb6096f79819601",
+   "size_bytes": 547839
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/AUTHOR-NOTES.md": {
+   "mode": "0o644",
+   "sha256": "319ed338689f9f378d387b35efe1968266cac7c42edf97ac3f1e4b5f3c9dd145",
+   "size_bytes": 15791
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/SHA256SUMS.txt": {
+   "mode": "0o644",
+   "sha256": "d0b77df70a225f2cbbf02935d32c17b95a6449ff486e68a67b06644a4d29b4cf",
+   "size_bytes": 1503
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/FAILURE-CAPTURE.md": {
+   "mode": "0o644",
+   "sha256": "804e0ae705d7f9a7111fa8eaad09d0159d181e2d5384ab420bab36e72fc4235f",
+   "size_bytes": 9898
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/README.md": {
+   "mode": "0o644",
+   "sha256": "c81f2110e734355f0a77fc193c4f6348e49b78515e1de091a865a68ca5724f03",
+   "size_bytes": 23957
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/audit_numeric.py": {
+   "mode": "0o644",
+   "sha256": "5918ea594329222dffcd8edde63e01cb4cbbea609522cc1aadadd15cc08d3745",
+   "size_bytes": 35248
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/collect_outcomes.py": {
+   "mode": "0o644",
+   "sha256": "69ded87a4f723a9c06747b029b0db6113f2325fcea0e0c6c0ea5cfe1e77e26a0",
+   "size_bytes": 40607
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/control_harness.py": {
+   "mode": "0o644",
+   "sha256": "708c9be021c15388c98907c214b932bab7119dfcdb6d95e8bd247aa1928500ec",
+   "size_bytes": 44120
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/discover_inventory.py": {
+   "mode": "0o644",
+   "sha256": "f9a7b25fcf083ab25fddd6c0436f225951ad226a7442ffb3aefde04e8f08762e",
+   "size_bytes": 27386
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/run_direct_probe.py": {
+   "mode": "0o644",
+   "sha256": "68214ffec390467bf38084ceecd9632288a4c8ce62d7b1a2f26ef7016a2a532a",
+   "size_bytes": 38151
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/scan_mc11.py": {
+   "mode": "0o644",
+   "sha256": "23720761846b6fff07dad31afa67e2ff6d5ac5a1eb320d859a50b7de88e73c70",
+   "size_bytes": 31917
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/tests/TEST-RUN.txt": {
+   "mode": "0o644",
+   "sha256": "1d07f31570ae12d09a3552d84eabe4410eb2235ba48680c115ff0e80dca26fd9",
+   "size_bytes": 8122
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/tests/mh_support.py": {
+   "mode": "0o644",
+   "sha256": "1276b5126af5d8ec310124040fae45b3355a83b209fca6c7793fe977ad366e58",
+   "size_bytes": 4703
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/tests/test_audit_numeric.py": {
+   "mode": "0o644",
+   "sha256": "22e1684a9fe1e1f6745b33dea478b2dab17dbb1a657c2a9591f99a21d279a3c6",
+   "size_bytes": 14463
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/tests/test_collect_outcomes.py": {
+   "mode": "0o644",
+   "sha256": "efe408f971c66688ff6008e25a5c870ab05248138b9c9ec4a73efe6939103289",
+   "size_bytes": 15146
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/tests/test_control_harness.py": {
+   "mode": "0o644",
+   "sha256": "4e57ac3dbd86025da5dbf4e26d074d4a02cf8df5d8953f5d8ef81fad3b0c256d",
+   "size_bytes": 21266
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/tests/test_discover_inventory.py": {
+   "mode": "0o644",
+   "sha256": "224dfb58852425c568ca078df45e9906a8bf9964d837e09ea00f9bc38eee0b6a",
+   "size_bytes": 11093
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/tests/test_run_direct_probe.py": {
+   "mode": "0o644",
+   "sha256": "0ce2a99fc536638571b5f02dcd37e74117988f543f67a3449f5740446cf87b23",
+   "size_bytes": 9169
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/tests/test_scan_mc11.py": {
+   "mode": "0o644",
+   "sha256": "80e531dc824957d246d3b41b4ea7c7b7f54d863ce44452b6106929b2b2d98664",
+   "size_bytes": 7914
+  },
+  "<local>/c271-p35/workers/W2/rejected-001/tooling/tests/test_zz_hygiene.py": {
+   "mode": "0o644",
+   "sha256": "d537e914e5cd3fa1c14d675ec27e36d301517e113384ae14b523f102e46ca697",
+   "size_bytes": 3096
+  },
+  "<local>/c271-p35/workers/W2/tooling/FAILURE-CAPTURE.md": {
+   "mode": "0o644",
+   "sha256": "f387fb3ec0ed306366f6d3f22820ec344f1ac843008775475258c5de9634c99c",
+   "size_bytes": 13147
+  },
+  "<local>/c271-p35/workers/W2/tooling/README.md": {
+   "mode": "0o644",
+   "sha256": "60d9298f36a4170f8a610995e2b34cdfe2f70ed806683966a6556a0f1f7c6084",
+   "size_bytes": 35797
+  },
+  "<local>/c271-p35/workers/W2/tooling/audit_numeric.py": {
+   "mode": "0o644",
+   "sha256": "9140379c61bc70f29939bd7b216ef5ca5e2f5e6cab5b4a452e50018651bac4e3",
+   "size_bytes": 40667
+  },
+  "<local>/c271-p35/workers/W2/tooling/capture_probe.py": {
+   "mode": "0o644",
+   "sha256": "db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f",
+   "size_bytes": 29076
+  },
+  "<local>/c271-p35/workers/W2/tooling/collect_outcomes.py": {
+   "mode": "0o644",
+   "sha256": "510bcf3e5b6ce473707f2c0e6f49357983ab2c0964760bf388969d0e12cc2fdf",
+   "size_bytes": 46010
+  },
+  "<local>/c271-p35/workers/W2/tooling/control_harness.py": {
+   "mode": "0o644",
+   "sha256": "a54fb85d757e2908bfe36e1b77a9e7fc4afd7ae38a7faf4111432960996c9674",
+   "size_bytes": 48562
+  },
+  "<local>/c271-p35/workers/W2/tooling/discover_inventory.py": {
+   "mode": "0o644",
+   "sha256": "980c80883f3106706a3ecd3b03e908efe31a5c572a67a0d71dc650f85cfb695e",
+   "size_bytes": 35270
+  },
+  "<local>/c271-p35/workers/W2/tooling/run_direct_probe.py": {
+   "mode": "0o644",
+   "sha256": "4b30ac5bb633f4c82079c830f4c09720e57e944c51da44fe063b3b2f8f6be5a2",
+   "size_bytes": 56139
+  },
+  "<local>/c271-p35/workers/W2/tooling/scan_mc11.py": {
+   "mode": "0o644",
+   "sha256": "31cc6e35df6fc92b428310aedd71fb3c0c16f504424197ce69b30cbc8f6cd0c5",
+   "size_bytes": 42833
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/TEST-RUN-AGAINST-REJECTED-001.txt": {
+   "mode": "0o644",
+   "sha256": "d76b297ff748c720d9828f987ebbd3c289c6eb9e73168baf1c549f82daf57cd9",
+   "size_bytes": 158053
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/TEST-RUN.txt": {
+   "mode": "0o644",
+   "sha256": "4e8f812f415698929f70beb46f4cb4419e3ae9acf1cc8806047c3f60f4350704",
+   "size_bytes": 17104
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/mh_support.py": {
+   "mode": "0o644",
+   "sha256": "51eb867279b4add78ce808492734825add2cc26b2414a4ed3e562049ad839929",
+   "size_bytes": 7761
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_audit_numeric.py": {
+   "mode": "0o644",
+   "sha256": "c3c91f3508af855ecd7bacdf3a58267dfc77f9f03761532b639a05e66aa172f8",
+   "size_bytes": 18402
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_capture_probe.py": {
+   "mode": "0o644",
+   "sha256": "c4f40ef3b078a494f0ccf5ff596f4715121973fef3a19ba5b2c76403912168a2",
+   "size_bytes": 12245
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_collect_outcomes.py": {
+   "mode": "0o644",
+   "sha256": "a03e96def66c768a49209b2fdc4875233d0489503f05182e8d64929964b4ad33",
+   "size_bytes": 22025
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_control_harness.py": {
+   "mode": "0o644",
+   "sha256": "0151d0fbeb777bda669a6f7545d327f3bd6b9b7e420862222f09f6ed8f02d217",
+   "size_bytes": 28349
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_discover_inventory.py": {
+   "mode": "0o644",
+   "sha256": "d3f6732f089564acb1a0589617a7702937b43d9fb70ffb15cccdd9f41acf18eb",
+   "size_bytes": 18696
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_run_direct_probe.py": {
+   "mode": "0o644",
+   "sha256": "5342ffaa455e1d3442a93a6b8f41da641f01ff106786996e9ac681e622ecf0a7",
+   "size_bytes": 25986
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_scan_mc11.py": {
+   "mode": "0o644",
+   "sha256": "da70787a66704562eb88eb6c7325b341d1fcde23f936212f86d84c4db76f9e6f",
+   "size_bytes": 13637
+  },
+  "<local>/c271-p35/workers/W2/tooling/tests/test_zz_hygiene.py": {
+   "mode": "0o644",
+   "sha256": "53b5122ab2b1452b8dcea2ca14d6a5bbb1bade96dc4b7f74fd715b0fc5d0fe07",
+   "size_bytes": 8680
+  },
+  "<local>/c271-p35/workers/W3-tooling-001/TOOLING-REVIEW-001.json": {
+   "mode": "0o644",
+   "sha256": "0662e9ece4ed12fbc2017c1d48ad7c81611912eb554c215d5f2b8f6500499d03",
+   "size_bytes": 34619
+  },
+  "<local>/c271-p35/workers/W3-tooling-001/TOOLING-REVIEW-001.md": {
+   "mode": "0o644",
+   "sha256": "40377ef3cd60f66204753f03988513258b506e9bf69d9b492c054829160984c0",
+   "size_bytes": 41670
+  },
+  "<worktree>/.gitignore": {
+   "mode": "0o644",
+   "sha256": "a240eee582b8da51dc16841e5ebc00fdecb5505dca2a4bf6f29c43f962356f4e",
+   "size_bytes": 9801
+  },
+  "<worktree>/.venv/pyvenv.cfg": {
+   "mode": "0o644",
+   "sha256": "f45c398eb25dd94caa28ae72962a32a982f151a48ba6118a9a39e9b598eb68e2",
+   "size_bytes": 336
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md": {
+   "mode": "0o644",
+   "sha256": "cfb4200ea3745cfe590d9059cd272e244a2ba3cd8c9969f8df5982dc58a69bc1",
+   "size_bytes": 23696
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md": {
+   "mode": "0o644",
+   "sha256": "42db98dc6099ee605b0963f3734f7bff2d68c019ff6c00a0ee97bd753c03fdc9",
+   "size_bytes": 42769
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-FROZEN.json": {
+   "mode": "0o644",
+   "sha256": "cd7ae80f93cc28b0a9fa69994a77672611eee2c3127b460a595d745c13230594",
+   "size_bytes": 292673
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/INVENTORY-ADDITIONS.json": {
+   "mode": "0o644",
+   "sha256": "f710dbb55483ca428e641e81c523ee556d422660a2594675be0d790fa3a4c9da",
+   "size_bytes": 49810
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W1-SUPERVISOR.md": {
+   "mode": "0o644",
+   "sha256": "829e4924c7042718d84f24970f7997199022aea494e215fb737402366b6b7ee4",
+   "size_bytes": 17770
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W3-OBSERVER.md": {
+   "mode": "0o644",
+   "sha256": "5e936aa4b46590df710dd13da2c2a2d1ac758aa903470bb5e72ef2143a02018d",
+   "size_bytes": 38426
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W4-DRIVER.md": {
+   "mode": "0o644",
+   "sha256": "0c17384027506eeb1aa7bdd71117877a8e05460bb365fc15f99dd4545f146963",
+   "size_bytes": 20549
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W5-PROVIDER.md": {
+   "mode": "0o644",
+   "sha256": "106ad82aba250df6fba9d048d7c10c8240239f59b779cac9e8e4eba5baa052ea",
+   "size_bytes": 25272
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md": {
+   "mode": "0o644",
+   "sha256": "02da913c198118fc356cccdb60e78a3a2fef3b7ba7115d77d794a85f9e22fc49",
+   "size_bytes": 16420
+  },
+  "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/n34m/N34-M-REVIEW.md": {
+   "mode": "0o644",
+   "sha256": "55e4a0568a35201f8064b606af8bcd8eed0f5d3758f72d20a315cc75ffd17547",
+   "size_bytes": 82141
+  },
+  "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py": {
+   "mode": "0o644",
+   "sha256": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+   "size_bytes": 162557
+  },
+  "<worktree>/prototypes/static_tray_v01/current_host_readback_v01.py": {
+   "mode": "0o644",
+   "sha256": "cb3f0c7f247331c79171a9e1ac71141d93205392ff426382046cfa61999d1126",
+   "size_bytes": 74144
+  },
+  "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.mjs": {
+   "mode": "0o644",
+   "sha256": "bca11b2ab3acfb818fd6b43636a51056a60b4af888d77fefa0b1214fec4054cd",
+   "size_bytes": 58452
+  },
+  "<worktree>/prototypes/static_tray_v01/current_host_readback_v02.py": {
+   "mode": "0o644",
+   "sha256": "d34ea2f98cf77188750b7819f0b5418d4811d0bfcd8612fdd71be58210f59071",
+   "size_bytes": 81218
+  },
+  "<worktree>/prototypes/static_tray_v01/format_check.py": {
+   "mode": "0o644",
+   "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+   "size_bytes": 15959
+  },
+  "<worktree>/prototypes/static_tray_v01/supervisor.py": {
+   "mode": "0o644",
+   "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+   "size_bytes": 11286
+  },
+  "<worktree>/prototypes/static_tray_v01/supervisor_darwin_v01.py": {
+   "mode": "0o644",
+   "sha256": "bd4a5e3fcdfb5367994bfeeb93d211dd627b830017b17f607cd94d71ade2bd2b",
+   "size_bytes": 10621
+  },
+  "<worktree>/tests/test_current_host_readback_controls_v02.py": {
+   "mode": "0o644",
+   "sha256": "3b8c91b7767c2db0ac3dd5c7dd48d035eb6dd602dc8c01e08bb0e49ac21bd618",
+   "size_bytes": 204751
+  },
+  "<worktree>/tests/test_static_tray_readback_v01.py": {
+   "mode": "0o644",
+   "sha256": "6295e0442ba7e7a1d1236fb5d9148e97ed92cc4db3e77dcd7b2993af5ef0f662",
+   "size_bytes": 9298
+  },
+  "<worktree>/tests/test_static_tray_reader_v01.py": {
+   "mode": "0o644",
+   "sha256": "cb62893652f553d61d55a1d80b9855d16dda3d54a47a8914058b78b6cc6b6706",
+   "size_bytes": 27925
+  },
+  "<worktree>/tools/check_local.py": {
+   "mode": "0o644",
+   "sha256": "4c55033d51bdd33700f6d8a847b3ed44e6b4f7f6489bf11b5f497279a5a4cb70",
+   "size_bytes": 50513
+  }
+ },
+ "reviewer": "W3, fresh context; wrote none of the tooling and took no part in review 001",
+ "runs": [
+  {
+   "exit": 0,
+   "launch": "from W2's tooling/: env -i PATH LANG TMPDIR MH_TOOLING_ROOT=<worktree>; -B -m unittest discover -s tests -v",
+   "result": [
+    "Ran 91 tests in 13.704s",
+    "OK"
+   ],
+   "same_ids_as_TEST-RUN.txt": true,
+   "starts_reported": [
+    "direct children: {'/usr/bin/true': 1, 'python -B': 135}; started by the tools under test: {'/bin/sh': 4, '/usr/bin/true': 3, 'fork of a stand-in': 1, 'stand-in python -B via the supervisor': 7}"
+   ],
+   "what": "W2's suite, once, as TEST-RUN.txt shows"
+  },
+  {
+   "copy": "made with cp -pR, 17 of 17 verified, removed afterwards",
+   "exit": 1,
+   "launch": "from W2's tooling/tests: env -i PATH LANG TMPDIR MH_TOOLING_ROOT MH_TOOLING_UNDER_TEST=<copy>; -B -m unittest -v <22 tests>",
+   "outcomes": {
+    "test_capture_probe.ListingTests.test_a_start_without_dash_b_refuses": "ERROR",
+    "test_capture_probe.ListingTests.test_the_readback_listing_never_follows_a_link": "ERROR",
+    "test_capture_probe.ProbeTests.test_a_present_process_with_an_established_identity": "ERROR",
+    "test_capture_probe.ProbeTests.test_a_start_outside_the_window_does_not_establish_identity": "ERROR",
+    "test_capture_probe.ProbeTests.test_absence_is_established_by_esrch_and_a_malformed_record_is_unknown": "ERROR",
+    "test_capture_probe.ProbeTests.test_an_image_that_is_not_the_recorded_argv0_does_not_establish_identity": "ERROR",
+    "test_capture_probe.ProcedureTextTests.test_identity_comes_before_any_signal_and_the_probes_are_code": "FAIL",
+    "test_capture_probe.StopTests.test_an_established_identity_is_ended_through_its_group": "ERROR",
+    "test_capture_probe.StopTests.test_nothing_is_sent_when_identity_is_not_established": "ERROR",
+    "test_capture_probe.StopTests.test_sigkill_follows_only_continuous_presence_and_a_second_established_identity": "ERROR",
+    "test_collect_outcomes.RevisionTests.test_it_runs_from_its_committed_place_inside_the_root": "FAIL",
+    "test_discover_inventory.PlaceAndEnvironmentTests.test_every_other_preloaded_root_module_still_refuses": "ok",
+    "test_discover_inventory.PlaceAndEnvironmentTests.test_it_runs_from_its_committed_place_inside_the_root": "FAIL",
+    "test_run_direct_probe.FrozenStateTests.test_a_target_that_exists_before_the_start_refuses_the_row_before_any_start": "FAIL",
+    "test_run_direct_probe.FrozenStateTests.test_inputs_and_stage_entries_are_verified_again_immediately_before_each_start": "FAIL",
+    "test_run_direct_probe.PlaceAndLoadingTests.test_it_runs_from_its_committed_place_inside_the_root": "FAIL",
+    "test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start": "FAIL",
+    "test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start [input digest (TR-03)]": "FAIL",
+    "test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start [shared stage (TR-10)]": "FAIL",
+    "test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start [stage entries (TR-03)]": "FAIL",
+    "test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start [supervisor error not implied by the status (TR-02)]": "FAIL",
+    "test_run_direct_probe.RunnerTests.test_bound_inputs_and_row_shapes_refuse_before_any_start [unbound stage file (TR-03)]": "FAIL",
+    "test_run_direct_probe.SupervisorRefusalTests.test_a_remaining_descendant_misses_the_row_although_the_child_exited_zero": "FAIL",
+    "test_run_direct_probe.SupervisorRefusalTests.test_a_staged_link_misses_the_row_although_the_child_exited_zero": "FAIL",
+    "test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (file='tests/test_zz_hygiene.py', kind='interpreter prefix component 16')": "FAIL",
+    "test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (file='tests/test_zz_hygiene.py', kind='part of the account name 2')": "FAIL",
+    "test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (file='tests/test_zz_hygiene.py', kind='part of the account name 3')": "FAIL",
+    "test_zz_hygiene.HygieneTests.test_no_machine_path_package_manager_or_account_name_in_any_tooling_file (file='tests/test_zz_hygiene.py', kind='worktree parent component 7')": "FAIL",
+    "test_zz_hygiene.HygieneTests.test_the_derivation_finds_a_split_literal": "ok"
+   },
+   "result": [
+    "Ran 22 tests in 3.407s",
+    "FAILED (failures=18, errors=9)"
+   ],
+   "starts_reported": [
+    "direct children: {'/usr/bin/true': 1, 'python -B': 37}; started by the tools under test: {'/bin/sh': 1, '/usr/bin/true': 6, 'fork of a stand-in': 1, 'stand-in python -B via the supervisor': 5}"
+   ],
+   "what": "the TR-01 to TR-05 tests and the start report, against a verified copy of rejected-001"
+  },
+  {
+   "equal_to_w2_mc11_dev_scan_3_revised": true,
+   "exit": 1,
+   "launch": "env -i PATH LANG LC_ALL TZ; -I -S -B",
+   "require_parenthesized": [
+    [
+     "validator/package/gltf_validator.dart.js",
+     "url"
+    ]
+   ],
+   "result": {
+    "frozen_rule": {
+     "decides_mc11": true,
+     "dynamic_hits": 587,
+     "passed": false,
+     "process_creation_none": true,
+     "source": "CONTROLS-FROZEN.json mc11_rule, applied as MI's scan_javascript applies it",
+     "specifiers_equal_review": false,
+     "unreviewed_dynamic_hits": 587
+    },
+    "inventory_sha256": "ff5a95da6d349e0bd6ea1d2c79fc02757de48ac9cbb89dc59737b67c6d7a71c8",
+    "none_found": true,
+    "probe_sha256": "bca11b2ab3acfb818fd6b43636a51056a60b4af888d77fefa0b1214fec4054cd",
+    "tool_sha256": "31cc6e35df6fc92b428310aedd71fb3c0c16f504424197ce69b30cbc8f6cd0c5",
+    "totals": {
+     "dynamic": 628,
+     "process_call_names": 23,
+     "process_creation": 0,
+     "specifiers": 53
+    },
+    "unresolved": [],
+    "wider_scan": {
+     "none_found": true,
+     "reviewed_list_matches": null,
+     "unresolved_relative_specifiers": 0
+    }
+   },
+   "what": "W2's scan_mc11.py on the real probe, reader tree and MP install plan, no reviewed list"
+  },
+  {
+   "clone": "removed afterwards",
+   "exit": 0,
+   "launch": "env -i PATH LANG LC_ALL TZ TMPDIR PYTHONDONTWRITEBYTECODE=1 (frozen, no HOME); -B",
+   "result": {
+    "additions_listed": 407,
+    "additions_present": 407,
+    "bytecode_present": 0,
+    "cf_admitted": true,
+    "count": 5994,
+    "count_minus_additions": 5587,
+    "declared_base_count": 5587,
+    "duplicates": 0,
+    "environment_names": [
+     "LANG",
+     "LC_ALL",
+     "PATH",
+     "PYTHONDONTWRITEBYTECODE",
+     "TMPDIR",
+     "TZ"
+    ],
+    "failed_imports": 0,
+    "loader_errors": 0,
+    "modules": 388,
+    "order_sha256": "32b2b8618464fc10a1ac0b8aa2dad35dfaebd945e9aa5341a31001d1fefe3c1b",
+    "own_main_admitted": true,
+    "own_main_is_the_in_place_copy": true,
+    "process_events": 0,
+    "same_ids_in_same_order_as_w2": true,
+    "state": "COMPLETE",
+    "tooling_tests_discovered": 0,
+    "unique": 5994,
+    "unit_stage": {
+     "argv_after_interpreter": [
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+     ],
+     "derived_from": "build_plan.add, by its AST",
+     "discovery": {
+      "pattern": "test*.py",
+      "start": "tests",
+      "top": null
+     },
+     "interpreter_flags_added_by_build_plan": [
+      "-B"
+     ]
+    },
+    "w2_order_sha256": "32b2b8618464fc10a1ac0b8aa2dad35dfaebd945e9aa5341a31001d1fefe3c1b"
+   },
+   "what": "W2's discover_inventory.py discover from its committed place inside an APFS clone of the worktree's sources (22,451 files equal), --root the clone"
+  },
+  {
+   "launch": "-I -S -B",
+   "scripts": [
+    "scripts/w3_assemble_review_json.py",
+    "scripts/w3_bytecode_and_scan_checks.py",
+    "scripts/w3_contexts.py",
+    "scripts/w3_digests.py",
+    "scripts/w3_discovery_helpers.py",
+    "scripts/w3_inventory.py",
+    "scripts/w3_privacy_scan.py",
+    "scripts/w3_proc_check.py",
+    "scripts/w3_wt_state.py"
+   ],
+   "what": "my scripts"
+  }
+ ],
+ "schema": "ontokin.c271.p35-tooling-review/1",
+ "stage": "S3",
+ "starts": {
+  "bash_tool_calls": 39,
+  "codesign": 0,
+  "failed_before_running": "5 interpreter commands of one shell, not split; none ran",
+  "focused_rerun_children": {
+   "/usr/bin/true": 1,
+   "python -B": 37
+  },
+  "focused_rerun_tool_starts": {
+   "/bin/sh": 1,
+   "/usr/bin/true": 6,
+   "fork": 1,
+   "stand-in python -B": 5
+  },
+  "git": 0,
+  "interpreter_B_only_by_me": 3,
+  "interpreter_I_S_B_by_me": 33,
+  "last_four_calls": "assemble this JSON, scan the report, the JSON and the scripts, then both again after the report's last edit",
+  "ldd": 0,
+  "leftover_processes": "none of mine; the final check found only two Node processes of another parent and the checking command",
+  "node": 0,
+  "observe": 0,
+  "static_read_and_file_utilities": 140,
+  "suite_rerun_children": {
+   "/usr/bin/true": 1,
+   "python -B": 135
+  },
+  "suite_rerun_tool_starts": {
+   "/bin/sh": 4,
+   "/usr/bin/true": 3,
+   "fork": 1,
+   "stand-in python -B": 7
+  }
+ },
+ "tr_status": {
+  "TR-01": {
+   "evidence": "own __main__ admitted by realpath and recorded in discovery (233-244, 482), the collector (694-706) and the runner (461-470, 922); every other root module refuses; real in-place discovery COMPLETE",
+   "status": "met"
+  },
+  "TR-02": {
+   "evidence": "the expected supervisor error is the one the status implies (491-495, 569-571); equality required for the raised Stop and the receipt's error (730-731, 769-770)",
+   "status": "met"
+  },
+  "TR-03": {
+   "evidence": "inputs and exact stage entries, every stage file an input (604-629); checked at read time (671) and after intent immediately before the start with Node, probe and loader re-hashed (792-794); predicate files and supervisor outputs absent at intent, recorded",
+   "status": "met"
+  },
+  "TR-04": {
+   "evidence": "forbidden strings derived at run time with joined-literal views; no literal or fragment in tooling/",
+   "status": "met"
+  },
+  "TR-05": {
+   "evidence": "capture_probe.py establishes identity (start window, image, group) before any signal; otherwise sends nothing, records 'present, identity not established', outcome unknown",
+   "status": "met"
+  },
+  "TR-06": {
+   "evidence": "discover and mc29 require an exact frozen environment and record names; HOME refused; hooks record names and a digest",
+   "status": "met"
+  },
+  "TR-07": {
+   "evidence": "counts, duplicates and state recomputed; -B derived from add()'s AST",
+   "status": "met"
+  },
+  "TR-08": {
+   "evidence": "blind spots stated in README and FC-P7; ctypes.dlsym lookups recorded",
+   "status": "met"
+  },
+  "TR-09": {
+   "evidence": "subtest skip is the parent's; unplanned events kept; --module-sha256 required; bodies compared; GIT_* exactly the driver's set",
+   "status": "met"
+  },
+  "TR-10": {
+   "evidence": "boot before and after each row; exact and negative predicates; one stage per row; 'is not None'",
+   "status": "met"
+  },
+  "TR-11": {
+   "evidence": "every pattern on every view; binding names; bracket forms; require references; the validator's 'url' listed",
+   "status": "met"
+  },
+  "TR-12": {
+   "evidence": "the frozen rule applied pattern for pattern and reported as the deciding verdict; a list must be REVIEWED and name a reviewer",
+   "status": "met"
+  },
+  "TR-13": {
+   "evidence": "PYTHON-MODULE reached with and without the exclusion; attempt_listing uses O_NOFOLLOW",
+   "status": "met"
+  },
+  "TR-14": {
+   "evidence": "unchanged; AUTHOR-NOTES section 4 item 11 lists it for the S6 freeze",
+   "status": "carried"
+  },
+  "TR-15": {
+   "evidence": "vertices recomputed in applyMatrix4 order and bounds from them; retained values must be equal",
+   "status": "met"
+  },
+  "TR-16": {
+   "evidence": "FC-P3, FC-P6 and FC-K5 name capture_probe.py; the listing records digests_computed_by",
+   "status": "met"
+  },
+  "TR-17": {
+   "evidence": "every entry point refuses a start without -B (rule PYTHON); its limit is TR2-05",
+   "status": "met"
+  },
+  "TR-18": {
+   "evidence": "missing tests added; an interruption after a start is UNKNOWN; SIGTERM and SIGHUP handled as SIGINT; the gap before a start is TR2-01",
+   "status": "met"
+  }
+ },
+ "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+ "worktree": {
+  "branch": "work/c271-missing-import-digest-control",
+  "clean": "no modified, deleted or untracked file outside .venv; no bytecode; snapshot unchanged before, after and at the end",
+  "commit": "c81cf07b5386ea7eba7904f3ef5700709b84b366",
+  "label": "<worktree>",
+  "read_from": "Git files, no Git start"
+ },
+ "written_utc": "2026-11-27"
+}

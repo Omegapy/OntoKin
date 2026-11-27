@@ -1,0 +1,46 @@
+{
+  "schema": "ontokin.c271.p35-review-disposition/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "recorded_at_utc": "2026-11-27T00:59:43Z",
+  "review": {
+    "record": "TOOLING-REVIEW-001.md",
+    "structured": "TOOLING-REVIEW-001.json",
+    "sha256": {
+      "TOOLING-REVIEW-001.md": "40377ef3cd60f66204753f03988513258b506e9bf69d9b492c054829160984c0",
+      "TOOLING-REVIEW-001.json": "0662e9ece4ed12fbc2017c1d48ad7c81611912eb554c215d5f2b8f6500499d03"
+    },
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model, with no earlier review in its context",
+    "written_at_utc": "2026-11-27T00:58:00Z",
+    "subject": "W2's tooling of MH-PLAN section 4, 17 files, every digest matching W2's SHA256SUMS.txt",
+    "verdict": "REJECT_WITH_MANDATORY_FINDINGS"
+  },
+  "director_checks": [
+    "Read the verdict and all eighteen findings with their locations, and section 4's view of W2's T-01 to T-11.",
+    "Confirmed TR-04 in tests/test_zz_hygiene.py: its FORBIDDEN tuple joins split literals into fragments of a machine path, the account name and the package manager's name. The Director's plain search had missed them because they are split.",
+    "Nothing of the rejected tooling is committed, bound by a plan or run; S4 cannot begin before a repeated review accepts the revised tooling."
+  ],
+  "dispositions": [
+    {"id": "TR-01", "severity": "mandatory", "disposition": "Adopted. Admit exactly the running tool's own __main__, identified by realpath equality with its __file__, record the admission, keep refusing every other preloaded root module, and test each tool run from inside a root."},
+    {"id": "TR-02", "severity": "mandatory", "disposition": "Adopted. Each direct-probe row states the expected supervisor error exactly (for an expected status N other than 0: code OTRAY-E-BACKEND, reason 'Child exited with status N', state REJECTED; null for 0), and the runner requires equality for both the raised Stop and the receipt's error. Tests with a stand-in that leaves a descendant and with a staged link."},
+    {"id": "TR-03", "severity": "mandatory", "disposition": "Adopted. Every file_includes and present_paths target must be absent at intent, recorded. Each row carries its frozen input descriptors (path, SHA-256, size, mode) and the exact set of its stage's entries, verified immediately before the start. The test that accepts a pre-existing probe.json changes so that such a file refuses the row before any start."},
+    {"id": "TR-04", "severity": "mandatory", "disposition": "Adopted. The hygiene test derives the forbidden strings at run time (the home directory, the account name, the tooling directory's path components, the interpreter's base prefix and its ancestors); no literal or fragment of them is committed."},
+    {"id": "TR-05", "severity": "mandatory", "disposition": "Adopted. Before any signal, the procedure establishes identity: the kernel's start time (proc_pidinfo PROC_PIDTBSDINFO) inside the window between intent and the started record, and the image from proc_pidpath equal to the recorded argv[0]. Otherwise it sends nothing, records 'present, identity not established' and keeps the outcome unknown."},
+    {"id": "TR-06", "severity": "nonmandatory", "disposition": "Adopted now: discovery and mc29 enforce an exact frozen environment or record variable names only; no tool writes an ambient environment's values; HOME is not part of a frozen environment."},
+    {"id": "TR-07", "severity": "nonmandatory", "disposition": "Adopted now: compare recomputes duplicates and counts from the IDs and checks the baseline's state; the -B flag is derived from check_local.py's build_plan, not asserted."},
+    {"id": "TR-08", "severity": "nonmandatory", "disposition": "Adopted now: the README and FAILURE-CAPTURE state the audit hook's blind spots; recording ctypes.dlsym events is left to W2's judgement."},
+    {"id": "TR-09", "severity": "nonmandatory", "disposition": "Adopted now: unplanned events, a skip inside a subTest included, are kept by name; --module-sha256 is required in both modes; body digests are compared with ORIGINAL_BODIES, or the README states that the audit compares them; GIT_* names that the frozen environment does not list are refused."},
+    {"id": "TR-10", "severity": "nonmandatory", "disposition": "Adopted now: kern.bootsessionuuid read and recorded before and after each row; exact and negative predicates available (stdout empty, probe.json passed false, absence of a named member); two rows may not share a stage; the 'is not None' fix. MC36's order after MC30-probe with rows_independent false is decided in S6."},
+    {"id": "TR-11", "severity": "nonmandatory", "disposition": "Adopted now: every pattern on every view; the binding names (spawn_sync, process_wrap) and the bracket forms; any require that is neither a plain call nor a declaration is flagged. The S6 reviewer adds the validator's 'url' specifier and reviews its preamble."},
+    {"id": "TR-12", "severity": "nonmandatory", "disposition": "Adopted now: the frozen mc11_rule's verdict is reported separately; a reviewed list needs a reviewed status and a reviewer identity, and an unreviewed list refuses."},
+    {"id": "TR-13", "severity": "nonmandatory", "disposition": "Adopted now: a test reaches PYTHON-MODULE with and without the mc10 exclusion; attempt_listing opens files with O_NOFOLLOW."},
+    {"id": "TR-14", "severity": "nonmandatory", "disposition": "Carried to the S6 freeze: the provider's bound Git reads listed as recorded, unbounded starts (about 60 in the cohort, 15 or 25 per mc29 case); MC29's scope stated; one configuration copy per mc29 case at its own path."},
+    {"id": "TR-15", "severity": "nonmandatory", "disposition": "Adopted now: the bounds are recomputed from the retained vertices; the vertices are recomputed from positions and world_matrix if W2 can do so independently of the probe's code; T-10's bound stays declared."},
+    {"id": "TR-16", "severity": "nonmandatory", "disposition": "Adopted now: FC-P3's probe is fixed as code in the tooling, and FC-K5 names the process that computes the listing's digests."},
+    {"id": "TR-17", "severity": "nonmandatory", "disposition": "Adopted now: every entry point refuses a start without -B (sys.flags.dont_write_bytecode must be 1)."},
+    {"id": "TR-18", "severity": "nonmandatory", "disposition": "Adopted now: the missing tests are added, and each mandatory fix comes with a test that fails on the rejected code."}
+  ],
+  "w2_findings": "Review 001's section 4 view is taken as given: T-01's exclusion is acceptable under Q7's conditions, so MC10 can run labelled mocked; T-03, T-05, T-07 and T-10 are right; T-04's MC30-probe design discriminates presence, adds a ninth Node start and orders MC36 after it.",
+  "next": "W2 revises the tooling under these dispositions; a fresh W3 then carries out tooling review 002 of the whole revised tooling before commit C."
+}

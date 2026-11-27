@@ -1,0 +1,101 @@
+{
+  "schema": "ontokin.c271.p35-commit-checks/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "commit": "commit C of the MH plan: the commit that carries this record",
+  "parent": "c81cf07b5386ea7eba7904f3ef5700709b84b366",
+  "recorded_at_utc": "2026-11-27T04:16:06Z",
+  "executor": "The owner's prepared environment, run by the Director: <worktree>/.venv/bin/python with -B, and PYTHONDONTWRITEBYTECODE=1 added; Git from the developer tools, for the two whitespace checks.",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "stdout": "workflow.stdout",
+      "stdout_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293",
+      "stderr": "workflow.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "when": "on the final staged commit; the same output as on the candidate"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "stdout": "documentation.stdout",
+      "stdout_sha256": "fb1988da317dfc1af9a139d972dfbb703eef808c9d66413120db9620c86d1168",
+      "stderr": "documentation.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "when": "on the final staged commit, with this record's link in the checkpoint"
+    },
+    {
+      "name": "full_staged_whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "when": "on the staged candidate before this directory was added",
+      "exit_code": 2,
+      "status": "failed_preserved",
+      "stdout": "whitespace-full-staged.stdout",
+      "stdout_sha256": "85976cb818974e2716f00a18e463285ddff294ed114e9add823f75a11a493c5c",
+      "stderr": "whitespace-full-staged.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnostic_count": 13,
+      "affected_paths": {
+        "tooling/tests/TEST-RUN-AGAINST-REJECTED-001.txt": 10,
+        "tooling/tests/TEST-RUN-IN-PLACE.txt": 2,
+        "tooling/tests/TEST-RUN.txt": 1
+      },
+      "classes": {
+        "unittest_verbose_test_line_ending_before_its_output": 10,
+        "assertion_line_with_an_empty_message": 3
+      },
+      "disposition": "Preserved. The three files are labelled verbatim records of unittest runs, and the trailing spaces are unittest's own output. Review 003 found the records equal to their raw outputs, and authoring/TOOLING-SHA256SUMS.txt and reviews 002 and 003 bind their bytes, so removing the spaces would change reviewed bytes. Every authored file passes (authored_whitespace). Earlier C271 phases preserved verbatim records in the same way (P19, P28)."
+    },
+    {
+      "name": "authored_whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/tests/TEST-RUN.txt",
+        ":(exclude)docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/tests/TEST-RUN-AGAINST-REJECTED-001.txt",
+        ":(exclude)docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/tests/TEST-RUN-IN-PLACE.txt",
+        ":(exclude)docs/engineering/localized-repair-c271/macos-qualification-p35/checks/commit-c/whitespace-full-staged.stdout"
+      ],
+      "when": "on the final staged commit, this record included",
+      "exit_code": 0,
+      "stdout": "empty"
+    },
+    {
+      "name": "tooling_suite_at_the_committed_place",
+      "record": "reviews/TOOLING-REVIEW-DISPOSITION-003.json, director_in_place_runs, inplace-run-003",
+      "result": "exit 0, 91 of 91, from 2026-11-27T04:12:12Z to 04:12:26Z, with this commit's other files in place"
+    },
+    {
+      "name": "privacy",
+      "method": "Every file of this commit was searched for private strings derived at run time from the home directory, the account name, the clone's ancestors, the interpreter's base prefix and the Git identity, case-insensitively, and for the names of the host's installed applications as whole words. Each Python file's string constants were also searched after joining them.",
+      "result": "No hit except the public repository's own name in its GitHub URLs and in the documentation check's output, the name of the Claude Code agent tool, and one known false positive of two joined constants ('actual' followed by 'expected')."
+    }
+  ],
+  "not_run": [
+    "the routine driver tools/check_local.py, whose default routine MH does not run",
+    "the unit suite and conformance, since no runtime or semantic file changes",
+    "Node, ldd, codesign, M0, M1 and the cohort"
+  ]
+}
