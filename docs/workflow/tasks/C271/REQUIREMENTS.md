@@ -693,3 +693,19 @@ Gate MH passed on this executor (`macos-arm64-local`: macOS 26.6.2 (25G83), arm6
   - product completion: no.
 - **Unchanged:** R01/R02 remain done and R03–R05 not_done. MH is not MR (R03).
 - **Next gate:** MR (R03), then R04 and R05, each a separate phase that needs the owner's selection.
+
+## P36 gate MR: the complete default routine and R03 acceptance — November 27, 2026
+
+The owner answered "Start gate MR" in this session. Phase C271-P36-macos-complete-routine-mr runs in local mode ([phase declaration](../../../engineering/localized-repair-c271/macos-routine-p36/PHASE.json), [MR plan](../../../engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md), [session checkpoint](P36-SESSION.md)).
+- **Objective:** gate MR of the adopted contract `ontokin.current-host-readback/0.2.0`, at design revision 4, which is R03 on this executor:
+  - a static inventory, read only, of every start and write that the complete default routine can make;
+  - M0 and M1 again, under an independently frozen and reviewed observation plan, giving an independently reviewed HOST at the new bound commit;
+  - the complete default routine of `tools/check_local.py` under a reviewed operational freeze, once as a qualifying run with a resolved temporary directory and once as an ordinary run with macOS's default one, with zero missing or skipped obligations in the qualifying run;
+  - both runs compared with main's recorded macOS baseline runs under OK-ENG-009 section 3, with exact inputs;
+  - an independent audit, then an independent R03 review of the exact candidate and its evidence.
+- **Fixed state:** from the observation plan's freeze to the audit, one boot, HEAD at one commit and no commit; every start of the framework interpreter with `-B`; the language and region settings unchanged.
+- **Downloads:** none.
+- **Not run:** `ldd`, `codesign`, any Node other than the pinned runtime, and the `--full` and `--force-agent` profiles.
+- **Main:** not written.
+- **Excluded:** R04 and R05, and R04's classification of S8's outcome changes.
+- **Unchanged until MR's outcome records say otherwise:** R01/R02 remain done and R03–R05 not_done.

@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "in_progress",
-  "owner": "c271-p35-e38e3aa82ade",
+  "owner": "c271-p36-14f7f8b219db",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -1718,27 +1718,24 @@
       "scope": "gate MH only: the seven readback methods and the direct negatives qualified on this executor (macos-arm64-local), with contract section 10's labels; not MR, R03, R04, R05, integration or a release"
     }
   },
-  "next_action": "C271-P35 passed gate MH of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) on this executor (macos-arm64-local), from the bound commit 0eb9a5517f4e19705178a2c59b8d8d33fb87867a: N34-M, M0 and M1 with HOST accepted, the qualifying cohort run once exactly as operational freeze 002 froze it (the probe syntax check, P06-H01, P06-H02, the original seven methods 7 of 7 with exactly three CPU starts and the intended matrix_0_3 negative, and the MH controls), and an independent audit that returned PASS_WITH_NONBLOCKING_FINDINGS. MH started Node 9 times and one other program twice, never ldd or codesign. It qualifies the seven methods and the direct negatives on this executor only, with contract section 10's labels; nothing is integrated into main. The next gates are MR (R03), then R04 and R05, each a separate phase that needs the owner's selection.",
+  "next_action": "C271-P36-macos-complete-routine-mr is declared and in progress: gate MR of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001), which is R03 on this executor. An independent reviewer lists every start and write the complete default routine can make; an independent author writes the comparison tooling, the observation plan and the operational freeze, and a fresh reviewer reviews each before it runs; M0 and M1 run once again on this host (one Git and one Node start) and give a new HOST at the new bound commit; the complete default routine of tools/check_local.py runs once as a qualifying run (R1, resolved temporary directory, the CPU trio's three Node starts) and once as an ordinary run (R2, macOS's default temporary directory); both are compared with main's recorded macOS baseline runs under OK-ENG-009 section 3 with exact inputs; an independent audit recomputes the results, and a fresh reviewer reviews the exact candidate and its evidence for R03. From the observation plan's freeze to the audit, one boot and one commit. Nothing is integrated. Then R04 and R05, each a separate phase.",
   "session_phase": {
-    "schema": "ontokin.c271.p35-macos-host-qualification/1",
+    "schema": "ontokin.c271.p36-macos-complete-routine/1",
     "task": "C271",
-    "phase": "C271-P35-macos-host-qualification-mh",
-    "owner": "c271-p35-e38e3aa82ade",
-    "declared_at_utc": "2026-11-26T23:08:24Z",
+    "phase": "C271-P36-macos-complete-routine-mr",
+    "owner": "c271-p36-14f7f8b219db",
+    "declared_at_utc": "2026-11-27T15:46:53Z",
     "execution_mode": "local",
     "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-    "starting_branch_head": "30e00d83df8bd87216b15ec1e4a4f0ca349fc78d",
+    "starting_branch_head": "47cc579fa28e23d3424a46c72fd80a71d73440dc",
     "branch": "work/c271-missing-import-digest-control",
     "worktree": "../OntoKin-worktrees/c271",
     "pull_request": 274,
     "scope_issue": 273,
-    "record": "docs/engineering/localized-repair-c271/macos-qualification-p35/PHASE.json",
-    "plan": "docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
-    "session_checkpoint": "docs/workflow/tasks/C271/P35-SESSION.md",
-    "status": "qualification_passed_audited_pushed",
-    "completed_at_utc": "2026-11-27T11:32:20Z",
-    "bound_commit": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
-    "outcome": "docs/engineering/localized-repair-c271/macos-qualification-p35/OUTCOME.json"
+    "record": "docs/engineering/localized-repair-c271/macos-routine-p36/PHASE.json",
+    "plan": "docs/engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md",
+    "session_checkpoint": "docs/workflow/tasks/C271/P36-SESSION.md",
+    "status": "declared_routine_pending"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8563,6 +8560,101 @@
         "p34_macos_preparation",
         "p34_prior_current_fields",
         "p35_prior_current_fields"
+      ]
+    }
+  },
+  "p36_prior_current_fields": {
+    "recorded_at_utc": "2026-11-27T15:46:53Z",
+    "purpose": "The current values that the C271-P36 declaration replaced, kept unchanged as P35's closing state.",
+    "owner": "c271-p35-e38e3aa82ade",
+    "next_action": "C271-P35 passed gate MH of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) on this executor (macos-arm64-local), from the bound commit 0eb9a5517f4e19705178a2c59b8d8d33fb87867a: N34-M, M0 and M1 with HOST accepted, the qualifying cohort run once exactly as operational freeze 002 froze it (the probe syntax check, P06-H01, P06-H02, the original seven methods 7 of 7 with exactly three CPU starts and the intended matrix_0_3 negative, and the MH controls), and an independent audit that returned PASS_WITH_NONBLOCKING_FINDINGS. MH started Node 9 times and one other program twice, never ldd or codesign. It qualifies the seven methods and the direct negatives on this executor only, with contract section 10's labels; nothing is integrated into main. The next gates are MR (R03), then R04 and R05, each a separate phase that needs the owner's selection.",
+    "session_phase": {
+      "schema": "ontokin.c271.p35-macos-host-qualification/1",
+      "task": "C271",
+      "phase": "C271-P35-macos-host-qualification-mh",
+      "owner": "c271-p35-e38e3aa82ade",
+      "declared_at_utc": "2026-11-26T23:08:24Z",
+      "execution_mode": "local",
+      "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "starting_branch_head": "30e00d83df8bd87216b15ec1e4a4f0ca349fc78d",
+      "branch": "work/c271-missing-import-digest-control",
+      "worktree": "../OntoKin-worktrees/c271",
+      "pull_request": 274,
+      "scope_issue": 273,
+      "record": "docs/engineering/localized-repair-c271/macos-qualification-p35/PHASE.json",
+      "plan": "docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
+      "session_checkpoint": "docs/workflow/tasks/C271/P35-SESSION.md",
+      "status": "qualification_passed_audited_pushed",
+      "completed_at_utc": "2026-11-27T11:32:20Z",
+      "bound_commit": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a",
+      "outcome": "docs/engineering/localized-repair-c271/macos-qualification-p35/OUTCOME.json"
+    }
+  },
+  "p36_macos_routine": {
+    "phase": "C271-P36-macos-complete-routine-mr",
+    "owner": "c271-p36-14f7f8b219db",
+    "record": "docs/engineering/localized-repair-c271/macos-routine-p36/PHASE.json",
+    "plan": "docs/engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md",
+    "session_checkpoint": "docs/workflow/tasks/C271/P36-SESSION.md",
+    "declared_at_utc": "2026-11-27T15:46:53Z",
+    "status": "declared_routine_pending",
+    "owner_direction": [
+      {
+        "date": "2026-11-27 (UTC)",
+        "question": "Should I start gate MR, the complete routine (R03)?",
+        "reply": "Start gate MR",
+        "how_received": "typed by the owner in this session",
+        "scope_of_selection": "gate MR of the adopted contract ontokin.current-host-readback/0.2.0, which is R03 on this executor"
+      }
+    ],
+    "gate": "MR of ontokin.current-host-readback/0.2.0, and R03's acceptance",
+    "downloads": "none needed and none approved",
+    "host_record": "MH's HOST 34e94f29 is not reused: it binds the source at 0eb9a551, and the branch head has moved since",
+    "parent_complete": false
+  },
+  "p36_fields_index": {
+    "recorded_at_utc": "2026-11-27T15:46:53Z",
+    "purpose": "Extends p35_fields_index, which stays unchanged: p36_macos_routine joins the current-state fields of task.json, and p35_macos_qualification becomes history.",
+    "current_state_fields": {
+      "task.json": [
+        "status",
+        "blocked_reason",
+        "owner",
+        "branch",
+        "scope_issue",
+        "requirements",
+        "plan",
+        "checks",
+        "completion",
+        "next_action",
+        "session_phase",
+        "execution_mode",
+        "execution_mode_record",
+        "delivery_reconciliation",
+        "p36_macos_routine"
+      ],
+      "CURRENT.json": [
+        "schema_version",
+        "project",
+        "latest_task",
+        "active_task",
+        "execution_mode",
+        "observed_main",
+        "snapshot_date",
+        "next_action",
+        "checkpoint",
+        "unfinished",
+        "boundaries",
+        "delivery_policy",
+        "history"
+      ]
+    },
+    "now_history": {
+      "task.json": [
+        "p35_macos_qualification",
+        "p35_prior_current_fields",
+        "p35_fields_index",
+        "p36_prior_current_fields"
       ]
     }
   }

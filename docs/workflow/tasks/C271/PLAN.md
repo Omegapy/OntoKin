@@ -677,3 +677,19 @@ Recorded failures and deviations:
 - one launch message held a third call.
 
 The [outcome](../../../engineering/localized-repair-c271/macos-qualification-p35/OUTCOME.json) lists each. Each push was without force and read back. The next phase, not begun here, is MR (R03). Then come R04 and R05, each a separate phase.
+
+## P36 gate MR: the complete default routine and R03 acceptance — November 27, 2026
+
+Local mode, on the owner's selection ([phase declaration](../../../engineering/localized-repair-c271/macos-routine-p36/PHASE.json)). Director `c271-p36-14f7f8b219db`. The [MR plan](../../../engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md) fixes the stages, the workers, the fixed state, the start accounting and the comparison rules.
+
+Ordered steps:
+1. Declare and push.
+2. Have an independent reviewer, W1, list every start and write the complete routine can make, while an independent author, W2, writes the tooling, which a fresh reviewer (W3) reviews.
+3. Commit W1's records and the reviewed tooling at one commit B, push and read back.
+4. Have W2 freeze the observation plan at B, outside Git, and a fresh W3 review it; the digest comes from the review.
+5. Run M0 and M1 once through the observer, and have a fresh W3 review HOST.
+6. Have W2 freeze the configuration, the two runs' commands and their expected outcomes, and a fresh W3 review them.
+7. Run R1, the qualifying run, then R2, the ordinary run, exactly as frozen, counting every start, and compare both with main's baseline runs.
+8. Have an independent auditor, W4, recompute the results.
+9. Have a fresh W3 review the exact candidate and the evidence for R03.
+10. Record, push without force, read the push back, comment once on PR274 and issue273, and stop.
