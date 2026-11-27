@@ -1,0 +1,266 @@
+{
+ "schema": "ontokin.c271.p36-plan-review/1",
+ "review": "plan review 001 of observation plan 001",
+ "task": "C271",
+ "phase": "C271-P36-macos-complete-routine-mr",
+ "gate": "MR",
+ "stage": "S4",
+ "director": "c271-p36-14f7f8b219db",
+ "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; no earlier review in its context; it wrote none of the plan, its inventories, the launch record, the observer, the supervisor, the contract, the amendment, MP's preparation, MH's records or MR's tooling",
+ "written_utc": "2026-11-27, after the final recheck at 19:40:47Z",
+ "labels": {
+  "<worktree>": "the C271 worktree at commit B",
+  "<clone>": "the main clone; <clone>/.git is the common Git directory that <worktree>/.git names through <clone>/.git/worktrees/c271",
+  "<local>": "the working directory beside the clone; <local>/.. holds it and the clone",
+  "<volume>": "the mount point of the external volume that holds <worktree>, <clone> and <local>",
+  "<prefix>": "the installation prefix of the interpreter's framework and of its non-system libraries",
+  "<framework>": "<prefix>/Cellar/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12",
+  "OUT": "<local>/c271-p36/workers/W3-plan-001/, the only place I wrote"
+ },
+ "subject": {
+  "commit_b": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
+  "tree": "0935162c72fd9d804681e920da6f6d6e9066ff28",
+  "candidate_directory": "<local>/c271-p36/workers/W2-plan-001/",
+  "candidate_sums": {"path": "<local>/c271-p36/workers/W2-plan-001/SHA256SUMS.txt", "entries": 60, "all_equal": true, "unlisted_files": 0},
+  "host": "macOS 26.6.2 (25G83), Darwin 25.6.0, arm64, proc_translated 0, boot C90010BA-4DA9-475D-BBAB-CF1A9C40175A"
+ },
+ "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+ "mandatory_findings": [],
+ "plan": {
+  "path": "<local>/c271-p36/workers/W2-plan-001/observation-plan-001.json",
+  "sha256": "cc1c2defd73d8d1ade22a8c772308c0e3d2fad3262a83c946c1733aecf429d5e",
+  "size_bytes": 9017,
+  "mode": "0o644",
+  "nlink": 1,
+  "canonical_json": true,
+  "computed_by": "my own scripts w3_show_plan.py (19:10:36Z), s02_plan_keys.py (19:30:38Z) and s07_final_recheck.py (19:36:41Z and 19:39:04Z), each from the file's bytes",
+  "use": "the Director passes this digest as the last argument of static and observe; it is taken from this record, not from the plan, W2's notes, W2's SHA256SUMS.txt or M0-LAUNCH.json"
+ },
+ "recomputed_inventories": {
+  "python": {
+   "sha256": "c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633",
+   "canonical_bytes": 776209,
+   "byte_identical_to_w2_file": true,
+   "byte_identical_to_mh_file": true,
+   "differences": 0,
+   "explained_differences": "none: the canonical bytes are identical, so every file entry, link, directory, image, external library, link hop and selection key is equal",
+   "how": "s03_python_inventory.py: my own tree walk without following links, link resolver, thin arm64 Mach-O parser with section 6.3's rules, closure (stable after 2 passes) and package check",
+   "figures": {
+    "framework": {"files": 3478, "bytecode_files": 414, "pycache_directories": 37, "symlinks": 5, "directories": 305, "file_bytes": 72433430},
+    "venv": {"files": 297, "bytecode_files": 0, "symlinks": 3, "directories": 45, "file_bytes": 13983870},
+    "images": {"total": 111, "framework": {"MH_EXECUTE": 2, "MH_DYLIB": 1, "MH_BUNDLE": 76}, "venv": {"MH_DYLIB": 19, "MH_BUNDLE": 8}, "external_MH_DYLIB": 5},
+    "closure": {"link_hops": 6, "rpath_entries": 81, "loader_path_references": 26, "system_references": 127, "bound_references": 35},
+    "selection": {"launcher_hops": 4, "home_hops": 1, "home_launcher_hops": 2, "executable_hops": 0},
+    "packages": {"Pillow": 139, "attrs": 36, "jsonschema": 45, "jsonschema-specifications": 29, "referencing": 20, "rpds-py": 10, "typing_extensions": 6, "unhashed_rows_each": 1, "unowned_files": 0, "lock_equals_contract_pins": true}
+   },
+   "recomputed_at_utc": ["19:22:45Z", "19:32:38Z", "19:38:59Z", "19:40:47Z"]
+  },
+  "source": {
+   "sha256": "95abd300edbb9930e67c569b726015964ab98f4ed0ede389da122bbb3f145c4c",
+   "canonical_bytes": 96238,
+   "files": 644,
+   "file_bytes": 13588394,
+   "byte_identical_to_w2_file": true,
+   "byte_identical_to_mh_file": true,
+   "how": "s04_source_and_git.py: the observer's four trees, sixteen roles and three optional files (its source lines 135-150), with no link, .DS_Store, __pycache__, bytecode or multi-link file",
+   "recomputed_at_utc": ["19:25:40Z", "19:39:04Z"]
+  },
+  "dependencies": {
+   "sha256": "3545d5f920ac840804a9e25d28a87d623f96af71537fd3f020a0c1d743f82fb4",
+   "canonical_bytes": 4543,
+   "files": 24,
+   "directories": 13,
+   "byte_identical_to_w2_file": true,
+   "byte_identical_to_mh_file": true,
+   "how": "s07_final_recheck.py builds the document from the installed reader tree and the retained C195 archive; s02 checks it against the C199 pins of EXTERNAL-INPUTS.json (21fd6bad...), the necessary directories, MP's reader plan and receipt, and the versions 2.0.0-dev.3.10 and 0.186.1",
+   "recomputed_at_utc": ["19:36:41Z", "19:39:04Z"]
+  }
+ },
+ "checks": {
+  "s01_files": {"total": 9, "passed": 9},
+  "s02_plan_keys": {"total": 33, "passed": 33},
+  "s03_python_inventory": {"runs": 4, "all_byte_identical": true},
+  "s04_source_and_git": {"total": 7, "passed": 7, "runs": 2},
+  "s05_git_static": {"slices": ["x86_64 subtype 3", "arm64 subtype 0"], "predicted_line": "git version 2.50.1 (Apple Git-155)\\n", "fits_git_version_line_v1": true},
+  "s06_imports_static": {"total": 3, "passed": 3},
+  "s07_final_recheck": {"total": 8, "passed": 8, "runs": 2}
+ },
+ "plan_keys": [
+  {"key": "/schema, /contract, /profile, /executor", "value": "ontokin.current-host-readback-observation-plan/0.2.0, ontokin.current-host-readback/0.2.0, darwin-arm64-v1, macos-arm64-local", "source": "W3-OBSERVER.md section 2; observer lines 57-69", "result": "equal (K-03, K-05)"},
+  {"key": "/environment", "value": "PATH=/usr/bin:/bin, LANG=C.UTF-8, LC_ALL=C.UTF-8, TZ=UTC, UV_THREADPOOL_SIZE=2", "source": "W3-OBSERVER.md section 2; observer lines 102-103", "result": "exactly the five (K-04)"},
+  {"key": "/limits", "value": "the 15 fixed values", "source": "observer lines 127-131, evaluated statically", "result": "equal (K-05)"},
+  {"key": "/platform", "value": "Darwin, 25.6.0, arm64, 0, C90010BA-4DA9-475D-BBAB-CF1A9C40175A", "source": "os.uname(), sysctlbyname and sysctl -n now", "result": "the actual release and this boot (K-06; sysctl -n at 19:36:41Z)"},
+  {"key": "/os/system_version", "value": "/System/Library/CoreServices/SystemVersion.plist, 6151cb88...04a1, 603, 0o444", "source": "rehash; plist", "result": "macOS 26.6.2, 25G83 = kern.osversion, no ProductVersionExtra (K-07)"},
+  {"key": "/os/cryptex", "value": "present, /System/Volumes/Preboot/Cryptexes/OS/System/Library/CoreServices/SystemVersion.plist, same bytes", "source": "my resolver: one hop /System/Cryptexes/OS -> ../../System/Volumes/Preboot/Cryptexes/OS", "result": "equal, canonical (K-08)"},
+  {"key": "/source", "value": "<worktree>, B, 0935162c..., W2's source inventory", "source": "Git's files read without Git (s04); recomputation", "result": "HEAD is B; B names the tree; inventory byte-identical (K-09, K-10, G-01 to G-05)"},
+  {"key": "/observer", "value": "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py, 471a9547...2788, 162557, 0o644", "source": "rehash; source inventory entry; blob e59d6292... at B and C", "result": "equal (K-11, G-07)"},
+  {"key": "/python", "value": "<worktree>/.venv, <framework>, 3.12.13, W2's Python inventory", "source": "canonical paths; pyvenv.cfg; my interpreter; recomputation", "result": "equal (K-12; s03)"},
+  {"key": "/runtime", "value": "<local>/c271-macos/node-v24.22.1-darwin-arm64, v24.22.1, 0o755, 0o755, 6f320694...f329, e928a8ec...ea2c, the archive 89c68259...c0a7 and MP's plan and receipt", "source": "rehash; my Mach-O parser; my receipt rule; MP's sums", "result": "equal; 21 commands in the closed list, dylibs CoreFoundation, Security, libc++, libSystem; INSTALLED_EXACT (K-13 to K-19)"},
+  {"key": "/dependencies", "value": "<local>/c271-macos/reader-c195, W2's dependency inventory, MP's reader plan and receipt", "source": "tree walk; C199 pins; my receipt rule", "result": "24 files, 13 directories, INSTALLED_EXACT, node_source null (K-20 to K-22; R-01)"},
+  {"key": "/git", "value": "/Library/Developer/CommandLineTools/usr/bin/git, be4afb2b...bcae, 7604272, 0o755", "source": "rehash; N34-M-REVIEW.md line 317", "result": "N34-M's file; not /usr/bin/git, its hard link or its bytes; fat x86_64 + arm64 (K-23; s05)"},
+  {"key": "/commands", "value": "git_version then node_version", "source": "W3-OBSERVER.md section 2's table; observer lines 1954-1965", "result": "equal: argv, cwd <attempt>/<id>, label, environment (the five, plus six GIT_* for Git), 5000/3000/2000 ms, one expected start, stdout predicates git-version-line-v1 and v24.22.1\\n, empty stderr predicates (K-24)"},
+  {"key": "/evidence", "value": "parent <local>/c271-p36/evidence, seven ancestors, attempt observe-001, the fixed outputs", "source": "my lstat walk", "result": "parent empty; ancestors equal with no link; attempt absent; outputs equal; no overlap with a bound root (K-25 to K-27, K-29; F-07 to F-09; R-05)"},
+  {"key": "/failure_capture/procedure", "value": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/FAILURE-CAPTURE.md, f387fb3e...c99c, 13147, 0o644", "source": "rehash; MH's TOOLING-SHA256SUMS.txt; MR's tooling README line 399; blob 6ce5a793... at B and C", "result": "equal, outside the attempt (K-28, G-07); see PR-01"}
+ ],
+ "evidence_ancestors": [
+  {"path": "/", "device": 16777234, "inode": 2, "mode": "0o755"},
+  {"path": "/Volumes", "device": 16777234, "inode": 18343, "mode": "0o755"},
+  {"path": "<volume>", "device": 16777244, "inode": 2, "mode": "0o775"},
+  {"path": "<local>/..", "device": 16777244, "inode": 7019967, "mode": "0o755"},
+  {"path": "<local>", "device": 16777244, "inode": 14022344, "mode": "0o755"},
+  {"path": "<local>/c271-p36", "device": 16777244, "inode": 16455187, "mode": "0o755"},
+  {"path": "<local>/c271-p36/evidence", "device": 16777244, "inode": 16455190, "mode": "0o755"}
+ ],
+ "git_state": {
+  "head": "<worktree>/.git names <clone>/.git/worktrees/c271 (commondir ../..), whose HEAD is ref: refs/heads/work/c271-missing-import-digest-control; the ref is a loose file of the common directory holding B; no per-worktree ref and no packed-refs entry; the backlink names <worktree>/.git; no alternates",
+  "commit_b": {"stored": "loose", "name_recomputes": true, "tree": "0935162c72fd9d804681e920da6f6d6e9066ff28", "parents": ["d3b622d61745259c3477bc94be0fb4da05c23c56"], "signed": false, "committed_epoch": 1795804835, "subject": "C271-P36: commit B, the start-and-write inventory and the reviewed MR tooling"},
+  "pack": {"objects": 27674, "index_v2_checksum_valid": true, "trailer_equals_index": true, "content_sha1_equals_trailer": true},
+  "tree": {"trees": 2655, "entries": 23012, "modes": {"100644": 23004, "100755": 2, "120000": 6}, "blobs_missing_from_store": 0},
+  "worktree": {"entries": 23012, "links": 6, "directories": 2654, "missing": 0, "extra": 0, "changed": 0, "special": 0, "untracked_directories": 0, "hygiene_problems": 0, "excluded": ".git and .venv at the root"},
+  "index": {"version": 2, "entries": 23012, "checksum_valid": true, "equal_to_tree": true, "cached_sizes_equal": true, "stage_assume_valid_skip_worktree_intent_to_add": 0, "tree_extension_root": "0935162c72fd9d804681e920da6f6d6e9066ff28", "extensions": {"TREE": 104554, "REUC": 516}},
+  "c_to_b": {"first_parent_chain": ["4ca78142 (B)", "d3b622d6", "47cc579f", "2cd69829"], "reaches_c": "0eb9a5517f4e19705178a2c59b8d8d33fb87867a", "c_tree": "ea10cd94c05a2ebbb44b3f83d4c96cb0a59baa2b", "added": 522, "removed": 0, "changed": 6, "outside_docs": 0, "in_source_set": 0, "groups": {"macos-qualification-p35/": 472, "macos-routine-p36/": 49, "docs/workflow/ (CURRENT.json, memory.json and five files of tasks/C271)": 7}},
+  "named_blobs_equal_at_b_and_c": {
+   "macos-qualification-p35/tooling/FAILURE-CAPTURE.md": "6ce5a7931c662c40cb11fe0600e7d0b12f368fda",
+   "macos-qualification-p35/tooling/capture_probe.py": "d7ca23f9489075c9ae9818083c30caa4867dedf2",
+   "macos-implementation-p33/ADOPTION-AMENDMENT-001.json": "0431fab527c6bb69d52e224cac73c524ea6f70a3",
+   "prototypes/static_tray_v01/current_host_observation_v02.py": "e59d62922075e90b6cc3478f6bf3268fa7ab9926",
+   "prototypes/static_tray_v01/supervisor_darwin_v01.py": "4765dd892785e7d3b41619a4463fd94822444b1c",
+   "prototypes/static_tray_v01/supervisor.py": "b02086915dcf28e2e915d7e3d2b66d253688d331",
+   "tools/native-reader-verification-macos-arm64-cp312.lock": "c29341218d876b6e0d727edcd3ac883ddccc6ca4",
+   "docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz": "6d062bc9eefadb84c541ae5f0375c21a82c4bbca",
+   "docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json": "64b7238e1aaf4305f090748b3b65857ecbab3fcf"
+  }
+ },
+ "launch_record": {
+  "files": {"M0-LAUNCH.json": {"sha256": "8530ebd7a091d83365dbcd61dc09c971807612b3568d16846ac18c7a218de7b5", "size_bytes": 17592}, "M0-ENVIRONMENT.json": {"sha256": "0ed78f47b1929634d65b6407b8e8daf047aeb2daa6b5c194c24e91a7b91ebcf2", "size_bytes": 96, "equals_canonical_declared_environment": true}},
+  "observe_launch": "/usr/bin/env -i PATH=/usr/bin:/bin LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=UTC UV_THREADPOOL_SIZE=2 <worktree>/.venv/bin/python -I -S -B <worktree>/prototypes/static_tray_v01/current_host_observation_v02.py observe --plan <local>/c271-p36/workers/W2-plan-001/observation-plan-001.json --plan-sha256 cc1c2defd73d8d1ade22a8c772308c0e3d2fad3262a83c946c1733aecf429d5e",
+  "static_launch": "the same with static in place of observe",
+  "cwd": "<local>/c271-p36/evidence (exists, canonical)",
+  "result": "exact for W3-OBSERVER section 1 and observer lines 1477-1493 and 2779-2809: env -i leaves exactly the five declared variables and executes the venv launcher in the same process; sys.executable is <venv>/bin/python; -I -S -B; the plan digest only as the final argument; no plan digest anywhere in the record (K-32, K-33)",
+  "capture": "six fresh absent siblings of the attempt: observe-001.{static,observe}.{stdout,stderr,exit}.txt; outside the attempt; distinct from the two suggested FC-K3 records",
+  "shell_forms": "the same words as the argv, none needing quotes, then \"$PLAN_SHA256\", the redirections and echo $?; see PR-03",
+  "expected_starts": "exactly the plan's two commands in order through supervisor_darwin_v01.run_process; totals node 1 and other 1",
+  "expected_outputs": "the 19 planned files without the three failure.json files, the three 0o700 directories, HOST at its path",
+  "nothing_else_started": "the shell's cd and echo are built-ins; env executes the interpreter in its own process; the observer's only start route is supervisor.run_process (observer line 2533), one call per command and no retry; run_process makes one subprocess.Popen (supervisor_darwin_v01.py lines 155-156)"
+ },
+ "differences_from_mh_plan": {
+  "mh_plan": {"path": "<local>/c271-p35/workers/W2-plan-001/observation-plan-001.json", "sha256": "b8cd6449aba958373f68715158402ed2e0e233e08213f3521bbc3d80cfe4c152", "size_bytes": 9017},
+  "confirmed": true,
+  "same_size_and_leaf_set": true,
+  "differing_leaves": 37,
+  "leaves": {
+   "/source/commit": ["0eb9a5517f4e19705178a2c59b8d8d33fb87867a", "4ca781429c5411c67c0965bc69306b42c6cc74ad"],
+   "/source/tree": ["ea10cd94c05a2ebbb44b3f83d4c96cb0a59baa2b", "0935162c72fd9d804681e920da6f6d6e9066ff28"],
+   "inventory paths": "/source/inventory/path, /python/inventory/path, /dependencies/inventory/path: <local>/c271-p35/workers/W2-plan-001/ becomes <local>/c271-p36/workers/W2-plan-001/; digests, sizes and modes unchanged",
+   "evidence paths": "/evidence/parent, /evidence/attempt, the 24 leaves of /evidence/outputs and /commands/0/cwd, /commands/1/cwd: <local>/c271-p35/evidence becomes <local>/c271-p36/evidence",
+   "/evidence/ancestors/5": "path <local>/c271-p35 inode 15728058 becomes <local>/c271-p36 inode 16455187; device and mode unchanged",
+   "/evidence/ancestors/6": "path <local>/c271-p35/evidence inode 15728417 becomes <local>/c271-p36/evidence inode 16455190; device and mode unchanged"
+  },
+  "unexplained": []
+ },
+ "refusal_and_start_analysis": {
+  "plan_defects": "none found: no key would make static or observe refuse on the present host state",
+  "start_count": "exactly one Git and one Node start: the observer starts processes only through run_process (observer line 2533), called once for each of the two commands (lines 2696-2706) with no retry; each call makes one Popen; git --version and node --version start no descendant, and MH observed both groups absent at exit with 0 ms cleanup",
+  "never_started": "ldd, codesign, otool, /usr/bin/git, any other Git or Node",
+  "loaded_modules": "s06: every standard-library module on the path to observe's check after the supervisor import is a frozen framework file or built in, with any existing bytecode inventoried; the only project modules are the four supervisor files, all in the source inventory; no bytecode or __pycache__ under prototypes/; no entry of the worktree root shadows a standard module",
+  "host_conditions_that_fail_closed": [
+   "a reboot (the plan binds the boot) or a remount of the external volume (its device is bound through the ancestors): refused before any start",
+   "a bytecode or other file added to the framework tree or the .venv, for example by an interpreter start without -B (PR-02): refused before any start if it appears before observe's static phase, otherwise DRIFT after a counted start",
+   "a package-manager operation that retargets a <prefix>/opt link or replaces a Cellar file: the selection chain, the closure's hops or an external library differs, refused before any start",
+   "a Git write that moves the ref, rewrites HEAD or adds an untracked or changed file in the source set: refused before any start",
+   "a change of the plan, an inventory, MP's plans or receipts, the archives, the runtime, the reader tree or FAILURE-CAPTURE.md: refused before any start",
+   "a umask that clears owner permission bits: the first evidence directory fails its 0o700 check before any start (this shell's umask is 022)",
+   "a remount of the volume with noexec: M1's exec of bin/node fails and its start count is UNKNOWN",
+   "a non-empty stderr of either start (PR-05): refused after that counted start",
+   "an unset, empty or mistyped digest (PR-03): refused with zero bounded starts, but the capture paths are then used"
+  ],
+  "volume": "APFS, local, nodev, nosuid, journaled, noowners; not noexec; bin/node carries only com.apple.provenance"
+ },
+ "answers": {
+  "Q-1": "Sound for M0 and M1, on the conditions of PR-01. The observer binds FAILURE-CAPTURE.md by its bytes only and never reads its text (observer lines 2253-2254), and capture_probe.py names no phase path (lines 199-205). MR's FC-K5 readback and any capture record belong in MR's evidence parent <local>/c271-p36/evidence/, as fresh absent siblings of the attempt and never inside it, because MR-PLAN section 6 puts MR's evidence there and keeps MH's exact records unchanged; nothing may be written under <local>/c271-p35/. The Director records this reading, with 'MH-PLAN section 8' read as 'MR-PLAN section 9' and the schema name kept, and names the exact paths before S5.",
+  "Q-2": "Yes. argv_without_digest followed by exactly one argument, the plan's SHA-256 cc1c2defd73d8d1ade22a8c772308c0e3d2fad3262a83c946c1733aecf429d5e from this record, is W3-OBSERVER section 1's launch: env -i with the five declared assignments, then <worktree>/.venv/bin/python -I -S -B <observer> observe --plan <plan> --plan-sha256 <digest>, from the evidence parent. The same holds for static. PR-03 recommends a guard on the shell variable.",
+  "Q-3": "Confirmed. python3 on the session's PATH resolves through <prefix>/opt/python@3.12 and libexec/bin/python3 to <framework>/bin/python3.12, the same launcher and Python.app image as the .venv launcher. MR-PLAN section 3 allows W2 its own scripts under -I -S -B, and section 6 requires -B for every start of that interpreter whatever its name. I ran my own scripts the same way; the four byte-identical recomputations of the Python inventory show that neither W2's starts nor mine added a file.",
+  "Q-4": "The job still runs: PID 1304, parent launchd, started 2026-11-23T12:21:13Z, the bound Python.app image with another project's watcher script and an argv without -B, the process of MH's PR-03. I did not read its environment. The Python inventory recomputed by my code at 19:22:45Z, 19:32:38Z, 19:38:59Z and 19:40:47Z is byte-identical to the frozen file. A further user of the interpreter appeared during this review (PR-02).",
+  "Q-5": "Agree. MH's M0 observed both stderr streams empty for the same bytes and environments; that is one observation, not a guarantee. A refusal for a non-empty stderr cannot be corrected by a plan, so under MR-PLAN section 9 MR stops. The Director adopts this classification again before the run (PR-05).",
+  "Q-6": "Agree. Read from Git's files, the adoption record's blob is 0431fab527c6bb69d52e224cac73c524ea6f70a3 at B and at C, and the worktree file equals it: SHA-256 872312ed80a63fbb196c17ace42e786b7fe757b710eff41139b125dfaa507937, 5,396 bytes, 0o644, one link. M0 and M1 do not read it; the S6 configuration binds its bytes (PR-06).",
+  "Q-7": "Agree that a reboot and a remount fail closed before any start. Further facts that change without an edit of a bound file by the project: a package-manager operation on <prefix> (fails closed before any start); another session's interpreter start without -B (PR-02); the language and region settings, whose CoreFoundation value M0 admits and records but the plan does not bind, so only static's facts_sha256 can show its change before observe (PR-04); a remount with noexec, under which M1's exec would fail with an UNKNOWN start count; and sleep or unmounting of the volume during observe.",
+  "Q-8": "Accepted. With -I the cwd is not on sys.path, the observer resolves no path against it, and each child runs in its own stage. The six capture paths are fresh absent siblings of the attempt, outside it, and creating them changes neither the parent's device, inode and mode, which are all that _ancestors compares (observer lines 1983-1993 and 2364-2365), nor the attempt's absence."
+ },
+ "findings": [
+  {
+   "id": "PR-01",
+   "mandatory": false,
+   "location": "FAILURE-CAPTURE.md lines 83-93 (FC-K5, the readback 'under <local>/c271-p35/evidence/'), 167 and 183 (MH-PLAN section 8), 195-199 (schema); MR-PLAN.md line 160 and lines 187-196; observation-plan-001.json /failure_capture/procedure; M0-LAUNCH.json /fc_k3 and /expected_outputs/refusal_or_failure/then; PLAN-AUTHOR-NOTES.md lines 362-367 (Q-1)",
+   "statement": "The procedure that the plan binds, reused unchanged, places FC-K5's readback record in MH's evidence parent and refers to MH-PLAN section 8 after a refusal. The observer binds the procedure by its bytes only, so M0 and M1 do not depend on this wording, and capture_probe.py writes any absent canonical path in an existing canonical directory. Read literally, FC-K5 would put MR's readback into MH's evidence parent, which MR-PLAN section 6 keeps unchanged with MH's exact records.",
+   "required_change": "Before S5, the Director records MR's reading in the plan-review disposition: <local>/c271-p35/evidence/ reads <local>/c271-p36/evidence/, the plan's evidence parent; MH-PLAN section 8 reads MR-PLAN section 9, and 'an MH plan' and 'MH tool' include MR's plans and the reused tools; the capture record keeps the schema ontokin.c271.p35-failure-capture/1; capture_probe.py runs from its committed path under its bound SHA-256 db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f. The Director names, before the run, the fresh absent paths of the FC-K5 readback with its command record and streams, and of FC-P3's probe record if one is made, as siblings of the attempt distinct from the six capture paths and the two command records. Nothing is written under <local>/c271-p35/. The plan and its digest stay unchanged."
+  },
+  {
+   "id": "PR-02",
+   "mandatory": false,
+   "location": "MR-PLAN.md lines 174-178 (-B for every start of the framework interpreter, other sessions on this host included); M0-LAUNCH.json /preconditions_for_the_director/3; MH's PR-03 (PLAN-REVIEW-DISPOSITION-001.json /dispositions/2)",
+   "statement": "During this review an agent application other than this Claude Code session, whose controlling process has run since 2026-11-26T00:30:42Z, started the bound framework interpreter's process image three times, each time a parent and a child: at 19:31:28Z (still present at 19:32:09Z, gone moments later), 19:37:20Z (gone by 19:39:04Z) and 19:39:18Z (running at 19:40:54Z). For the second and third pairs, both argvs carried -B and named nothing of this project; the first pair had ended before I read its argv, and I read no environment. The Python inventory stayed byte-identical at each of my four recomputations, the last at 19:40:47Z. The Director cannot enforce MR-PLAN section 6 on that application.",
+   "required_change": "No change to the plan. The Director records the observation and asks the owner to keep that application from starting the framework interpreter without -B, or to pause it, from S5 to the end of S8. The Director's static run immediately before observe detects an added file before any start; a file added between observe's rechecks refuses with DRIFT after a counted start."
+  },
+  {
+   "id": "PR-03",
+   "mandatory": false,
+   "location": "M0-LAUNCH.json /observe/shell_form, /static_before_observe/shell_form and /observe/shell_form_variable; FAILURE-CAPTURE.md lines 161-168 (FC-R2, FC-R3); observation-plan-001.json /evidence/attempt",
+   "statement": "Both shell forms pass \"$PLAN_SHA256\" unguarded. If it is unset, empty or mistyped, the shell creates the capture files and the observer starts and refuses at PLAN with zero bounded starts. For observe, FC-R2 and FC-R3 then call for fresh paths and a new attempt ID, and the plan binds observe-001, so the corrected attempt would need a new plan and review.",
+   "required_change": "The Director sets the variable to this record's digest in the same shell, writes the argument as \"${PLAN_SHA256:?}\", and compares the plan file's SHA-256 with it immediately before each launch, with a utility that starts no interpreter (for example shasum -a 256). With the guard, zsh stops at the expansion before any redirection or start: my probe exited with status 1 and created no file. The observer's argv is unchanged."
+  },
+  {
+   "id": "PR-04",
+   "mandatory": false,
+   "location": "M0-LAUNCH.json /static_before_observe/expected/facts_sha256_if_nothing_changed; observer lines 2265-2271 (_fingerprint) and 2653-2664 (static_check); MR-PLAN.md lines 179-180 (MC31)",
+   "statement": "static refuses only on a binding that the plan makes. Its facts_sha256 also covers facts the plan does not bind: the observed __CF_USER_TEXT_ENCODING value, the kernel's version string and the bytes of the Git pointer files. W2's static gave 3f0624318211f82e76aaf408a98e2e0a82ec2147ed681682242f37c9343c4ddf. M0 admits any non-empty CoreFoundation value and only records it.",
+   "required_change": "The Director compares its static run's facts_sha256 with that value and, on a difference, stops before observe and reconciles; no bounded start has then been made."
+  },
+  {
+   "id": "PR-05",
+   "mandatory": false,
+   "location": "observation-plan-001.json /commands/0/stderr_predicate and /commands/1/stderr_predicate; observer lines 102-107 (the fixed environments) and 2483-2490 (_predicate); MR-PLAN.md lines 239-245; MH's inspection receipts",
+   "statement": "Both starts must write nothing to stderr. MH's M0 observed that for the same Git and Node bytes and environments: Git printed 'git version 2.50.1 (Apple Git-155)' in 0.007 s and Node 'v24.22.1' in 1.11 s, both with empty stderr and the group absent at exit. That is one observation. No corrected plan can change the environments or the predicate, since _plan_shape refuses other commands.",
+   "required_change": "The Director adopts MH's classification again before S5: a refusal with OUTPUT-STDERR has its cause in the implementation's constants, so under MR-PLAN section 9 MR stops with the refusal kept, and no corrected plan or new attempt follows in this phase."
+  },
+  {
+   "id": "PR-06",
+   "mandatory": false,
+   "location": "observation-plan-001.json /source (closed schema, observer lines 2027-2033); W3-OBSERVER.md Q8; PLAN-AUTHOR-NOTES.md lines 384-386 (Q-6)",
+   "statement": "The plan binds the adoption record of P33-AMENDMENT-001 only through B and its tree, and M0 checks only HEAD's ref. This review binds it statically: blob 0431fab527c6bb69d52e224cac73c524ea6f70a3 at B and C; SHA-256 872312ed80a63fbb196c17ace42e786b7fe757b710eff41139b125dfaa507937, 5,396 bytes, 0o644, one link. M0 and M1 do not read it.",
+   "required_change": "None for M0 and M1. The S6 configuration binds its bytes, and the freeze review compares them with this binding."
+  }
+ ],
+ "conduct": {
+  "forbidden_starts": "none: no Git of any kind, no Node, ldd, codesign or otool, no observer command (not even static), no routine driver, no tools/check_local.py, no unit test",
+  "framework_interpreter_starts": {"count": 18, "all_with": "-I -S -B", "as": "python3 on the session's PATH, which resolves to <framework>/bin/python3.12", "scripts": "w3_show_plan.py 1, s01 1, s02 1, s03 4, s04 2, s05 1, s06 1, s07 2, and five python3 -I -S -B -c reads that only printed my own outputs or MH's two inspection receipts"},
+  "shells": "50 Bash calls before this record, each one zsh; after it, one more with s08_report_check.py (start 19) and a listing",
+  "utilities": "about 140 read-only utility processes (ls, cat, grep, sed, head, tail, cut, wc, tr, awk, ps, lsof, mount, stat, xattr, sysctl, date), mkdir once for OUT, and one nested zsh -f probe of the variable guard that wrote nothing; command substitutions add a few subshells",
+  "process_listings": "ps and lsof were used to identify the users of the bound interpreter image; their arguments and environments are not recorded, apart from whether -B appeared",
+  "imports": "my scripts import only the standard library and my own w3_common.py from OUT/scripts; no project module was imported or executed",
+  "audit_hook": "every script of mine except the five -c reads installs an audit hook that refuses process creation and ctypes process lookups; no event was recorded",
+  "writes": "only under OUT; nothing in <worktree>, <clone>, <local>/c271-p34, <local>/c271-p35, <local>/c271-macos, W2's directory or the evidence parent; no Finder",
+  "harness": "the agent harness's wrapper may start processes I cannot see, and it attached a Git status summary of the main clone to my context; no command of mine produced it"
+ },
+ "files": {
+  "reviewed": "the 60 files of W2's SHA256SUMS.txt, all equal, and no unlisted file",
+  "records": ["PLAN-REVIEW-001.md", "PLAN-REVIEW-001.json"],
+  "scripts": ["scripts/w3_common.py", "scripts/w3_show_plan.py", "scripts/s01_files.py", "scripts/s02_plan_keys.py", "scripts/s03_python_inventory.py", "scripts/s04_source_and_git.py", "scripts/s05_git_static.py", "scripts/s06_imports_static.py", "scripts/s07_final_recheck.py", "scripts/s08_report_check.py"],
+  "outputs": {
+   "outputs/plan-indented.json": "a reading copy of the plan, with its machine paths; not for copying",
+   "outputs/s01-files.json": "a80eb8fe117ee9330cd0441a964746361d3fe69e59ae6a7e287cc0e2b615dc90",
+   "outputs/s02-plan-keys.json": "c34eb780a7a9eff387e14b3c33093855d706f2d7b8d13227e5b231b7cc92e141",
+   "outputs/s03-python-inventory.json": "3b5996b826802d34d99a9db9b0cddf03dcdb647e13b8a1419f29a57156daf242",
+   "outputs/s03-python-inventory-recheck-1.json": "cd880b71ed9a0ee66b9a9089d2db98fa623fdf0483bf203a6b6bc9a2f63bd31f",
+   "outputs/s03-python-inventory-recheck-2.json": "03861946ed7323004c46cdc7f3b56eb15c3daee78a9b03ce51adedee2791670f",
+   "outputs/s03-python-inventory-recheck-3.json": "ce2b9268c6f68c33eda74972b6c0f77cf511a4a774c29d1fac8d9d888b29a677",
+   "outputs/s04-source-and-git.json": "d2ecb7266e7fe61a6e7fc2b381ce7946561ad47e89620bc89f14547ae2bbcb65",
+   "outputs/s04-source-and-git-recheck-1.json": "e6755a8d529a32c7d4773a9a8f75cd9fa945ce95d872f803bbc5af8f9ba5de99",
+   "outputs/s05-git-static.json": "e25f95008273036f618d30e355ebd08d7ddaf4cd27a822f217f175e802fe2588",
+   "outputs/s06-imports-static.json": "9939d9531e177fbfd8475a90ba3f15c825aa88e9b05dc75296cfed36b1ea2a52",
+   "outputs/s07-dependencies-and-recheck-1.json": "024e75790362f7b149770013018543ad6514bf7e6eca4b4d15938033a394b9a3",
+   "outputs/s07-dependencies-and-recheck-2.json": "e830f76ccc05ea2921a1d6e20101c61c66ee9441f33149c9df9cc08c4400d6fa",
+   "outputs/s08-report-check.json": "written after this record"
+  },
+  "sums": "SHA256SUMS.txt lists every file in OUT except itself; written last by s08_report_check.py"
+ }
+}

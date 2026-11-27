@@ -5,15 +5,15 @@
   "active_task": "C271",
   "execution_mode": "local",
   "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-  "snapshot_date": "2026-11-27T15:46:53Z",
+  "snapshot_date": "2026-11-27T22:37:00Z",
   "next_action": {
-    "status": "ready",
-    "summary": "C271-P36-macos-complete-routine-mr is declared and in progress: gate MR of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001), which is R03 on this executor. An independent reviewer lists every start and write the complete default routine can make; an independent author writes the comparison tooling, the observation plan and the operational freeze, and a fresh reviewer reviews each before it runs; M0 and M1 run once again on this host (one Git and one Node start) and give a new HOST at the new bound commit; the complete default routine of tools/check_local.py runs once as a qualifying run (R1, resolved temporary directory, the CPU trio's three Node starts) and once as an ordinary run (R2, macOS's default temporary directory); both are compared with main's recorded macOS baseline runs under OK-ENG-009 section 3 with exact inputs; an independent audit recomputes the results, and a fresh reviewer reviews the exact candidate and its evidence for R03. From the observation plan's freeze to the audit, one boot and one commit. Nothing is integrated. Then R04 and R05, each a separate phase.",
+    "status": "awaiting_user_direction",
+    "summary": "C271-P36 stopped gate MR of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) at stage S6, before any routine run, with an implementation blocker (FZ-01): in a qualifying run at the bound commit 4ca781429c5411c67c0965bc69306b42c6cc74ad, the provider's derived source check refuses the driver's isolated workspace, because seven tracked .claude/ entries are not copied into it. The observation plan and HOST 858ef72a were accepted (M0 and M1: one Git and one Node start), and the operational freeze was rejected for this reason alone. R03 stays not_done. The next phase needs the owner's selection: the recommended one corrects how a derived workspace treats tracked paths that the driver does not copy, under contract section 7 and MC19, with controls on a tree that tracks such paths, before MR is attempted again at the corrected commit. R04 and R05 stay separate phases.",
     "suggested_task": "C271",
     "sources": [
       "docs/workflow/tasks/C271/task.json",
       "docs/workflow/tasks/C271/P36-SESSION.md",
-      "docs/engineering/localized-repair-c271/macos-routine-p36/PHASE.json"
+      "docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json"
     ]
   },
   "checkpoint": {
@@ -29,7 +29,7 @@
     "C264 requires a saved online browser-session ZIP; the separate C262 archive and offline restoration contract remain unchanged.",
     "C269 completed an evidence-only H01-H28 audit: 24 complete groups, H16/H20/H22/H24 partial, 94 complete/5 partial material subcases. Full C260 qualification remains unestablished; no new behavioral execution or missing control implementation.",
     "LOCAL-MIGRATION-20261124 changes how development runs. It qualifies no language, native, destination or product claim, and environment readiness is not task completion.",
-    "On this branch, C271 is the active task in local mode. Its adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) is implemented in source and tested with synthetic inputs (gate MI), its pinned runtime, reader tree and .venv are prepared (gate MP), and gate MH qualified the seven readback methods and the direct negatives on this executor (macos-arm64-local) with an independent audit; gate MR (R03), the complete routine as a qualifying and an ordinary run with R03's acceptance, is declared as C271-P36 and in progress; the Linux contract ontokin.current-host-readback/0.1.0 and plans /0.1.1 to /0.1.5 stay adopted and their H0 and H1 stay unmet in local mode (P30-EXECUTOR-001). Main was merged into this branch at 5f30f26b (gate MB); nothing of C271 is integrated into main; R03, R04 and R05 are not done.",
+    "On this branch, C271 is the active task in local mode. Its adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) is implemented in source and tested with synthetic inputs (gate MI), its pinned runtime, reader tree and .venv are prepared (gate MP), and gate MH qualified the seven readback methods and the direct negatives on this executor (macos-arm64-local) with an independent audit; gate MR (R03) stopped at stage S6 in C271-P36, before any routine run, with an implementation blocker (FZ-01: the provider's derived source check refuses the driver's workspace, which lacks seven tracked .claude/ entries); the Linux contract ontokin.current-host-readback/0.1.0 and plans /0.1.1 to /0.1.5 stay adopted and their H0 and H1 stay unmet in local mode (P30-EXECUTOR-001). Main was merged into this branch at 5f30f26b (gate MB); nothing of C271 is integrated into main; R03, R04 and R05 are not done.",
     "Main's own STATUS.md and CURRENT.json describe C271 as observed on 2026-11-25; on this branch the current C271 state is in docs/workflow/tasks/C271/task.json and this file."
   ],
   "delivery_policy": {

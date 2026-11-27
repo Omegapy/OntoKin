@@ -709,3 +709,17 @@ The owner answered "Start gate MR" in this session. Phase C271-P36-macos-complet
 - **Main:** not written.
 - **Excluded:** R04 and R05, and R04's classification of S8's outcome changes.
 - **Unchanged until MR's outcome records say otherwise:** R01/R02 remain done and R03–R05 not_done.
+
+### P36 routine outcome (2026-11-27, UTC)
+
+Gate MR is not met. It stopped at stage S6, before any routine run, with an implementation blocker. The records are pushed without force and read back ([outcome](../../../engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json), [freeze review 001](../../../engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/FREEZE-REVIEW-001.md), [portable records](../../../engineering/localized-repair-c271/macos-routine-p36/README-PORTABLE.md)).
+- **Met:** the declaration, the start-and-write inventory, the reviewed tooling at commit B `4ca781429c5411c67c0965bc69306b42c6cc74ad`, the reviewed observation plan, and M0 and M1 with one Git and one Node start, which gave a HOST that an independent review accepted.
+- **The blocker (FZ-01).** The operational freeze was rejected for one reason, which the Director confirmed by reading.
+  - In a qualifying run, the driver copies only its source directories and root files into its workspace, while its Git index holds the whole tree.
+  - B's seven tracked `.claude/` entries therefore show as deleted, and the provider's derived source check refuses them before the unit stage.
+  - Main's own baseline summaries record exactly those seven deletions.
+  - No freeze at B can avoid it, so under MR-PLAN section 9 the correction belongs to a later phase.
+- **Not run:** R1, R2, the audit and the R03 review.
+- **Open for the R03 review:** MI's per-module records show 93 of the branch's own tests not passing on this host, in five Linux-route modules. The freeze attributed 91 of them by exact record, which is not an acceptance.
+- **Unchanged:** R01/R02 remain done and R03–R05 not_done.
+- **Next:** a correction phase for FZ-01, then MR again at the corrected commit, each needing the owner's selection.

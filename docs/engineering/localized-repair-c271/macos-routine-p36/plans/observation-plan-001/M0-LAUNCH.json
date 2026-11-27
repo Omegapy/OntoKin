@@ -1,0 +1,314 @@
+{
+ "author_static": {
+  "cwd": "<local>/c271-p36/evidence",
+  "exit_status": 0,
+  "facts_sha256": "3f0624318211f82e76aaf408a98e2e0a82ec2147ed681682242f37c9343c4ddf",
+  "launched": "as static_before_observe, with W2's records as capture paths",
+  "starts": {
+   "node": {
+    "exact": 0,
+    "observed_lower_bound": 0
+   },
+   "other": {
+    "exact": 0,
+    "observed_lower_bound": 0
+   }
+  },
+  "state": "STATIC_READY",
+  "stderr": {
+   "mode": "0o644",
+   "path": "<local>/c271-p36/workers/W2-plan-001/records/static-001.stderr.txt",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  "stdout": {
+   "mode": "0o644",
+   "path": "<local>/c271-p36/workers/W2-plan-001/records/static-001.stdout.txt",
+   "sha256": "f62c062cddd780426e260c54c97d9af60c81f766b684da2c57b34e5e29dd25c7",
+   "size_bytes": 1650
+  }
+ },
+ "environment_file": {
+  "canonical_sha256": "0ed78f47b1929634d65b6407b8e8daf047aeb2daa6b5c194c24e91a7b91ebcf2",
+  "content": "the canonical JSON of the declared environment, no trailing newline",
+  "mode": "0o644",
+  "path": "<local>/c271-p36/workers/W2-plan-001/M0-ENVIRONMENT.json",
+  "sha256": "0ed78f47b1929634d65b6407b8e8daf047aeb2daa6b5c194c24e91a7b91ebcf2",
+  "size_bytes": 96
+ },
+ "expected_outputs": {
+  "refusal_or_failure": {
+   "exit_status": 1,
+   "files": "before the attempt directory exists, none; after it exists, whatever the observer published, with failure.json and result.json when it could write them, and each attempted command's failure.json and postflight.json",
+   "stderr": "one line: ontokin.current-host-readback-observation-refusal/0.2.0 with error {code, reason, state, cause, details}; names of environment variables only, never their values",
+   "then": "FAILURE-CAPTURE sections 3 to 8 and MR-PLAN section 9; no retry"
+  },
+  "success": {
+   "attempt": "<local>/c271-p36/evidence/observe-001",
+   "directories": [
+    "<local>/c271-p36/evidence/observe-001",
+    "<local>/c271-p36/evidence/observe-001/git_version",
+    "<local>/c271-p36/evidence/observe-001/node_version"
+   ],
+   "directory_mode": "0o700",
+   "exit_status": 0,
+   "files": [
+    "<local>/c271-p36/evidence/observe-001/reserved.json",
+    "<local>/c271-p36/evidence/observe-001/preflight.json",
+    "<local>/c271-p36/evidence/observe-001/HOST.json",
+    "<local>/c271-p36/evidence/observe-001/result.json",
+    "<local>/c271-p36/evidence/observe-001/completion.json",
+    "<local>/c271-p36/evidence/observe-001/git_version/intent.json",
+    "<local>/c271-p36/evidence/observe-001/git_version/started.json",
+    "<local>/c271-p36/evidence/observe-001/git_version/host-git-version.stdout.log",
+    "<local>/c271-p36/evidence/observe-001/git_version/host-git-version.stderr.log",
+    "<local>/c271-p36/evidence/observe-001/git_version/host-git-version.process.json",
+    "<local>/c271-p36/evidence/observe-001/git_version/inspection.json",
+    "<local>/c271-p36/evidence/observe-001/git_version/postflight.json",
+    "<local>/c271-p36/evidence/observe-001/node_version/intent.json",
+    "<local>/c271-p36/evidence/observe-001/node_version/started.json",
+    "<local>/c271-p36/evidence/observe-001/node_version/host-node-version.stdout.log",
+    "<local>/c271-p36/evidence/observe-001/node_version/host-node-version.stderr.log",
+    "<local>/c271-p36/evidence/observe-001/node_version/host-node-version.process.json",
+    "<local>/c271-p36/evidence/observe-001/node_version/inspection.json",
+    "<local>/c271-p36/evidence/observe-001/node_version/postflight.json"
+   ],
+   "files_absent_on_success": [
+    "<local>/c271-p36/evidence/observe-001/failure.json",
+    "<local>/c271-p36/evidence/observe-001/git_version/failure.json",
+    "<local>/c271-p36/evidence/observe-001/node_version/failure.json"
+   ],
+   "host": {
+    "next": "an independent HOST review before any configuration binds it (MR-PLAN S5)",
+    "path": "<local>/c271-p36/evidence/observe-001/HOST.json",
+    "schema": "ontokin.current-host-readback-host/0.2.0",
+    "state": "OBSERVED_UNAPPROVED"
+   },
+   "observer_document_mode": "0o600 (the supervisor writes its own three files per command)",
+   "stderr": "empty",
+   "stdout": "one line: the canonical result, schema ontokin.current-host-readback-observation-result/0.2.0, mode observe, state OBSERVED_UNAPPROVED, evidence_finalized true, starts node exact 1 and other exact 1, with the descriptors of HOST, the result and the completion"
+  }
+ },
+ "expected_starts": {
+  "bounded": [
+   {
+    "active_work_ms": 3000,
+    "argv": [
+     "/Library/Developer/CommandLineTools/usr/bin/git",
+     "--version"
+    ],
+    "cleanup_ms": 2000,
+    "cwd": "<local>/c271-p36/evidence/observe-001/git_version",
+    "environment": {
+     "GIT_ATTR_NOSYSTEM": "1",
+     "GIT_CONFIG_GLOBAL": "/dev/null",
+     "GIT_CONFIG_NOSYSTEM": "1",
+     "GIT_NO_REPLACE_OBJECTS": "1",
+     "GIT_OPTIONAL_LOCKS": "0",
+     "GIT_TERMINAL_PROMPT": "0",
+     "LANG": "C.UTF-8",
+     "LC_ALL": "C.UTF-8",
+     "PATH": "/usr/bin:/bin",
+     "TZ": "UTC",
+     "UV_THREADPOOL_SIZE": "2"
+    },
+    "expected_direct_starts": 1,
+    "id": "git_version",
+    "kind": "other",
+    "label": "host-git-version",
+    "order": 1,
+    "stderr_predicate": "",
+    "stdout_predicate": "git-version-line-v1",
+    "through": "prototypes/static_tray_v01/supervisor_darwin_v01.py run_process",
+    "timeout_ms": 5000
+   },
+   {
+    "active_work_ms": 3000,
+    "argv": [
+     "<local>/c271-macos/node-v24.22.1-darwin-arm64/bin/node",
+     "--version"
+    ],
+    "cleanup_ms": 2000,
+    "cwd": "<local>/c271-p36/evidence/observe-001/node_version",
+    "environment": {
+     "LANG": "C.UTF-8",
+     "LC_ALL": "C.UTF-8",
+     "PATH": "/usr/bin:/bin",
+     "TZ": "UTC",
+     "UV_THREADPOOL_SIZE": "2"
+    },
+    "expected_direct_starts": 1,
+    "id": "node_version",
+    "kind": "node",
+    "label": "host-node-version",
+    "order": 2,
+    "stderr_predicate": "",
+    "stdout_predicate": "v24.22.1\n",
+    "through": "prototypes/static_tray_v01/supervisor_darwin_v01.py run_process",
+    "timeout_ms": 5000
+   }
+  ],
+  "director_launcher": "one start of the framework interpreter for observe, and one for static before it, both through <worktree>/.venv/bin/python with -I -S -B; MR-PLAN section 8 does not count them as bounded starts, and they are recorded",
+  "never_started": [
+   "ldd",
+   "codesign",
+   "otool",
+   "the /usr/bin/git dispatcher",
+   "any Git other than the bound file",
+   "any Node other than the planned bin/node",
+   "a second observe under this plan"
+  ],
+  "order_of_work": "plan digest, plan shape, environment, platform and boot, OS identity, source inventory and HEAD, launcher and Python inventory, packages, loaded modules, runtime (Node's bytes and Mach-O), reader tree, Git binding, failure capture, evidence ancestors and absent attempt; then the supervisor import, the loaded-module check, the attempt directories, Git --version, and Node --version last (W3-OBSERVER section 7)",
+  "totals": {
+   "node": 1,
+   "other": 1
+  }
+ },
+ "fc_k3": "Each of the two runs gets a command record beside the attempt, never inside it: the exact argv with the digest, the cwd, environment_file above by path and SHA-256, the UTC start and end, the wall time and kern.bootsessionuuid before and after. Suggested paths: <local>/c271-p36/evidence/observe-001.static.command-record.json and <local>/c271-p36/evidence/observe-001.observe.command-record.json.",
+ "observe": {
+  "argv_without_digest": [
+   "/usr/bin/env",
+   "-i",
+   "PATH=/usr/bin:/bin",
+   "LANG=C.UTF-8",
+   "LC_ALL=C.UTF-8",
+   "TZ=UTC",
+   "UV_THREADPOOL_SIZE=2",
+   "<worktree>/.venv/bin/python",
+   "-I",
+   "-S",
+   "-B",
+   "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py",
+   "observe",
+   "--plan",
+   "<local>/c271-p36/workers/W2-plan-001/observation-plan-001.json",
+   "--plan-sha256"
+  ],
+  "capture": {
+   "exit_status": "<local>/c271-p36/evidence/observe-001.observe.exit.txt",
+   "stderr": "<local>/c271-p36/evidence/observe-001.observe.stderr.txt",
+   "stdout": "<local>/c271-p36/evidence/observe-001.observe.stdout.txt"
+  },
+  "capture_rule": "FAILURE-CAPTURE FC-K2: stdout, stderr and the exit status go into fresh files beside the attempt, never inside it, each absent before the start. A redirect into the attempt would create it first, and the observer would refuse (EVIDENCE-FRESH).",
+  "cwd": "<local>/c271-p36/evidence",
+  "digest_argument": "exactly one further argv element after --plan-sha256: the plan's 64-character lowercase SHA-256 as the review record of observation plan 001 states it",
+  "environment": {
+   "LANG": "C.UTF-8",
+   "LC_ALL": "C.UTF-8",
+   "PATH": "/usr/bin:/bin",
+   "TZ": "UTC",
+   "UV_THREADPOOL_SIZE": "2"
+  },
+  "observer_process_argv_without_digest": [
+   "<worktree>/.venv/bin/python",
+   "-I",
+   "-S",
+   "-B",
+   "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py",
+   "observe",
+   "--plan",
+   "<local>/c271-p36/workers/W2-plan-001/observation-plan-001.json",
+   "--plan-sha256"
+  ],
+  "retry": "none (FAILURE-CAPTURE section 5; MR-PLAN section 9)",
+  "shell_form": "cd <local>/c271-p36/evidence && /usr/bin/env -i PATH=/usr/bin:/bin LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=UTC UV_THREADPOOL_SIZE=2 <worktree>/.venv/bin/python -I -S -B <worktree>/prototypes/static_tray_v01/current_host_observation_v02.py observe --plan <local>/c271-p36/workers/W2-plan-001/observation-plan-001.json --plan-sha256 \"$PLAN_SHA256\" > <local>/c271-p36/evidence/observe-001.observe.stdout.txt 2> <local>/c271-p36/evidence/observe-001.observe.stderr.txt; echo $? > <local>/c271-p36/evidence/observe-001.observe.exit.txt",
+  "shell_form_variable": "PLAN_SHA256 is set by the Director, in the same shell immediately before this line, to the review record's digest. That shell expands it into the final argument; env -i passes no variable of that name to the observer."
+ },
+ "plan": {
+  "digest": "not recorded here; taken from the review record by the Director",
+  "mode": "0o644",
+  "path": "<local>/c271-p36/workers/W2-plan-001/observation-plan-001.json",
+  "size_bytes": 9017
+ },
+ "preconditions_for_the_director": [
+  "HEAD of the worktree is commit 4ca781429c5411c67c0965bc69306b42c6cc74ad (tree 0935162c72fd9d804681e920da6f6d6e9066ff28), clean apart from the ignored .venv, and nothing has been committed, checked out or edited",
+  "kern.bootsessionuuid is C90010BA-4DA9-475D-BBAB-CF1A9C40175A (a reboot ends this plan)",
+  "the attempt <local>/c271-p36/evidence/observe-001 and the six capture paths above are absent; the evidence parent's own device, inode and mode are unchanged",
+  "nothing has started the framework interpreter without -B (or without PYTHONDONTWRITEBYTECODE=1) since the inventories were frozen",
+  "MP's plans and receipts, the Node archive, the runtime, the reader tree and FAILURE-CAPTURE.md are unchanged at their paths and modes; nothing is chmod-ed",
+  "the volume that holds the worktree, the prepared trees and the evidence stays mounted (its device number is bound through the evidence ancestors), the host stays awake, and Finder is not used on any bound tree",
+  "the digest on the command line is the review record's, and the plan file's own SHA-256 equals it"
+ ],
+ "predicted_stdout": {
+  "git_version": "git version 2.50.1 (Apple Git-155)\n",
+  "node_version": "v24.22.1\n"
+ },
+ "prediction_basis": {
+  "git_version": "not a predicate: the plan freezes only the grammar git-version-line-v1. MH's M0 recorded this line for the same bound Git bytes (be4afb2b003904725826250de9fb76567bbacf82323457b5a1ec26706b66bcae) in its HOST, <local>/c271-p35/evidence/observe-001/HOST.json, SHA-256 34e94f29ea1b7d9d60b389598b4ce5bc7eaf6fcaa58f3798fc3df021a8f28a92; N34-M predicted it statically from the arm64 slice.",
+  "node_version": "the plan's literal predicate",
+  "stderr": "both expect an empty stderr (stderr_predicate empty); MH's M0 observed both empty"
+ },
+ "purpose": "The exact launch of the Director's single observe start (MR-PLAN stage S5) under observation plan 001, written by W2 at stage S4, and of the Director's static run immediately before it. It describes; it approves nothing. It deliberately carries no plan digest: the Director supplies --plan-sha256 from the review record of plan 001, never from this file, the author's notes, SHA256SUMS.txt or the plan (MR-PLAN section 2, S4; PHASE A4).",
+ "refused_process_events": [],
+ "schema": "ontokin.c271.p36-m0-launch/1",
+ "static_before_observe": {
+  "argv_without_digest": [
+   "/usr/bin/env",
+   "-i",
+   "PATH=/usr/bin:/bin",
+   "LANG=C.UTF-8",
+   "LC_ALL=C.UTF-8",
+   "TZ=UTC",
+   "UV_THREADPOOL_SIZE=2",
+   "<worktree>/.venv/bin/python",
+   "-I",
+   "-S",
+   "-B",
+   "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py",
+   "static",
+   "--plan",
+   "<local>/c271-p36/workers/W2-plan-001/observation-plan-001.json",
+   "--plan-sha256"
+  ],
+  "capture": {
+   "exit_status": "<local>/c271-p36/evidence/observe-001.static.exit.txt",
+   "stderr": "<local>/c271-p36/evidence/observe-001.static.stderr.txt",
+   "stdout": "<local>/c271-p36/evidence/observe-001.static.stdout.txt"
+  },
+  "cwd": "<local>/c271-p36/evidence",
+  "digest_argument": "exactly one further argv element after --plan-sha256: the plan's 64-character lowercase SHA-256 as the review record of observation plan 001 states it",
+  "environment": {
+   "LANG": "C.UTF-8",
+   "LC_ALL": "C.UTF-8",
+   "PATH": "/usr/bin:/bin",
+   "TZ": "UTC",
+   "UV_THREADPOOL_SIZE": "2"
+  },
+  "expected": {
+   "exit_status": 0,
+   "facts_sha256_if_nothing_changed": "3f0624318211f82e76aaf408a98e2e0a82ec2147ed681682242f37c9343c4ddf",
+   "starts": {
+    "node": {
+     "exact": 0,
+     "observed_lower_bound": 0
+    },
+    "other": {
+     "exact": 0,
+     "observed_lower_bound": 0
+    }
+   },
+   "state": "STATIC_READY",
+   "stderr": "empty"
+  },
+  "observer_process_argv_without_digest": [
+   "<worktree>/.venv/bin/python",
+   "-I",
+   "-S",
+   "-B",
+   "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py",
+   "static",
+   "--plan",
+   "<local>/c271-p36/workers/W2-plan-001/observation-plan-001.json",
+   "--plan-sha256"
+  ],
+  "purpose": "The Director's own static run immediately before observe (MH's PR-05): zero starts and zero writes; it detects any change of a bound input since S4 before the counted starts.",
+  "shell_form": "cd <local>/c271-p36/evidence && /usr/bin/env -i PATH=/usr/bin:/bin LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=UTC UV_THREADPOOL_SIZE=2 <worktree>/.venv/bin/python -I -S -B <worktree>/prototypes/static_tray_v01/current_host_observation_v02.py static --plan <local>/c271-p36/workers/W2-plan-001/observation-plan-001.json --plan-sha256 \"$PLAN_SHA256\" > <local>/c271-p36/evidence/observe-001.static.stdout.txt 2> <local>/c271-p36/evidence/observe-001.static.stderr.txt; echo $? > <local>/c271-p36/evidence/observe-001.static.exit.txt",
+  "shell_form_variable": "PLAN_SHA256 is set by the Director, in the same shell immediately before this line, to the review record's digest. That shell expands it into the final argument; env -i passes no variable of that name to the observer."
+ },
+ "written_by": {
+  "at_utc": "2026-11-27T18:58:36.257344+00:00",
+  "pid": 21452,
+  "script": "<local>/c271-p36/workers/W2-plan-001/scripts/w2p_launch_record.py",
+  "script_sha256": "b49170cc288d69d89d9e29200ff9eb4d37f0573c4e492c5dfc4999e62f39ccde"
+ }
+}

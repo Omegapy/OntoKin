@@ -1,0 +1,179 @@
+{
+  "schema": "ontokin.c271.p36-freeze-review/1",
+  "id": "MR-FREEZE-REVIEW-001",
+  "task": "C271",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "gate": "MR",
+  "stage": "S6",
+  "director": "c271-p36-14f7f8b219db",
+  "reviewer": "W3 (freeze review 001), a subagent in a fresh context with the session's model; it took no part in any earlier stage and reviewed none of them",
+  "reviewed_at_utc": "2026-11-27",
+  "candidate": {
+    "commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
+    "tree": "0935162c72fd9d804681e920da6f6d6e9066ff28",
+    "freeze_directory": "<local>/c271-p36/workers/W2-freeze-001"
+  },
+  "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+  "s7_may_run_as_frozen": false,
+  "verdict_reason": "FZ-01: R1, as frozen, refuses deterministically in the driver's preparation at B, before the unit stage. The provider's source check of the derived workspace refuses every git status line except the generated examples, and the workspace that tools/check_local.py builds omits the seven tracked .claude/ entries of B, which git status there reports as deleted (main's own baseline summary records exactly these seven deletions). No change of the freeze can avoid it; the cause lies in the implementation, so MR-PLAN section 9 stops MR before S7.",
+  "freeze": {
+    "path": "<local>/c271-p36/workers/W2-freeze-001/FREEZE-001.json",
+    "sha256": "11555730a5d153d4155bd730f288d8478fff2933a4587c4fef0a35940592ab66",
+    "size_bytes": 641427,
+    "mode": "0o644",
+    "nlink": 1
+  },
+  "sums": {
+    "path": "<local>/c271-p36/workers/W2-freeze-001/SHA256SUMS.txt",
+    "sha256": "a4fd0dc3ddfe2cd1657923ec7a20211cae3440ccdc94518a98d8490d751325d4",
+    "size_bytes": 13619,
+    "lines": 126,
+    "check": "every line OK (shasum --strict -c, run from env -i with PATH=/usr/bin:/bin); the 126 lines name exactly the 126 files of the directory other than the sums file"
+  },
+  "configuration": {
+    "path": "<local>/c271-p36/workers/W2-freeze-001/config/readback-config-001.json",
+    "sha256": "e700edefb0a933f784d9fcf180770ef6d4675ae2cf8b7d6008ea0a126f5f916d",
+    "size_bytes": 2295,
+    "mode": "0o644",
+    "nlink": 1,
+    "note": "computed from the bytes; a record, not an approval to run S7 under this freeze (s7_may_run_as_frozen is false)"
+  },
+  "wrapper": {
+    "path": "<local>/c271-p36/director/run/run_once_p36.sh",
+    "sha256": "9154f181cfa7c8648c21b31a1f309af43f9b2b5046df1656a124a4b6b55e07a7",
+    "size_bytes": 3629,
+    "mode": "0o644",
+    "equals_freeze": true
+  },
+  "findings": [
+    {
+      "id": "FZ-01",
+      "mandatory": true,
+      "title": "R1 cannot pass its preparation at B: the derived workspace's git status reports B's seven tracked .claude/ entries as deleted, and the provider refuses them",
+      "evidence": [
+        "B's tracked tree: the loose commit 4ca78142 names tree 0935162c (object bytes hashed and checked), whose root holds an entry .claude (tree 9aa8e177); the worktree index (version 2, 23,012 entries, cache-tree root 0935162c with 23,012 entries) lists .claude/.gitignore and six symbolic links .claude/skills/{communication, ontokin-delivery, ontokin-learning, ontokin-session, to-implementation-plan, to-trd}; these are the only 7 of 23,012 entries outside SOURCE_DIRS and ROOT_FILES (outputs/b-tree-check.json, outputs/index-paths-b-2.json). The driver's own inventory of B, recomputed: sha256:e7f1c4b5..., 23,005 files = 23,012 - 7 (outputs/driver-inventory-b.json).",
+        "The copy: tools/check_local.py:47-50 (SOURCE_DIRS and ROOT_FILES, no .claude) and :340-346 (prepare_workspace copies only those), then :298-318 (git init, fetch of B, update-ref, read-tree B: the workspace index is B's whole tree).",
+        "Main's own record of the same copy: <local>/checks/main-8e847c15-tmpdir-20261125T2110Z/summary.json /workspace_git/tracked_worktree_status is ' D .claude/.gitignore' and the six ' D .claude/skills/...' lines; the default-directory run records the same. The .claude/ subtree is unchanged between main 8e847c15 and B (outputs/tree-diff-main8e847c15-vs-b.json).",
+        "The refusal: in a qualifying run, check_local.py:779-782 calls bind_readback_workspace, :609-612 the facade's derive_workspace_binding, which dispatches to current_host_readback_v02.py:913; after the original selection passes, :943 validates the derived selection (source root = the workspace), and _selection at :866 calls _verify_source with derived=True; :471-474 refuse every 'git status --porcelain=v1 --untracked-files=no' line unless immutable_workspace_inputs drops the path, which it does only for the generated examples (check_local.py:127-132). The first line is ' D .claude/.gitignore', so the provider raises CH-SOURCE 'Dirty source:  D .claude/.gitignore' (or CH-SOURCE 'Bounded source Git inspection failed' if the 5 s allowance of :461 runs out first).",
+        "Effect in S7: run() catches the RuntimeError (check_local.py:816-819): summary status failed, an error member, readback_selection.status original_verified with preparation_or_execution_error, steps [], all seven steps not executed, exit 1. R1.X is then NOT_MET (its predicates /error absent, /readback_selection/status workspace_bound, /not_executed_steps [] and /steps length 7 fail), so by stop rule 4 R2 never starts and S7 ends after R1.Y and R1.Z; R1's own classification gives IMPLEMENTATION, for which MR-PLAN section 9 stops MR.",
+        "Why nothing earlier caught it: the author's validation stopped at the first Git read (records/config-validation-001.json not_run lists the Git reads and derive_workspace_binding); MH's cohort ran the readback module at the worktree (parent null), never in a derived workspace; MI's driver tests use fixture repositories; the MB review noted that .claude is not copied but not the provider's derived status check."
+      ],
+      "required_change": "Do not run S7 under freeze 001. Record the blocker under MR-PLAN section 9: the cause lies in the implementation (the provider's derived-workspace source check and the driver's copied set disagree for tracked paths outside SOURCE_DIRS and ROOT_FILES), so MR stops at S6. The correction belongs to a later phase that decides, under contract section 7 and MC19, how a derived workspace treats tracked paths that the driver does not copy (for example, the check admits deletions of exactly those paths, or the copy accounts for them), with controls that exercise the derived route on a tree that tracks such paths. A corrected commit then needs a new observation plan, HOST and freeze (S4 to S6) and their reviews. If the Director wants this refusal executed as evidence, that needs a revised freeze whose R1 expects this preparation refusal with its reason and states R2's handling, and its own review; it cannot meet MR. R2 does not take the selection route and is not affected by this finding, but under MR-PLAN section 1 and stop rule 4 it follows R1; whether to run it alone is a plan decision outside this review."
+    },
+    {
+      "id": "FZ-02",
+      "mandatory": false,
+      "title": "The derived route's Git timing is not established (for the corrected attempt)",
+      "evidence": [
+        "read-tree leaves the workspace index without stat data, and every provider Git read runs with GIT_OPTIONAL_LOCKS=0 (check_local.py:135-142), so each git status in the workspace re-hashes every copied tracked file: 1,169,653,662 bytes in 23,005 files at B (outputs/driver-inventory-b.json).",
+        "The provider allows each Git read min(5 s, remaining) (current_host_readback_v02.py:456-466); in the unit process 12 selection checks run there, 9 of them inside the case clock, which leaves 28 s for two full selections before each start (:1019-1030, :1089-1105).",
+        "MH's per-selection time, about 0.57 s per _selection (its ledgers' file times), was measured at the worktree, whose index has stat data; main's preparation of a 1,006,213,500-byte copy took 16.6 s in all; no record measures a status in a derived workspace."
+      ],
+      "required_change": "The next freeze states the expected time of a workspace status and of a derived _selection with its basis, or records the margin as a stated risk, with the classification of a CH-SOURCE timeout or CH-CLOCK refusal (R1 not qualified)."
+    },
+    {
+      "id": "FZ-03",
+      "mandatory": false,
+      "title": "No independent check of the checker's own bytes before P01 (MH's FR-07)",
+      "evidence": [
+        "P00 verifies only <F>/SHA256SUMS.txt, which lists files of <F>; the checker (w2f_s7_check.py, eb96aa1a..., in the worktree) is bound only inside FREEZE-001.json and is checked at P01 by itself, which MH's FR-07 called circular; launch.before_p00 compares the freeze, the sums and the wrapper, not the checker.",
+        "MH's freeze 002 carried FR-07 with a second sums file at P00 (s7/p00-freeze-001-rebound.sha256sums.txt, line 46: eb96aa1a... of the checker). The author's notes cite FR-07 for P00."
+      ],
+      "required_change": "Add the checker and the other worktree-resident tools of bindings (capture_probe.py, unit_log_outcomes.py, readback_evidence.py, audit_numeric.py, discover_inventory.py, the observer) to a P00-level verification, for example a second sums file in <F> with absolute paths verified by the same shasum --strict -c, or add the checker's digest to the before_p00 comparison."
+    },
+    {
+      "id": "FZ-04",
+      "mandatory": false,
+      "title": "An attribution is not an acceptance: MI's 89 and D-18's two need the R03 review's classification",
+      "evidence": [
+        "MR-PLAN section 9 makes an unattributed failure a finding that holds R03 unless the R03 review accepts it; an attributed failure is not a finding. The 89 Linux-route rows are new not-passing tests relative to main (main has no such module); the brief's rule allowed attributing outcomes that a record establishes, and the records do establish them (FZ-04 does not dispute the attribution).",
+        "The comparator never exempts (R1 stop predicate on /exempt length 0) and keeps every attributed record in new_not_passing with attribution.matches, so nothing becomes silent in the records; but R1.Y MET would no longer signal them as findings."
+      ],
+      "required_change": "Add a rule to attributions.rules and expected_outcomes: an attribution states the expected exact record only; each of the 89 and of D-18's two remains a not-passing test that the R03 review must classify under OK-ENG-009 section 3 item 4 (and R04 under item 4's last sentence), and the audit lists them as 'attributed by record; classification required'."
+    },
+    {
+      "id": "FZ-05",
+      "mandatory": false,
+      "title": "R1.F's exit-1 class marks R1's Node starts UNKNOWN even when no unit process started",
+      "evidence": [
+        "R1.F's classification for exit 1 is 'UNKNOWN for R1's Node starts (P07 section 4)'. After a preparation refusal (FZ-01's case) the summary records steps [] and all seven steps not executed, so no unit process and no provider attempt existed: P07 section 4 shows no attempt, and the count is 0, not unknown."
+      ],
+      "required_change": "Distinguish in R1's and R1.F's classification: no unit process started (summary steps [] and process_started false) gives 0 Node starts established by the driver's record; otherwise UNKNOWN as frozen."
+    },
+    {
+      "id": "FZ-06",
+      "mandatory": false,
+      "title": "The limits omit two conditions in which MI's records differ from R1",
+      "evidence": [
+        "MI ran each module alone from the worktree root without any selection variable (CHECKS.json /commands/modules); R1's unit process carries the derived selection pair for all 5,994 tests (check_local.py:651-665) and runs every module after the earlier ones in one process. The limits name only the invocation form."
+      ],
+      "required_change": "Add both conditions to limits; a difference still shows as a mismatch, never as an exemption."
+    },
+    {
+      "id": "FZ-07",
+      "mandatory": false,
+      "title": "The shell tool's own execution conditions for a full-suite run are not recorded",
+      "evidence": [
+        "The launch rule handles approvals and refusals, but not whether the Director's shell tool runs a command inside a sandbox; MH's S7 and S5 ran short commands through it, the whole unit suite never has, and main's baseline was not run under it. A denial by the tool would appear as test failures indistinguishable from the code's."
+      ],
+      "required_change": "Record the tool's mode for R1 and R2 in the launch record (or state that it is the same as for S5), and list a tool-level denial as a possible cause in the classification of unattributed failures."
+    },
+    {
+      "id": "FZ-08",
+      "mandatory": false,
+      "title": "Three of R2's 307 main-derived attributions rest on changed inputs",
+      "evidence": [
+        "tests/test_local_checks.py and tools/check_local.py changed between main 8e847c15 and B (outputs/tree-diff-main8e847c15-vs-b.json). The two attributed test_local_checks methods have equal ASTs in both versions, but their helper LocalChecksTests.execute changed and they exercise the changed driver; test_force_conformance (one row) imports check_local.inventory from the changed file. Their notes say 'main's unchanged baseline failure'."
+      ],
+      "required_change": "Label these three rows as 'same record expected; inputs changed' so that a match is read as a record comparison, not as an unchanged input identity (OK-ENG-009 section 3 item 4)."
+    },
+    {
+      "id": "FZ-09",
+      "mandatory": false,
+      "title": "S10's privacy rule should name the raw logs' environment dump and the command records' values",
+      "evidence": [
+        "When a 0.1.0 driver test fails, its mocked Popen call list prints the parent environment; MI redacted one such line in each run (CHECKS.json /evidence; final-003/09-redaction.txt). D-18's tests fail in R1 and R2, so both raw unit logs will carry the home and account values; the wrapper's command records carry HOME, LOGNAME and USER in their argv."
+      ],
+      "required_change": "State that raw logs are never copied publicly (digest only), that every argv and environment value is replaced by its label in portable copies, and that each portable file is searched for the account name, the home, the per-user temporary component and the volume names before S10 publishes."
+    }
+  ],
+  "nonmandatory_findings": 8,
+  "items": {
+    "1_integrity": "MET: the four digests above; 126 of 126 sums OK and covering every file; 83 of 83 bindings, 3 host facts (and .config/git/config and attributes absent), 5 trees (no bytecode or .DS_Store; the two attempt roots absent), 7 ancestors, 162 absent paths, all as they are now (outputs/verify-bindings-2.json); the wrapper equals the freeze; <E> holds only observe-001 and its eight capture files; the boot is C90010BA-..., the umask 022; the live framework (3,788 entries, 414 .pyc) and .venv (345 entries, 0 .pyc) trees equal HOST's frozen inventory (outputs/python-trees-now.json, -after-deviation.json); the 644 source bindings equal the worktree's bytes (outputs/source-files-now.json).",
+    "2_configuration": "MET as a configuration (outputs/config-check.json): closed config/0.2.0 keys; source and dependencies equal HOST's descriptors, path included (HR-01, HR-02); runtime equals HOST's and v24.22.1; HOST by path, 858ef72a..., 18,420 bytes, 0o600; contract_source and amendment_adoption bound at their worktree paths (PR-06: 872312ed..., 5,396 bytes, 0o644, the value in PLAN-REVIEW-001.json); methods' nine bodies equal the provider's ORIGINAL_BODIES; discovery 5,994 sorted unique IDs, the seven present, equal to B's discovery, which equals MH's 5,587 plus exactly the 407 additions (outputs/discovery-check.json); baseline map bound; evidence_root <A1>, absent now and outside the source; parent null. Its use in R1 fails for FZ-01.",
+    "3_refusals": "FINDING FZ-01 (and FZ-02 for the corrected route). Every check up to and including the original selection holds now (MC21's identity and digest, the Git binding, HOST's state, the environment record (MC31 reads HOST's record only), the Python inventory (MC32), runtime, inspections, labels, source at the worktree including the five Git reads against a clean worktree with exactly the tracked files, dependencies, methods, output beneath <A1>). The derived selection then refuses at its first git status line (FZ-01). What the author's validation left open is exactly that path: the Git reads, the derivation and the cohort.",
+    "4_environment_and_path": "MET with stated limits. Declared lists as frozen (R1: HOME, LOGNAME, PATH=/usr/bin:/bin, TMPDIR=<tmp:resolved> with final slash, USER; R2 the same with <tmp:default>; no PYTHON*, PIP_*, GIT_*, NODE_*, DYLD_*). Under the frozen PATH: git -> /usr/bin/git (the dispatcher), uname -> /usr/bin/uname, file -> /usr/bin/file, sh -> /bin/sh; node, python3.12 and Git's lfs helper -> none. No record of main's baseline PATH exists (BASELINE-CHECKS.json and INTEGRATION.json record none); under this session's PATH git, uname and file resolve the same, while node (the package manager's Node), python3.12 (a link to the same framework interpreter) and git-lfs are found, which D-P1's reading covers for U-28 and U-30. No test can reach another Node, ldd (absent) or codesign/otool (present, named by no start). The author's statement that the Director's session sets no LANG, LC_*, TZ, XDG_* or PLAYWRIGHT_* variable holds for this session too; this kind of session does set PYTHONDONTWRITEBYTECODE and GIT_EDITOR, which env -i removes, so the declared five do not depend on it.",
+    "5_runs": "MET as written: argv, cwd, environment files and their digests, output paths and the timer's exit file and bound agree for all 36 commands (outputs/commands-check.json); --timeout 7200 and the outer bound 10,800 s suit the expected 1,000 to 1,500 s of the unit stage without resting on Node timing; the launch is MH's (background command beside its frozen bound timer). FZ-07 for the tool's own conditions.",
+    "6_checker_and_order": "MET with FZ-03. The order evaluates P00 to P03 by D02 before R1, HR-04's inventory recheck (P02) immediately before R1; R1.X, R1.Y and R1.Z before R2; R2.X and R2.Y, Q01, Q01.X and Q04 after it. MC22 (R2.C and R2.Y), MC23 (R1.C expectations, fixture IDs 0, the cohort, the reader and audit), MC28 (R1.C inventory join with discovery-b-001.json c9e8fbec...), TR-09 (R1.F's one-preserved-root rule, R1.M), TR2-01 (footer counts, collector counts and the driver's test_execution), D-P4 (trees at P01, D02, R1.Z, Q04) and D-P5 (P02, R1.I, R2.I) are each a frozen predicate. The checker's phases fit MR's commands; reusing it unchanged is admissible (Q-4).",
+    "7_attributions": "MET as exact records, with FZ-04 and FZ-08. Recomputed with MR's collector from the retained logs: all 94 MI-derived statements (89 + D-18's 2 in R1, D-18's 2 + MC22's 1 in R2) and all 308 main-derived statements (1 raw, 307 normalized) are equal to the frozen rows; all 402 rows are not passing and agree with their own events (TR2-04); no ID repeats in the rows or in the discovery (TR2-03); every baseline not-passing record and every MI not-passing record except RI_L07 and RI_L08 is attributed. MI's log digests equal CHECKS.json's; MI's final-003 commit 7b759de0 and B have identical blobs and modes for all 5,511 files under tests/, prototypes/, tools/, ontokin/, fixtures/, examples/, schemas/ and pyproject.toml (outputs/tree-diff-mi-final003-vs-b.json); the first lines hold no run path, module prefix or line number (outputs/mi-attribution-check.json). Counts: R1 92 (1 unchanged + 91 new), R2 310 (307 + 3). Nothing is exempt and every attributed failure stays listed as not passing.",
+    "8_starts": "MET as planned (Node 3 in R1 through the provider with receipts, 0 in R2; no other bounded start; magnitudes stated; never ldd, codesign, otool or another Node). Under FZ-01 R1 makes 0 Node starts; FZ-05.",
+    "9_stop_rules": "MET: MH's launch and six overrun steps, only established identities stopped, FAILURE-CAPTURE unchanged and read as PR-01's disposition says (its FC-K4 additions are a reading of the kinds, not an edit). Q-7 agreed.",
+    "10_carried": "MET: PR-01, PR-06, HR-01 to HR-08, TR-09, TR2-01, TR2-03, TR2-04, D-P1 to D-P7 and F-1 to F-5 are applied where the freeze says; FZ-03 for MH's FR-07, which the freeze cites but does not carry.",
+    "11_author_starts": "MET: none of the author's starts or deviations could change a bound tree, the worktree, the evidence or a frozen input; the live trees, the worktree (no bytecode, nothing newer than the freeze) and <E> confirm it.",
+    "13_privacy": "MET for the notes (labels only; no account, machine or application name); FZ-09 for S10."
+  },
+  "answers": {
+    "Q-1": "Attribute them by exact record: the retained logs (digests equal to MI's CHECKS.json) were made on this host at code and test bytes equal to B's, and all 89 recompute exactly; but an attribution is not an acceptance, and the R03 review must classify each (FZ-04).",
+    "Q-2": "Agreed: R2's /var directory can change them, so R2.V's comparison with R1's own records is the right source; R2 attributes only what a record under its own directory establishes.",
+    "Q-3": "Agreed: leave both unattributed; MI's ModuleNotFoundError is an artifact of its per-module invocation; RI_L08 requires the rtld-paths suite to pass in process, which MI recorded with 38 failures and 2 errors, so it will probably not pass; RI_L07 depends on test_current_host_libc_static_tls_flags_v01, which has no record here; either one not passing is a finding.",
+    "Q-4": "Admissible: the checker is committed at B, reviewed by MH's freeze reviews 001 and 002, bound by path, SHA-256, size and mode, standard library only and starting nothing, so P07 section 3 is met; MR-PLAN section 5 names three reused pieces, so the Director records the fourth as a plan decision; carry FR-07 (FZ-03).",
+    "Q-5": "Adequate: T bounds each step only and no test reads it; 7,200 s is about five times the expected unit stage; 10,800 s exceeds one hung step plus the rest; no bound rests on Node timing (see FZ-02 for the provider's own 30 s case clock).",
+    "Q-6": "Acceptable as a stated limit: no code reads them by name, this kind of session sets none of them, and CPython's C-locale coercion applies alike.",
+    "Q-7": "Agreed: R1.Y and R2.Y record findings and never stop S7; R2 after an unqualified R1 (R1.X and R1.Z MET) is right, since it starts no Node and gives MC22 and the /var comparison.",
+    "Q-8": "Agreed: <A1> created empty by D01 and checked by D02 keeps the cohort and the driver output in one directory that R1.L lists whole, and P07 section 2's ancestors stay those of <E>.",
+    "Q-9": "Sufficient: I recomputed the comparison from the bound documents (5,994 = 5,587 plus 407, exact; the configuration's list is B's sorted); B is fixed, and R1.C joins R1's log with the same list.",
+    "Q-10": "Agreed: Git reads <home>/.config/git/ignore by default when core.excludesFile is unset, which GIT_CONFIG_GLOBAL=/dev/null does not switch off, and it can change every untracked listing the driver and the provider make.",
+    "Q-11": "Keep the exact count: a different count is exactly the finding signal; R1.Y records it and never stops; RI_L08's predicted failure is already named in reading_based_risk.",
+    "Q-12": "Sufficient, with FZ-09: raw logs are never copied, argv and environment values are labelled, and portable files are searched before publication."
+  },
+  "deviations_of_this_review": [
+    "One start of the framework interpreter as 'python3 -' with an empty program on standard input, without -B on its command line; PYTHONDONTWRITEBYTECODE=1 was set in the inherited session environment (printenv), and the Python trees were walked again afterwards and still equal HOST's frozen inventory (outputs/python-trees-after-deviation.json).",
+    "Three of my scripts were edited after a first run, only to write labels instead of machine values (verify_bindings.py, index_paths.py) or to read the temporary directories from the freeze's places (check_main_attributions.py); each was run again into a -2 output with the same results, and the first outputs holding machine values, with my convenience copies of the freeze's parts, were removed from my directory."
+  ],
+  "starts": {
+    "framework_interpreter": "about 65 starts of python3 -I -S -B (it resolves to the framework interpreter) for my scripts and short readers, two of them reading a program from standard input to edit my own script; plus the one deviation above",
+    "shell": "one zsh per tool call (about 85), with read-only utilities: ls, cat, head, sed, grep, wc, find, awk, cut, tr, sort, diff, cmp, stat, od, which, id, printenv, echo, shasum (and its perl), /usr/sbin/sysctl -n kern.bootsessionuuid (once), /usr/bin/env -i (once, for the sums check); writes only in my directory: mkdir, sed -i on my own scripts, rm of my own files",
+    "never": "Git of any kind (Git's data was read from its files by my scripts), Node, ldd, codesign, otool, the observer, the routine driver, a unit test, MR's tooling suite, any download or install, Finder, a child agent"
+  },
+  "files": "SHA256SUMS.txt in this directory lists every file I wrote"
+}

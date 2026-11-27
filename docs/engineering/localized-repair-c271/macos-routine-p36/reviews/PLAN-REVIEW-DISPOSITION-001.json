@@ -1,0 +1,66 @@
+{
+  "schema": "ontokin.c271.p36-review-disposition/1",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "stage": "S4",
+  "director": "c271-p36-14f7f8b219db",
+  "recorded_at_utc": "2026-11-27T19:48:39Z",
+  "review": {
+    "record": "workers/W3-plan-001/PLAN-REVIEW-001.md",
+    "record_sha256": "0aef3c7ef93bfbc30bb7f806a9dfae7a56a6028f066b98f82d7622a1d4665612",
+    "json": "workers/W3-plan-001/PLAN-REVIEW-001.json",
+    "json_sha256": "729c69faeef1bbace056916de0fff753b16f0e5016df7a45dd5149a630603506",
+    "sums_sha256": "d8cea2250bdd0211a52d88e1a16ad3beb20cf9f0220b9bddaf0f93bed6ae8861",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; it took no part in any earlier stage"
+  },
+  "plan_digest_for_s5": {
+    "value": "cc1c2defd73d8d1ade22a8c772308c0e3d2fad3262a83c946c1733aecf429d5e",
+    "source": "PLAN-REVIEW-001.json /plan/sha256, computed by the reviewer from the plan's bytes"
+  },
+  "dispositions": [
+    {
+      "id": "PR-01",
+      "disposition": "adopted before S5",
+      "reading": "The reused FAILURE-CAPTURE.md (f387fb3e...) reads for MR as follows: <local>/c271-p35/evidence/ reads <local>/c271-p36/evidence/, the plan's evidence parent; 'MH-PLAN section 8' reads 'MR-PLAN section 9'; 'an MH plan' and 'MH tool' include MR's plans and the reused tools. The capture record keeps the schema ontokin.c271.p35-failure-capture/1. capture_probe.py runs only from its committed path under SHA-256 db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f. Nothing is written under <local>/c271-p35/.",
+      "paths_for_s5": {
+        "static": [
+          "<local>/c271-p36/evidence/observe-001.static.stdout.txt",
+          "<local>/c271-p36/evidence/observe-001.static.stderr.txt",
+          "<local>/c271-p36/evidence/observe-001.static.exit.txt",
+          "<local>/c271-p36/evidence/observe-001.static.command.json"
+        ],
+        "observe": [
+          "<local>/c271-p36/evidence/observe-001.observe.stdout.txt",
+          "<local>/c271-p36/evidence/observe-001.observe.stderr.txt",
+          "<local>/c271-p36/evidence/observe-001.observe.exit.txt",
+          "<local>/c271-p36/evidence/observe-001.observe.command.json"
+        ],
+        "fc_k5_readback_if_needed": "<local>/c271-p36/evidence/observe-001.readback.json",
+        "fc_probe_records_if_needed": "<local>/c271-p36/evidence/observe-001.probe-<n>.json",
+        "note": "fresh absent siblings of the attempt, never inside it; the command records are written by the Director's wrapper run_once_p36.sh (9154f181...), whose record name ends in .command.json instead of M0-LAUNCH's suggested .command-record.json"
+      }
+    },
+    {
+      "id": "PR-02",
+      "disposition": "recorded; the owner is told",
+      "note": "Another agent application on this host starts the bound framework interpreter; the starts the reviewer could read carried -B, and the Python inventory stayed unchanged. The owner's launchd job of MH's PR-03 still runs. The Director's static run before observe, and the inventory checks of the freeze, detect an added file; a refusal for a changed inventory is kept and handled under MR-PLAN section 9."
+    },
+    {
+      "id": "PR-03",
+      "disposition": "adopted: the shell argument is written \"${PLAN_SHA256:?}\", the variable is set in the same shell to the digest above, and the plan file's SHA-256 is compared with it by shasum immediately before each launch"
+    },
+    {
+      "id": "PR-04",
+      "disposition": "adopted: the Director's static run's facts_sha256 must equal 3f0624318211f82e76aaf408a98e2e0a82ec2147ed681682242f37c9343c4ddf; on a difference the Director stops before observe and reconciles, with no bounded start made"
+    },
+    {
+      "id": "PR-05",
+      "disposition": "adopted: MH's classification again; an observe refusal with OUTPUT-STDERR has its cause in the implementation's constants, so under MR-PLAN section 9 MR stops at S5 with the refusal kept, and no corrected plan or new attempt follows in this phase"
+    },
+    {
+      "id": "PR-06",
+      "disposition": "carried to S6: the configuration binds the adoption record's bytes (872312ed..., 5,396 bytes, 0o644), and the freeze review compares them with this review's binding"
+    }
+  ],
+  "a4": "met: observation plan 001 (cc1c2def...) frozen by an independent author at B and accepted by a fresh reviewer; its digest is supplied from this record"
+}

@@ -1,0 +1,141 @@
+{
+  "schema": "ontokin.c271.p36-checks/1",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "stage": "S10 at MR's stop (S6)",
+  "director": "c271-p36-14f7f8b219db",
+  "recorded_at_utc": "2026-11-27T22:42:27Z",
+  "source_head_before_commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
+  "interpreter_rule": "every start of the framework interpreter with -B",
+  "staged_files": 142,
+  "checks": [
+    {
+      "name": "workflow",
+      "command": ".venv/bin/python -B tools/chat_workflow.py check",
+      "exit": 0,
+      "result": "passed",
+      "stdout": "workflow.stdout",
+      "stdout_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+    },
+    {
+      "name": "documentation",
+      "command": ".venv/bin/python -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "exit": 0,
+      "result": "passed",
+      "links": {
+        "documents": 1767,
+        "local_links": 7024,
+        "anchors": 189,
+        "external_skipped": 1118
+      },
+      "failures": [],
+      "stdout": "documentation.stdout",
+      "stdout_sha256": "98d3f4c1867370ea1d7f6e5b8c89b0c42f0a3050da6c82d5e8aac06f1d3cee53",
+      "note": "run while this record was a placeholder, so that the links to it resolve"
+    },
+    {
+      "name": "whitespace, every staged file",
+      "command": "git diff --cached --check",
+      "exit": 0,
+      "result": "passed",
+      "stdout": "whitespace-staged.stdout",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "privacy search of every staged file",
+      "command": "the derived private terms, the per-user temporary directory and a /var/folders pattern after the accepted contexts; the joined and squeezed string constants of every staged Python file; the application terms counted",
+      "result": "passed",
+      "files_with_a_term_left": [],
+      "accepted_classes": [
+        "python@3.12 only inside <prefix>/Cellar/... and <prefix>/opt/... interpreter paths and their relative link target, as in MH",
+        "the public repository's own name",
+        "macOS's own system paths (/System/Volumes/...), a public wheel's recorded build path (/Users/runner), a prose mention of the temporary directory's form, one reviewer's regular expression of generic path prefixes, and a table of the system's own links",
+        "one joined test name, as in MH and commit B"
+      ],
+      "joined_constant_hits": [
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/plans/freeze-001/scripts/w2f_build.py",
+          "term": "#21",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/plans/freeze-001/scripts/w2f_build.py",
+          "term": "#21",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/plans/observation-plan-001/scripts/w2p_author.py",
+          "term": "#13",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/scripts/check_mi_attributions.py",
+          "term": "#0",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/scripts/check_mi_attributions.py",
+          "term": "#0",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/scripts/check_mi_attributions.py",
+          "term": "#2",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/scripts/check_mi_attributions.py",
+          "term": "#2",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/scripts/source_vs_inventory.py",
+          "term": "#13",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/scripts/source_vs_inventory.py",
+          "term": "#13",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/host-review-001/scripts/w3h_07_final.py",
+          "term": "#2",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/host-review-001/scripts/w3h_07_final.py",
+          "term": "#2",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/plan-review-001/scripts/s02_plan_keys.py",
+          "term": "#7",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/plan-review-001/scripts/s02_plan_keys.py",
+          "term": "#7",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/plan-review-001/scripts/s02_plan_keys.py",
+          "term": "#13",
+          "in": "squeezed"
+        }
+      ],
+      "joined_constant_reading": "each hit is either a machine path's generic prefix that the text search accepts in context, or a false positive formed across adjacent constants and absent in the source ('actual' + 'expected', 'equal' + 'expected', 'canonical' + 'exactly')",
+      "application_term_counts": {
+        "#8": 86,
+        "#24": 8,
+        "#34": 20,
+        "#11": 139,
+        "#28": 12,
+        "#2": 1,
+        "#6": 80,
+        "#9": 4
+      },
+      "application_term_reading": "only the project's own workflow vocabulary (Claude, ChatGPT), generic words in test IDs and prose, and one standard-library file name in the Python inventory"
+    }
+  ],
+  "result": "passed"
+}

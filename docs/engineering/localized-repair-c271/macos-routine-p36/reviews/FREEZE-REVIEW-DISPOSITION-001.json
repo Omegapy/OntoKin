@@ -1,0 +1,108 @@
+{
+  "schema": "ontokin.c271.p36-review-disposition/1",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "stage": "S6",
+  "director": "c271-p36-14f7f8b219db",
+  "recorded_at_utc": "2026-11-27T22:26:54Z",
+  "review": {
+    "record": "workers/W3-freeze-001/FREEZE-REVIEW-001.md",
+    "record_sha256": "b71e1e589ab44c06cbdea3f86c236a808986ace0f445b0214b80e18d7c22981b",
+    "json": "workers/W3-freeze-001/FREEZE-REVIEW-001.json",
+    "json_sha256": "5761f7a878f2c1dbbaa811cfac197daae7520193ecf0b417560393e588c84562",
+    "sums_sha256": "c35c8b916b413b130bff7f2d72ce265d87204f38290fb43560bb7a6c806d9b1c",
+    "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+    "s7_may_run_as_frozen": false,
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; it took no part in any earlier stage"
+  },
+  "digests": {
+    "note": "computed by the reviewer from the bytes, and equal to the Director's recomputation at this disposition",
+    "freeze": {
+      "path": "<local>/c271-p36/workers/W2-freeze-001/FREEZE-001.json",
+      "sha256": "11555730a5d153d4155bd730f288d8478fff2933a4587c4fef0a35940592ab66"
+    },
+    "sums": {
+      "path": "<local>/c271-p36/workers/W2-freeze-001/SHA256SUMS.txt",
+      "sha256": "a4fd0dc3ddfe2cd1657923ec7a20211cae3440ccdc94518a98d8490d751325d4"
+    },
+    "configuration": {
+      "path": "<local>/c271-p36/workers/W2-freeze-001/config/readback-config-001.json",
+      "sha256": "e700edefb0a933f784d9fcf180770ef6d4675ae2cf8b7d6008ea0a126f5f916d",
+      "used": false
+    },
+    "wrapper": {
+      "path": "<local>/c271-p36/director/run/run_once_p36.sh",
+      "sha256": "9154f181cfa7c8648c21b31a1f309af43f9b2b5046df1656a124a4b6b55e07a7"
+    }
+  },
+  "fz01_director_confirmation": {
+    "method": "reading the code at B, main's two baseline summaries, and one Director Git read of B's tree; nothing of S7 was started",
+    "basis": [
+      "tools/check_local.py:47-50: the copied set is SOURCE_DIRS and ROOT_FILES, and neither names .claude",
+      "tools/check_local.py:298-318: prepare_workspace_git fetches B into the workspace and runs read-tree B (line 314), so the workspace's index holds every entry of B's tree",
+      "tools/check_local.py:336-346: prepare_workspace copies only that set",
+      "tools/check_local.py:604-615 and 779-782: a qualifying run derives the workspace binding after the copy and before any step",
+      "prototypes/static_tray_v01/current_host_readback_v02.py:913-943: derive_workspace_binding validates the derived selection at the workspace (line 943), and _selection calls _verify_source with derived true (line 866)",
+      "current_host_readback_v02.py:471-474: every line of git status --porcelain=v1 --untracked-files=no refuses unless immutable_workspace_inputs drops its path, which it does only for the generated examples",
+      "current_host_readback_v02.py:108: CurrentHostBindingError is a RuntimeError, which run() catches (check_local.py:816-819), so the summary records status failed, the error, and no executed step",
+      "B's tree (git ls-tree -r HEAD .claude): seven entries, .claude/.gitignore and six symbolic links under .claude/skills/",
+      "main 8e847c15's two baseline summaries: /workspace_git/tracked_worktree_status is exactly the seven ' D' lines of those entries"
+    ],
+    "conclusion": "R1 as frozen refuses at the derived source check, with CH-SOURCE 'Dirty source:  D .claude/.gitignore' (or 'Bounded source Git inspection failed' if the status exceeds its 5 s allowance), before the unit stage. No configuration, environment or command at B can avoid it: B tracks the seven entries, the driver's copied set is fixed, and the check admits only generated examples. The cause lies in the implementation."
+  },
+  "dispositions": [
+    {
+      "id": "FZ-01",
+      "mandatory": true,
+      "disposition": "adopted. S7 does not run under freeze 001. Under MR-PLAN section 9 and the declaration's stopping condition (a new failure that needs a correction phase), MR stops at S6 with this concrete blocker. The correction belongs to a later phase. That phase decides, under contract section 7 and MC19, how a derived workspace treats tracked paths that the driver does not copy, with controls that exercise the derived route on a tree that tracks such paths. A corrected commit needs a new observation plan, HOST and freeze, with their reviews. No run that expects the refusal is frozen: it cannot meet MR, and the code with main's own record establishes the cause. R2 alone is not run in P36: without R1 it cannot meet MR or R03, and the next phase is the owner's to select."
+    },
+    {
+      "id": "FZ-02",
+      "mandatory": false,
+      "disposition": "carried to the next MR freeze: it states the derived route's Git timing in a workspace, with its basis, or states the margin as a risk; the correction phase's controls can measure it"
+    },
+    {
+      "id": "FZ-03",
+      "mandatory": false,
+      "disposition": "carried to the next MR freeze: P00 verifies the checker and every other tool read from the worktree with an independent sums file, as MH's FR-07 did"
+    },
+    {
+      "id": "FZ-04",
+      "mandatory": false,
+      "disposition": "carried to the next MR freeze and the R03 review: attributions.rules state that every attributed failure still needs the R03 review's classification under OK-ENG-009 section 3 item 4, and the audit lists them as 'attributed by record; classification required'. P36's outcome records the 93 branch tests that MI's records show not passing on this host as open for that classification"
+    },
+    {
+      "id": "FZ-05",
+      "mandatory": false,
+      "disposition": "carried to the next MR freeze: a preparation refusal whose summary records no started step counts 0 Node starts from the driver's record, not UNKNOWN"
+    },
+    {
+      "id": "FZ-06",
+      "mandatory": false,
+      "disposition": "carried to the next MR freeze: its limits state that MI ran each module alone without a selection variable, while R1's unit process sets the derived selection pair for every test in one process"
+    },
+    {
+      "id": "FZ-07",
+      "mandatory": false,
+      "disposition": "carried to the next MR freeze: it records the shell tool's mode for R1 and R2, and treats a denial by the tool as a possible cause of an unattributed failure"
+    },
+    {
+      "id": "FZ-08",
+      "mandatory": false,
+      "disposition": "carried to the next MR freeze: the three main-derived rows whose inputs changed are labelled 'same record expected; inputs changed'"
+    },
+    {
+      "id": "FZ-09",
+      "mandatory": false,
+      "disposition": "applied to P36's portable records now, and carried: raw logs are never copied, only their digests; every argv and environment value in a portable copy is replaced by its label; each portable file is searched before it is published"
+    }
+  ],
+  "answers": "The review's answers to Q-1 to Q-12 (FREEZE-REVIEW-001.md, 'Answers to Q-1 to Q-12') are inputs for the next freeze. Among them: Q-1, attribute MI's 89 by exact record, since MI's logs were made at code bytes equal to B's, and the attribution is not an acceptance; Q-3, RI_L07 and RI_L08 stay unattributed; Q-11, keep the exact count.",
+  "acceptance": {
+    "A6": "not met: freeze 001 was rejected with FZ-01, which no freeze at B can resolve",
+    "A7": "not met: not run",
+    "A8": "not met: not run",
+    "A9": "not met: not run"
+  },
+  "starts": "No S7 start. MR's bounded starts stay M0's one Git and M1's one Node.",
+  "fixed_state": "held from 18:56:41Z to this disposition: one boot (C90010BA), HEAD at B with a clean worktree, no commit, -B, no Finder, nothing installed. It ends with P36's closing commit, since no S7 or S8 follows at B."
+}

@@ -399,6 +399,20 @@
       "scope": "Path-portable copies of worker records in a public repository; observed in C271's gate MH, where three such scripts were kept local.",
       "recorded_at": "2026-11-27",
       "supersedes": null
+    },
+    {
+      "id": "memory-c271-derived-workspace-tracked-paths",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "Before a qualifying run of tools/check_local.py is frozen, check by reading that every path tracked at the candidate reaches the driver's isolated workspace, or that the provider's derived source check admits its absence. The driver copies only SOURCE_DIRS and ROOT_FILES while read-tree gives the workspace's index the whole tree, so a tracked path outside that set shows as deleted, and the 0.2.0 provider refuses every status line that is not a generated example. Main's own summaries record the workspace's tracked status (workspace_git/tracked_worktree_status), which shows such paths.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/FREEZE-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/FREEZE-REVIEW-DISPOSITION-001.json",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json"
+      ],
+      "scope": "tools/check_local.py and prototypes/static_tray_v01/current_host_readback_v02.py at C271's commit B (4ca78142), where seven tracked .claude/ entries made R1's preparation refuse; found by gate MR's freeze review 001 (FZ-01) by reading, before any run.",
+      "recorded_at": "2026-11-27",
+      "supersedes": null
     }
   ]
 }

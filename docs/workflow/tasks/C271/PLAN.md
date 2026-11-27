@@ -693,3 +693,17 @@ Ordered steps:
 8. Have an independent auditor, W4, recompute the results.
 9. Have a fresh W3 review the exact candidate and the evidence for R03.
 10. Record, push without force, read the push back, comment once on PR274 and issue273, and stop.
+
+### P36 routine outcome (2026-11-27, UTC)
+
+Steps 1 to 5 ran as planned: the declaration `d3b622d6`, the inventory and the tooling at commit B `4ca781429c5411c67c0965bc69306b42c6cc74ad`, the reviewed observation plan, and M0 and M1 with the reviewed HOST. Step 6 stopped MR. Freeze review 001 rejected operational freeze 001 with one mandatory finding, FZ-01, whose cause lies in the implementation: R1 would refuse in the driver's preparation at B. So steps 7 to 9 did not run. This outcome closes the phase as step 10 does, with these records.
+
+Recorded failures and deviations:
+- tooling review 001 rejected the first tooling;
+- freeze review 001 rejected freeze 001 (FZ-01);
+- the Director's empty here-document under the operating system's Python launcher;
+- the launch marker first dated in local time;
+- the freeze author's six starts of the operating system's Python launcher and one file written to the system temporary directory, both without effect;
+- the freeze reviewer's one interpreter start that relied on `PYTHONDONTWRITEBYTECODE=1` instead of `-B`.
+
+The [outcome](../../../engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json) lists each. Each push was without force and read back. The next phase, not begun here, corrects how a derived workspace treats tracked paths that the driver does not copy. MR then runs again at the corrected commit, and R04 and R05 follow, each a separate phase.

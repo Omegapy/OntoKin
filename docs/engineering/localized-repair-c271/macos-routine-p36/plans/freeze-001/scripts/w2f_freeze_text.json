@@ -1,0 +1,201 @@
+{
+ "deferred_arguments": {
+  "rule": "Each placeholder below stands, inside one single-quoted word of a command's shell member, for a value that is taken mechanically from the named source. The Director replaces every occurrence of the placeholder text in that member and nothing else; the values hold no quote. A 64-hex value is 64 lowercase hexadecimal characters; a root is a path that matches the stated pattern. The checker verifies each replaced word against its source (equals_freeze_sha256, equals_sha256_of, equals_from or the stated prefix).",
+  "rows": [
+   {"placeholder": "<FREEZE-001.json SHA-256>", "used_by": ["P01", "D02", "R1.X", "R1.Y", "R1.Z", "R2.X", "R2.Y", "Q01.X", "Q04"], "source": "FREEZE-REVIEW-001.json /freeze/sha256, computed by the reviewer from the bytes of FREEZE-001.json"},
+   {"placeholder": "<readback-config-001.json SHA-256>", "used_by": ["R1"], "source": "FREEZE-REVIEW-001.json /configuration/sha256, computed by the reviewer from the bytes of config/readback-config-001.json (A6: supplied from outside the freeze)"},
+   {"placeholder": "<R1 unit log SHA-256>", "used_by": ["R1.C", "R1.K", "R2.V"], "source": "/usr/bin/shasum -a 256 of <A1>/driver/logs/unit-tests.log, immediately before the launch"},
+   {"placeholder": "<R1 summary SHA-256>", "used_by": ["R1.K", "R1.R", "R2.V"], "source": "/usr/bin/shasum -a 256 of <A1>/driver/summary.json, immediately before the launch"},
+   {"placeholder": "<R1 audit SHA-256>", "used_by": ["R1.R"], "source": "/usr/bin/shasum -a 256 of <E>/mr-001-r1.audit-numeric.json, immediately before the launch"},
+   {"placeholder": "<R1 cohort root>", "used_by": ["R1.P", "R1.A", "R1.R"], "source": "/usr/bin/jq -r .cohort_root <E>/mr-001-r1.cohort-find.stdout.txt; pattern ^<A1>/current-host-cpu-[a-z0-9_]{8}-preserved-[0-9a-f]{32}$"},
+   {"placeholder": "<R1 overrun cohort root>", "used_by": ["R1.O", "R1.S1", "R1.S2", "R1.S3"], "source": "after an overrun of R1: /usr/bin/jq -r .cohort_root <E>/mr-001-r1.overrun-select.stdout.txt; for R1.S<k> after R1.P without an overrun: R1.F's printed root; pattern ^<A1>/current-host-cpu-[a-z0-9_]{8}(-preserved-[0-9a-f]{32})?$"},
+   {"placeholder": "<R2 unit log SHA-256>", "used_by": ["R2.C", "R2.K", "R2.V"], "source": "/usr/bin/shasum -a 256 of <E>/mr-001-r2/logs/unit-tests.log, immediately before the launch"},
+   {"placeholder": "<R2 summary SHA-256>", "used_by": ["R2.K", "R2.V"], "source": "/usr/bin/shasum -a 256 of <E>/mr-001-r2/summary.json, immediately before the launch"}
+  ]
+ },
+ "launch": {
+  "rule": "MH's freeze 002 launch (FR-01 (a) and (b), FR2-03 and FR2-05), applied unchanged to MR's wrapper",
+  "before_p00": "Immediately before P00, in one read, the Director compares the SHA-256 of <F>/FREEZE-001.json and of <F>/SHA256SUMS.txt with the freeze review record's values, and the wrapper's with 9154f181cfa7c8648c21b31a1f309af43f9b2b5046df1656a124a4b6b55e07a7 (HR-08), using /usr/bin/shasum, and records the result. S7 begins only if all three are equal (MH's FR2-05).",
+  "read": {"shell": "/usr/bin/jq -r --arg id ID '.commands[] | select(.id == $id) | .shell' <F>/FREEZE-001.json",
+           "timer": "/usr/bin/jq -r --arg id ID '.commands[] | select(.id == $id) | .timer_shell' <F>/FREEZE-001.json"},
+  "command": "Every command runs as its shell member alone, read raw with jq -r, with only its deferred placeholders replaced. Nothing is prepended or appended, so zsh -c runs one simple command and the wrapper leads its group. It goes to the shell tool in background mode with no tool timeout: one call per command, never retried.",
+  "timer": "In the same message, as the second call, the Director passes the command's timer_shell, read the same way and passed alone, also in background mode with no tool timeout. It is MH's timer template with the command's exit file and limits.outer_bound_s. It exits at the first of two events: the exit file exists ('bound-timer: exit-file ...', status 0), or more than outer_bound_s whole epoch seconds have passed ('bound-timer: outer-bound ...', status 1). It starts only shell builtins, /bin/date and /bin/sleep, and writes nothing.",
+  "after": "The Director goes on when the command's background task has ended and its timer has printed 'exit-file'; it then reads the exit file and applies the command's classification and stop_rules. 'outer-bound' while the command's task still runs: the overrun procedure. 'no-clock', or any other timer output or status: a PLAN deviation of this freeze's own tool; the Director records it, waits for the command's task without a bound, runs the command's listing and probe as frozen, and stops S7. A timer line printed after the task ended has effect only as FR2-03 (b) says: when the command record's end_epoch_s - start_epoch_s is not above outer_bound_s, an 'outer-bound' line had no effect. A wrapper exit of 90 leaves no exit file: the command did not start (a PLAN deviation; stop S7). Exits 91 and 92 come after the exit file: the command ran once and its record is missing (UNKNOWN; stop S7).",
+  "order_and_approval": "Each launch message holds exactly two calls: the command first and its timer second. If either waits for an approval or is refused, the launch has deviated: a command that did not start did not run, and S7 stops before it (class HOST, the Director's executor), with no retry; a command that started is waited for, its listing and probe run as frozen, and S7 stops after them (MH's FR2-03 (a)).",
+  "director_starts": "Recorded, not bounded: one zsh per tool call; each timer's /bin/date about once a second and its /bin/sleep; one jq per member read; /usr/bin/shasum and /usr/bin/cut for each deferred digest; and inside each wrapper call /bin/sh, /usr/bin/env, /usr/bin/jq (about 4), /usr/bin/shasum (3), /usr/bin/cut (3), /bin/date (2), /usr/bin/perl (3), /usr/sbin/sysctl (2) and /usr/bin/stat (2) (MH's FR2-06). None starts Node or the framework interpreter.",
+  "dash_b": "Every start of the framework interpreter in this freeze carries -B on its command line (N-09, D-P4). The Director's own reads use no interpreter. The owner is asked to keep every other user of that interpreter (the launchd job of MH's PR-03 and the other agent application of PR-02) from starting it without -B, or to pause them, from P00 to the end of S8 (HR-04)."
+ },
+ "overrun": {
+  "rule": "MH's FR-01 (c) six steps, with MR's records. A command that ends at its bound may be reported as an overrun, never the reverse.",
+  "steps": [
+   "1. Record the overrun with its UTC time and epoch seconds. The command's outcome is UNKNOWN. Start the command's own timer_shell a second time (MH's A-3).",
+   "2. R1: run R1.N (it reads names only). If it exits 0, run R1.O with its printed root, which probes every candidate pair of R1's three cases; a pair whose records do not exist is reported, not refused. Any other command (R2, a tool, a checker) has no supervised child with a recorded pair, so step 2 is empty for it.",
+   "3. Run R1.S<k> once for each target of R1.O in state 'present, identity established', where target j-1 is case j in the order Q01-positive, Q03-positive, Q01-changed-reference, confirmed by the target's pair.started.path (MH's FR2-01). Send nothing for any other state.",
+   "4. Send nothing to the wrapper, the tool's task, the driver, its steps or any of their groups: no record establishes their identity (FC-P1, FC-P2).",
+   "5. Wait for the wrapper to exit. Then run the command's listing (R1.L or R2.L), for R1 also R1.I, R1.F and, if R1.F exits 0, R1.P; write the capture record (failure_capture.record) and stop S7. No collector, comparator, reader, audit or X/Y/Z check runs.",
+   "6. If the second timer ends first, tell the owner, keep waiting and start nothing."
+  ],
+  "r1": {"select": "R1.N", "probe": "R1.O", "stops": ["R1.S1", "R1.S2", "R1.S3"], "pairs": "<root>/provider-ledgers/<case>/preflight.json and started.json (FAILURE-CAPTURE FC-P2, the provider row)"},
+  "other": "R2, the tools and the checkers: steps 1, 4, 5 and 6 only.",
+  "limits": ["A start recorded after R1.N reads the root is probed only after the wrapper exits (step 5, R1.P).", "A start between its preflight.json and its started.json cannot be named.", "FC-P5: a descendant that moved to another process group or session is not found by the group probe."]
+ },
+ "stop_rules": {
+  "rules": [
+   "1. P00's exit file other than '0\\n', or the before_p00 comparison unequal: S7 does not begin.",
+   "2. P01 or D02 not exit 0 with state MET: R1 does not start. P02, P03 or D01 not exit 0: stop; D02 records the predicates.",
+   "3. A command's exit status outside its allowed_exit_statuses, or a missing exit file or command record: its outcome is UNKNOWN; FAILURE-CAPTURE section 6; S7 stops after the steps that its classification names; no retry.",
+   "3a. The sequence after a run. When R1's wrapper has exited without an overrun, the Director runs R1.L, R1.I, R1.F, R1.P, R1.C, R1.K, R1.A, R1.R, R1.M, R1.X, R1.Y and R1.Z in this order, whatever R1's outcome. A step whose frozen input file does not exist (the unit log after a preparation refusal; the cohort root when R1.F exits 1, for R1.P, R1.A and R1.R; the audit's output, for R1.R) is not started and is recorded as NOT_RUN in the capture record. R1.M, R1.X, R1.Y and R1.Z always run. After R2's wrapper has exited the same holds for R2.L, R2.I, R2.C, R2.K, R2.V, R2.M, R2.X and R2.Y, and Q01, Q01.X and Q04 follow.",
+   "4. R1.X or R1.Z NOT_MET: R2 does not start; S7 stops after R1.Y and R1.Z. R2.X NOT_MET: S7 stops after R2.Y, Q01, Q01.X and Q04.",
+   "5. R1.Y or R2.Y NOT_MET: FINDINGS, recorded; they never stop S7 (MR-PLAN section 9). A NOT_MET predicate of MC23 means that R1 is not qualified and MR is unmet; R2 still runs when R1.X and R1.Z are MET, because R2 is independent evidence for MC22 and the symlinked-directory comparison and starts no Node.",
+   "6. A probe target (R1.P) in any state other than absent: UNKNOWN; FC-P6 for an established identity only; S7 stops after R1.M, R1.X, R1.Y and R1.Z. FR2-02's reading applies to a pair whose records do not exist when the ledger shows that the start never happened.",
+   "7. An overrun: the overrun procedure; S7 stops.",
+   "8. A boot change (any command record's boot.before or boot.after other than the frozen UUID): the attempt ends (FC-R5); MR's S4 starts again with new records.",
+   "9. Nothing is retried (FC-R1, FC-R2). A corrected attempt needs a new attempt ID, a freeze that states the cause, and its review (FC-R3, MR-PLAN section 9). The earlier attempt is retained."
+  ],
+  "r2_classification": {
+   "rule": "R2 starts from macOS's default temporary directory through the /var link, and no record establishes the branch's own outcomes there. Each test of R2 that does not pass is recorded in exactly one of these classes, from R2.K and R2.V, by the audit and the R03 review; the freeze's checker counts only what is exact (R2.Y).",
+   "classes": [
+    "(a) main's unchanged baseline failure: in R2.K's unchanged_not_passing with attribution.matches true (main's 307);",
+    "(b) attributed by R2's file: D-18's two 0.1.0 driver tests, and MC22's setUpClass error;",
+    "(c) unchanged from R1: in R2.V's unchanged_not_passing; R1's own attribution or finding then covers it;",
+    "(d) passes in R1 and fails in R2 with a reason that names the /var form of the temporary directory (R2.V's new_not_passing whose candidate reason holds <tmp>, the /var form that R2 gives, or the raw /var/folders/... text): recorded beside main's symlinked-directory class; it stays not passing and visible; R04 classifies it;",
+    "(e) anything else: a FINDING (MR-PLAN section 9)."
+   ]
+  }
+ },
+ "failure_capture": {
+  "procedure": {"path": "<worktree>/docs/engineering/localized-repair-c271/macos-qualification-p35/tooling/FAILURE-CAPTURE.md", "sha256": "f387fb3ec0ed306366f6d3f22820ec344f1ac843008775475258c5de9634c99c", "size_bytes": 13147, "mode": "0o644", "use": "reused unchanged"},
+  "reading_for_mr": [
+   "PR-01 as disposed: '<local>/c271-p35/evidence/' reads '<local>/c271-p36/evidence/' (<E>); 'MH-PLAN section 8' reads 'MR-PLAN section 9'; 'an MH plan' and 'MH tool' include MR's plans, MR's tools and the reused tools. The capture record keeps the schema ontokin.c271.p35-failure-capture/1. capture_probe.py runs only from its committed path under SHA-256 db5fb5250909effa7e3fe3d66feadc5183160b4e6088178a763e6fc41567048f. Nothing is written under <local>/c271-p35/.",
+   "Section 1's scope reads, for MR: R1 and R2 (the routine driver through the wrapper), D01's mkdir, R1.F and R1.N, MR's collector, comparator and reader, the reused audit, probe and listing, the observer's python-inventory and source-inventory, and the checker.",
+   "FC-K4 adds two kinds for MR: the routine driver (summary.json, logs/, reports/, artifacts/, source-before.json, source-after.json, workspace-storage.json, workspace/ and, in R1, readback-binding/ with its four files), and the provider in a driver run (the cohort in <A1>: current-host-cpu-<8>, then -preserved-<32 hex> with PRESERVATION.json and CLEANUP.json; setup.pending.json, setup.json, supplemental-cpu.json, cohort.json; each case's stage and provider-ledgers/<case>/).",
+   "FC-K5 reads: R1.L and R2.L are the readback records of R1 and R2, written before any other command touches the evidence (R1.L lists the whole attempt directory <A1>, so the cohort's random name needs no argument); R1.M and R2.M bind the checker steps' outputs; every other command's own output is its record.",
+   "FC-R5's 'S4 starts again' reads as MR's S4 (MR-PLAN section 6: one boot)."
+  ],
+  "record": {"path_pattern": "<E>/<command name>.capture.json", "schema": "ontokin.c271.p35-failure-capture/1", "written_by": "the Director, by exclusive creation (set -C), fsynced, after section 6 steps 1 to 5"},
+  "never": "Finder on the worktree, the evidence or the prepared trees; a Git write; an edit in the worktree; a change to a prepared input; a re-run to see what happens (FAILURE-CAPTURE section 7)."
+ },
+ "starts": {
+  "rule": "P07 section 4, unchanged: an audit event or a provider record shows an attempt; a receipt with a positive PID establishes a start; an interrupted attempt is UNKNOWN and blocks success and any automatic retry.",
+  "table": [
+   {"row": "M0, Git --version (S5, done)", "node": 0, "other": 1},
+   {"row": "M1, Node --version (S5, done)", "node": 1, "other": 0},
+   {"row": "R1: the readback CPU trio through the provider (Q01-positive, Q03-positive, Q01-changed-reference), each with a started.json, a positive PID and a receipt", "node": 3, "other": 0},
+   {"row": "R2: none; the readback class fails at setUpClass (MC22)", "node": 0, "other": 0},
+   {"row": "Every other S7 command", "node": 0, "other": 0}
+  ],
+  "s7_bounded": {"node": 3, "other": 0},
+  "mr_total": {"node": 4, "other": 1, "equals_mr_plan_section_8": true},
+  "recorded_not_counted": "D-P7, as magnitudes per run (each command's starts member): uname about 4 and file about 4 (D-19); driver Git reads 49 in R1 (bound Git) and 29 in R2 (PATH's /usr/bin/git); provider Git reads about 60 in R1; the tests' Git starts by name, tens to hundreds, not enumerated (W1's limit); the framework interpreter: the driver, 7 steps each, and the tests' Python children (tens); the Git stand-in shell scripts; one os.fork; each S7 tool command's one interpreter start; D01's mkdir; R1.F's and R1.N's /bin/sh; P00's shasum; the Director's launch starts (launch.director_starts).",
+  "never": ["ldd", "codesign", "otool", "a Node other than the pinned runtime: PATH=/usr/bin:/bin holds no node (D-P1), and the doctor's tests start node only through which('node')", "Git's --version (no observe in S7)", "the observer's observe", "any download or install"]
+ },
+ "expected_outcomes": {
+  "r1": {
+   "run": "qualifying, workspace_bound; every one of the 7 steps started and completed; status failed and exit 1 (the unit stage fails because tests fail); the source unchanged; HEAD B before and after; the bound Git; the driver's source inventory sha256:e7f1c4b5..., 23,005 files",
+   "unit_stage": "Ran 5,994 (the frozen discovery list of B, in discovery order, each once); skipped 0; expected failures 0; unexpected successes 0 (TR2-01: the log's own counts, the collector's records and the driver's test_execution)",
+   "readback": "the seven methods passed, each once; no fixture record of the module (MC23); exactly three Node starts with receipts; the negative case exits 1 with exactly the intended matrix_0_3 finding; every numerical row recomputed by MH's harness; the cohort preserved in <A1>",
+   "not_passing": "92 attributed, by exact ID and complete record: main's unchanged last-digit fixture test (1), D-18's two 0.1.0 driver tests (2), and the 89 0.1.0 Linux-route tests that MI's retained per-module runs on this host record as failing (final-003). Every other test, about 5,900 of them, is expected to pass; one that does not is a FINDING.",
+   "comparison_with_main": "against main's resolved-directory run: unchanged 4,985 passed and 1 failure; different_outcome exactly the 3 CPU methods (skipped in main, passed here: S8's change); added 1,005, of which 91 not passing, all attributed; removed 0; no other list entry; every step's status, report summary and pending case equal",
+   "reading_based_risk": "By reading, test_current_host_required_images_v01.RequiredImageControls.test_RI_L08 runs test_current_host_rtld_paths_v01's suite in process and requires it to pass, and MI's record shows that suite failing on this host; so RI_L08 is likely not to pass. No record establishes its exact record, so it is not attributed and would be a FINDING."
+  },
+  "r2": {
+   "run": "ordinary (readback_selection absent, run_kind ordinary); every step started and completed; status failed, exit 1; PATH's /usr/bin/git; source unchanged",
+   "unit_stage": "Ran 5,991 (the three CPU methods neither run nor reported); skipped 0; expected failures 0; exactly one fixture record, setUpClass (test_static_tray_readback_v01.ReadbackCPUControls), an error with the fixed ordinary-run reason (MC22); the four seams passed",
+   "comparison_with_main": "against main's default-directory run: main's 307 unchanged, each matching its attribution; removed exactly the 3 CPU methods (skipped in main); added 1,006 (1,005 tests and the fixture record); D-18's two and MC22's record matching their attributions; every step's status and report summary equal",
+   "not_established": "The branch's own tests have no record under the /var link. Their R2 outcomes are classified by stop_rules.r2_classification from R2.K and R2.V; the freeze counts no total for them."
+  }
+ },
+ "attributions": {
+  "schema": "ontokin.c271.p36-attributions/2",
+  "rules": ["TR-01: each row states the complete not-passing record: outcome, occurrences, own events in order with first lines, failing and skipped subtests; exact equality only; nothing exempt.", "TR2-03: no ID that the frozen discovery lists more than once (the discovery of B has no duplicate).", "TR2-04: every row's outcome follows from its own events and subtests (checked by the builder with the collector's outcome_of)."],
+  "sources": {
+   "main-8e847c15-resolved-tmpdir": "main's resolved-directory run (INTEGRATION.json): 1 row, raw",
+   "main-8e847c15-default-tmpdir": "main's default-directory run: 307 rows, normalized under that run's own summary and temporary directory with the collector's Normalizer (ontokin.c271.p36-reason-normalization/2)",
+   "D-18": "MI's retained per-module log of the 0.1.0 driver module on this host (final-003, 8a58d3fc...), raw: 2 rows, in R1 and in R2",
+   "MI final-003": "MI's retained per-module logs of five branch modules on this host (final-003, commit 7b759de0; MI's CHECKS.json binds each log by digest and records each non-pass set identical to the phase-start baseline 1c2f25ba): 89 rows, raw, in R1 only",
+   "MC22": "the contract's fixed reason, recorded on this host by MI's ordinary per-module run of the readback module: 1 row, raw, in R2 only"
+  },
+  "self_test": "records/selftest/: the comparator, run on main's own runs with these files, matched all 307 rows of main's default run and the one row of its resolved run; the 94 MI-derived rows equal the collector's record_statement of MI's collected records",
+  "not_attributed": [
+   "test_current_host_required_images_v01.RequiredImageControls.test_RI_L07 and test_RI_L08: MI recorded ModuleNotFoundError for both, which is an artifact of its per-module invocation (python -m unittest tests.<module> leaves tests/ off sys.path; tests/test_current_host_required_images_v01.py:756-761 imports the sibling modules by top-level name, which the routine's discover makes importable). No record establishes their routine outcome.",
+   "the 81 tests of test_current_host_elf_mapping_v01 (40) and test_current_host_libc_static_tls_flags_v01 (41): no retained run on this host. The second imports test_current_host_libc_plt_metadata_v01 by top-level name, so it cannot run per module.",
+   "in R2, MI's 89 Linux-route rows: their record was made under a resolved temporary directory; R2.V compares each with R1's own record instead.",
+   "every other test of the branch: no record establishes a not-passing outcome, so each is expected to pass."
+  ]
+ },
+ "decisions": [
+  {"id": "D-P1", "decision": "PATH=/usr/bin:/bin for R1 and R2, with no directory of links.", "basis": "By reading, no test differs from main's baseline only because python3.12 or Git's lfs helper is missing. (1) U-28 (tests/test_doctor_local.py:1077-1090) asserts exit 1 and a selected state in {missing, unsupported} for a checkout without an environment; core_checks (tools/doctor_local.py:492-532) depend on the environment, the checkout and the source import, not on node, git-lfs or a base interpreter on PATH; find_interpreters (:410-423) and visual_section (:735-760) only add candidates or report node missing, which the test does not assert. (2) U-30 (tests/test_bootstrap_local.py:1098-1120) passes --python with the base interpreter's absolute path for the first run (bootstrap_local.py:285-293, which(requested) or requested), and the second run reuses the environment, so resolve_interpreter is not called (:572-573); require_unused, the only lsof route, is not reached for create-environment. (3) storage_section (doctor_local.py:852-883) needs an LFS client only when a tracked file is selected for LFS; the LocalProject fixture has none. (4) Git by name resolves to /usr/bin/git on the owner's PATH too, so the tests' and R2's driver's Git is unchanged. The reading's limit: a test that the reading missed would show as a new failure, a FINDING."},
+  {"id": "D-P2", "decision": "Both runs start from /usr/bin/env -i with exactly HOME, LOGNAME, PATH, TMPDIR and USER (env/r1 and env/r2); no PYTHON*, PIP_*, GIT_*, NODE_*, DYLD_*, LANG, LC_* or TZ.", "basis": "records/env-reads.json: the code under tests/, tools/, ontokin/, prototypes/ and the documents verifier reads by name only ONTOKIN_* (test-only retain roots and the selection pair), STATIC_TRAY_READBACK_CPU_OUTPUT, PATH, PLAYWRIGHT_BROWSERS_PATH and XDG_CACHE_HOME (the doctor); the standard library reads HOME (Path.home, in the doctor) and TMPDIR (tempfile); no code reads USER or LOGNAME by name, and every child that inherits the environment receives all five. HOME, USER, LOGNAME and TMPDIR are the ones main's baseline would have had, with this host's values. The Director's shell, the same kind of session as the one that ran main's baseline, sets no LANG, LC_*, TZ, PLAYWRIGHT_BROWSERS_PATH or XDG_* variable, so none is declared. STATIC_TRAY_READBACK_CPU_OUTPUT is not declared: main's baseline did not have it, and tests read it (tests/test_current_host_readback_provider_v02.py:305-306 patches only the selection pair, so a global value would reach setups that expect none). TMPDIR: R1 the resolved form with the final slash, as main's resolved run (BASELINE-CHECKS.json); R2 macOS's default form. Limit: main's baseline recorded only the absence of PYTHON*, PIP_* and GIT_* variables; the rest of its environment is not recorded, so the difference is stated, not measured."},
+  {"id": "D-P3", "decision": "Host facts by digest and size, never content: <home>/.gitconfig (237 bytes) and, beyond D-P3's wording, <home>/.config/git/ignore (31 bytes), Git's default excludes file, which every Git child that lists untracked files reads; <home>/.config/git/config and attributes are absent and checked absent.", "basis": "the doctor's Git children use clean_environment() (doctor_local.py:127-130), which strips GIT_CONFIG_GLOBAL; the XDG ignore file is a default path that GIT_CONFIG_GLOBAL does not switch off"},
+  {"id": "D-P4", "decision": "The driver always runs as <worktree>/.venv/bin/python -B; the checker's trees check (no __pycache__, .pyc, .pyo or .DS_Store) runs on the worktree and its .venv, the prepared trees, the evidence and both runs' outputs at P01, D02, R1.Z and Q04; the framework tree is checked by the Python inventory (D-P5).", "basis": "the framework tree holds 414 legitimate .pyc files, so only the inventory can show an added one"},
+  {"id": "D-P5", "decision": "The observer's python-inventory at P02 (immediately before R1, HR-04), R1.I (between the runs) and R2.I (after R2), each required to be byte-identical to HOST's c277bdd3...; the source inventory at P03 and Q01 against 95abd300...", "basis": "S6's own runs: inventories/python-inventory-s6-001.json and source-inventory-s6-001.json are byte-identical to HOST's at 20:55Z"},
+  {"id": "D-P6", "decision": "evidence.devices: the evidence (and so R1's driver output) on device 16777244, the temporary directory on 16777234.", "basis": "stat at S6; I-05"},
+  {"id": "D-P7", "decision": "The uncounted starts as magnitudes (starts.recorded_not_counted); the bounded totals 3 Node in S7, 4 Node and 1 other for MR.", "basis": "W1's counts"},
+  {"id": "F-1", "decision": "The cohort takes the provider's default route: mkdtemp in the evidence root, then the preserved copy; no STATIC_TRAY_READBACK_CPU_OUTPUT.", "basis": "D-P2; the route is fixed and its root found by R1.F's frozen rule (TR-09, Q-2). It is the route that MH did not exercise (MH's FR-09)."},
+  {"id": "F-2", "decision": "The configuration's evidence_root is R1's own attempt directory <A1>, created empty by D01; R1's driver output is <A1>/driver.", "basis": "prepare_readback_selection requires the output beneath the evidence root; the cohort then lands in a directory that holds nothing else, so R1.L lists it whole and R1.F needs no glob outside it; the evidence parent <E> keeps its recorded ancestors (P07 section 2)"},
+  {"id": "F-3", "decision": "--timeout 7200 for every step; outer bound 10,800 s for each run; the tools' bounds 60 to 1,800 s.", "basis": "main's unit stage took 957 to 1,149 s (BASELINE-CHECKS.json, INTEGRATION.json; the two 8e847c15 runs ran at the same time); the branch adds 1,005 tests, whose modules took about 34 s in MI's per-module runs (final-003); so about 1,000 to 1,500 s is expected and 7,200 s leaves a margin of about five. A step that hangs is stopped by the driver at 7,200 s, within the outer bound; two would pass it. The bounds rest on no Node timing (HR-06); the cohort's own clocks are the provider's fixed 30,000 ms per case."},
+  {"id": "F-4", "decision": "The checker is MH's reviewed w2f_s7_check.py, unchanged, at its committed path at B (eb96aa1a..., 16,612 bytes; byte-equal to MH's original beside the clone); its expect phase evaluates each run's stop predicates (expect) and its outcome predicates (audit_expect, --audit).", "basis": "a reviewed checker is preferred to a new unreviewed one; P07 section 3 admits no untracked harness"},
+  {"id": "F-5", "decision": "No discovery run in S7. MC28's first half was established at S6 by MH's collector on the worktree at B (discovery/discovery-b-001.json, COMPLETE, 5,994 unique IDs, no import failure, bytecode or process event) and its comparison with MH's baseline (5,587 at 1c2f25ba) and the 407 additions: exact_match true, missing 0, extra 0. Both are bound; P01 and D02 check them and the source inventory; R1.C joins R1's log with the same list.", "basis": "the source of B is fixed (P03, D02); a second discovery adds a start and no fact"}
+ ],
+ "carried_findings": [
+  {"id": "PR-01", "where": "failure_capture.reading_for_mr", "how": "the reused text's MH paths and references read as disposed"},
+  {"id": "PR-06", "where": "configuration amendment_adoption; bindings source:ADOPTION-AMENDMENT-001.json; deferred_inputs requirements", "how": "872312ed80a63fbb196c17ace42e786b7fe757b710eff41139b125dfaa507937, 5,396 bytes, 0o644, equal to PLAN-REVIEW-001's binding (blob 0431fab5... at B)"},
+  {"id": "HR-01", "where": "bindings host:HOST.json, host:completion.json, host:result.json", "how": "HOST bound with completion.json (9db0900a..., 981 bytes; state OBSERVED_UNAPPROVED, evidence_finalized true) and result.json (ec9fd08f..., 2,621 bytes; PENDING_COMPLETION by design); HOST's finality rests on completion.json"},
+  {"id": "HR-02", "where": "configuration source.inventory and dependencies.inventory; bindings plan:* and host:*-inspection", "how": "the configuration's descriptors are HOST's, path included; W2-plan's three inventories (95abd300, c277bdd3, 3545d5f9) and the attempt's two receipts (bbbb832f, 009fbd06) are bound and checked unchanged at their paths and modes at P01, D02, R1.Z and Q04, through S8; MP's plans and receipts and both archives too; R1's unit stage runs through <worktree>/.venv/bin/python"},
+  {"id": "HR-03", "where": "host_facts fact:CFUserTextEncoding", "how": "bd605d2eae2bc28178ba94d69e189242f971d699c5846addae706d7e52bc69fd, 7 bytes, 0o400, an unbound host fact, checked at P01, D02, R1.Z and Q04; the owner keeps the language and region settings unchanged through S8"},
+  {"id": "HR-04", "where": "P02, D02, launch.dash_b", "how": "the inventory recheck immediately before R1 is a precondition; the owner is asked to pause the launchd job and the other agent application"},
+  {"id": "HR-05", "where": "candidate", "how": "the tree, index and cache facts are cited from HOST-REVIEW-001 section 2.1 and HR-05 (B's loose object names tree 0935162c; the index caches it whole; the 644 source files equal their blobs; the shared cache and dyld as N34-M's), not re-derived here: this author starts no Git"},
+  {"id": "HR-06", "where": "decisions F-3", "how": "no bound rests on the warm Node timing (41.9 ms) or the first execution (1.11 s)"},
+  {"id": "HR-07", "where": "contract.sections_cited; limits", "how": "contract section 10 lists what no result here can support; HOST's /claims are not read as complete"},
+  {"id": "HR-08", "where": "wrapper; launch.before_p00", "how": "the wrapper bound by path and SHA-256 (9154f181..., 3,629 bytes) and compared before P00; its epoch fields are the authoritative times"},
+  {"id": "TR-09", "where": "decisions F-1, F-2; R1.F; R1.M", "how": "the cohort route (default, preserved) and root (R1.F's rule) are fixed; the reader records cohort_bindings; R1.M binds the reader's output, and R1.L lists the cohort's files, for the audit"},
+  {"id": "TR2-01", "where": "audit_expect of R1 and R2", "how": "the zero-skip checks use the log's own footer counts and the driver's test_execution, besides the collector's records"},
+  {"id": "TR2-03", "where": "attributions.rules", "how": "no attribution for a repeated ID; the discovery has none"},
+  {"id": "TR2-04", "where": "attributions.rules", "how": "each statement's outcome follows from its events; checked by the builder"},
+  {"id": "TR-10", "where": "expected_outcomes.r1.comparison_with_main", "how": "main changed only documentation and records from 8e847c15 to 51223c9b (director/inputs/main-8e847c15-to-51223c9b-name-status.txt, a3031678...); the documents stage read B's own documents and passed at commit B's check; its expected comparison is an equal status (passed, passed) and no report"},
+  {"id": "D-18", "where": "attributions r1 and r2", "how": "two rows each, from MI's retained run on this host"},
+  {"id": "O-01", "where": "decisions F-3; R1 classification", "how": "no stage timeout is expected; one is recorded"},
+  {"id": "I-05", "where": "evidence.devices", "how": "two volumes"},
+  {"id": "AU-07", "where": "limits", "how": "Node's warning about --experimental-loader is recorded from R1's stage stderr logs by the audit; the argv is unchanged"},
+  {"id": "D-19", "where": "starts.recorded_not_counted", "how": "uname and file by name through PATH, recorded, not bounded"}
+ ],
+ "fixed_state": [
+  "One commit: HEAD B, the worktree clean with only .venv ignored, nothing committed, checked out, merged or edited, from S4 to S8.",
+  "One boot: C90010BA-4DA9-475D-BBAB-CF1A9C40175A in every command record and checker run.",
+  "-B for every start of the framework interpreter, whatever its name (N-09).",
+  "The language and region settings unchanged (MC31; HR-03).",
+  "No Finder on the worktree, the evidence or the prepared trees.",
+  "R1's temporary directory resolved, R2's the default form; the evidence and the temporary directory on different volumes.",
+  "Retained unchanged at their paths and modes: every file in bindings, among them the Node archive, the committed C195 archive, MP's plans and receipts, MH's exact records that MR reads, W2-plan's three inventories, the attempt's two receipts, HOST, completion.json and result.json.",
+  "Nothing installed or downloaded; the doctor's advice to rebuild the .venv is not followed (D-21)."
+ ],
+ "limits": [
+  "Contract section 10 (HR-07): no result here supports a Linux x86-64 qualification, the C199/C225 replay, a P05 Gate H for the Linux plan's earlier Node build, any statement that the ELF policies of /0.1.1 to /0.1.5 ran on a real host, N34 or N57, the Linux descendant-reaping guarantee or any enforcement against descendants, a per-file closure of the macOS system libraries, durable storage beyond fsync, or a binding of files that libraries load at run time.",
+  "MR accepts R03 only for this executor and profile: macOS arm64, CPython 3.12.13, the core profile; not R04 or a release. Pending external cases stay pending (16).",
+  "The declared environment differs from main's unrecorded one (D-P2).",
+  "89 attributions rest on MI's per-module invocation (python -m unittest tests.<module>, from the worktree); the routine imports top-level modules from the workspace, in one process, in discovery order. A difference shows as a mismatch; it is not pre-classified.",
+  "About 5,900 tests are expected to pass by rule, not by record; about 1,000 of them belong to the branch and have never run as one suite on this host.",
+  "The checker evaluates single predicates; R2's per-test classification (stop_rules.r2_classification) is applied by the audit and the R03 review from the bound comparison records.",
+  "The provider's default cohort route (mkdtemp, preservation, cleanup) runs here for the first time on a real host (MH's FR-09).",
+  "R2's counts of the tests' starts are upper bounds (W1).",
+  "The collector refuses a log with two status candidates after one start (TR-05); a refusal is a tooling finding (Q-8), and the raw log is kept.",
+  "FC-P5: a descendant that left its process group is not found by the probes.",
+  "The driver's step processes leave no record with which their identity could be established; their absence after a completed run rests on the driver's own waits.",
+  "AU-07's warning is recorded, not checked by a predicate.",
+  "This freeze's files hold machine paths and this host's account values; the portable copies of S10 replace them by labels."
+ ],
+ "open_questions": [
+  {"id": "Q-1", "question": "The brief expects the branch's own tests to pass. MI's CHECKS.json at B records five branch modules failing on this host (91 tests besides RI_L07 and RI_L08). This freeze attributes 89 of them in R1, from MI's retained logs, as the brief's own rule allows for outcomes that a record establishes. Is attributing them right, or should they stand as findings?"},
+  {"id": "Q-2", "question": "In R2 those 89 are not attributed, because their record was made under a resolved temporary directory; R2.V compares them with R1's own records. Is that the right reading of 'outcomes that no record establishes are not attributed'?"},
+  {"id": "Q-3", "question": "RI_L08, and possibly RI_L07, are expected not to pass by reading, without a record of their exact outcome. Leaving them unattributed makes them findings. Agreed?"},
+  {"id": "Q-4", "question": "MH's reviewed checker is reused unchanged as a fourth reused MH piece, beyond MR-PLAN section 5's three. Admissible, or must the checker be a new MR tool?"},
+  {"id": "Q-5", "question": "T = 7,200 s instead of main's 14,400 s, and an outer bound of 10,800 s for each run: adequate?"},
+  {"id": "Q-6", "question": "No LANG, LC_* or TZ in the declared environment, following the Director's session rather than a record of main's: acceptable as a stated limit?"},
+  {"id": "Q-7", "question": "Outcome predicates (R1.Y, R2.Y) record findings and never stop S7; R2 runs after an unqualified R1 when R1.X and R1.Z are MET. Agreed?"},
+  {"id": "Q-8", "question": "The evidence root is a fresh attempt directory created by D01 (a preparation start of mkdir) rather than the existing evidence parent. Agreed?"},
+  {"id": "Q-9", "question": "No discovery rerun in S7 (F-5). Is the author's S6 run, bound by digest, sufficient for MC28's first half?"},
+  {"id": "Q-10", "question": "The XDG ignore file is recorded as a host fact beside the global configuration. Agreed?"},
+  {"id": "Q-11", "question": "R1.Y expects exactly 91 new not-passing tests; RI_L08 would make it 92 and R1.Y NOT_MET (a finding). Keep the exact count?"},
+  {"id": "Q-12", "question": "The exact files (the environment files, places, R2's attribution file with the per-user temporary directory in five reasons, the host facts' paths) hold this host's account and path values. They stay beside the clone; is a labelled portable copy at S10 sufficient?"}
+ ]
+}

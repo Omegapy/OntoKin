@@ -1,0 +1,282 @@
+{
+  "schema": "ontokin.c271.p36-outcome/1",
+  "task": "C271",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "owner": "c271-p36-14f7f8b219db",
+  "recorded_at_utc": "2026-11-27T22:35:30Z",
+  "status": "stopped_at_s6_implementation_blocker",
+  "gate": "MR of ontokin.current-host-readback/0.2.0, design revision 4 (P33-AMENDMENT-001); R03 of C271 on this executor (macos-arm64-local: macOS 26.6.2 (25G83), arm64, CPython 3.12.13, the core profile)",
+  "outcome": "Gate MR is not met, and R03 stays not_done. MR stopped at stage S6, before any routine run. Freeze review 001 found, and the Director confirmed by reading the code at B and main's own records, that R1 would refuse in the driver's preparation at B (FZ-01). The driver copies only SOURCE_DIRS and ROOT_FILES into its workspace, while read-tree gives the workspace's index all of B's tree. B's seven tracked .claude/ entries therefore show as deleted, and the provider's derived source check refuses every status line that is not a generated example ('Dirty source:  D .claude/.gitignore'). Main's two baseline summaries record exactly these seven deletions. No freeze at B can avoid the refusal, because its cause lies in the implementation. Under MR-PLAN section 9, the correction belongs to a later phase.",
+  "starting_revision": "47cc579fa28e23d3424a46c72fd80a71d73440dc",
+  "bound_commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
+  "bound_tree": "0935162c72fd9d804681e920da6f6d6e9066ff28",
+  "commits": [
+    {
+      "commit": "d3b622d6",
+      "subject": "C271-P36: declare gate MR, the complete default routine and R03 acceptance"
+    },
+    {
+      "commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
+      "subject": "C271-P36: commit B, the start-and-write inventory and the reviewed MR tooling"
+    }
+  ],
+  "downloads": "none needed and none made",
+  "fixed_state": {
+    "period": "from the observation plan's freeze at 2026-11-27T18:56:41Z to the freeze review's disposition at 2026-11-27T22:26:54Z",
+    "boot": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A, unchanged",
+    "head": "B, with the worktree clean (only .venv/ ignored) and no commit, until the closing records",
+    "python_inventory": "c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633, equal to HOST's at the freeze author's recheck; no bytecode in the worktree or the .venv, and 414 .pyc in the framework tree at each Director check",
+    "source_inventory": "95abd300edbb9930e67c569b726015964ab98f4ed0ede389da122bbb3f145c4c, equal to HOST's at the freeze author's recheck",
+    "ends": "with the closing commit, since no S7 or S8 follows at B"
+  },
+  "stages": [
+    {
+      "stage": "S1",
+      "status": "met",
+      "summary": "declaration d3b622d6 pushed and read back at 2026-11-27T15:48:07Z"
+    },
+    {
+      "stage": "S2",
+      "status": "met",
+      "summary": "W1's start-and-write inventory, read only; disposition D-P1 to D-P7",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/inventory/START-INVENTORY.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/inventory/START-INVENTORY-DISPOSITION.json"
+      ]
+    },
+    {
+      "stage": "S3",
+      "status": "met",
+      "summary": "MR's tooling: review 001 rejected revision 1 (TR-01), review 002 accepted revision 2; committed with the inventory at commit B",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/TOOLING-REVIEW-002.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/checks/commit-b/CHECKS.json"
+      ]
+    },
+    {
+      "stage": "S4",
+      "status": "met",
+      "summary": "observation plan 001 (cc1c2def) frozen at 18:56:41Z; plan review 001 accepted it with PR-01 to PR-06",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/plans/observation-plan-001/observation-plan-001.json",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/plan-review-001/PLAN-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/PLAN-REVIEW-DISPOSITION-001.json"
+      ]
+    },
+    {
+      "stage": "S5",
+      "status": "met",
+      "summary": "static STATIC_READY with no start; observe once at 19:49:14Z to 19:49:16Z, exit 0, OBSERVED_UNAPPROVED, one Git and one Node start; HOST 858ef72a accepted by HOST review 001 with HR-01 to HR-08",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/host/observe-001/HOST.json",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/host-review-001/HOST-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/HOST-REVIEW-DISPOSITION-001.json"
+      ]
+    },
+    {
+      "stage": "S6",
+      "status": "not_met",
+      "summary": "operational freeze 001 (11555730) written and verified by its author; freeze review 001 rejected it with FZ-01 mandatory and FZ-02 to FZ-09 nonmandatory; the Director confirmed FZ-01 and stopped MR",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/plans/freeze-001/FREEZE-001.json",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/FREEZE-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/FREEZE-REVIEW-DISPOSITION-001.json"
+      ]
+    },
+    {
+      "stage": "S7",
+      "status": "not_run",
+      "summary": "R1 and R2 were not started"
+    },
+    {
+      "stage": "S8",
+      "status": "not_run",
+      "summary": "no audit, since nothing ran"
+    },
+    {
+      "stage": "S9",
+      "status": "not_run",
+      "summary": "no R03 review, since MR is not met"
+    },
+    {
+      "stage": "S10",
+      "status": "this_record",
+      "summary": "outcome records with path-portable copies, the checks, the push without force, the readback and one checkpoint comment each on PR274 and issue273; CLOSING.json records them"
+    }
+  ],
+  "blocker": {
+    "id": "FZ-01",
+    "category": "implementation",
+    "statement": "In a qualifying run at B, the provider's derived source check refuses the driver's isolated workspace before the unit stage, because B tracks seven .claude/ entries that the driver does not copy.",
+    "evidence": [
+      "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/FREEZE-REVIEW-001.md",
+      "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/FREEZE-REVIEW-DISPOSITION-001.json",
+      "tools/check_local.py:47-50, 298-318, 336-346, 604-615, 779-782 and 816-819 at B",
+      "prototypes/static_tray_v01/current_host_readback_v02.py:108, 471-474, 866 and 913-943 at B",
+      "main 8e847c15's baseline summaries, /workspace_git/tracked_worktree_status (beside the clone, digests in docs/engineering/local-migration-20261124/INTEGRATION.json)"
+    ],
+    "why_no_earlier_stage_found_it": "the freeze author's validation stopped before the first Git read; MH's cohort ran at the worktree with parent null; MI's driver tests use fixture repositories; gate MB's review noted that .claude is not copied without connecting it to the status check",
+    "correction": "a later phase decides, under contract section 7 and MC19, how a derived workspace treats tracked paths that the driver does not copy (for example, by admitting the deletion of exactly those paths, or by making the copy account for them), with a versioned decision if the contract's rule changes, and with controls that exercise the derived route on a tree that tracks such paths",
+    "new_attempt_needs": "a corrected commit, then a new observation plan, HOST and operational freeze with their reviews; HOST 858ef72a binds B and this boot and is consumed by no run"
+  },
+  "established": [
+    "W1's start-and-write inventory of both run kinds, with D-P1 to D-P7 (A2)",
+    "MR's reviewed tooling at commit B: the unit-log outcome collector, the baseline comparator and the readback evidence reader (A3)",
+    "HOST 858ef72a949ce7575787290601ae70d117090a460781b2e660a3b0d4f0162666 at B, accepted by an independent review; the Python (c277bdd3...), source (95abd300...) and dependencies (3545d5f9...) inventories equal MH's",
+    "the default inventory at B: 5,994 unique IDs, an exact match with the 5,587 IDs at 1c2f25ba plus the 407 additions, from MH's discovery collector, which starts no test (MC28's first half, by the freeze author)",
+    "the driver's inventory of B: sha256:e7f1c4b5..., 23,005 files, computed by the freeze author and recomputed by the freeze reviewer",
+    "a complete operational freeze for R1 and R2 whose other parts the freeze reviewer recomputed and found correct: integrity, the configuration, all 36 commands, the checker steps and all 402 attribution rows"
+  ],
+  "open_for_r03": {
+    "branch_tests_not_passing_in_mi_records": 93,
+    "modules": {
+      "the 0.1.0 driver (D-18)": 2,
+      "the 0.1.0 provider": 3,
+      "the inspection module": 47,
+      "the required-images module": 2,
+      "the rtld-paths module": 39
+    },
+    "source": "MI's CHECKS.json and its retained per-module runs on this host (final-003), each identical to MI's phase-start baseline",
+    "status": "not yet observed in a routine run. The freeze attributed 91 of them by exact record (code bytes equal to B's), which is not an acceptance: each needs the R03 review's classification under OK-ENG-009 section 3 item 4 (FZ-04). RI_L07's and RI_L08's routine outcomes are not established, and by reading RI_L08 will probably not pass."
+  },
+  "starts": {
+    "counting_rule": "P07 section 4: a subprocess.Popen audit event shows an attempt; a receipt with a positive PID establishes a start",
+    "mr_total": {
+      "node": 1,
+      "other": 1
+    },
+    "rows": [
+      {
+        "row": "M0, Git --version",
+        "where": "S5",
+        "pid": 30441,
+        "kind": "other"
+      },
+      {
+        "row": "M1, Node --version",
+        "where": "S5",
+        "pid": 30442,
+        "kind": "node"
+      }
+    ],
+    "against_plan": "MR-PLAN section 8 expected Node 4 and other 1 for a complete MR; R1's three CPU starts were never reached",
+    "recorded_not_bounded": "the Director's Git reads of HEAD, status and B's tree, and the workers' own starts of the framework interpreter with -I -S -B, each listed in director/WORKERS.md and the workers' records",
+    "never_started": [
+      "ldd",
+      "codesign",
+      "otool",
+      "the routine driver apart from the freeze author's --list",
+      "any Node other than M1's pinned runtime"
+    ]
+  },
+  "not_run": [
+    "R1",
+    "R2",
+    "the audit (S8)",
+    "the R03 review (S9)"
+  ],
+  "reviews": [
+    {
+      "review": "tooling review 001",
+      "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+      "record": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/TOOLING-REVIEW-001.md"
+    },
+    {
+      "review": "tooling review 002",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "record": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/TOOLING-REVIEW-002.md"
+    },
+    {
+      "review": "plan review 001",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "record": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/plan-review-001/PLAN-REVIEW-001.md"
+    },
+    {
+      "review": "HOST review 001",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "record": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/host-review-001/HOST-REVIEW-001.md"
+    },
+    {
+      "review": "freeze review 001",
+      "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+      "record": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/FREEZE-REVIEW-001.md"
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "A1",
+      "met": true,
+      "evidence": "d3b622d6, pushed and read back at 15:48:07Z"
+    },
+    {
+      "id": "A2",
+      "met": true,
+      "evidence": "docs/engineering/localized-repair-c271/macos-routine-p36/inventory/START-INVENTORY-DISPOSITION.json"
+    },
+    {
+      "id": "A3",
+      "met": true,
+      "evidence": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/TOOLING-REVIEW-002.md, at commit B"
+    },
+    {
+      "id": "A4",
+      "met": true,
+      "evidence": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/PLAN-REVIEW-DISPOSITION-001.json; static took the plan digest from the review record"
+    },
+    {
+      "id": "A5",
+      "met": true,
+      "evidence": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/HOST-REVIEW-DISPOSITION-001.json"
+    },
+    {
+      "id": "A6",
+      "met": false,
+      "evidence": "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/FREEZE-REVIEW-DISPOSITION-001.json: freeze 001 rejected with FZ-01, which no freeze at B can resolve"
+    },
+    {
+      "id": "A7",
+      "met": false,
+      "evidence": "not run"
+    },
+    {
+      "id": "A8",
+      "met": false,
+      "evidence": "not run"
+    },
+    {
+      "id": "A9",
+      "met": false,
+      "evidence": "not run"
+    },
+    {
+      "id": "A10",
+      "met": "partly",
+      "evidence": "the fixed state held from S4 to MR's stop, with the deviations below; no ldd or codesign; Node only through M1; the records checks in docs/engineering/localized-repair-c271/macos-routine-p36/checks/closing/CHECKS.json"
+    },
+    {
+      "id": "A11",
+      "met": "pending_at_this_record",
+      "evidence": "CLOSING.json records the push, the readback and the two checkpoint comments; PR274 stays draft and main is not written"
+    }
+  ],
+  "carried_to_the_next_mr_attempt": [
+    "FZ-02 to FZ-09, as the freeze review's disposition states",
+    "the freeze review's answers to Q-1 to Q-12",
+    "HR-01 to HR-08's rules, as HOST review 001's disposition carried them to S6",
+    "D-P1 to D-P7, and TR-09, TR2-01, TR2-03 and TR2-04 as freeze rules",
+    "the default inventory's IDs and the attributions' method, by the freeze's records; each value to be derived again at the corrected commit"
+  ],
+  "deviations_recorded": [
+    "16:50:38Z: the Director ran an empty here-document under /usr/bin/python3, the operating system's Python launcher, which wrote nothing and was not the framework interpreter",
+    "15:49:00Z: the S2 and S3 launch marker was first dated in local time and recreated in UTC; the wrapper's time in the log was corrected to its modification time, 15:51:54Z (HR-08)",
+    "the freeze author's six starts of /usr/bin/python3 that wrote nothing, and one file list written to the system temporary directory and removed at once",
+    "the freeze reviewer's one start of python3 - without -B, with PYTHONDONTWRITEBYTECODE=1 set in the tool's environment; the Python trees still equalled HOST's afterwards"
+  ],
+  "limits": [
+    "Contract section 10 lists what no result under this contract can support.",
+    "MR ran no routine, so it establishes no outcome of the complete default routine at B, and none of MC22, MC23 or MC28's second half on a real run.",
+    "The 93 failures come from MI's per-module runs, not from the routine; FZ-06 states two differences from a routine run.",
+    "HOST binds B and this boot only."
+  ],
+  "next_action": "The owner selects the next phase. MR cannot pass at B (FZ-01). The recommended phase is a correction: decide, under contract section 7 and MC19, how a derived workspace treats tracked paths that the driver does not copy; add controls that exercise the derived route on a tree that tracks such paths; and pass the routine checks, with PATH fixed as D-P1 fixes it so that no Node of other software starts. Then MR again at the corrected commit, with a new observation plan, HOST and freeze, carrying FZ-02 to FZ-09. R04 and R05 stay separate phases."
+}

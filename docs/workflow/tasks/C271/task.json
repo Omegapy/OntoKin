@@ -1574,6 +1574,85 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/macos-qualification-p35/checks/s9/CHECKS.json"
       ]
+    },
+    {
+      "name": "P36 start-and-write inventory",
+      "command": "Fresh-context subagent W1, static reads of the routine's every start and write in both run kinds",
+      "result": "passed",
+      "required": true,
+      "scope": "six verdicts; a Node of other software reachable only through PATH; no ldd, codesign or otool; disposition D-P1 to D-P7",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/inventory/START-INVENTORY.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/inventory/START-INVENTORY-DISPOSITION.json"
+      ]
+    },
+    {
+      "name": "P36 comparison tooling and its reviews",
+      "command": "Independent author W2, two fresh reviews W3; the suite run by the Director at its committed place",
+      "result": "passed",
+      "required": true,
+      "scope": "review 001 rejected revision 1 (TR-01); review 002 accepted revision 2; 90 of 90 tests at commit B",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/TOOLING-REVIEW-002.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/TOOLING-REVIEW-DISPOSITION-002.json",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/checks/commit-b/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P36 observation plan and its review",
+      "command": "Independent author W2 at commit B, outside Git; fresh reviewer W3 re-deriving every key and inventory",
+      "result": "passed",
+      "required": true,
+      "scope": "plan cc1c2def, ACCEPT_WITH_NONMANDATORY_FINDINGS, PR-01 to PR-06; the digest taken from the review record",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/plans/observation-plan-001/observation-plan-001.json",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/plan-review-001/PLAN-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/PLAN-REVIEW-DISPOSITION-001.json"
+      ]
+    },
+    {
+      "name": "P36 M0 and M1, and the HOST review",
+      "command": "The observer's static and observe once each through the Director's wrapper, from env -i with the declared environment; fresh reviewer W3",
+      "result": "passed",
+      "required": true,
+      "scope": "exit 0, OBSERVED_UNAPPROVED, one Git and one Node start, both processes absent; HOST 858ef72a, ACCEPT_WITH_NONMANDATORY_FINDINGS, HR-01 to HR-08",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/host/observe-001/HOST.json",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/host-review-001/HOST-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/HOST-REVIEW-DISPOSITION-001.json"
+      ]
+    },
+    {
+      "name": "P36 operational freeze and its review",
+      "command": "Independent author W2; fresh reviewer W3; the Director's confirmation by reading",
+      "result": "failed",
+      "required": true,
+      "scope": "freeze 001 (11555730) rejected with FZ-01 mandatory: R1 would refuse in the driver's preparation at B, because seven tracked .claude/ entries are not copied into the workspace and the provider's derived source check refuses their deletion; the cause lies in the implementation, so MR stopped at S6 and R1 and R2 never ran",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/FREEZE-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/FREEZE-REVIEW-DISPOSITION-001.json",
+        "docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json"
+      ]
+    },
+    {
+      "name": "P36 complete default routine, R1 and R2",
+      "command": "tools/check_local.py once as a qualifying run and once as an ordinary run, as a reviewed freeze would fix them",
+      "result": "not_run",
+      "required": true,
+      "scope": "not started: MR stopped at S6 with FZ-01",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json"
+      ]
+    },
+    {
+      "name": "P36 records checks",
+      "command": "workflow check, documentation verifier and scoped whitespace check on the records commit, each interpreter start with -B; privacy search of every committed file",
+      "result": "passed",
+      "required": true,
+      "scope": "see the check record",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-routine-p36/checks/closing/CHECKS.json"
+      ]
     }
   ],
   "completion": {
@@ -1716,9 +1795,14 @@
       "outcome": "docs/engineering/localized-repair-c271/macos-qualification-p35/OUTCOME.json",
       "audit": "docs/engineering/localized-repair-c271/macos-qualification-p35/audit/AUDIT-001.md",
       "scope": "gate MH only: the seven readback methods and the direct negatives qualified on this executor (macos-arm64-local), with contract section 10's labels; not MR, R03, R04, R05, integration or a release"
+    },
+    "macos_0_2_0_routine": {
+      "bound_commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
+      "outcome": "docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json",
+      "scope": "gate MR not met: stopped at S6 with FZ-01, an implementation blocker; no routine ran; R03 stays not_done"
     }
   },
-  "next_action": "C271-P36-macos-complete-routine-mr is declared and in progress: gate MR of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001), which is R03 on this executor. An independent reviewer lists every start and write the complete default routine can make; an independent author writes the comparison tooling, the observation plan and the operational freeze, and a fresh reviewer reviews each before it runs; M0 and M1 run once again on this host (one Git and one Node start) and give a new HOST at the new bound commit; the complete default routine of tools/check_local.py runs once as a qualifying run (R1, resolved temporary directory, the CPU trio's three Node starts) and once as an ordinary run (R2, macOS's default temporary directory); both are compared with main's recorded macOS baseline runs under OK-ENG-009 section 3 with exact inputs; an independent audit recomputes the results, and a fresh reviewer reviews the exact candidate and its evidence for R03. From the observation plan's freeze to the audit, one boot and one commit. Nothing is integrated. Then R04 and R05, each a separate phase.",
+  "next_action": "C271-P36 stopped gate MR of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) at stage S6, before any routine run, with an implementation blocker (FZ-01): in a qualifying run at the bound commit 4ca781429c5411c67c0965bc69306b42c6cc74ad, the provider's derived source check refuses the driver's isolated workspace, because seven tracked .claude/ entries are not copied into it. The observation plan and HOST 858ef72a were accepted (M0 and M1: one Git and one Node start), and the operational freeze was rejected for this reason alone. R03 stays not_done. The next phase needs the owner's selection: the recommended one corrects how a derived workspace treats tracked paths that the driver does not copy, under contract section 7 and MC19, with controls on a tree that tracks such paths, before MR is attempted again at the corrected commit. R04 and R05 stay separate phases.",
   "session_phase": {
     "schema": "ontokin.c271.p36-macos-complete-routine/1",
     "task": "C271",
@@ -1735,7 +1819,10 @@
     "record": "docs/engineering/localized-repair-c271/macos-routine-p36/PHASE.json",
     "plan": "docs/engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P36-SESSION.md",
-    "status": "commit_b_inventory_and_tooling_reviewed"
+    "status": "stopped_at_s6_implementation_blocker",
+    "stopped_at_utc": "2026-11-27T22:35:30Z",
+    "bound_commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
+    "outcome": "docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8597,7 +8684,7 @@
     "plan": "docs/engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P36-SESSION.md",
     "declared_at_utc": "2026-11-27T15:46:53Z",
-    "status": "commit_b_inventory_and_tooling_reviewed",
+    "status": "stopped_at_s6_implementation_blocker",
     "owner_direction": [
       {
         "date": "2026-11-27 (UTC)",
@@ -8612,12 +8699,31 @@
     "host_record": "MH's HOST 34e94f29 is not reused: it binds the source at 0eb9a551, and the branch head has moved since",
     "parent_complete": false,
     "stages": {
-      "recorded_at_utc": "2026-11-27T18:38:28Z",
+      "recorded_at_utc": "2026-11-27T22:35:30Z",
       "S1": "Declaration d3b622d6 pushed and read back at 2026-11-27T15:48:07Z (A1).",
       "S2": "W1's start-and-write inventory, read only: every start of both run kinds; a Node of other software is reachable only through PATH (two doctor tests); no ldd, codesign or otool; no bound-tree write by reading; Node R1 3, R2 0. The Director's disposition gives the freeze D-P1 to D-P7 (A2).",
       "S3": "W2's tooling: review 001 rejected revision 1 on TR-01 (an attribution matched by any one reason); revision 2 adopted TR-01 to TR-11; review 002 accepted it with nonmandatory findings TR2-01 to TR2-05, three of them freeze rules; the suite passed 90 of 90 at its committed place. Committed with the inventory's records at commit B (A3).",
-      "records": "docs/engineering/localized-repair-c271/macos-routine-p36/: inventory/, tooling/, authoring/, reviews/, checks/commit-b/"
-    }
+      "records": "docs/engineering/localized-repair-c271/macos-routine-p36/: inventory/, tooling/, authoring/, reviews/, checks/, plans/, host/, director/, OUTCOME.json, LEARNING-DECISION.md, README-PORTABLE.md, EXACT-RECORDS.json, CLOSING.json",
+      "S4_to_S6": "Outside Git, from commit B, under MR-PLAN section 6: one boot (C90010BA), HEAD fixed at B, the worktree clean and no commit, every start of the framework interpreter with -B. Held until MR's stop at S6.",
+      "S4": "Observation plan 001 (cc1c2def), accepted by plan review 001 with PR-01 to PR-06 (A4).",
+      "S5": "M0 and M1: observe once at 2026-11-27T19:49:14Z, exit 0, OBSERVED_UNAPPROVED, one Git and one Node start; HOST 858ef72a, accepted by HOST review 001 with HR-01 to HR-08 (A5).",
+      "S6": "Freeze 001 (11555730) rejected by freeze review 001 with FZ-01 mandatory and FZ-02 to FZ-09 nonmandatory; the Director confirmed FZ-01 by reading and stopped MR under MR-PLAN section 9 (A6 not met).",
+      "S7_to_S9": "Not run: R1, R2, the audit and the R03 review.",
+      "S10": "Outcome records with path-portable copies, the checks, the push without force, the readback and one checkpoint comment each on PR274 and issue273."
+    },
+    "stopped_at_utc": "2026-11-27T22:35:30Z",
+    "bound_commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
+    "verdicts": {
+      "inventory": "six verdicts, D-P1 to D-P7",
+      "tooling": "ACCEPT_WITH_NONMANDATORY_FINDINGS (review 002, after review 001's rejection)",
+      "plan": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "host": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "freeze": "REJECT_WITH_MANDATORY_FINDINGS (FZ-01, an implementation blocker)"
+    },
+    "blocker": "FZ-01: in a qualifying run at B the provider's derived source check refuses the driver's workspace, because seven tracked .claude/ entries are not copied; a later phase owns the correction",
+    "outcome": "docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json",
+    "closing": "docs/engineering/localized-repair-c271/macos-routine-p36/CLOSING.json",
+    "learning": "docs/engineering/localized-repair-c271/macos-routine-p36/LEARNING-DECISION.md"
   },
   "p36_fields_index": {
     "recorded_at_utc": "2026-11-27T15:46:53Z",

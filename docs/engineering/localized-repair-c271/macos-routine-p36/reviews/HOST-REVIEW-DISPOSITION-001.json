@@ -1,0 +1,66 @@
+{
+  "schema": "ontokin.c271.p36-review-disposition/1",
+  "phase": "C271-P36-macos-complete-routine-mr",
+  "stage": "S5",
+  "director": "c271-p36-14f7f8b219db",
+  "recorded_at_utc": "2026-11-27T20:27:31Z",
+  "review": {
+    "record": "workers/W3-host-001/HOST-REVIEW-001.md",
+    "record_sha256": "a0566eec8de1167cb8e394a7f098e3a1812a03d0a37e8258776c289753a3209c",
+    "json": "workers/W3-host-001/HOST-REVIEW-001.json",
+    "json_sha256": "72cdd57000bbe8a929961ff08f5940a95f9c96b2a38d8e6310005c4fd8a03998",
+    "sums_sha256": "682e4b21f31bd680538e13d9611eeff0afdf174a23a82d5228f00027a04f6f7d",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; it took no part in any earlier stage"
+  },
+  "host_for_s6": {
+    "path": "<local>/c271-p36/evidence/observe-001/HOST.json",
+    "sha256": "858ef72a949ce7575787290601ae70d117090a460781b2e660a3b0d4f0162666",
+    "size_bytes": 18420,
+    "mode": "0o600",
+    "source": "HOST-REVIEW-001.json /host/sha256, computed by the reviewer from HOST's bytes",
+    "completion": {
+      "path": "<local>/c271-p36/evidence/observe-001/completion.json",
+      "sha256": "9db0900a1d8af90eebd3c73dac1f65791c7091723637064e544f74c7dc8469b0"
+    },
+    "result": {
+      "path": "<local>/c271-p36/evidence/observe-001/result.json",
+      "sha256": "ec9fd08f3b0a33a5e081d2559149894085434e762d7cddc226c5b934c9c5d4e7"
+    }
+  },
+  "dispositions": [
+    {
+      "id": "HR-01",
+      "disposition": "carried to S6: the freeze binds HOST with completion.json and result.json and cites completion.json's state"
+    },
+    {
+      "id": "HR-02",
+      "disposition": "carried to S6: the configuration's source and reader-tree inventory descriptors equal HOST's, path included; the freeze lists W2's three inventories (95abd300..., c277bdd3..., 3545d5f9...) and the attempt's two inspection receipts (bbbb832f..., 009fbd06...) among the files retained unchanged at their paths and modes through S8; R1's unit stage runs through <worktree>/.venv/bin/python"
+    },
+    {
+      "id": "HR-03",
+      "disposition": "carried to S6: the freeze records the CoreFoundation text-encoding file's SHA-256 again as an unbound host fact; the owner is reminded to keep the language and region settings unchanged through S8 (MR-PLAN section 6)"
+    },
+    {
+      "id": "HR-04",
+      "disposition": "carried to S6 and told to the owner: D-P5's inventory recheck immediately before R1 is a stated precondition; the owner may pause the launchd job and the other agent application until S8 ends"
+    },
+    {
+      "id": "HR-05",
+      "disposition": "carried to S6: the freeze cites this review for the tree, the index and the cache facts"
+    },
+    {
+      "id": "HR-06",
+      "disposition": "carried to S6 and S8: the freeze's bounds do not rest on the warm Node timing (first execution 1.11 s at MH); the audit states the basis of M0's and M1's counts (two receipts with positive PIDs, the single start route, consecutive PIDs)"
+    },
+    {
+      "id": "HR-07",
+      "disposition": "carried to S6 and S8: both cite contract section 10 for what results built on HOST cannot support, and do not read /claims as complete"
+    },
+    {
+      "id": "HR-08",
+      "disposition": "carried to S6: if S7 uses the wrapper, the freeze binds it by path and SHA-256 (9154f181..., 3,629 bytes) and treats its epoch fields as the authoritative times. The worker log's time for the wrapper's writing is corrected to its modification time, 15:51:54Z."
+    }
+  ],
+  "a5": "met: M0 and M1 ran once through observe under the reviewed plan, with exactly one Git and one Node start, and an independent review accepted HOST 858ef72a... before any configuration binds it"
+}
