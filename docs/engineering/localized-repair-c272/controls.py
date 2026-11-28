@@ -183,10 +183,23 @@ def evaluator_controls(corpus, base: dict, variants: dict, extras: dict) -> list
     return rows
 
 
+REVISION_BOUND = {"sha256", "source_revision", "program_revision", "programRevision", "artifactSha256",
+                  "entry_revision", "revision", "artifact_sha256"}
+
+
+def stable(value):
+    """Declaration meaning without revision-bound digests and revision identities (SCORING.md)."""
+    if isinstance(value, dict):
+        return {k: stable(v) for k, v in value.items() if k not in REVISION_BOUND}
+    if isinstance(value, list):
+        return [stable(v) for v in value]
+    return value
+
+
 def hinge_records(source_files, glb):
     try:
         result = observe.pinned("c267_hinge_compare").compare_hinges(source_files, glb)
-        return {"refused": None, "records": result["records"]}
+        return {"refused": None, "records": stable(result["records"])}
     except Exception as error:
         return {"refused": getattr(error, "code", type(error).__name__), "records": None}
 
@@ -215,12 +228,11 @@ def residual_controls(corpus, base: dict) -> list[dict]:
         g, lambda d: d["extras"]["ontokin"]["follows"][0]["offset_position_m"].__setitem__(1, -0.55)))
     h20("R03", "motion: one translation sample of second.fingers[\"top\"].blade", lambda g: blade_sample(g, SIBLING_BLADE, "translation", 60, 0.01))
     start_hinges = hinge_records(v1["authority"]["start"]["sourceFiles"], v1["authority"]["start"]["artifacts"][GLB])
-    strip = lambda records: [{k: v for k, v in r.items() if k not in ("origin", "origins", "artifactSha256", "sourceOrigin", "artifactOrigin")}
-                             for r in records] if records else records
-    unchanged = start_hinges["refused"] is None and baseline["refused"] is None and \
-        json.dumps(strip(start_hinges["records"]), sort_keys=True, default=str) == json.dumps(strip(baseline["records"]), sort_keys=True, default=str)
+    unchanged = (start_hinges["refused"] is None and baseline["refused"] is None
+                 and start_hinges["records"] == baseline["records"])
     rows.append({"id": "R04", "group": "H20", "field": "length parameter (the actual V1 edit, 0.65 m to 0.75 m)", "label": LABEL,
-                 "c267_hinge_result": "declaration fields equal across the edit" if unchanged else "declaration fields differ",
+                 "c267_hinge_result": ("hinge records equal across the edit apart from revision-bound digests and revision identities"
+                                       if unchanged else "hinge records differ beyond revision-bound fields"),
                  "no_hinge_value_inferred": unchanged, "passed": unchanged})
     delivery = v1["final"]["delivery"]
     side = json.loads(v1["authority"]["retained"]["artifacts"][SIDECAR])

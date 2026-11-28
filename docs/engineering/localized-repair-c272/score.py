@@ -147,9 +147,12 @@ def locality(case_id: str, start: dict, final: dict) -> dict:
                 changed.append(f"{collection}[{'/'.join(key)}]:{','.join(fields)}")
     pose_a = {(tuple(p["id"]), p["time_s"]): p for p in start["delivery"]["poses"]}
     pose_b = {(tuple(p["id"]), p["time_s"]): p for p in final["delivery"]["poses"]}
+    def same(a, b):
+        """Equal position and an equal rotation up to the quaternion's equivalent sign."""
+        return a["position_m"] == b["position_m"] and (a["rotation_wxyz"] == b["rotation_wxyz"]
+                                                       or a["rotation_wxyz"] == [-x for x in b["rotation_wxyz"]])
     moved = sorted({"/".join(k[0]) for k in set(pose_a) | set(pose_b)
-                    if k not in pose_a or k not in pose_b
-                    or (pose_a[k]["position_m"], pose_a[k]["rotation_wxyz"]) != (pose_b[k]["position_m"], pose_b[k]["rotation_wxyz"])})
+                    if k not in pose_a or k not in pose_b or not same(pose_a[k], pose_b[k])})
     finger, blade = "/".join(SELECTED_FINGER), "/".join(SELECTED_BLADE)
     allowed = {f"objects[{finger}]:parameters", f"objects[{blade}]:parameters,primitive", f"sites[{blade}/base]:position_m"}
     if case_id == "N1":

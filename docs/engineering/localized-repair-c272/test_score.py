@@ -95,6 +95,17 @@ class Scoring(unittest.TestCase):
                 self.assertFalse(result["c255"]["componentPass"])
                 self.assertTrue(any(r["outcome"] == "failed" for r in result["properties"]))
 
+    def test_an_equivalent_quaternion_sign_is_not_a_change(self):
+        flipped = copy.deepcopy(self.final)
+        for row in flipped["delivery"]["poses"]:
+            row["rotation_wxyz"] = [-x for x in row["rotation_wxyz"]]
+        result = score.score_case(CORPUS, "V1", self.authority, self.start, flipped, flipped, self.artifacts,
+                                  {"runner completed": True})
+        self.assertTrue(result["c255"]["componentPass"])
+        self.assertTrue(result["locality"]["passed"], result["locality"])
+        self.assertEqual(result["locality"]["movedObjects"], ["/".join(score.SELECTED_BLADE)])
+        self.assertTrue(result["passed"])
+
     def test_a_service_success_field_is_not_the_case_result(self):
         result = score.score_case(CORPUS, "V1", self.authority, self.start, self.final, self.final, self.artifacts,
                                   {"runner completed": True, "service status succeeded": True, "rebuild clean": False})
