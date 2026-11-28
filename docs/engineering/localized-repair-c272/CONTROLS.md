@@ -16,7 +16,7 @@ fixture of the frozen corpus.
 | E04a | stale provenance | The pre-edit source named with the new artifacts. |
 | E04b | stale artifact | The pre-edit GLB and sidecar named with the accepted new source. |
 | E04c | self-asserted acceptance | The client claims acceptance while the service's accepted state is the start. |
-| E04d | self-asserted acceptance in the artifact | The pre-edit GLB with a sidecar that claims the new accepted program. |
+| E04d | self-asserted acceptance in the artifact | The delivered GLB with a sidecar whose acceptance claim names a program revision that the GLB does not carry; G3's `STALE_SIDECAR` fires. |
 | E05 | accepted invalid candidate | N1's 0.75 kg candidate recorded as accepted and retained. |
 | E06a | missing output | No GLB delivered for V1. |
 | E06b | missing output, crashed case | The runner's case outcome is a crash. |
@@ -24,7 +24,7 @@ fixture of the frozen corpus.
 | E07b | rebuild with an undeclared input | A real rebuild in a workspace that also held `extra.ok`. |
 | E08 | changed dependency pin | The retained library differs from the bytes that `main.ok`'s digest names. |
 | P01, P02 | positive | The independently correct 0.75 m and 0.65 m states. |
-| P03 | positive | Every observed pose quaternion negated (equivalent sign). |
+| P03 | positive | Every stored rotation keyframe of all 18 nodes negated in the actual GLB bytes, with the sidecar rebound, judged end to end. |
 | P04 | positive | A legitimate change of accepted revision, source hash and artifact hashes after the valid edit. |
 | R01 to R03 | H20 | One ownership, one follow or one motion field of a delivered GLB changed alone. The workflow must reject it, and C267's hinge records must stay as they were, so that no hinge value is inferred from that field. |
 | R04 | H20 | The actual length edit: C267's hinge records are equal across V1 apart from revision-bound digests and revision identities. |
@@ -57,6 +57,20 @@ regression; they are cited, not re-implemented.
 | Boundary controls: inclusive tolerances and just-outside values | C255 `test_inclusive_source_dimension_boundary_and_next_float`, `test_pose_position_boundaries_reference_and_delivery`, `test_time_boundary_and_exact_reference_times`, `test_rotation_boundaries_and_no_raw_secondary_tolerance`. **No end-to-end boundary control here.** |
 
 ## Retained failures
+
+The first independent review, of `d275baa4`, required changes. It is retained as
+`evidence/review-1/REVIEW.md`.
+- **M2.** G3 read the hinge angle without fixing the quaternion's sign. A correct GLB whose stored
+  rotations carry the equivalent negative sign was therefore rejected. P03 negated pose records
+  only after G3 had run, so it never exercised that claim.
+- **The fix.** `3c206ac7` canonicalizes the sign, and P03 now negates the stored keyframes in
+  the GLB bytes. A unit test that fails without the fix was added.
+- **Other findings.** M1 (two evidence logs excluded by `.gitignore`) and M3 (per-property rows
+  without observation, origin and derivation) were resolved at the same commit.
+
+The `cad34f35` crash below kept no traceback; only its partial output directory beside the
+clone and the cause stated here remain.
+
 
 The first attempt of `qualify.py`, at `cad34f35`, stopped with an exception before writing
 `RESULTS.json`: C255's decoder needs a rebuild state that the runner's record does not yet

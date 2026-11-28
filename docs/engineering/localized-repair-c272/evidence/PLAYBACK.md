@@ -44,3 +44,11 @@ destination, and it is no statement about Blender, Unreal, Godot or OpenUSD.
 
 The animation is source-defined and delivered as recorded playback: the GLB holds sampled
 motion only. Its sites, actions and events are carried only by the semantic sidecar.
+
+## Recapture at `3c206ac7`
+
+After the fix for review finding M2, the same capture was run on the run at `3c206ac7`
+([capture-3c206ac7.json](playback/capture-3c206ac7.json)). The GLB is the same file
+(`05ebe856…`), and the five stepped frames are byte-identical to the frames looked at above.
+The frame after Play and Pause shows 0.6499 s instead of 0.65 s, where the pause happened to
+land, so the observation above stands.

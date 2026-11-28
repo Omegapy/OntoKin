@@ -1,7 +1,11 @@
 # C272 requirements audit (TASK-031)
 
 This is the Director's audit of the candidate `f955dafd6009ead2fc957ef8fd2cec5c40d3642f` and of
-the records added at the audit's own commit. It was written against the evidence files
+the records added at the audit's own commit. After the first independent review, `3c206ac7`
+changed the scope's evaluator code and controls, and the evidence moved to the run at that
+revision. The audit's preservation, model and C271 findings were checked again on the
+corrected candidate and still hold: the same paths are unchanged, and nothing under `ontokin/`,
+`tests/`, `tools/` or `examples/` changed. It was written against the evidence files
 themselves. It is **not** the independent review that REQ-026 requires; that review follows
 in TASK-032.
 

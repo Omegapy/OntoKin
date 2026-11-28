@@ -90,24 +90,32 @@
   },
   "scope_checks": {
     "qualification": {
-      "command": "qualify.py --output-dir <OntoKin-local>/c272/runs/delivered-2",
-      "revision": "d10c9f624c3247852242c19e83d69a1f90d67cc4",
+      "revision": "3c206ac7e97d4ac4e30a15fe597257e66f2d5504",
       "result": "passed",
-      "record": "evidence/runs/delivered-d10c9f62/RESULTS.json"
+      "record": "evidence/runs/delivered-3c206ac7/RESULTS.json"
     },
     "replay": {
-      "revision": "d10c9f624c3247852242c19e83d69a1f90d67cc4",
+      "revision": "3c206ac7e97d4ac4e30a15fe597257e66f2d5504",
       "result": "passed, equal",
       "record": "evidence/REPLAY.json"
     },
     "gltf_validation": {
       "result": "passed",
-      "record": "evidence/gltf-validation/SUMMARY.json"
+      "record": "evidence/gltf-validation/SUMMARY.json",
+      "run": "delivered-3c206ac7"
     },
     "playback": {
       "result": "inspected",
       "record": "evidence/PLAYBACK.md"
-    }
+    },
+    "superseded": "The same checks at d10c9f62 passed; that candidate's code had review finding M2."
   },
-  "pending": "observer regression with the c272 group, documentation verifier and workflow check on the candidate commit that carries this record (recorded in its successor)"
+  "pending": "observer regression with the c272 group, documentation verifier and workflow check on the commit that carries this record (recorded in CANDIDATE-CHECKS.json at its successor)",
+  "routine_driver_applies_to": {
+    "revisions": [
+      "d10c9f62",
+      "3c206ac7 and its record-only successors"
+    ],
+    "reason": "git diff d10c9f62..3c206ac7 changes only docs/engineering/localized-repair-c272/ (scope code, tests and evidence) and docs/workflow/tasks/C272/; the driver runs nothing in that directory, and no implementation, dependency, fixture, test or command identity of the driver changed (PROTOCOL section 5)."
+  }
 }

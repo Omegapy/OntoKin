@@ -16,7 +16,9 @@ tolerance.
 **Observation sources.** Three kinds of actual bytes exist for each case:
 - the accepted source, read back through `ProgramAgentService.read_program`;
 - the GLB, exported and retrieved through Agent/0.2 `export` and `artifact`;
-- the semantic sidecar that the C210 route writes beside the GLB (`build_semantic_manifest`).
+- the semantic sidecar that the C210 route writes beside the GLB. The C272 harness builds it in
+  process with the product's `build_semantic_manifest`, from the program read back through the
+  service and the retrieved GLB bytes; no Agent/0.2 operation delivers it.
 
 The sidecar and the GLB's `extras.ontokin` are **producer metadata**. Reading them gives an
 observed claim of the delivery. Such a claim passes only by agreeing with the independent

@@ -82,3 +82,9 @@ with C255's independent expectations and cross-checks the fields that decoded ge
 motion determine. It reads four literals from the accepted source by fixed pattern and
 records zero mass as rule-derived. Its limit, stated above, goes with every result. Options
 B and C are not pursued.
+
+In the implementation, G3 also reads the tween's numeric value (45) and the event time (0 s)
+as source literals at the same fixed patterns, and cross-checks them against the delivered
+goal and time. A site's `kind` and a hinge's `axisFrame` follow from fixed reading rules; the
+semantic record lists each as derived. The first independent review found these were not
+stated here (O4, O5).

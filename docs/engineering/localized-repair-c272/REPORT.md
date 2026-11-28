@@ -9,7 +9,7 @@ route on the three frozen C253 cases of the keyed-rack family:
 - V2: 0.75 m to 0.65 m;
 - N1: 0.75 kg given as a length.
 
-The command passed all three cases and all 24 controls. A fresh replay produced identical results and bytes.
+At the reviewed candidate's code revision `3c206ac7`, the command passed all three cases and all 24 controls. A fresh replay at the same revision produced identical results and bytes.
 
 A scripted client made the edits; **no model took part**. The three cases come from one public,
 previously used assembly family. The result qualifies this machinery on that family only. It is
@@ -45,19 +45,20 @@ not an unseen test and says nothing about authoring advantage.
   byte-identical to the delivered one, and nothing was imported from a checkout.
 - **Faults and positives.** 13 fault controls were each rejected while their clean twins were
   accepted. They cover all seven kinds that R08 names, plus stale and self-asserted provenance
-  and a changed dependency pin. 4 positive controls and 7 residual controls (H20, H24) passed
+  and a changed dependency pin. 4 positive controls and 7 residual controls (H20, H24) passed. P03 negates every stored rotation keyframe in the GLB bytes and is judged end to end
   ([CONTROLS.md](CONTROLS.md)).
 - **Replay.** A second execution of the command from empty stores gave equal case outcomes,
   per-property and pose tables, and control results. All 34 retained source and artifact files
   are byte-equal ([REPLAY.json](evidence/REPLAY.json)).
 - **Format and playback.**
-  - All six delivered GLBs pass the Khronos validator 2.0.0-dev.3.10 with no errors or
+  - All six delivered GLB files, which are two distinct byte sequences (`d009…` for 0.65 m and `05eb…` for 0.75 m), pass the Khronos validator 2.0.0-dev.3.10 with no errors or
     warnings, and Three.js r180 playback matches C255's poses for all 126 samples. A truncated
     copy was refused ([gltf-validation](evidence/gltf-validation/SUMMARY.json)).
   - V1's 0.75 m animation was played in the project's offline viewer and looked at
     ([PLAYBACK.md](evidence/PLAYBACK.md)).
 - **Determinism beyond this host.** The fresh GLBs equal the historical C210 proof GLBs byte
-  for byte. Those were generated on Linux.
+  for byte. Those were generated at `bb7e831a` with CPython 3.12.14 on Linux x86-64. This
+  equality is a comparison with that historical result, not a result of this scope run on Linux.
 
 ## Requirements
 
@@ -76,21 +77,21 @@ States are at the candidate given for independent review. The rows still open ar
 | REQ-009 C269 reconciliation and residual controls | met | [RECONCILIATION.md](RECONCILIATION.md), R01–R07 in [CONTROLS.md](CONTROLS.md) |
 | REQ-010 scripted client, independent evaluator | met | [runner.py](runner.py); import tests in `test_observe.py`, `test_semantic_observe.py`, `test_score.py` |
 | REQ-011 one documented command | met | [qualify.py](qualify.py), [README.md](README.md) |
-| REQ-012 fresh store, exact start, baseline artifact | met | `evidence/runs/delivered-d10c9f62/cases/*/record/` |
+| REQ-012 fresh store, exact start, baseline artifact | met | `evidence/runs/delivered-3c206ac7/cases/*/record/` |
 | REQ-013 V1/V2 edit only the occurrence | met | the same records; locality in `RESULTS.json` |
 | REQ-014 N1 refused, state untouched | met | N1 record and `accepted-state.json` |
 | REQ-015 accepted-state record, stale and self-asserted rejected | met | `authority.json` (run output), E04a–E04d |
-| REQ-016 every C253 property checked | met within option A's limit | per-property tables in `cases/*/score.json`; [GAPS.md](GAPS.md) |
+| REQ-016 every C253 property checked | met within option A's limit | per-property tables in `cases/*/score.json`: each row holds the observation, its origin pointers in the actual bytes, the expected value with its derivation, and the outcome; [GAPS.md](GAPS.md) |
 | REQ-017 126 poses decoded and checked | met | `cases/*/score.json` pose rows |
 | REQ-018 clean rebuild, byte-identical | met | `cases/*/rebuild.json` |
 | REQ-019 deliberate faults rejected | met; the open items are named | [CONTROLS.md](CONTROLS.md) |
 | REQ-020 external record, failure and retry exercised | met | `exchanges.jsonl`, protocol cases in `outcome.json` |
-| REQ-021 fresh replay | met | [REPLAY.json](evidence/REPLAY.json) |
+| REQ-021 fresh replay | met at the code revision `3c206ac7` | [REPLAY.json](evidence/REPLAY.json) |
 | REQ-022 GLB validation and inspected playback | met | [gltf-validation](evidence/gltf-validation/SUMMARY.json), [PLAYBACK.md](evidence/PLAYBACK.md) |
 | REQ-023 visual profile prepared | met, with a side effect reported to the owner | [VISUAL-PROFILE.json](evidence/VISUAL-PROFILE.json) |
 | REQ-024 checks for the changed scope | met for the driver at `d10c9f62`; the observer regression and record checks on the review candidate are in its check record | [CHECKS.json](evidence/CHECKS.json) |
 | REQ-025 failing check compared with main | met: one known baseline failure, none new or worsened | [CHECKS.json](evidence/CHECKS.json) |
-| REQ-026 independent review | open: review of this candidate | the review record at review |
+| REQ-026 independent review | first review: changes required (M1 to M3), resolved; the second review is in the review record | `evidence/review-1/REVIEW.md`, `evidence/review-2/REVIEW.md` |
 | REQ-027 integration and resulting main | open | the integration record |
 | REQ-028 deliverables | met | this directory and `evidence/` |
 | REQ-029 readiness table | met | below |
@@ -114,6 +115,23 @@ States are at the candidate given for independent review. The rows still open ar
 are examples and regression coverage. They are not qualification of this evaluator.
 
 ## Limits that go with every result
+
+- **The sidecar's origin.** No Agent/0.2 operation delivers the semantic sidecar. The harness
+  builds it in process with the product's `build_semantic_manifest`, from the program it read
+  back through `read_program` and the GLB bytes it retrieved. The rebuild does the same with
+  the installed wheel. This is the C210 route's sidecar production, run by the harness.
+- **Provenance fields.** The observation's accepted and program revisions are taken from the
+  accepted-state record. C255's check of those two fields is therefore a consistency check.
+  The GLB's own program revision is checked independently through C256, and the accepted
+  revision is observed only in the service's responses and its accepted pointer.
+- **More reader rules.** Besides the four source-only facts, G3 reads the tween's numeric value
+  (45) and the event time (0 s) as source literals, cross-checking them against the delivered
+  goal and time. A site's `kind` is derived from `@system` in its element ID, and a hinge's
+  `axisFrame` from the sidecar key `axis_in_parent_site`. Each such rule is listed as derived
+  in the semantic record.
+- **Output inside the checkout.** The package-smoke setup tool writes its own report into the
+  checkout's ignored `build/local-environment/`. All other run output is written outside the
+  checkout.
 
 - **Delivered semantics.** The semantic values (sites, actions, events, parameters, placement)
   are delivered producer metadata. They are checked against C255's independent expectations
@@ -154,7 +172,7 @@ Blocking requirements of the frozen run plan (`RUN-PLAN.json`, `executionAdmissi
 | Blocking requirement | State after C272 |
 | --- | --- |
 | Qualified offline oracle with positive, boundary and adversarial controls | **Partly addressed, for the OntoKin route only.** Positive and adversarial controls run end to end here. Boundary controls exist at record level in C255. The independent oracle review of REQ-026 is pending. |
-| Qualified native artifact readers and minimal trial runner | **Partly addressed, for the OntoKin route only.** The GLB and sidecar readers and the scripted runner are qualified on this family. A Blender reader and a model-facing trial runner do not exist. |
+| Qualified native artifact readers and minimal trial runner | **Partly addressed, for the OntoKin route only.** The GLB and sidecar readers and the scripted runner have been implemented and exercised on this family, with qualification subject to the independent review. A Blender reader and a model-facing trial runner do not exist. |
 | Exact model snapshot, settings and usage semantics | unmet; the run plan's model fields stay null |
 | Qualified Blender starting seed and runtime dependency bindings | unmet |
 | Frozen route roster, equivalent task and reference-pack bindings, starting-state checks | unmet |
