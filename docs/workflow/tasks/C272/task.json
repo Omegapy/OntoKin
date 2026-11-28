@@ -57,8 +57,11 @@
       "id": "REQ-003",
       "description": "C271's excluded phases are not resumed and completed evidence stays as recorded",
       "acceptance": "All 3 acceptance criteria of REQ-003 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c272/REQUIREMENTS-AUDIT.md",
+        "docs/workflow/tasks/C272/PLAN.md"
+      ]
     },
     {
       "id": "REQ-004",
@@ -255,8 +258,11 @@
       "id": "REQ-024",
       "description": "The checks that the changed scope requires are run",
       "acceptance": "All 3 acceptance criteria of REQ-024 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c272/evidence/CHECKS.json",
+        "docs/engineering/localized-repair-c272/evidence/CANDIDATE-CHECKS.json"
+      ]
     },
     {
       "id": "REQ-025",
@@ -914,9 +920,10 @@
         "TASK-023",
         "TASK-026"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
-        "docs/engineering/localized-repair-c272/evidence/CHECKS.json"
+        "docs/engineering/localized-repair-c272/evidence/CHECKS.json",
+        "docs/engineering/localized-repair-c272/evidence/CANDIDATE-CHECKS.json"
       ],
       "verification": [
         "Compare the revision in every check record with the candidate's commit.",
@@ -1004,7 +1011,7 @@
       "depends_on": [
         "TASK-030"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c272/REQUIREMENTS-AUDIT.md"
       ],
@@ -1024,7 +1031,7 @@
       "depends_on": [
         "TASK-031"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c272/REVIEW.md"
       ],
@@ -1133,6 +1140,33 @@
       "evidence": [
         "docs/engineering/localized-repair-c272/evidence/gltf-validation/SUMMARY.json"
       ]
+    },
+    {
+      "name": "observer regression with the c272 group at f955dafd",
+      "command": ".venv/bin/python docs/engineering/localized-repair-c272/run_observer_regression.py --with-c272 --output-dir <new>",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c272/evidence/observer-candidate-f955dafd.json"
+      ]
+    },
+    {
+      "name": "documentation verifier",
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c272/evidence/CANDIDATE-CHECKS.json"
+      ]
+    },
+    {
+      "name": "workflow check",
+      "command": "python3 tools/chat_workflow.py check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c272/evidence/CANDIDATE-CHECKS.json"
+      ]
     }
   ],
   "completion": {
@@ -1142,7 +1176,7 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Run the observer regression with the c272 group, the documentation verifier and the workflow check on the candidate commit; audit every requirement (TASK-031); then the independent review (TASK-032).",
+  "next_action": "Independent review of the exact candidate by a separate worker with fresh context (TASK-032); then integration under the lease (PHASE-007).",
   "blockers": [],
   "owner_waivers": []
 }
