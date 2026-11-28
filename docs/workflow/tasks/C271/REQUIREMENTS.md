@@ -756,3 +756,17 @@ The correction is implemented, independently reviewed and accepted at candidate 
 - **For the next MR attempt:** C's default inventory is 5,587 plus 474 additions, which that attempt's freeze approves (MC28).
 - **Unchanged:** R01/R02 remain done and R03–R05 not_done.
 - **Next:** gate MR again at C, which needs the owner's selection.
+
+## P38 gate MR, second attempt: the complete default routine at the corrected code — November 28, 2026
+
+The owner answered "Start gate MR" in this session, after C271-P37 corrected FZ-01. Phase C271-P38-macos-complete-routine-mr-2 runs in local mode ([phase declaration](../../../engineering/localized-repair-c271/macos-routine-p38/PHASE.json), [plan](../../../engineering/localized-repair-c271/macos-routine-p38/MR-PLAN-2.md), [session checkpoint](P38-SESSION.md)).
+- **Objective:** gate MR of the adopted contract `ontokin.current-host-readback/0.2.0` again, which is R03 on this executor, at the code of P37's reviewed candidate `5a3502e2`. It follows [P36's MR plan](../../../engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md) unchanged, except for three points:
+  - a fresh reviewer writes an addendum to the start-and-write inventory for P37's changes;
+  - MR's tooling is reused unchanged;
+  - the bound commit is B2, which carries the addendum.
+- **Fixed state:** from the observation plan's freeze to the audit, one boot, HEAD at B2 and no commit; every start of the framework interpreter with `-B`; the language and region settings unchanged.
+- **Downloads:** none.
+- **Not run:** `ldd`, `codesign`, any Node other than the pinned runtime, and the `--full` and `--force-agent` profiles.
+- **Main:** not written.
+- **Excluded:** R04 and R05.
+- **Unchanged until this phase's outcome records say otherwise:** R01/R02 remain done and R03–R05 not_done.

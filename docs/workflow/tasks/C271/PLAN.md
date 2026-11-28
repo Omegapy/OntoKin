@@ -742,3 +742,18 @@ Recorded failures and deviations:
 - the scripts behind cited evidence, copied from the session's scratchpad at S8 (RV-02).
 
 The [outcome](../../../engineering/localized-repair-c271/derived-workspace-p37/OUTCOME.json) lists each. Each push was without force and read back. The next phase, not begun here, is gate MR again at C. Then come R04 and R05, each a separate phase.
+
+## P38 gate MR, second attempt — November 28, 2026
+
+Local mode, on the owner's selection ([phase declaration](../../../engineering/localized-repair-c271/macos-routine-p38/PHASE.json)). Director `c271-p38-1e501e005f79`. The [plan](../../../engineering/localized-repair-c271/macos-routine-p38/MR-PLAN-2.md) keeps P36's MR plan and states what differs and what the attempt carries.
+
+Ordered steps:
+1. Declare and push.
+2. Have a fresh reviewer, W1, write the inventory addendum for P37's changes; commit it at B2, push and read back.
+3. Have W2 freeze the observation plan at B2, and a fresh W3 review it.
+4. Run M0 and M1 once through the observer, and have a fresh W3 review HOST.
+5. Have W2 freeze the configuration, the two runs and their expected outcomes, and a fresh W3 review them.
+6. Run R1, then R2, exactly as frozen, and compare both with main's baseline runs.
+7. Have an independent auditor, W4, recompute the results.
+8. Have a fresh W3 review B2 and the evidence for R03.
+9. Record, push without force, read the push back, comment once on PR274 and issue273, and stop.

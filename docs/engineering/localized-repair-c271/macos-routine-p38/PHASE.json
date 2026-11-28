@@ -1,0 +1,101 @@
+{
+  "schema": "ontokin.c271.p38-macos-complete-routine-2/1",
+  "task": "C271",
+  "phase": "C271-P38-macos-complete-routine-mr-2",
+  "owner": "c271-p38-1e501e005f79",
+  "declared_at_utc": "2026-11-28T02:35:52Z",
+  "status": "declared_routine_pending",
+  "execution_mode": {
+    "mode": "local",
+    "entry_document": "https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/LOCAL-START-HERE.md",
+    "governing_instructions": "current main at 51223c9b94a222f29d38eb6c33808f8e55e2bff9; gate MB merged it into this branch, so the branch's instruction files are main's bytes"
+  },
+  "owner_direction": {
+    "date": "2026-11-28 (UTC)",
+    "question": "Start gate MR again now, or leave it for later?",
+    "reply": "Start gate MR",
+    "how_received": "selected by the owner in this session, as the reply to the question that closed C271-P37",
+    "scope_of_selection": "gate MR of the adopted contract ontokin.current-host-readback/0.2.0 again, at the corrected code, which is R03 on this executor"
+  },
+  "objective": "Gate MR of docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md section 11, as amended by P33-AMENDMENT-001, and R03's acceptance, in a second attempt at the code of C271-P37's reviewed candidate 5a3502e2: the complete default routine of tools/check_local.py once as a qualifying run (R1) and once as an ordinary run (R2), compared with main's recorded macOS baseline runs under OK-ENG-009 section 3, with an independent audit and an independent R03 review.",
+  "plan": "docs/engineering/localized-repair-c271/macos-routine-p38/MR-PLAN-2.md",
+  "governing_plan": "docs/engineering/localized-repair-c271/macos-routine-p36/MR-PLAN.md",
+  "starting_state": {
+    "branch_head": "e7f05fc95adff2c258f1c9322a9a3fec69616f27",
+    "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "remote_observation": "git ls-remote --heads origin at 2026-11-28T02:34:45Z: this branch at e7f05fc9, main at 51223c9b, work/c271-p29-trd-record at 880933a4",
+    "pull_request": "PR274 open, draft, head e7f05fc9",
+    "scope_issue": "issue273 open",
+    "code": "unchanged since C271-P37's candidate 5a3502e2 under tools/, prototypes/, tests/, ontokin/, fixtures/, schemas/ and examples/",
+    "environment": "as MP prepared it; the Python installation inventory c277bdd3... at P37's routine run; the .venv holds no bytecode",
+    "boot": "C90010BA-4DA9-475D-BBAB-CF1A9C40175A, the boot session of 2026-11-23; the observation plan binds the boot that is current when it is frozen",
+    "first_attempt": "C271-P36 stopped at S6 on FZ-01 (docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json); its HOST 858ef72a binds commit B and is not reused"
+  },
+  "acceptance": [
+    {
+      "id": "A1",
+      "check": "This declaration and its plan, MR-PLAN-2.md, which follows P36's MR plan, are pushed before any MR work."
+    },
+    {
+      "id": "A2",
+      "check": "Inventory addendum: before the observation plan is adopted, an independent reviewer lists, by reading only, every start and write that C271-P37's changes add or change in either run kind, against P36's start-and-write inventory, and establishes whether any can reach a Node other than the pinned runtime, ldd or codesign, or write into the bound trees, and the expected Node starts of each run; the Director's disposition states what the freeze carries."
+    },
+    {
+      "id": "A3",
+      "check": "MR's tooling of P36 is reused unchanged at its committed path; the addendum's records are committed at one commit B2, pushed and read back, before any observation; the plans bind the tools' identities and those of the reused MH tools by digest."
+    },
+    {
+      "id": "A4",
+      "check": "Observation plan: frozen by an independent author at B2 under the observer's plan schema, with the Python installation inventory, the source inventory of B2, the Git binding, the boot, the evidence parent with its ancestors and the failure-capture procedure; reviewed by a fresh reviewer; applied with its digest supplied from outside the plan."
+    },
+    {
+      "id": "A5",
+      "check": "M0 and M1 run once through the observer's observe command under that plan, with exactly one Git and one Node start, and write HOST (OBSERVED_UNAPPROVED); an independent review accepts HOST before any configuration binds it; a failed or unknown attempt is retained and never silently repeated."
+    },
+    {
+      "id": "A6",
+      "check": "Operational freeze: the configuration (config/0.2.0, source at B2, HOST, dependencies, runtime, methods, and discovery with the complete default inventory), the exact commands, environments, temporary directories and bounds of R1 and R2, the launch rule, and the checker and comparison steps with their expected outcomes (MC22, MC23, MC28 and every attribution by exact test ID and reason), frozen by the independent author and reviewed before execution; the configuration digest supplied from outside it."
+    },
+    {
+      "id": "A7",
+      "check": "R1 and R2 run once each, exactly as frozen, every start counted and every failure, interruption or unknown retained: R1 is a qualifying run with every stage executed, zero skipped, expected-failure or missing tests, and the readback cohort as frozen (exactly three real CPU starts, the intended matrix_0_3 negative, the four seams labelled mocked); R2 is an ordinary run whose readback class fails visibly at setup with the fixed reason and no skip; both are compared with main's baseline runs by the reviewed tooling, with exact inputs."
+    },
+    {
+      "id": "A8",
+      "check": "An independent audit recomputes the readback cohort's starts, receipts and numerical rows, MC22, MC23 and MC28, and the comparison from the raw logs and summaries, and accepts the results, or its mandatory findings are resolved and re-audited."
+    },
+    {
+      "id": "A9",
+      "check": "R03 acceptance: a fresh reviewer reviews the exact candidate B2 against main 51223c9b and MR's evidence under OK-ENG-009 section 3 items 1 to 5, and accepts it with no unresolved mandatory finding."
+    },
+    {
+      "id": "A10",
+      "check": "From the observation plan's freeze to the audit one boot, HEAD at B2 and no commit; every start of the framework interpreter with -B; no ldd or codesign start; Node only through the bounded routes, counted; the workflow check, the documentation verifier and a scoped whitespace check pass on the records commit."
+    },
+    {
+      "id": "A11",
+      "check": "Pushed without force and read back; outcome records with path-portable copies (no machine path), session checkpoint and task record; one checkpoint comment each on PR274 and issue273; PR274 stays draft; main is not written."
+    }
+  ],
+  "ownership": {
+    "director": "c271-p38-1e501e005f79",
+    "director_session": "the same Claude Code session that carried out C271-P30 to P37",
+    "owned": [
+      "the C271 worktree, its index and .venv",
+      "every update of this branch in this phase",
+      "the working evidence directory ../OntoKin-local/c271-p38/"
+    ],
+    "workers": "as P36's MR plan section 3: W1 (the inventory addendum), W2 (independent author of the observation plan and the freeze), W3 (a fresh reviewer for each review) and W4 (independent auditor); no worker makes a Git write",
+    "main": "not written; the integration lease is not used"
+  },
+  "stopping_condition": "R03 accepted, with the audited runs and their records pushed and read back; or a concrete blocker, such as a refusal that needs an amendment or a new failure that needs a correction phase.",
+  "excluded": [
+    "any download or install; any change to the prepared runtime, reader tree or .venv",
+    "any ldd or codesign start; any start of a Node other than the pinned runtime",
+    "the --full and --force-agent profiles: C271 changes no exporter, viewer or Agent/0.5 file, the visual profile is not prepared on this host, and main's baseline ran the same core profile",
+    "changes to the implementation, the tests, the adopted contract, its amendment or the frozen controls of MI; a needed change is a finding for a later phase and, if it changes the contract, an amendment",
+    "the classification of S8's outcome changes and of D-18's two failing 0.1.0 driver tests, which the contract and MI assign to R04; MR records them",
+    "integration into main and the main lease, R04 and R05; PR274 state changes, issue closure, branch deletion"
+  ],
+  "records": "docs/engineering/localized-repair-c271/macos-routine-p38/"
+}
