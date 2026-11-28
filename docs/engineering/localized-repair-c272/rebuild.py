@@ -77,6 +77,8 @@ def prepare(work: Path, revision: str) -> dict:
             "wheel": {"filename": wheels[0].name, "bytes": wheels[0].stat().st_size, "sha256": sha256(wheels[0].read_bytes())},
             "build_environment": versions(build), "install_environment": versions(install),
             "interpreter": run([install, "-I", "-c", "import platform; print(platform.python_version())"]).stdout.strip(),
+            "interpreter_binary_sha256": sha256(Path(run([install, "-I", "-c", "import sys, os; print(os.path.realpath(sys.executable))"]).stdout.strip()).read_bytes()),
+            "build_requirement": "setuptools>=77 resolved from the package index at build time; the version used is in build_environment",
             "install_python": str(install)}
 
 

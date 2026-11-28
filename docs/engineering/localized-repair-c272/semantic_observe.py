@@ -180,14 +180,18 @@ class Reader:
 
         coordinates, glb_coordinates = side["coordinates"], meta["coordinates"]
         units = {key: coordinates[key] for key in ("length", "time", "angle", "mass")}
-        self.origin("units", "scene.semantic.json", "/coordinates/length,time,angle,mass")
+        for key in ("length", "time", "angle", "mass"):
+            self.origin("units", "scene.semantic.json", f"/coordinates/{key}")
         self.check("units agree between GLB and sidecar", glb_coordinates["length_unit"] == units["length"]
                    and glb_coordinates["time_unit"] == units["time"])
         pose_frames = {m["pose_frame"] for m in node_meta}
         require(len(pose_frames) == 1, "FRAME", "one pose frame for every node")
         frame = {"handedness": glb_coordinates["handedness"], "up": glb_coordinates["up"], "basis": next(iter(pose_frames)),
                  "quaternionOrder": coordinates["source_rotation_order"]}
-        self.origin("frame", "scene.glb", "/extras/ontokin/coordinates/handedness,up; /nodes/*/extras/ontokin/pose_frame")
+        for key in ("handedness", "up"):
+            self.origin("frame", "scene.glb", f"/extras/ontokin/coordinates/{key}")
+        for i in range(len(node_meta)):
+            self.origin("frame", "scene.glb", f"/nodes/{i}/extras/ontokin/pose_frame")
         self.origin("frame", "scene.semantic.json", "/coordinates/source_rotation_order")
         self.check("frame agrees between GLB and sidecar", coordinates["handedness"] == frame["handedness"]
                    and coordinates["up"] == frame["up"])
@@ -198,7 +202,9 @@ class Reader:
         self.literals.append({"field": "scene.gravityFrame", **span})
         scene = {"id": list(next(iter(prefixes))), "duration_s": decimal_number(side["scene"]["duration_seconds"], "duration"),
                  "gravity_mps2": meta["gravity_m_per_s2"], "gravityFrame": gravity_frame}
-        self.origin("scene", "scene.glb", "/nodes/*/extras/ontokin/element_id[0:2]; /extras/ontokin/gravity_m_per_s2")
+        self.origin("scene", "scene.glb", "/extras/ontokin/gravity_m_per_s2")
+        for i in range(len(node_meta)):
+            self.origin("scene", "scene.glb", f"/nodes/{i}/extras/ontokin/element_id (segments 0 and 1)")
         self.origin("scene", "scene.semantic.json", "/scene/duration_seconds")
         self.check("gravity agrees between GLB and sidecar", side["scene"]["gravity_m_per_s2"] == meta["gravity_m_per_s2"])
 
@@ -243,8 +249,9 @@ class Reader:
             for field, pointer in (("id,path,owner,properties,geometry,physical", f"/nodes/{i}/extras/ontokin"),
                                    ("definitionId", f"/nodes/{i}/extras/ontokin/source_mapping/definition_id"),
                                    ("appearance", f"/materials/{doc['meshes'][node['mesh']]['primitives'][0]['material']}/pbrMetallicRoughness/baseColorFactor")):
-                self.origin(f"objects[{m['path']}].{field}", "scene.glb", pointer)
-            self.origin(f"objects[{m['path']}].placement,motion", "scene.semantic.json", f"/objects/{j}/placement; /objects/{j}/motion")
+                self.origin(f"objects[{'/'.join(m['element_id'])}]", "scene.glb", pointer)
+            self.origin(f"objects[{'/'.join(m['element_id'])}]", "scene.semantic.json", f"/objects/{j}/placement")
+            self.origin(f"objects[{'/'.join(m['element_id'])}]", "scene.semantic.json", f"/objects/{j}/motion")
 
         side_sites = self.bounded(side["sites"], "sites", "/sites")
         site_by_path = {}
@@ -256,7 +263,10 @@ class Reader:
                           "position_m": s["pose"]["position_m"], "rotation_wxyz": s["pose"]["rotation_wxyz"],
                           "interface": s["interface"], "size_m": s["size_m"],
                           "kind": "system" if "@system" in s["element_id"] else "authored"})
-            self.origin(f"sites[{s['path']}]", "scene.semantic.json", f"/sites/{j}")
+            self.origin(f"sites[{'/'.join(s['element_id'])}]", "scene.semantic.json", f"/sites/{j}")
+            self.derived.append({"field": f"sites[{'/'.join(s['element_id'])}].kind",
+                                 "rule": "kind is 'system' when the element ID holds '@system', otherwise 'authored'",
+                                 "basis": [f"scene.semantic.json /sites/{j}/element_id"]})
 
         follows = []
         side_follows = {tuple(f["element_id"]): f for f in self.bounded(side["follows"], "follows", "/follows")}
@@ -268,7 +278,7 @@ class Reader:
             self.check(f"follow agrees between GLB and sidecar: {f['path']}", sf is not None
                        and sf["offset"]["position_m"] == f["offset_position_m"] and sf["offset"]["rotation_wxyz"] == f["offset_rotation_wxyz"]
                        and sf["parent_frame"] == f["parent_frame"] and sf["child_object"] == f["child_object"])
-            self.origin(f"follows[{f['path']}]", "scene.glb", f"/extras/ontokin/follows/{j}")
+            self.origin(f"follows[{'/'.join(f['element_id'])}]", "scene.glb", f"/extras/ontokin/follows/{j}")
 
         hinges, joint_by_path = [], {}
         side_joints = {tuple(x["element_id"]): x for x in self.bounded(side["joints"], "joints", "/joints")}
@@ -283,8 +293,13 @@ class Reader:
             self.check(f"hinge agrees between GLB and sidecar: {h['path']}", sj["axis_in_parent_site"] == h["axis"]
                        and sj["limits_rad"] == h["limits"] and sj["initial_rad"] == h["initial"]
                        and sj["parent_site"] == h["parent_site"] and sj["child_site"] == h["child_site"])
-            self.origin(f"hinges[{h['path']}]", "scene.glb", f"/extras/ontokin/joints/{j}")
-            self.origin(f"hinges[{h['path']}].axisFrame", "scene.semantic.json", "/joints/*/axis_in_parent_site")
+            key = f"hinges[{'/'.join(h['element_id'])}]"
+            self.origin(key, "scene.glb", f"/extras/ontokin/joints/{j}")
+            side_index = next(i for i, x in enumerate(side["joints"]) if x["element_id"] == h["element_id"])
+            self.origin(key, "scene.semantic.json", f"/joints/{side_index}/axis_in_parent_site")
+            self.derived.append({"field": key + ".axisFrame",
+                                 "rule": "the axis is given in the parent site's frame, as the sidecar key axis_in_parent_site names it",
+                                 "basis": [f"scene.semantic.json /joints/{side_index}/axis_in_parent_site"]})
 
         (angle_text, angle_unit), angle_span = literal(self.sources, "tween target angle")
         (move_frame,), move_span = literal(self.sources, "move frame")
@@ -306,7 +321,7 @@ class Reader:
                                 "velocity_mps": a["velocity_m_per_s"], "frame": move_frame, "duration_s": duration})
             else:
                 raise SemanticFault("UNSUPPORTED_ACTION", a["kind"])
-            self.origin(f"actions[{a['path']}]", "scene.semantic.json", f"/actions/{j}")
+            self.origin(f"actions[{'/'.join(a['element_id'])}]", "scene.semantic.json", f"/actions/{j}")
 
         (time_text, mode), event_span = literal(self.sources, "event block")
         blocks = self.bounded(side["events"], "event_blocks", "/events")
@@ -402,6 +417,10 @@ class Reader:
                 parent_frame = qmul(self.pose(parent["owner"], t)[1], parent["rotation_wxyz"])
                 child_frame = qmul(self.pose(child["owner"], t)[1], child["rotation_wxyz"])
                 relative = qmul(qconj(parent_frame), child_frame)
+                # q and -q are the same rotation; fix the sign before reading the angle,
+                # so that an equivalent stored sign never yields theta - 2*pi (review M2).
+                if relative[0] < 0:
+                    relative = [-x for x in relative]
                 axis = h["axis"]
                 theta = 2 * math.atan2(math.fsum(x * y for x, y in zip(relative[1:], axis)), relative[0])
                 ideal = [math.cos(theta / 2), *[x * math.sin(theta / 2) for x in axis]]

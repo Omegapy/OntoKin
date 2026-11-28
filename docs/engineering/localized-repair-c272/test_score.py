@@ -58,7 +58,19 @@ class Scoring(unittest.TestCase):
         self.assertEqual(sum(r["property"].startswith("semantic.sites[") for r in result["properties"]), 34)
         self.assertEqual(len(result["poses"]), 126)
         self.assertEqual(result["locality"]["unrelatedObjectsUnchanged"], 16)
-        self.assertEqual(result["locality"]["secondRackObjects"], 11)
+        self.assertEqual(result["locality"]["secondRackObjectsUnchanged"], 11)
+        semantic_rows = [r for r in result["properties"] if r["property"].startswith("semantic.")]
+        self.assertEqual(len(semantic_rows), 4 + 18 + 34 + 8 + 8 + 2)
+        for row in semantic_rows:
+            self.assertIn("observed", row)
+            self.assertTrue(row["origin"], row["property"])
+            self.assertTrue(all(o["artifact"] in ("scene.glb", "scene.semantic.json") and o["pointer"].startswith("/") for o in row["origin"]))
+            self.assertIn("expected", row)
+            self.assertTrue(row["derivation"].startswith("C255"))
+        geometry_rows = [r for r in result["properties"] if r["property"].startswith("geometry[")]
+        self.assertEqual(len(geometry_rows), 18)
+        self.assertTrue(all(r["origin"] and r["outcome"] == "passed" for r in geometry_rows))
+        self.assertTrue(all(r.get("derivation") and r.get("origin") for r in result["properties"]))
 
     def test_three_hand_computed_blade_poses(self):
         expected = {p["time_s"]: p for p in O.expected_state(CORPUS, "V1")["poses"] if p["id"] == score.SELECTED_BLADE}
@@ -105,6 +117,15 @@ class Scoring(unittest.TestCase):
         self.assertTrue(result["locality"]["passed"], result["locality"])
         self.assertEqual(result["locality"]["movedObjects"], ["/".join(score.SELECTED_BLADE)])
         self.assertTrue(result["passed"])
+
+    def test_locality_counts_are_measured(self):
+        sibling = copy.deepcopy(self.final)
+        obj = next(o for o in sibling["semantic"]["semantic"]["objects"] if o["path"] == 'second.fingers["top"].blade')
+        obj["appearance"] = [0.3, 0.6, 0.9, 1.0]
+        result = self.run_score(final=sibling)
+        self.assertEqual(result["locality"]["unrelatedObjectsUnchanged"], 15)
+        self.assertEqual(result["locality"]["secondRackObjectsUnchanged"], 10)
+        self.assertFalse(result["locality"]["passed"])
 
     def test_a_service_success_field_is_not_the_case_result(self):
         result = score.score_case(CORPUS, "V1", self.authority, self.start, self.final, self.final, self.artifacts,

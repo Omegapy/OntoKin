@@ -63,6 +63,19 @@ class Reading(unittest.TestCase):
         for name, length in (("before", 0.65), ("after", 0.75)):
             self.assertEqual(judge(*endpoint(name), length), ("accepted", None))
 
+    def test_negated_stored_rotations_are_the_same_motion(self):
+        """Review M2: an equivalent quaternion sign in the actual GLB bytes must be accepted end to end."""
+        sources, glb, sidecar = endpoint("after")
+        document, _ = glb_edit.split(glb)
+        for path in (BLADE, 'second.fingers["top"].blade', "first"):
+            node = glb_edit.node_index(document, path)
+            accessor = glb_edit.channel(document, node, "rotation")["output"]
+            count = document["accessors"][accessor]["count"]
+            for element in range(count):
+                values = glb_edit.read_floats(glb, accessor, element, 4)
+                glb = glb_edit.edit_floats(glb, accessor, element, [-x for x in values], 4)
+        self.assertEqual(judge(sources, glb, rebind(sidecar, glb), 0.75), ("accepted", None))
+
     def test_wrong_length_expectation_is_refused(self):
         self.assertEqual(judge(*endpoint("after"), 0.65)[0], "c255")
 
@@ -80,7 +93,11 @@ class Reading(unittest.TestCase):
             raw = sources[span["file"]]
             self.assertLess(span["startByte"], span["endByteExclusive"])
             self.assertTrue(raw[span["startByte"]:span["endByteExclusive"]])
-        self.assertEqual(len(result["derived"]), 18)
+        self.assertEqual(len(result["derived"]), 18 + 34 + 8)
+        for origins in result["origins"].values():
+            for origin in origins:
+                self.assertNotIn("*", origin["pointer"])
+                self.assertNotIn(",", origin["pointer"])
         kinds = {c["check"].split(":")[0] for c in result["crossChecks"]}
         self.assertIn("hinge sites coincide in the decoded motion", kinds)
         self.assertIn("follow offset holds in the decoded motion", kinds)

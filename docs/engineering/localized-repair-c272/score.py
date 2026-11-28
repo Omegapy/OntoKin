@@ -74,23 +74,57 @@ def assemble(case_id: str, authority: dict, final: dict, rebuilt: dict, rebuild_
             **final_part, "rebuild": rebuild_part, "decision": copy.deepcopy(authority["decision"])}
 
 
-def localize_semantic(observed: dict | None, expected: dict) -> list[dict]:
-    """Per-property outcomes with C255's semantic predicate; for reporting, never the verdict."""
+DERIVATIONS = {
+    "units": "C255 oracle.UNITS: m, s, rad and kg, the unit system of the source's literals",
+    "frame": "C255 oracle.FRAME: right-handed, +Y up, world basis, WXYZ order",
+    "scene": "C255 semantic_state: scene key from main.ok's module and scene keys; duration 2 s; zero gravity in world (main.ok lines 21-23)",
+    "events": "C255 semantic_state: one sequence block at 0 s starting flex, then travel (main.ok lines 41-44)",
+    "objects": "C255 object_record: keys, definitions, owners, typed parameters, primitives, appearance, placement, zero matter and velocities, derived by hand from main.ok and hinges.ok",
+    "sites": "C255 semantic_state: pivot at (0, 0, 0) on each finger, base at (-L/2, 0, 0) on each blade, and one system origin per object",
+    "follows": "C255 semantic_state: each finger follows its rack frame with offset (0, y, 0) from the rack's mount table",
+    "hinges": "C255 semantic_state: flex from the finger pivot to the blade base, axis (0, 0, 1) in the pivot frame, limits -pi/4 to pi/4, initial 0",
+    "actions": "C255 semantic_state: flex tweens first.fingers[middle].flex to 45 deg in 1 s; travel moves first at (0, 0.2, 0) m/s in world for 2 s",
+}
+
+
+CHECK_DERIVATIONS = {
+    "geometry": "C255 geometry_check against expected primitives (box corners from half-extents; 482-point sphere envelope)",
+    "poses": "C255 pose_for: SCORING.md's equations at 0, 0.25, 0.5, 0.75, 1, 1.5 and 2 s; limits 0.001 m, 0.001 rad, 1e-6 s",
+    "provenance": "C255 provenance_check: hashes of the retained bytes",
+    "semantic": "C255 semantic_state, as for the per-field rows",
+}
+CHECK_ORIGINS = {
+    "geometry": "C256 associate_glb: each mesh's POSITION and index accessors (see the geometry rows)",
+    "poses": "C256 associate_glb: animation channels and accessors at each time (see the pose table's origin)",
+    "provenance": ("hashes computed by the harness from the retained bytes; the accepted and program revisions are taken "
+                   "from the accepted-state record, so C255's check of those two fields is a consistency check, not an "
+                   "independent observation (the GLB's program revision is checked independently through C256)"),
+    "semantic": "G3 field pointers into the rebuilt GLB and sidecar",
+}
+
+
+def localize_semantic(observed: dict | None, expected: dict, origins: dict | None = None) -> list[dict]:
+    """Per-property rows: observation, its origin in the actual bytes, the independent expectation
+    and its derivation, and C255's outcome. For reporting; never the verdict."""
     rows = []
-    def outcome(label, replace):
+    origins = origins or {}
+    def outcome(label, replace, observed_value, expected_value, origin_key, kind):
         trial = copy.deepcopy(expected)
+        row = {"property": label, "observed": observed_value, "origin": origins.get(origin_key, []),
+               "expected": expected_value, "derivation": DERIVATIONS[kind]}
         try:
             replace(trial)
             ORACLE.semantic_check(trial, expected)
-            rows.append({"property": label, "outcome": "passed"})
+            row["outcome"] = "passed"
         except ORACLE.Fault as error:
-            rows.append({"property": label, "outcome": "failed", "fault": {"code": error.code, "detail": error.detail}})
+            row.update(outcome="failed", fault={"code": error.code, "detail": error.detail})
         except (KeyError, TypeError, ValueError) as error:
-            rows.append({"property": label, "outcome": "failed", "fault": {"code": "MALFORMED", "detail": type(error).__name__}})
+            row.update(outcome="failed", fault={"code": "MALFORMED", "detail": type(error).__name__})
+        rows.append(row)
     if observed is None:
         return [{"property": "semantic", "outcome": "incomplete", "reason": "no semantic observation"}]
     for field in ("units", "frame", "scene", "events"):
-        outcome(f"semantic.{field}", lambda t, f=field: t.__setitem__(f, observed[f]))
+        outcome(f"semantic.{field}", lambda t, f=field: t.__setitem__(f, observed[f]), observed.get(field), expected[field], field, field)
     for collection in ("objects", "sites", "follows", "hinges", "actions"):
         wanted = {tuple(r["id"]): i for i, r in enumerate(expected[collection])}
         got = {}
@@ -101,7 +135,8 @@ def localize_semantic(observed: dict | None, expected: dict) -> list[dict]:
             if len(got.get(key, [])) != 1:
                 rows.append({"property": label, "outcome": "failed", "fault": {"code": "IDENTITY", "detail": "missing or duplicated"}})
                 continue
-            outcome(label, lambda t, c=collection, i=index, r=got[key][0]: t[c].__setitem__(i, r))
+            outcome(label, lambda t, c=collection, i=index, r=got[key][0]: t[c].__setitem__(i, r), got[key][0],
+                    expected[collection][index], f"{collection}[{'/'.join(key)}]", collection)
         for key in set(got) - set(wanted):
             rows.append({"property": f"semantic.{collection}[{'/'.join(key)}]", "outcome": "failed",
                          "fault": {"code": "IDENTITY", "detail": "extra identity"}})
@@ -159,9 +194,14 @@ def locality(case_id: str, start: dict, final: dict) -> dict:
         passed = not changed and not moved
     else:
         passed = set(changed) == allowed and moved == [blade]
-    unrelated = [o for o in ORACLE.semantic_state(0.65)["objects"] if o["id"] not in (SELECTED_FINGER, SELECTED_BLADE)]
+    left_objects = {tuple(r["id"]): r for r in a["objects"]}
+    right_objects = {tuple(r["id"]): r for r in b["objects"]}
+    unrelated = [key for key in left_objects if list(key) not in (SELECTED_FINGER, SELECTED_BLADE)]
+    kept = [key for key in unrelated if left_objects[key] == right_objects.get(key) and "/".join(key) not in moved]
     return {"passed": passed, "changed": changed, "movedObjects": moved, "allowed": sorted(allowed) if case_id != "N1" else [],
-            "unrelatedObjectsUnchanged": len(unrelated), "secondRackObjects": sum(o["id"][2] == "second" for o in unrelated)}
+            "unrelatedObjects": len(unrelated), "unrelatedObjectsUnchanged": len(kept),
+            "secondRackObjectsUnchanged": sum(key[2] == "second" for key in kept),
+            "countsMeasured": "from the observed start and final semantic records and poses"}
 
 
 def score_case(corpus, case_id: str, authority: dict, start: dict, final: dict, rebuilt: dict,
@@ -170,12 +210,29 @@ def score_case(corpus, case_id: str, authority: dict, start: dict, final: dict, 
     observation = assemble(case_id, authority, final, rebuilt, rebuild_artifacts)
     verdict = ORACLE.evaluate(corpus, case_id, observation, authority)
     expected = ORACLE.expected_state(corpus, case_id)
-    rows = [{"property": "accepted-state record (C255 authority)", "outcome": "passed"}]
+    rows = [{"property": "accepted-state record (C255 authority)", "outcome": "passed",
+             "derivation": "C255 authority_check: frozen source bytes and program revisions, parent and new accepted revision, decision boundary and N1 diagnostic rules",
+             "origin": "the harness's accepted-state record (authority.json), derived from the service's responses, its accepted pointer and the retrieved bytes"}]
     try:
         ORACLE.authority_check(corpus, case_id, authority)
     except ORACLE.Fault as error:
         rows[0].update(outcome="failed", fault={"code": error.code, "detail": error.detail})
-    rows += localize_semantic(observation["semantic"], expected["semantic"])
+    rows += localize_semantic(observation["semantic"], expected["semantic"], final["semantic"].get("origins"))
+    for target in expected["semantic"]["objects"]:
+        mesh = next((g for g in observation["geometry"] or [] if g["id"] == target["id"]), None)
+        row = {"property": f"geometry[{'/'.join(target['id'])}]", "expected": target["primitive"],
+               "derivation": "C255 geometry_check: the eight box corners from the expected half-extents, or the 482-point sphere envelope at the expected radius",
+               "observed": None if mesh is None else {"vertices": len(mesh["vertices_m"]), "triangles": len(mesh["triangles"])},
+               "origin": [] if mesh is None else [mesh["origin"]]}
+        try:
+            ORACLE.geometry_check([mesh] if mesh else [], {"objects": [target]}, authority["retained"]["artifacts"],
+                                  authority["retained"]["programRevision"])
+            row["outcome"] = "passed"
+        except ORACLE.Fault as error:
+            row.update(outcome="failed", fault={"code": error.code, "detail": error.detail})
+        except (KeyError, TypeError, ValueError) as error:
+            row.update(outcome="failed", fault={"code": "MALFORMED", "detail": type(error).__name__})
+        rows.append(row)
     for label, function, args in (
             ("geometry (18 meshes)", ORACLE.geometry_check, (observation["geometry"], expected["semantic"], authority["retained"]["artifacts"], authority["retained"]["programRevision"])),
             ("poses (126)", ORACLE.pose_check, (observation["poses"], expected["poses"], "delivery", authority["retained"]["artifacts"], authority["retained"]["programRevision"])),
@@ -184,13 +241,17 @@ def score_case(corpus, case_id: str, authority: dict, start: dict, final: dict, 
             ("rebuild geometry", ORACLE.geometry_check, (observation["rebuild"]["geometry"], expected["semantic"], authority["retained"]["artifacts"], authority["retained"]["programRevision"])),
             ("rebuild poses", ORACLE.pose_check, (observation["rebuild"]["poses"], expected["poses"], "delivery", authority["retained"]["artifacts"], authority["retained"]["programRevision"])),
             ("rebuild provenance", ORACLE.provenance_check, (observation["rebuild"]["provenance"], authority["retained"]))):
+        kind = label.replace("rebuild ", "")
+        row = {"property": label, "derivation": CHECK_DERIVATIONS[kind.split(" ")[0]],
+               "origin": CHECK_ORIGINS[kind.split(" ")[0]] + (" (rebuilt artifacts)" if label.startswith("rebuild") else "")}
         try:
             function(*args)
-            rows.append({"property": label, "outcome": "passed"})
+            row["outcome"] = "passed"
         except ORACLE.Fault as error:
-            rows.append({"property": label, "outcome": "failed", "fault": {"code": error.code, "detail": error.detail}})
+            row.update(outcome="failed", fault={"code": error.code, "detail": error.detail})
         except (KeyError, TypeError, ValueError) as error:
-            rows.append({"property": label, "outcome": "failed", "fault": {"code": "MALFORMED", "detail": type(error).__name__}})
+            row.update(outcome="failed", fault={"code": "MALFORMED", "detail": type(error).__name__})
+        rows.append(row)
     checks = dict(workflow)
     checks["delivery decoded and agreements consistent"] = final["delivery"]["valid"] and rebuilt["delivery"]["valid"]
     checks["delivered semantics cross-checked against decoded motion"] = bool(final["semantic"].get("valid") and rebuilt["semantic"].get("valid"))

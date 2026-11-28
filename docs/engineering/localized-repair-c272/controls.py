@@ -35,6 +35,15 @@ def judge(corpus, m) -> dict:
                               m["rebuild_artifacts"], m["workflow"])
     reasons = [f"C255 {f['code']}: {f['detail']}" for f in result["c255"]["faults"]]
     reasons += [f"workflow check failed: {k}" for k, v in result["workflowChecks"].items() if not v]
+    for state in ("final", "rebuilt"):
+        observed = m[state]
+        reasons += [f"{state} observer {f.get('observer', '')} {f.get('code')}: {f.get('detail', '')}".replace("  ", " ")
+                    for f in (observed["delivery"].get("faults") or [])]
+        fault = (observed["semantic"] or {}).get("fault")
+        if fault and fault.get("code") != "DELIVERY_INVALID":
+            reasons.append(f"{state} G3 {fault['code']}: {fault.get('detail', '')}")
+        reasons += [f"{state} G3 cross-check failed: {c['check']}" for c in (observed["semantic"].get("crossChecks") or []) if not c["passed"]]
+    reasons = list(dict.fromkeys(reasons))
     return {"accepted": result["passed"], "reasons": reasons}
 
 
@@ -90,6 +99,20 @@ def mutate_glb(m, change, rebind_sidecar=True):
     return artifacts
 
 
+def negate_all_rotations(glb: bytes) -> bytes:
+    """Negate every stored rotation keyframe of every node in one pass: the same rotations."""
+    import struct
+    document, binary = glb_edit.split(glb)
+    data = bytearray(binary)
+    for node in range(len(document["nodes"])):
+        accessor = glb_edit.channel(document, node, "rotation")["output"]
+        start, count = glb_edit.accessor_offset(document, accessor)
+        for element in range(count):
+            offset = start + 16 * element
+            struct.pack_into("<4f", data, offset, *[-x for x in struct.unpack_from("<4f", data, offset)])
+    return glb_edit.join(document, bytes(data))
+
+
 def blade_sample(glb: bytes, path: str, channel: str, element: int, delta: float) -> bytes:
     document, _ = glb_edit.split(glb)
     node = glb_edit.node_index(document, path)
@@ -126,12 +149,12 @@ def evaluator_controls(corpus, base: dict, variants: dict, extras: dict) -> list
     asserted["authority"]["decision"]["acceptedRevision"] = v1["authority"]["start"]["acceptedRevision"]
     rows.append(fault_control(corpus, "E04c", "self-asserted acceptance",
                               "The client claims acceptance while the service's accepted state is still the start.", v1, asserted))
-    claimed = dict(v1["authority"]["start"]["artifacts"])
+    claimed = dict(v1["authority"]["retained"]["artifacts"])
     side = json.loads(claimed[SIDECAR])
-    side["binding"]["accepted_program_revision"] = v1["authority"]["retained"]["programRevision"]
+    side["binding"]["accepted_program_revision"] = v1["authority"]["start"]["programRevision"]
     claimed[SIDECAR] = json.dumps(side, sort_keys=True, separators=(",", ":")).encode()
     rows.append(fault_control(corpus, "E04d", "self-asserted acceptance in the artifact",
-                              "The pre-edit GLB with a sidecar whose binding claims the new accepted program.",
+                              "The delivered GLB with a sidecar whose acceptance claim names a program revision that the GLB does not carry.",
                               v1, with_artifacts(v1, claimed)))
     promoted = copy.deepcopy(n1)
     promoted["authority"]["retained"]["sourceFiles"] = dict(n1["authority"]["candidate"]["sourceFiles"])
@@ -170,11 +193,9 @@ def evaluator_controls(corpus, base: dict, variants: dict, extras: dict) -> list
                               "The retained library differs from the pinned bytes that main.ok's digest names.", v1, pin))
     rows.append(positive_control(corpus, "P01", "Independently correct 0.75 m state (V1 final) is accepted.", v1))
     rows.append(positive_control(corpus, "P02", "Independently correct 0.65 m state (V2 final) is accepted.", v2))
-    flipped = copy.deepcopy(v1)
-    for state in ("final", "rebuilt"):
-        for row in flipped[state]["delivery"]["poses"]:
-            row["rotation_wxyz"] = [-x for x in row["rotation_wxyz"]]
-    rows.append(positive_control(corpus, "P03", "Every observed pose quaternion negated (equivalent sign) is accepted.", flipped))
+    rows.append(positive_control(corpus, "P03", "Every stored rotation keyframe of all 18 nodes negated in the actual GLB bytes "
+                                 "(the same rotations) and judged end to end, the sidecar rebound, is accepted.",
+                                 with_artifacts(v1, mutate_glb(v1, negate_all_rotations))))
     changed = (v1["authority"]["start"]["acceptedRevision"] != v1["authority"]["retained"]["acceptedRevision"]
                and v1["authority"]["start"]["sourceFiles"]["main.ok"] != v1["authority"]["retained"]["sourceFiles"]["main.ok"]
                and all(v1["authority"]["start"]["artifacts"][k] != v1["authority"]["retained"]["artifacts"][k] for k in (GLB, SIDECAR)))
