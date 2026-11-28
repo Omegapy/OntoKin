@@ -3,7 +3,7 @@
   "id": "C271",
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
-  "status": "review",
+  "status": "done",
   "owner": "c271-close-6b644749c2d0",
   "branch": "work/c271-h22-result",
   "base_sha": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
@@ -46,18 +46,21 @@
       "id": "R04",
       "description": "Reviewed integration and actual-main verification",
       "acceptance": "In a later phase acquire verified expected-head ownership, conditionally integrate the reviewed candidate, verify actual main and observe branch disposition with retained history.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/close-out/CLOSE-OUT.json"
+      ]
     },
     {
       "id": "R05",
       "description": "Verified phase delivery and truthful closure",
       "acceptance": "Confirm early recovery before substantial work. Verify and save each phase handoff and matching prompts; publish its separate receipt. Keep parent and scope issue open until every requirement, integration and final delivery gate passes.",
-      "status": "not_done",
+      "status": "done",
       "evidence": [
-        "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
-      ]
+        "docs/engineering/localized-repair-c271/close-out/CLOSE-OUT.json",
+        "docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md"
+      ],
+      "owner_decision": "2026-11-28: local-mode closure; the push, these records and the scope issue closed with the completion record"
     }
   ],
   "plan": [
@@ -89,7 +92,7 @@
         "R04",
         "R05"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md",
         "docs/engineering/localized-repair-c271/close-out/CLOSE-OUT.json"
@@ -166,31 +169,43 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/close-out/CHECKS-A.json"
       ]
+    },
+    {
+      "name": "actual-main documentation and workflow checks",
+      "command": ".venv/bin/python -B tools/chat_workflow.py check; .venv/bin/python -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py, on main at 417b89b8",
+      "result": "passed",
+      "required": true,
+      "scope": "main after the merge of PR279",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/close-out/CLOSE-OUT.json"
+      ]
     }
   ],
   "completion": {
-    "implementation_commit": null,
-    "merge_commit": null,
-    "pull_request": null,
-    "branch_disposition": "active",
+    "implementation_commit": "530af062231470472efb6228958d5ab1fb15e1e2",
+    "merge_commit": "417b89b89074c8c1545d4a8338f487e479d996ce",
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/279",
+    "branch_disposition": "deleted",
     "evidence": [
+      "docs/engineering/localized-repair-c271/close-out/CLOSE-OUT.json",
       "docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md"
     ]
   },
-  "next_action": "Merge C271's documentation-only result into main with a normal pull request (the owner's decision of 2026-11-28), check main with the documentation verifier and the workflow check, then record completion in a second small pull request that closes issue 273. Phases P02 to P38 stay unmerged on work/c271-missing-import-digest-control.",
+  "next_action": "None. C271 is complete: its documentation-only result merged into main with PR279 at 417b89b8 by the owner's decision of 2026-11-28. Phases P02 to P38 stay unmerged on work/c271-missing-import-digest-control and draft PR274, for history.",
   "session_phase": {
     "phase": "C271-close-out-20261128",
     "owner": "c271-close-6b644749c2d0",
     "declared_at_utc": "2026-11-28T02:52:10Z",
     "execution_mode": "local",
-    "status": "merge_pending",
+    "status": "complete",
     "decision": "docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md",
     "unmerged_history": {
       "branch": "work/c271-missing-import-digest-control",
       "pull_request": "https://github.com/Omegapy/OntoKin/pull/274",
       "phases": "P02 to P38",
       "note": "retained unchanged for history; not merged"
-    }
+    },
+    "completed_at_utc": "2026-11-28T02:57:17Z"
   },
   "delivery": {
     "required": true,
