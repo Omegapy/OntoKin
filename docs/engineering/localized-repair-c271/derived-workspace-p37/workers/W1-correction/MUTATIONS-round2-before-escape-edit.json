@@ -1,0 +1,130 @@
+[
+ {
+  "mutation": "MP1 no case-folded record guard",
+  "file": "prototypes/static_tray_v01/current_host_readback_v02.py",
+  "run": "mutation-01",
+  "runner": "mutation-01 exit=1 2026-11-28T00:03:58Z..2026-11-28T00:04:18Z :: Ran 64 tests in 19.697s FAILED (failures=4)",
+  "detected": true,
+  "failing_tests": [
+   "test_a_case_variant_of_a_recorded_copied_file_is_refused (tests.test_current_host_readback_provider_v02.DerivedStatusLineTests.test_a_case_variant_of_a_recorded_copied_file_is_refused)"
+  ],
+  "restored": true,
+  "sha256": "bab89614c9ceeeaae56e9e264937cae482feda5bf08bda13c5972ad7412f902b"
+ },
+ {
+  "mutation": "MP2 any XY form admitted for an uncopied path",
+  "file": "prototypes/static_tray_v01/current_host_readback_v02.py",
+  "run": "mutation-02",
+  "runner": "mutation-02 exit=1 2026-11-28T00:04:18Z..2026-11-28T00:04:38Z :: Ran 64 tests in 19.627s FAILED (failures=21)",
+  "detected": true,
+  "failing_tests": [
+   "test_every_other_change_to_an_uncopied_tracked_path_is_refused (tests.test_current_host_readback_provider_v02.DerivedWorkspaceTests.test_every_other_change_to_an_uncopied_tracked_path_is_refused)",
+   "test_only_the_unstaged_deletion_of_an_uncopied_tracked_path_is_admitted (tests.test_current_host_readback_provider_v02.DerivedStatusLineTests.test_only_the_unstaged_deletion_of_an_uncopied_tracked_path_is_admitted)"
+  ],
+  "restored": true,
+  "sha256": "bab89614c9ceeeaae56e9e264937cae482feda5bf08bda13c5972ad7412f902b"
+ },
+ {
+  "mutation": "MP3 the driver's copied set not consulted",
+  "file": "prototypes/static_tray_v01/current_host_readback_v02.py",
+  "run": "mutation-03",
+  "runner": "mutation-03 exit=1 2026-11-28T00:04:38Z..2026-11-28T00:04:57Z :: Ran 64 tests in 18.890s FAILED (failures=9)",
+  "detected": true,
+  "failing_tests": [
+   "test_a_link_inside_the_copied_set_is_refused_by_the_copy_and_by_the_derived_check (tests.test_current_host_readback_provider_v02.DerivedWorkspaceTests.test_a_link_inside_the_copied_set_is_refused_by_the_copy_and_by_the_derived_check)",
+   "test_the_copied_set_decides_by_the_drivers_own_definition (tests.test_current_host_readback_provider_v02.DerivedStatusLineTests.test_the_copied_set_decides_by_the_drivers_own_definition)"
+  ],
+  "restored": true,
+  "sha256": "bab89614c9ceeeaae56e9e264937cae482feda5bf08bda13c5972ad7412f902b"
+ },
+ {
+  "mutation": "MP4 a deletion admitted without the record",
+  "file": "prototypes/static_tray_v01/current_host_readback_v02.py",
+  "run": "mutation-04",
+  "runner": "mutation-04 exit=1 2026-11-28T00:04:57Z..2026-11-28T00:05:18Z :: Ran 64 tests in 20.383s FAILED (failures=1)",
+  "detected": true,
+  "failing_tests": [
+   "test_a_derived_check_without_its_copied_record_admits_no_deletion (tests.test_current_host_readback_provider_v02.DerivedStatusLineTests.test_a_derived_check_without_its_copied_record_admits_no_deletion)"
+  ],
+  "restored": true,
+  "sha256": "bab89614c9ceeeaae56e9e264937cae482feda5bf08bda13c5972ad7412f902b"
+ },
+ {
+  "mutation": "MP5 the selection drops the parent proof's record",
+  "file": "prototypes/static_tray_v01/current_host_readback_v02.py",
+  "run": "mutation-05",
+  "runner": "mutation-05 exit=1 2026-11-28T00:05:18Z..2026-11-28T00:05:37Z :: Ran 64 tests in 19.676s FAILED (failures=1)",
+  "detected": true,
+  "failing_tests": [
+   "test_the_selection_gives_the_source_check_the_parent_proofs_record (tests.test_current_host_readback_provider_v02.DerivedSelectionTests.test_the_selection_gives_the_source_check_the_parent_proofs_record)"
+  ],
+  "restored": true,
+  "sha256": "bab89614c9ceeeaae56e9e264937cae482feda5bf08bda13c5972ad7412f902b"
+ },
+ {
+  "mutation": "MP6 no check of empty, current or parent components",
+  "file": "prototypes/static_tray_v01/current_host_readback_v02.py",
+  "run": "mutation-06",
+  "runner": "mutation-06 exit=1 2026-11-28T00:05:37Z..2026-11-28T00:05:57Z :: Ran 64 tests in 19.495s FAILED (failures=6)",
+  "detected": true,
+  "failing_tests": [
+   "test_renames_copies_quoted_and_unsafe_names_are_refused (tests.test_current_host_readback_provider_v02.DerivedStatusLineTests.test_renames_copies_quoted_and_unsafe_names_are_refused)"
+  ],
+  "restored": true,
+  "sha256": "bab89614c9ceeeaae56e9e264937cae482feda5bf08bda13c5972ad7412f902b"
+ },
+ {
+  "mutation": "MP7 quoted names admitted",
+  "file": "prototypes/static_tray_v01/current_host_readback_v02.py",
+  "run": "mutation-07",
+  "runner": "mutation-07 exit=1 2026-11-28T00:05:57Z..2026-11-28T00:06:17Z :: Ran 64 tests in 19.961s FAILED (failures=5)",
+  "detected": true,
+  "failing_tests": [
+   "test_an_uncopied_path_whose_name_git_quotes_is_refused (tests.test_current_host_readback_provider_v02.DerivedWorkspaceTests.test_an_uncopied_path_whose_name_git_quotes_is_refused)",
+   "test_renames_copies_quoted_and_unsafe_names_are_refused (tests.test_current_host_readback_provider_v02.DerivedStatusLineTests.test_renames_copies_quoted_and_unsafe_names_are_refused)"
+  ],
+  "restored": true,
+  "sha256": "bab89614c9ceeeaae56e9e264937cae482feda5bf08bda13c5972ad7412f902b"
+ },
+ {
+  "mutation": "MD1 no index refresh",
+  "file": "tools/check_local.py",
+  "run": "mutation-08",
+  "runner": "mutation-08 exit=1 2026-11-28T00:06:17Z..2026-11-28T00:06:27Z :: Ran 39 tests in 9.721s FAILED (failures=2)",
+  "detected": true,
+  "failing_tests": [
+   "test_failed_index_refresh_fails_the_run_before_any_step (tests.test_local_checks.CopiedSetAndWorkspaceIndexTests.test_failed_index_refresh_fails_the_run_before_any_step)",
+   "test_workspace_index_records_stat_data_once_and_status_reports_the_same_lines (tests.test_local_checks.CopiedSetAndWorkspaceIndexTests.test_workspace_index_records_stat_data_once_and_status_reports_the_same_lines)"
+  ],
+  "restored": true,
+  "sha256": "3136f52cef8ca4492e06f6c12898ea9f6e9f101eb5b34e4fed5c61b8b9be5ab8"
+ },
+ {
+  "mutation": "MD2 refresh without -q",
+  "file": "tools/check_local.py",
+  "run": "mutation-09",
+  "runner": "mutation-09 exit=1 2026-11-28T00:06:27Z..2026-11-28T00:06:36Z :: Ran 39 tests in 8.380s FAILED (failures=2, errors=2)",
+  "detected": true,
+  "failing_tests": [
+   "test_external_workspace_retains_real_git_revision_and_copied_changes_with_own_index (tests.test_local_checks.LocalChecksTests.test_external_workspace_retains_real_git_revision_and_copied_changes_with_own_index)",
+   "test_ordinary_run_records_the_uncopied_tracked_paths_with_unchanged_fields (tests.test_local_checks.CopiedSetAndWorkspaceIndexTests.test_ordinary_run_records_the_uncopied_tracked_paths_with_unchanged_fields)",
+   "test_refreshed_index_still_reports_every_change_of_a_copied_file (tests.test_local_checks.CopiedSetAndWorkspaceIndexTests.test_refreshed_index_still_reports_every_change_of_a_copied_file)",
+   "test_workspace_index_records_stat_data_once_and_status_reports_the_same_lines (tests.test_local_checks.CopiedSetAndWorkspaceIndexTests.test_workspace_index_records_stat_data_once_and_status_reports_the_same_lines)"
+  ],
+  "restored": true,
+  "sha256": "3136f52cef8ca4492e06f6c12898ea9f6e9f101eb5b34e4fed5c61b8b9be5ab8"
+ },
+ {
+  "mutation": "MD3 copied set without the ignored() exclusion",
+  "file": "tools/check_local.py",
+  "run": "mutation-10",
+  "runner": "mutation-10 exit=1 2026-11-28T00:06:36Z..2026-11-28T00:06:46Z :: Ran 39 tests in 10.562s FAILED (failures=2)",
+  "detected": true,
+  "failing_tests": [
+   "test_copied_source_path_is_the_scope_of_the_copy_and_of_the_inventory (tests.test_local_checks.CopiedSetAndWorkspaceIndexTests.test_copied_source_path_is_the_scope_of_the_copy_and_of_the_inventory)",
+   "test_untracked_source_record_lists_exactly_the_copied_set_names (tests.test_local_checks.CopiedSetAndWorkspaceIndexTests.test_untracked_source_record_lists_exactly_the_copied_set_names)"
+  ],
+  "restored": true,
+  "sha256": "3136f52cef8ca4492e06f6c12898ea9f6e9f101eb5b34e4fed5c61b8b9be5ab8"
+ }
+]

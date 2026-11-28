@@ -1,0 +1,230 @@
+{
+  "schema": "ontokin.c271.p37-review/1",
+  "task": "C271",
+  "phase": "C271-P37-derived-workspace-correction",
+  "stage": "S7",
+  "acceptance": "A7",
+  "director": "c271-p37-08beec34eb0a",
+  "reviewer": "W3, the phase's independent reviewer: a subagent in a fresh context with the session's model; it wrote none of the plan, the decision, the implementation or the controls",
+  "recorded_at_utc": "2026-11-28T02:14:14Z",
+  "labels": {
+    "<worktree>": "the C271 worktree",
+    "<local>": "the data root beside the clone",
+    "<P37>": "<local>/c271-p37",
+    "<W3>": "<P37>/workers/W3-review-001",
+    "<tmp>": "the per-user temporary directory in resolved form",
+    ".../": "<worktree>/docs/engineering/localized-repair-c271/"
+  },
+  "candidate": {
+    "commit": "5a3502e22d0fa4b29fbff2c867f1aab8271c4235",
+    "tree": "9249fdeb2ea3b80ac7f05c1ee3a7f0ce4d88e580",
+    "parent": "2f728998456c829f3cdc13bbf72d6dd805fefa36",
+    "diff_sha256": "862baca6d22fe3e57bbd83965974ec7c9168ab01b93771fd0b3305fc947e2a29",
+    "verified_from_git_files": [
+      "the branch ref names C; C names the tree and the one parent",
+      "the tree comparison with the parent finds exactly the eight paths below",
+      "the provided diff, applied to the parent's blobs, gives C's blob for each of its eight sections, and each index line matches",
+      "the worktree's index (version 2, 23,156 entries) equals C's tree; every file's stat data matches; every file outside .git and .venv is in the index; no bytecode",
+      "the same after the reviewer's test runs (an identical record); the .venv holds no .pyc"
+    ]
+  },
+  "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+  "closes_phase_correction": true,
+  "basis_for_next_mr_attempt": true,
+  "acceptance_view": {
+    "A2_to_A6": "hold on the evidence recomputed here",
+    "A7": "met by this review: no mandatory finding",
+    "A8": "remains for S8",
+    "not_checked": "A1's and A5's pushes and readbacks: the reviewer starts no Git and no network"
+  },
+  "mandatory_findings": [],
+  "nonmandatory_finding_count": 6,
+  "digests": [
+    {"path": "docs/engineering/localized-repair-c271/derived-workspace-p37/CONTROLS-FROZEN.json", "sha256": "7c5f86ca92d8e6452b73e89ce9c97475533f6a7bed23a1a7a8266fb26c534a8a", "bytes": 172127, "blob_at_C": "aafa6411d5615bce1f98c92a271909296b1b4dc0", "blob_at_parent": null},
+    {"path": "docs/engineering/localized-repair-c271/derived-workspace-p37/DECISION-001.md", "sha256": "7a1626cb7916d744c7e91f6c82f6ce84d72a9c4e84d44bfa8004fdcdd21815fe", "bytes": 27829, "blob_at_C": "6eee5f22b8bce86a6a2d22575c93bfaa1371ed83", "blob_at_parent": null},
+    {"path": "docs/engineering/localized-repair-c271/derived-workspace-p37/interfaces/W1-CORRECTION.md", "sha256": "ce434b54e4b1de5d899bfc5ff4b41398bad5e3efcf1d6d79c088bed3be13abf5", "bytes": 20576, "blob_at_C": "68c03e34253a4fce7e814ddea5ed95e58e33e647", "blob_at_parent": null},
+    {"path": "prototypes/static_tray_v01/current_host_readback_v02.py", "sha256": "bab89614c9ceeeaae56e9e264937cae482feda5bf08bda13c5972ad7412f902b", "bytes": 83145, "blob_at_C": "5b681575121eacca430be7a5bf9ba1c22432fe7d", "blob_at_parent": "b410c39925d96de5b2563701c92d34e3df77abfb"},
+    {"path": "tests/test_current_host_readback_derived_controls_v02.py", "sha256": "c0eebef7796cecda2725f717aebd1f912947ee67feda690e8ac03ce9d564199a", "bytes": 85712, "blob_at_C": "c08bd517c64c48b583c906c16225628cff6b2d04", "blob_at_parent": null},
+    {"path": "tests/test_current_host_readback_provider_v02.py", "sha256": "95e04a46ad8a3a0691b40e7a2809154040a7a272c0a25c60e86c48540dbafc83", "bytes": 112238, "blob_at_C": "a24d9aaf050824212240c6d1be7660013c3cb41c", "blob_at_parent": "6ad8be8c26b3db757bcdb31694e3f97ce2c4dbe0"},
+    {"path": "tests/test_local_checks.py", "sha256": "0ceb6b8342178322d3253e7e1c733add498564a43f521b6ec8653ee56f7e6125", "bytes": 47088, "blob_at_C": "f666b64023f518bc4694d8884c661efc38a12e09", "blob_at_parent": "1e35988739647aef7f61ff8b2fa8d70b42088235"},
+    {"path": "tools/check_local.py", "sha256": "3136f52cef8ca4492e06f6c12898ea9f6e9f101eb5b34e4fed5c61b8b9be5ab8", "bytes": 52020, "blob_at_C": "705577f23e0f31e1d8f84b72a4357e94b1a864b5", "blob_at_parent": "f39f2936597c59c9bca39330558a7d6ea9f306a6"}
+  ],
+  "unchanged_neighbours_sha256": {
+    "prototypes/static_tray_v01/current_host_readback_v01.py": "cb3f0c7f247331c79171a9e1ac71141d93205392ff426382046cfa61999d1126",
+    "tests/test_current_host_readback_controls_v02.py": "3b8c91b7767c2db0ac3dd5c7dd48d035eb6dd602dc8c01e08bb0e49ac21bd618",
+    "prototypes/static_tray_v01/current_host_observation_v02.py": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+    "tools/storage_identity.py": "c8a88e9ead1e52f6e1b5d545fc3950cab14100f04366604a9ebee6ee215fe93c"
+  },
+  "findings": [
+    {
+      "id": "RV-01",
+      "mandatory": false,
+      "title": "The F-01 correction gives one refusal reason where there are two",
+      "evidence": [
+        "DECISION-001 section 2, 'Not missing source': a missing file of the source set always refuses through the binding, with CH-SOURCE, 'Complete CPU source inventory differs'",
+        "that reason holds for a missing or added source-tree file and for an optional file; a missing source role (a SOURCE_FILES path such as pyproject.toml) refuses earlier, in the observer's path check, with CH-SOURCE, 'Bound path or ancestor is missing: <path>', frozen in P37-C21 and confirmed by the reviewer's run",
+        "the rule and its fail-closed conclusion are right; F-01's own case (a source-tree file outside the copied set, such as ontokin/.env) is stated exactly; at C no source role lies outside the copied set (outputs/s2-tree-scope.json)"
+      ],
+      "change": "In S8's records, leaving C's reviewed text unchanged, state both reasons: a missing tree or optional file gives 'Complete CPU source inventory differs'; a missing role gives 'Bound path or ancestor is missing: <path>'. No code change."
+    },
+    {
+      "id": "RV-02",
+      "mandatory": false,
+      "title": "Scripts that made cited evidence live only in the session's scratchpad",
+      "evidence": [
+        "the Director's measure_fz02.py (93f0cac716595b0f209eb3be034f86da7c5d2180f2dda12fdd11fae670b3d476, the digest WORKERS.md records), s5_run.py and s5_compare.py exist only in the session's scratchpad",
+        "W1's index_scope.py, parent_proof_timing.py, compare.py, mutate.py and run_module.sh exist only there, and W1 recorded no digest for them; MUTATIONS.json names the ten mutations but not their texts",
+        "the storage module's run on the unchanged tree (<P37>/checks/s5-storage-baseline/) has no command or environment record; its tracebacks show the declaration commit's code under <P37>/measure/prep-001",
+        "a reboot or cleanup can clear the scratchpad; PROTOCOL section 5 asks for durable command evidence"
+      ],
+      "change": "Before the scratchpad is cleared, S8 copies these scripts beside the clone under <P37>/ (the Director's under director/, W1's under workers/W1-correction/scripts/), lists their SHA-256 in a sums file, and records the storage baseline run's command, working directory, environment names and times."
+    },
+    {
+      "id": "RV-03",
+      "mandatory": false,
+      "title": "W2 started Git outside a test fixture, and did not record it as a deviation",
+      "evidence": [
+        "W2's brief allowed Git starts only in its fixtures",
+        "explore_git.py and explore_path_wrapper.py started Git (version, init, add, commit, fetch, update-ref, read-tree, update-index, status, ls-files, rm --cached, reset, ls-tree, rev-parse) in fresh temporary directories; no Git start touched <worktree>",
+        "W2's STARTS.md lists these starts but not among deviations D-1 to D-3; they had no effect on any bound input"
+      ],
+      "change": "S8's process record lists them as W2's deviation D-4."
+    },
+    {
+      "id": "RV-04",
+      "mandatory": false,
+      "title": "P37-C34 is an MC19 case, not MC21 coverage",
+      "evidence": [
+        "P37-C34: a qualifying run with a valid selection whose original checkout lacks .claude/.gitignore; its docstring calls the outcome 'MC21's outcome'; WORKERS.md summarises it as '(C34: MC21)'",
+        "MC21 covers missing, partial, malformed or mismatched selections; this case is dirty original source (MC19), refused at a qualifying run's preparation, which is the outcome form MC21 has",
+        "the frozen JSON's sources list both MC21 and MC19; the control itself is right"
+      ],
+      "change": "In S8's records and in the next freeze's map of controls to obligations, count C34 under MC19 (original route, qualifying-run preparation), not as MC21 coverage. No change to the frozen control."
+    },
+    {
+      "id": "RV-05",
+      "mandatory": false,
+      "title": "Files that S8 must not copy as they are",
+      "evidence": [
+        "account values (home, logname and user): <P37>/checks/s5-001/tests.test_current_host_readback_driver.txt and <P37>/routine/ordinary-001/logs/unit-tests.log (the 0.1.0 driver tests' mocked call list); routine/ordinary-001.command.json and director/run/ordinary-001.environment.json",
+        "machine paths: the other routine/*.command.json and *.stdout.txt files, director/run/discovery-c.environment.json, both Python inventories, every *.collect.json, both comparisons, discovery-c.json and its two comparisons, ordinary-001/summary.json (source root, interpreter, step cwd and argv), MEASURE-001.json (copy.workspace), and W1's 30 mutation logs (tracebacks)",
+        "clean as they stand: the eight files of C, S5-RUN.json, S5-COMPARE.json, INVENTORY-ADDITIONS.json, WORKERS.md, W2's evidence, W1's files other than the mutation logs, and every file of this review"
+      ],
+      "change": "S8 applies FZ-09's carried rule to the files listed: raw logs only by digest, every argv and environment value replaced by its label, and each portable file searched before publication."
+    },
+    {
+      "id": "RV-06",
+      "mandatory": false,
+      "title": "To carry into the next MR attempt",
+      "evidence": [
+        "(a) start inventory: one more Git start per run, update-index -q --refresh (through the bound Git in R1); the 67 new tests start real Git through the PATH dispatcher in W1's and W2's fixtures and wrappers, /bin/sh wrappers and stand-ins, and cat; W1's two run() tests start uname and file through platform.platform() when first in the process; with LFS files the clean filter process moves from the first status read to the refresh",
+        "(b) MC28: the 474 additions (routine/INVENTORY-ADDITIONS.json, 7eccdc027ab1a52cb4ed3fa5b5b5589aba22670448e5d1f41d35ea5220a45682) need the freeze's approval",
+        "(c) FZ-06 now covers P37's 67 tests too: S5 and the reviewer ran each module alone without selection variables; R1 runs them with the derived pair set; none of them reads a selection variable",
+        "(d) FZ-02: the margin after the refresh rests on one measurement on this host, taken after a manual refresh at the declaration commit, not inside a run",
+        "(e) the derived checks after the source check (HOST, cross bindings, dependencies, methods) have never run on a real derived selection; P37-C05 to P37-C07 substitute them, so R1 is their first exercise; by reading they handle the parent explicitly (the original root for HOST's source binding, the parent's map root for the methods)"
+      ],
+      "change": "The next MR attempt's start inventory, observation plan and freeze carry (a) to (e); its freeze states FZ-02's post-refresh time on the new HOST with its basis."
+    }
+  ],
+  "items": {
+    "1_decision": {
+      "status": "MET",
+      "with": ["RV-01"],
+      "points": [
+        "the rule is exact and complete: rule A unchanged; rule B's six conditions are exactly what the code applies; every other line refuses with CH-SOURCE 'Dirty source: <line>'; untracked names refuse as before; a malformed record refuses with CH-WORKSPACE before any Git read; the original route refuses every line whatever record is passed",
+        "the basis holds: the deletions follow from P05 section 3's own derivation (a copy of the copied set, a repository that keeps the whole commit); an admitted path is outside the copied immutable-source inventory and absent from the workspace; the 0.2.0 source set is bound file by file before any Git read; contract section 7's untracked-file refusal is unchanged; no amendment is needed",
+        "every MC19 case still refuses: another checkout (C22), dirty source (C10 to C17, C51 to C55), untracked source (C19, C20, C59), changed provider or probe (C21), unbound Git (C22); MI's MC19 rows use derived=False and pass unchanged (S5: 151)",
+        "nothing the contract refuses is admitted: case variants of copied files refuse; non-ASCII names are quoted under the default core.quotePath and refuse; MC29's moments and refusals are unchanged"
+      ]
+    },
+    "2_implementation": {
+      "status": "MET",
+      "points": [
+        "one definition of the copied set: copied_source_path is the former git_metadata predicate; the provider imports it from the driver (in the unit process, the workspace's copy that the source set binds); the copy and the inventory walk the same constants with ignored(), and a path the walk cannot reach lies inside the predicate's set, so its deletion refuses",
+        "no other change of behaviour: the diff holds only the predicate and the refresh in the driver, and _copied_names, the keyword copied, rule B, _verify_parent's return value, _selection passing it on, a docstring paragraph and the comment in the provider; tests only add members (outputs/s5-inventory.json); _verify_source has one call site",
+        "case folding: str.casefold against the recorded regular files; for the unquoted ASCII names rule B can admit this matches the volume's case-insensitivity",
+        "refresh: once, after storage and before the first status read (C60); stat data only for copied entries whose bytes match (C61); later changes stay visible (C12, C62, C65); summary fields and values unchanged (C63; the S6 summary's 28 keys; workspace_git equal to main's baseline apart from head and tree); a failure fails the run before any step (C64); one more Git start per run with Git",
+        "LFS by reading: filters are configured only for LFS paths and before the refresh; the refresh runs the same clean filter the first status read ran before; a failing required filter fails preparation visibly where an ordinary run used to record workspace_git unavailable; the storage runner test's expectations hold; no LFS file at C and no git-lfs on R1's PATH"
+      ],
+      "r1_walk_at_C": [
+        "original checkout clean at C: index equals C's tree, stat data matches, no untracked file or bytecode (outputs/s1-candidate-identity.json)",
+        "S6 preparation: copy, workspace Git, storage without LFS and the refresh succeeded; index written at 01:10:51Z, unit stage started at 01:10:53Z",
+        "workspace_git shows C's head and tree; workspace inventory equals source_before (23,149 files); C tracks 23,156 entries, exactly seven outside the copied set",
+        "rule B admits all seven lines at C; no tracked name needs quoting, has an ignored component or collides up to case; all 645 files of the 0.2.0 source set lie inside the copied set (outputs/s2-tree-scope.json)",
+        "at the end of the whole routine the workspace showed exactly the seven deletions: index last written by the refresh, every copied entry's stat data unchanged, every file in the index, no bytecode or .DS_Store (outputs/s3-workspace-end-state.json); the twelve unit-process checks would see the same lines",
+        "nothing else in P37's scope refuses R1's route; remaining: RV-06 (e)"
+      ]
+    },
+    "3_controls": {
+      "status": "MET",
+      "with": ["RV-04"],
+      "points": [
+        "independent author (W2, fresh context); frozen 2026-11-28T01:02:35Z; the Director's S5 started 01:05:51Z on the same module bytes (c0eebef7...); W2's own earlier runs were allowed by its brief and are recorded",
+        "expectations from P05 section 3, the contract's MC19, MC21 and section 8, and the decision's rule; refusal reasons that the contract leaves to the code come from the unchanged code; each control cites its sources",
+        "coverage meets A4; labels 31 real, 11 simulated, 4 mocked, each boundary named; no weak or wrong control; the 46 methods equal the frozen IDs; the reviewer's run passed all 46"
+      ]
+    },
+    "4_evidence": {
+      "status": "MET",
+      "points": [
+        "S5 recomputed with MR's collector (outputs/s4-recheck-s5-s6.json): log digests match; test_local_checks +6 and provider_v02 +15, existing members unchanged; 0.2.0 driver, MI's controls and prepare_v02 equal MI's; the 0.1.0 driver (2) and provider (3) not-passing records and the readback setUpClass error equal MI's; the storage module differs from MI in 6 outcomes and 2 reasons and equals its unchanged-tree run exactly (PATH, not the correction)",
+        "S6: exit 1, unit tests failed, the other six steps passed, source_unchanged true, ordinary run kind; against main's resolved-directory run (recomputed, agreeing with the Director's comparator): 4,985 passed and 1 failure unchanged, 3 removed (main's skipped trio, MC22), 1,073 added, 93 new not passing (inspection 47, rtld-paths 39, 0.1.0 provider 3, 0.1.0 driver 2, RI_L08, the MC22 fixture), no different outcome, reason, subtests or occurrences, steps, reports, pending cases and unexecuted steps equal",
+        "every S6 difference is explained by earlier records: all 67 P37 tests passed; freeze 001's 92 attribution rows all match; RI_L08 predicted (Q-3); MC22 the contract's ordinary-run outcome; R03 still classifies them (FZ-04)",
+        "started tests equal the discovery minus exactly the trio, in discovery order (outputs/s7-log-discovery-join.json); no Node start (PATH reaches no node; no core step starts Node; the readback class fails at setup; MR's start inventory); Python inventory byte-equal before and after (c277bdd3...); framework 414 .pyc",
+        "discovery COMPLETE: 6,061 unique IDs = MH's 5,587 + MI's 407 + P37's 67 (W2's 46 frozen IDs, W1's 21 interface IDs equal to the methods added by syntax tree); the additions record is MI's 407 in order then the 67 in discovery order, with consistent counts (outputs/s5-inventory.json)",
+        "FZ-02: the measurement used the driver's own copy, the bound Git and the provider's exact reads; about 2.5 s of 5 s per read, 13 per run, no retry, page cache warm: the judgment and the correction are sound"
+      ]
+    },
+    "5_process_and_records": {
+      "status": "MET",
+      "with": ["RV-02", "RV-03", "RV-05"],
+      "points": [
+        "W1's D-1 and D-2 and W2's D-1 to D-3 are recorded and harmless",
+        "each worker wrote only its exclusive files; W1 changed no existing test; W2 changed no file of W1's; W1's 66 sums lines verify; W2's 14 local lines verify and its two labelled worktree lines equal C's digests",
+        "the files of C hold no machine path or personal name"
+      ]
+    },
+    "6_amendments_and_blockers": {
+      "status": "none",
+      "carries": ["RV-06"]
+    }
+  },
+  "observations": [
+    {"id": "O-01", "text": "Outside scope, by reading: in a --full run the driver links tools/node_modules after the refresh; tools/.gitignore's node_modules/ pattern matches directories only, not a link, so a --full qualifying run would list the link as an untracked name and the derived check would refuse it. This predates P37; MR's routine is the core profile."},
+    {"id": "O-02", "text": "S5 ran on the candidate's bytes before commit C, as the plan's stage order has it; W1's text correction of F-01 (01:07:38Z) fell within S5's last minute. No test reads that file, and C binds the corrected text."}
+  ],
+  "runs": {
+    "command": "/usr/bin/env -i HOME=<home> LOGNAME=<logname> USER=<user> PATH=/usr/bin:/bin TMPDIR=<tmp>/ .venv/bin/python -B -m unittest <module> -v",
+    "cwd": "<worktree> at C",
+    "rows": [
+      {"module": "tests.test_current_host_readback_derived_controls_v02", "started_at_utc": "2026-11-28T01:57:16Z", "ended_at_utc": "2026-11-28T01:58:13Z", "exit": 0, "result": "Ran 46 tests, OK", "log": "runs/derived-controls.log", "log_sha256": "37b1c809f977790f67deaaff4e8f91c5edce08e7fae0957109155ee8077e15ff"},
+      {"module": "tests.test_local_checks", "started_at_utc": "2026-11-28T01:58:19Z", "ended_at_utc": "2026-11-28T01:58:27Z", "exit": 0, "result": "Ran 39 tests, OK", "log": "runs/local-checks.log", "log_sha256": "187241ff617d21ce4e69c60515a5c1cd43ab58d156eb0fac68ffb8e1416a554b"},
+      {"module": "tests.test_current_host_readback_provider_v02", "started_at_utc": "2026-11-28T01:58:33Z", "ended_at_utc": "2026-11-28T01:58:49Z", "exit": 0, "result": "Ran 64 tests, OK", "log": "runs/provider-v02.log", "log_sha256": "ef7ac971f8edf982e056d722bd0c72f790383bafdcca397ae60fdfa2d0514c00"}
+    ],
+    "against_s5": "each equals S5's run of the same module, ID for ID (outputs/s6-reviewer-runs.json)"
+  },
+  "starts": {
+    "tests": "the three runs above; their fixtures started real Git through the PATH dispatcher, /bin/sh wrappers and cat",
+    "interpreter": "python3 -I -S -B (the framework interpreter) for the seven scripts and gitstore.py (s1 twice) and for short JSON and syntax-tree readers; s4 and s6 loaded MR's collector (0b5269402005584ffa8c0fe4510a1f1d728f7922414a0d38cf841851e29cc75b) and called only its reading functions; s4's first start failed before writing anything and ran again after a one-line fix",
+    "shell": "ls, cat, sed (sed -i on the reviewer's own scripts only), grep, find, stat, shasum, cmp, diff, wc, date, head, tail, cut, sort, uniq, tr, mkdir, mktemp and rmdir (one probe in <tmp>), and one /usr/bin/env -i PATH=/usr/bin:/bin sh -c 'command -v ...'",
+    "read_only": "Git's object, pack and index files; the session's scratchpad scripts of the Director and W1 were read, not run",
+    "never": ["a Git command", "the routine driver", "the complete suite or any other module", "Node", "ldd", "codesign", "otool", "a download or install", "a child agent"],
+    "writes": "only in <W3>"
+  },
+  "outputs": {
+    "outputs/s1-candidate-identity.json": "92e194db275c3ef1a9779aae939f5faf19c32d6ff609b135ff9bc2a9a05770c7",
+    "outputs/s1-candidate-identity-after-runs.json": "92e194db275c3ef1a9779aae939f5faf19c32d6ff609b135ff9bc2a9a05770c7",
+    "outputs/s2-tree-scope.json": "3cf41ea3b5c04156aae06730f8e8bdda0eccf46d3ba6e604cdea1c2c2a31ef5d",
+    "outputs/s3-workspace-end-state.json": "039c09a353b7321cf4c4f8b3a6f71a0b4198ac994d19fd3dbae8e6bcf9e50b1a",
+    "outputs/s4-recheck-s5-s6.json": "eb7b83e1feee83e9086939e089d76ab433bf31f92115a270c44e329e90055bb0",
+    "outputs/s5-inventory.json": "49f6e6928aed29c776057cca678c90e75fbd8b42652c036876abb4a3dcb8a675",
+    "outputs/s6-reviewer-runs.json": "fe7d9bbe4d493eab6af7160deaa6b1411115ee834b3a6fb6d28181bd9871a90a",
+    "outputs/s7-log-discovery-join.json": "e9d9f1323ba8d08beca3d516819e5957ab5c494ac4b10cebdc9231d14b578225"
+  },
+  "limits": [
+    "No Git was started: commit, tree, index and blob facts come from Git's files read directly; remote state, pushes and readbacks were not checked.",
+    "LFS behaviour of the refresh is judged by reading only; no LFS client or LFS file is available on this host or at C.",
+    "The unit-stage state of the workspace is inferred from the routine's end state and its index; a change made and undone between two checks cannot be excluded from these records.",
+    "The derived route's checks after the source check were not exercised on a real derived selection by anything in this phase."
+  ]
+}

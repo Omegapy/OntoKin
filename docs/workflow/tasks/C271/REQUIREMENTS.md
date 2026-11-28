@@ -738,3 +738,21 @@ The owner answered "Start the correction" in this session, after gate MR stopped
 - **Main:** not written.
 - **Excluded:** MR and R03's acceptance, R04 and R05, and the 0.1.0 provider.
 - **Unchanged until this phase's outcome records say otherwise:** R01/R02 remain done and R03–R05 not_done.
+
+### P37 correction outcome (2026-11-28, UTC)
+
+The correction is implemented, independently reviewed and accepted at candidate C `5a3502e22d0fa4b29fbff2c867f1aab8271c4235`. The records are pushed without force and read back ([outcome](../../../engineering/localized-repair-c271/derived-workspace-p37/OUTCOME.json), [decision](../../../engineering/localized-repair-c271/derived-workspace-p37/DECISION-001.md), [review](../../../engineering/localized-repair-c271/derived-workspace-p37/reviews/review-001/REVIEW-001.md), [portable records](../../../engineering/localized-repair-c271/derived-workspace-p37/README-PORTABLE.md)).
+- **The rule.** In a derived workspace, the 0.2.0 provider's source check also admits ` D <path>`, the unstaged deletion of a tracked path outside the driver's copied set, unless a recorded copied file has that name up to case.
+  - The driver now holds the copied set's one definition.
+  - Every other line, every untracked name and the whole original route still refuse.
+  - It stays within P05 section 3 and MC19, so no amendment is needed.
+- **FZ-02.** The driver refreshes the workspace's index once after its copy. The provider's status read fell from about 2.5 s, half of its 5 s allowance, to about 0.08 s. The summary's fields and values are unchanged.
+- **Evidence:**
+  - an independent author's decision with 21 focused tests;
+  - 46 controls, frozen by a second independent author;
+  - the focused modules at C;
+  - the complete ordinary routine at C. Against main's baseline, it differs only by the branch's added tests, 92 of which do not pass (MI's 91 on this host and RI_L08), and by S8's readback changes.
+  - an independent review with no mandatory finding.
+- **For the next MR attempt:** C's default inventory is 5,587 plus 474 additions, which that attempt's freeze approves (MC28).
+- **Unchanged:** R01/R02 remain done and R03–R05 not_done.
+- **Next:** gate MR again at C, which needs the owner's selection.

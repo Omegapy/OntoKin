@@ -1653,6 +1653,80 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/macos-routine-p36/checks/closing/CHECKS.json"
       ]
+    },
+    {
+      "name": "P37 FZ-02 measurement",
+      "command": "the driver's own prepare_workspace copy of the clean worktree, then the provider's status and untracked-file reads through the driver's git_read with HOST's bound Git, five times each before and after one index refresh",
+      "result": "passed",
+      "required": true,
+      "scope": "status 2.455 to 2.548 s before the refresh and 0.067 to 0.092 s after it, against 5 s per read",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/measure/MEASURE-001.json"
+      ]
+    },
+    {
+      "name": "P37 decision and implementation",
+      "command": "Independent author W1: DECISION-001, the correction in tools/check_local.py and the 0.2.0 provider, 21 focused tests, ten mutation runs",
+      "result": "passed",
+      "required": true,
+      "scope": "within P05 section 3 and MC19, no amendment; FZ-02 corrected by one index refresh",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/DECISION-001.md",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/interfaces/W1-CORRECTION.md"
+      ]
+    },
+    {
+      "name": "P37 frozen controls",
+      "command": "Independent control author W2: 46 controls with real Git, frozen before the Director executed them",
+      "result": "passed",
+      "required": true,
+      "scope": "31 real, 11 simulated, 4 mocked; all pass at C",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/CONTROLS-FROZEN.json"
+      ]
+    },
+    {
+      "name": "P37 focused modules at C",
+      "command": "/usr/bin/env -i HOME LOGNAME USER PATH=/usr/bin:/bin TMPDIR=<resolved>/ .venv/bin/python -B -m unittest -v <module>, eleven modules, one process each",
+      "result": "passed",
+      "required": true,
+      "scope": "the changed modules pass; every other module equals MI's final-003 outcomes, the storage module's environment-dependent class explained by a run on the unchanged tree",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/checks/s5-001/S5-COMPARE.json",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/checks/s5-storage-baseline/COMMAND.json"
+      ]
+    },
+    {
+      "name": "P37 complete ordinary routine at C",
+      "command": "/usr/bin/env -i HOME LOGNAME PATH=/usr/bin:/bin TMPDIR=<resolved>/ USER .venv/bin/python -B tools/check_local.py --timeout 7200 --output-dir <local>/c271-p37/routine/ordinary-001",
+      "result": "failed",
+      "required": true,
+      "scope": "exit 1: the unit stage failed with 92 not-passing tests (91 of MI's records on this host and RI_L08) and MC22's ordinary-run setup error; the six other stages passed; against main's resolved-directory run nothing else differs; recorded, not classified (R03's review classifies)",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/routine/ordinary-001/summary.json",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/routine/ordinary-001.compare-main-resolved.json"
+      ]
+    },
+    {
+      "name": "P37 independent review",
+      "command": "Fresh-context subagent W3 reviewing candidate C, the decision, the controls and the evidence",
+      "result": "passed",
+      "required": true,
+      "scope": "ACCEPT_WITH_NONMANDATORY_FINDINGS, RV-01 to RV-06, applied or carried",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/reviews/review-001/REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/reviews/REVIEW-DISPOSITION-001.json"
+      ]
+    },
+    {
+      "name": "P37 records checks",
+      "command": "workflow check, documentation verifier and whitespace check on the records commit, each interpreter start with -B; privacy search of every committed file",
+      "result": "passed",
+      "required": true,
+      "scope": "see the check record",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/checks/closing/CHECKS.json"
+      ]
     }
   ],
   "completion": {
@@ -1800,9 +1874,14 @@
       "bound_commit": "4ca781429c5411c67c0965bc69306b42c6cc74ad",
       "outcome": "docs/engineering/localized-repair-c271/macos-routine-p36/OUTCOME.json",
       "scope": "gate MR not met: stopped at S6 with FZ-01, an implementation blocker; no routine ran; R03 stays not_done"
+    },
+    "macos_0_2_0_derived_workspace_correction": {
+      "candidate_commit": "5a3502e22d0fa4b29fbff2c867f1aab8271c4235",
+      "outcome": "docs/engineering/localized-repair-c271/derived-workspace-p37/OUTCOME.json",
+      "scope": "the correction of gate MR's FZ-01 and FZ-02, reviewed and accepted; not MR, R03, R04, R05, integration or a release"
     }
   },
-  "next_action": "C271-P37-derived-workspace-correction is declared and in progress: the correction of FZ-01, the implementation blocker that stopped gate MR at its operational freeze. An independent author decides, under P05 section 3 and MC19 of the adopted contract ontokin.current-host-readback/0.2.0, how the provider's derived source check treats tracked paths that the driver does not copy into its isolated workspace, and whether that needs an amendment; implements it in tools/check_local.py and the 0.2.0 provider with one definition of the copied set; an independent author freezes real-Git controls on a fixture tree that tracks such paths; the Director first measures the derived route's Git timing (FZ-02) at the real tree's scale, runs the focused tests, the controls and the complete ordinary routine at the candidate commit, and a fresh reviewer reviews the candidate. It does not run MR. Nothing is integrated. Then MR again at the corrected commit, with a new observation plan, HOST and freeze.",
+  "next_action": "C271-P37 corrected FZ-01, the implementation blocker that stopped gate MR, and FZ-02, at candidate commit 5a3502e22d0fa4b29fbff2c867f1aab8271c4235: in a derived workspace the 0.2.0 provider's source check also admits the unstaged deletion of a tracked path outside the driver's copied set (one definition, check_local.copied_source_path), within P05 section 3 and MC19 with no amendment, and the driver refreshes the workspace's index once after its copy. An independent author decided and implemented it, an independent author froze 46 controls, the focused modules and the complete ordinary routine ran at C, and an independent review accepted it. R03 stays not_done. The next phase needs the owner's selection: gate MR again at C, with a new observation plan, HOST and freeze, carrying the items of the outcome. R04 and R05 stay separate phases.",
   "session_phase": {
     "schema": "ontokin.c271.p37-derived-workspace-correction/1",
     "task": "C271",
@@ -1819,7 +1898,10 @@
     "record": "docs/engineering/localized-repair-c271/derived-workspace-p37/PHASE.json",
     "plan": "docs/engineering/localized-repair-c271/derived-workspace-p37/CORRECTION-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P37-SESSION.md",
-    "status": "declared_correction_pending"
+    "status": "correction_reviewed_accepted",
+    "completed_at_utc": "2026-11-28T02:23:13Z",
+    "candidate_commit": "5a3502e22d0fa4b29fbff2c867f1aab8271c4235",
+    "outcome": "docs/engineering/localized-repair-c271/derived-workspace-p37/OUTCOME.json"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8802,7 +8884,7 @@
     "plan": "docs/engineering/localized-repair-c271/derived-workspace-p37/CORRECTION-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P37-SESSION.md",
     "declared_at_utc": "2026-11-27T23:16:33Z",
-    "status": "declared_correction_pending",
+    "status": "correction_reviewed_accepted",
     "owner_direction": [
       {
         "date": "2026-11-27 (UTC)",
@@ -8814,7 +8896,29 @@
     ],
     "blocker_corrected": "FZ-01 of gate MR (docs/engineering/localized-repair-c271/macos-routine-p36/reviews/FREEZE-REVIEW-DISPOSITION-001.json)",
     "downloads": "none needed and none approved",
-    "parent_complete": false
+    "parent_complete": false,
+    "completed_at_utc": "2026-11-28T02:23:13Z",
+    "candidate_commit": "5a3502e22d0fa4b29fbff2c867f1aab8271c4235",
+    "verdicts": {
+      "decision": "no amendment (W1)",
+      "controls": "46 frozen, all passing (W2)",
+      "review": "ACCEPT_WITH_NONMANDATORY_FINDINGS (W3)"
+    },
+    "outcome": "docs/engineering/localized-repair-c271/derived-workspace-p37/OUTCOME.json",
+    "closing": "docs/engineering/localized-repair-c271/derived-workspace-p37/CLOSING.json",
+    "learning": "docs/engineering/localized-repair-c271/derived-workspace-p37/LEARNING-DECISION.md",
+    "stages": {
+      "recorded_at_utc": "2026-11-28T02:23:13Z",
+      "S1": "declaration 2f728998 pushed and read back at 2026-11-27T23:17:41Z",
+      "S2": "FZ-02 measured at the declaration commit in a workspace that the driver's prepare_workspace copied (23,145 files, 1,173,504,904 bytes): status 2.455 to 2.548 s before a refresh, 0.067 to 0.092 s after it; the original checkout 0.049 to 0.074 s",
+      "S3": "W1's DECISION-001 (F-01 corrected, 7a1626cb), the implementation and 21 focused tests",
+      "S4": "W2's 46 frozen controls (31 real, 11 simulated, 4 mocked), all passing against W1's implementation; F-01 against the decision's text, corrected",
+      "S5": "eleven modules once each from env -i with PATH=/usr/bin:/bin: the changed modules pass (39, 64, 22, MI's 151 frozen, the 46 new); the others equal MI's final-003 outcomes; the storage module's 8 known non-passing tests differ from MI's record only by the environment, as a run on the unchanged tree shows; C pushed and read back at 2026-11-28T01:09:35Z",
+      "S6": "the complete ordinary routine at C once, 1,283.0 s, exit 1 (unit-tests failed; the six other stages passed); against main's resolved-directory run: 4,985 passed and main's one failure unchanged, 1,072 tests added of which 92 do not pass, the readback trio removed and MC22's setup error added, no other difference; the Python inventory unchanged; C's default inventory 6,061 = 5,587 + 474 additions, exact",
+      "S7": "review 001 (W3): ACCEPT_WITH_NONMANDATORY_FINDINGS, RV-01 to RV-06; disposition applies or carries each",
+      "S8": "records with path-portable copies, the checks, the push without force, the readback and one checkpoint comment each on PR274 and issue273; CLOSING.json records them",
+      "records": "docs/engineering/localized-repair-c271/derived-workspace-p37/: PHASE.json, CORRECTION-PLAN.md, DECISION-001.md, interfaces/, CONTROLS-FROZEN.json, measure/, checks/, routine/, workers/, reviews/, director/, INVENTORY-ADDITIONS.json, EXACT-RECORDS.json, README-PORTABLE.md, OUTCOME.json, LEARNING-DECISION.md, CLOSING.json"
+    }
   },
   "p37_fields_index": {
     "recorded_at_utc": "2026-11-27T23:16:33Z",

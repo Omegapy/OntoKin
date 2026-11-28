@@ -413,6 +413,34 @@
       "scope": "tools/check_local.py and prototypes/static_tray_v01/current_host_readback_v02.py at C271's commit B (4ca78142), where seven tracked .claude/ entries made R1's preparation refuse; found by gate MR's freeze review 001 (FZ-01) by reading, before any run.",
       "recorded_at": "2026-11-27",
       "supersedes": null
+    },
+    {
+      "id": "memory-c271-read-tree-index-refresh",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "An index that git read-tree builds holds no stat data, so every later git status there hashes every tracked file again, and with GIT_OPTIONAL_LOCKS=0 (the driver's Git environment) status never writes the index back. In the driver's isolated workspace of a 1.17 GB tree each status read took about 2.5 s against the provider's 5 s allowance; one git update-index -q --refresh after the copy brought it to about 0.08 s without changing what status reports. tools/check_local.py now does that refresh (refresh_workspace_index).",
+      "sources": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/measure/MEASURE-001.json",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/DECISION-001.md",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/reviews/review-001/REVIEW-001.md"
+      ],
+      "scope": "tools/check_local.py's isolated workspace and the 0.2.0 provider's derived source check, on the owner's macOS host at C271's P37 candidate (5a3502e2); one measurement, after a manual refresh.",
+      "recorded_at": "2026-11-28",
+      "supersedes": null
+    },
+    {
+      "id": "memory-c271-scratchpad-scripts-beside-the-clone",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "A script whose output becomes cited evidence must be copied beside the clone, with its SHA-256, before a record cites it: the session's scratchpad can be cleared by a reboot or a cleanup, so evidence that depends on it is not durable (PROTOCOL section 5). This holds for the Director's own scripts and for the workers'. Copy them at the latest before the records commit, and list them in EXACT-RECORDS.json.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/reviews/review-001/REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/reviews/REVIEW-DISPOSITION-001.json",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/EXACT-RECORDS.json"
+      ],
+      "scope": "Local phases whose Director or workers write helper scripts in the session's scratchpad; found by C271-P37's review 001 (RV-02).",
+      "recorded_at": "2026-11-28",
+      "supersedes": null
     }
   ]
 }

@@ -1,0 +1,217 @@
+{
+  "schema": "ontokin.c271.p37-outcome/1",
+  "task": "C271",
+  "phase": "C271-P37-derived-workspace-correction",
+  "owner": "c271-p37-08beec34eb0a",
+  "recorded_at_utc": "2026-11-28T02:23:13Z",
+  "status": "correction_reviewed_accepted",
+  "scope": "the correction of FZ-01, the implementation blocker that stopped gate MR at its operational freeze, and of FZ-02, the derived route's Git timing; not MR, R03, R04 or R05",
+  "outcome": "The correction is implemented, tested, independently reviewed and accepted at candidate C 5a3502e22d0fa4b29fbff2c867f1aab8271c4235. In a derived workspace, the 0.2.0 provider's source check also admits ' D <path>', the unstaged deletion of a tracked path outside the driver's copied set, by the driver's one definition of that set (check_local.copied_source_path), unless a file of the driver's recorded copied inventory has that name up to case; every other status line, every untracked name and the whole original route still refuse. The decision (an independent author's DECISION-001) stays within P05 section 3 and MC19 of ontokin.current-host-readback/0.2.0, with no amendment. For FZ-02, the driver refreshes the workspace's index once after its copy, which brought the provider's status read from about 2.5 s of its 5 s allowance to about 0.08 s; the driver's summary fields and values are unchanged. Nothing is integrated, and gate MR is not run in this phase.",
+  "starting_revision": "07d4e3c31e31054b147b586569f29cff3d945d5b",
+  "commits": [
+    {
+      "commit": "2f728998456c829f3cdc13bbf72d6dd805fefa36",
+      "subject": "C271-P37: declare the correction of the derived workspace's source check"
+    },
+    {
+      "commit": "5a3502e22d0fa4b29fbff2c867f1aab8271c4235",
+      "tree": "9249fdeb2ea3b80ac7f05c1ee3a7f0ce4d88e580",
+      "subject": "C271-P37: candidate C, the derived workspace's source check corrected (FZ-01, FZ-02)"
+    }
+  ],
+  "downloads": "none needed and none made",
+  "stages": [
+    {
+      "stage": "S1",
+      "status": "met",
+      "summary": "declaration 2f728998 pushed and read back at 2026-11-27T23:17:41Z"
+    },
+    {
+      "stage": "S2",
+      "status": "met",
+      "summary": "FZ-02 measured at the declaration commit in a workspace that the driver's prepare_workspace copied (23,145 files, 1,173,504,904 bytes): status 2.455 to 2.548 s before a refresh, 0.067 to 0.092 s after it; the original checkout 0.049 to 0.074 s",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/measure/MEASURE-001.json"
+      ]
+    },
+    {
+      "stage": "S3",
+      "status": "met",
+      "summary": "W1's DECISION-001 (F-01 corrected, 7a1626cb), the implementation and 21 focused tests",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/DECISION-001.md",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/interfaces/W1-CORRECTION.md"
+      ]
+    },
+    {
+      "stage": "S4",
+      "status": "met",
+      "summary": "W2's 46 frozen controls (31 real, 11 simulated, 4 mocked), all passing against W1's implementation; F-01 against the decision's text, corrected",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/CONTROLS-FROZEN.json"
+      ]
+    },
+    {
+      "stage": "S5",
+      "status": "met",
+      "summary": "eleven modules once each from env -i with PATH=/usr/bin:/bin: the changed modules pass (39, 64, 22, MI's 151 frozen, the 46 new); the others equal MI's final-003 outcomes; the storage module's 8 known non-passing tests differ from MI's record only by the environment, as a run on the unchanged tree shows; C pushed and read back at 2026-11-28T01:09:35Z",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/checks/s5-001/S5-RUN.json",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/checks/s5-001/S5-COMPARE.json",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/checks/s5-storage-baseline/COMMAND.json"
+      ]
+    },
+    {
+      "stage": "S6",
+      "status": "met",
+      "summary": "the complete ordinary routine at C once, 1,283.0 s, exit 1 (unit-tests failed; the six other stages passed); against main's resolved-directory run: 4,985 passed and main's one failure unchanged, 1,072 tests added of which 92 do not pass, the readback trio removed and MC22's setup error added, no other difference; the Python inventory unchanged; C's default inventory 6,061 = 5,587 + 474 additions, exact",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/routine/ordinary-001/summary.json",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/routine/ordinary-001.compare-main-resolved.json",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/INVENTORY-ADDITIONS.json",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/routine/discovery-c-compare-p37-additions.json"
+      ]
+    },
+    {
+      "stage": "S7",
+      "status": "met",
+      "summary": "review 001 (W3): ACCEPT_WITH_NONMANDATORY_FINDINGS, RV-01 to RV-06; disposition applies or carries each",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/reviews/review-001/REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/derived-workspace-p37/reviews/REVIEW-DISPOSITION-001.json"
+      ]
+    },
+    {
+      "stage": "S8",
+      "status": "this_record",
+      "summary": "records with path-portable copies, the checks, the push without force, the readback and one checkpoint comment each on PR274 and issue273; CLOSING.json records them"
+    }
+  ],
+  "decision": {
+    "record": "docs/engineering/localized-repair-c271/derived-workspace-p37/DECISION-001.md",
+    "rule": "in a derived workspace: the driver's generated examples, as before, and ' D <path>' for a tracked path outside the copied set unless a recorded copied file has that name up to case; nothing else; the original route admits no line",
+    "basis": "P05 section 3 (preparation fails on dirty or untracked executable source; the derivation records the equality of the complete copied immutable-source inventory; the generated-file exclusion stays the driver's) and MC19; such a path is neither source of the workspace nor executable there",
+    "amendment": "none needed",
+    "missing_source_refusals": "RV-01: a missing file of the source set always refuses: a tree or optional file with CH-SOURCE 'Complete CPU source inventory differs' (P37-C24 for a file outside the copied set), and a source role with CH-SOURCE 'Bound path or ancestor is missing: <path>' (P37-C21); at C all 645 files of the source set lie inside the copied set"
+  },
+  "implementation": {
+    "tools/check_local.py": "copied_source_path, the copied set's one path-level definition, used by git_metadata and the provider; refresh_workspace_index, one update-index -q --refresh after the copy and the storage step, whose failure fails preparation",
+    "prototypes/static_tray_v01/current_host_readback_v02.py": "the derived check reads the driver's recorded copied inventory, returned by _verify_parent from the derivation's parent proof",
+    "unchanged": [
+      "the generated-example exclusion",
+      "the untracked-input refusal",
+      "the original route",
+      "the 0.1.0 provider",
+      "MI's frozen controls",
+      "the driver's summary fields and values"
+    ]
+  },
+  "controls": {
+    "record": "docs/engineering/localized-repair-c271/derived-workspace-p37/CONTROLS-FROZEN.json",
+    "count": 46,
+    "labels": {
+      "real": 31,
+      "simulated": 11,
+      "mocked": 4
+    },
+    "note": "RV-04: P37-C34 counts under MC19 (the original route, at a qualifying run's preparation), not as MC21 coverage"
+  },
+  "routine_at_c": {
+    "not_passing_tests": 92,
+    "by_module": {
+      "test_current_host_inspection_v01": 47,
+      "test_current_host_rtld_paths_v01": 39,
+      "test_current_host_readback_provider": 3,
+      "test_current_host_readback_driver": 2,
+      "test_current_host_required_images_v01": 1
+    },
+    "fixture_errors": [
+      "setUpClass of the readback CPU class (MC22, an ordinary run)"
+    ],
+    "with_freeze_001_r1_attributions": "for information only: all 92 rows of gate MR's freeze 001 (main's last-digit test, D-18's two, MI's 89) match exactly; RI_L08 is the one not-passing test that no record establishes, as freeze 001's author predicted by reading",
+    "classification": "none here; the R03 review classifies every not-passing test under OK-ENG-009 section 3 item 4"
+  },
+  "inventory_additions": {
+    "record": "docs/engineering/localized-repair-c271/derived-workspace-p37/INVENTORY-ADDITIONS.json",
+    "base_count": 5587,
+    "added": 474,
+    "candidate_count": 6061,
+    "composition": "MI's 407 unchanged, and P37's 67: W1's 21 focused tests and W2's 46 frozen controls",
+    "approval": "the next MR attempt's freeze approves them (MC28)"
+  },
+  "starts": {
+    "node": 0,
+    "ldd": 0,
+    "codesign": 0,
+    "otool": 0,
+    "recorded_not_bounded": "Git in the workers' and the routine's tests and in the driver (one more Git start per run for the refresh), the framework interpreter with -B, the observer's python-inventory twice, MH's discovery collector once, and shell utilities; each listed in director/WORKERS.md and the workers' records"
+  },
+  "deviations_recorded": [
+    "W1 D-1: four /usr/bin/python3 -I -S -B reads of three JSON records",
+    "W1 D-2: four Git reads by name in the worktree outside any fixture, with no index write",
+    "W2 D-1 to D-3: one /usr/bin/python3 -c print(1), one version print under -I -S -B, one combined run that failed on its zsh invocation and ran no test",
+    "W2 D-4 (RV-03): exploration Git starts in fresh temporary directories, never in the worktree",
+    "the Director: the storage baseline run's command was recorded after the fact (RV-02), and the scripts behind cited evidence were copied from the session's scratchpad beside the clone at S8"
+  ],
+  "acceptance": [
+    {
+      "id": "A1",
+      "met": true,
+      "evidence": "2f728998, pushed and read back"
+    },
+    {
+      "id": "A2",
+      "met": true,
+      "evidence": "docs/engineering/localized-repair-c271/derived-workspace-p37/measure/MEASURE-001.json"
+    },
+    {
+      "id": "A3",
+      "met": true,
+      "evidence": "docs/engineering/localized-repair-c271/derived-workspace-p37/DECISION-001.md"
+    },
+    {
+      "id": "A4",
+      "met": true,
+      "evidence": "docs/engineering/localized-repair-c271/derived-workspace-p37/CONTROLS-FROZEN.json"
+    },
+    {
+      "id": "A5",
+      "met": true,
+      "evidence": "docs/engineering/localized-repair-c271/derived-workspace-p37/checks/s5-001/S5-COMPARE.json; C pushed and read back"
+    },
+    {
+      "id": "A6",
+      "met": true,
+      "evidence": "docs/engineering/localized-repair-c271/derived-workspace-p37/routine/ordinary-001.compare-main-resolved.json and docs/engineering/localized-repair-c271/derived-workspace-p37/INVENTORY-ADDITIONS.json"
+    },
+    {
+      "id": "A7",
+      "met": true,
+      "evidence": "docs/engineering/localized-repair-c271/derived-workspace-p37/reviews/REVIEW-DISPOSITION-001.json"
+    },
+    {
+      "id": "A8",
+      "met": "pending_at_this_record",
+      "evidence": "CLOSING.json records the push, the readback and the two checkpoint comments"
+    }
+  ],
+  "carried_to_the_next_mr_attempt": [
+    "a new observation plan, HOST and operational freeze at C (or a later commit), with their reviews; MR's HOST 858ef72a binds commit B",
+    "RV-06 (a): the start inventory gains one start per run, update-index -q --refresh (through the bound Git in R1), and the 67 new tests' starts of Git, /bin/sh stand-ins, cat, and uname and file through platform.platform()",
+    "RV-06 (b): the freeze approves INVENTORY-ADDITIONS.json's 474 additions for MC28",
+    "RV-06 (c): FZ-06 covers P37's 67 tests too, which ran alone and without selection variables in S5",
+    "RV-06 (d): FZ-02's margin after the refresh rests on one measurement on this host, taken after a manual refresh; the freeze states it again",
+    "RV-06 (e): the derived checks after the source check (HOST, cross bindings, dependencies, methods) have never run on a real derived selection; R1 is their first exercise",
+    "gate MR's FZ-02 to FZ-09 and its freeze review's answers to Q-1 to Q-12, as MR's disposition carried them",
+    "RI_L08: expected by reading and observed in S6 not to pass; never attributed; a finding for the R03 review",
+    "the 0.1.0 provider's same check (current_host_readback_v01.py, _verify_source): a follow-up of the Linux route, which does not run in local mode (P30-EXECUTOR-001)"
+  ],
+  "limits": [
+    "Contract section 10 lists what no result under this contract can support.",
+    "The correction is exercised with fixtures and on the real tree's workspace, but not through a real qualifying run: no HOST binds C.",
+    "The refresh's interplay with LFS filters is judged by reading only: this host has no prepared Git LFS client.",
+    "The case-folding guard is exercised by simulation, not on a real case-insensitive collision.",
+    "One host, one interpreter (CPython 3.12.13), the core profile."
+  ],
+  "next_action": "The owner selects the next phase. The recommended one is gate MR again at C: a new observation plan, HOST and operational freeze with their reviews, then R1 and R2, the audit and the R03 review, carrying the items above. R04 and R05 stay separate phases."
+}

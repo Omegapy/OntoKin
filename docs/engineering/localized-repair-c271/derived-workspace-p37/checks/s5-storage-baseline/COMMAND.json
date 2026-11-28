@@ -1,0 +1,49 @@
+{
+  "schema": "ontokin.c271.p37-command-record/1",
+  "name": "s5-storage-baseline",
+  "recorded": "after the fact, at S8, from the Director's own command (the shell call that ran it), the log's modification time and its digest (review 001's RV-02)",
+  "cwd": "<local>/c271-p37/measure/prep-001/workspace (the declaration commit's tree, copied by the driver's prepare_workspace at S2)",
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "HOME=<home>",
+    "LOGNAME=<user>",
+    "USER=<user>",
+    "PATH=/usr/bin:/bin",
+    "TMPDIR=<tmpdir>/",
+    "<worktree>/.venv/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "tools.storage_tests.test_storage_identity"
+  ],
+  "environment_names": [
+    "HOME",
+    "LOGNAME",
+    "PATH",
+    "TMPDIR",
+    "USER"
+  ],
+  "ended_at_utc_from_log_mtime": "2026-11-28T01:08:44Z",
+  "exit": {
+    "status": 1
+  },
+  "result_line": "FAILED (failures=6, errors=2), Ran 19 tests",
+  "log": {
+    "path": "tools.storage_tests.test_storage_identity.txt",
+    "sha256": "541e52dc5aca07cd4d7e0c2ab225bd9aef2b93784c12003e45ffcce88a64037e",
+    "size_bytes": 11693
+  },
+  "collection": {
+    "path": "collect.json",
+    "sha256": "c4fbc751880191795f2312b18a7f8edf54edca51dfb7bf35051afdb12481b306",
+    "by_outcome": {
+      "error": 2,
+      "failure": 6,
+      "passed": 11
+    }
+  },
+  "purpose": "S5's storage module gave 6 failures and 2 errors where MI's final-003 recorded 8 errors; the same run on the unchanged tree, with S5's environment, gives the same outcomes and first reasons, so the difference is the environment (PATH), not the correction",
+  "bytecode_after": "none in the measurement workspace"
+}

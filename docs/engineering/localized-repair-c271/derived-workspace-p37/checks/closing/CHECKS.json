@@ -1,0 +1,128 @@
+{
+  "schema": "ontokin.c271.p37-checks/1",
+  "phase": "C271-P37-derived-workspace-correction",
+  "stage": "S8",
+  "director": "c271-p37-08beec34eb0a",
+  "recorded_at_utc": "2026-11-28T02:27:33Z",
+  "source_head_before_commit": "5a3502e22d0fa4b29fbff2c867f1aab8271c4235",
+  "interpreter_rule": "every start of the framework interpreter with -B",
+  "staged_files": 142,
+  "checks": [
+    {
+      "name": "workflow",
+      "command": ".venv/bin/python -B tools/chat_workflow.py check",
+      "exit": 0,
+      "result": "passed",
+      "stdout": "workflow.stdout",
+      "stdout_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+    },
+    {
+      "name": "documentation",
+      "command": ".venv/bin/python -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "exit": 0,
+      "result": "passed",
+      "links": {
+        "documents": 1781,
+        "local_links": 7083,
+        "anchors": 192,
+        "external_skipped": 1122
+      },
+      "failures": [],
+      "stdout": "documentation.stdout",
+      "stdout_sha256": "7edd8e9c1af1811ce84ee34be210d2ec5344722463ecfd37c205154266154e12",
+      "note": "run while this record was a placeholder, so that the links to it resolve"
+    },
+    {
+      "name": "whitespace, every staged file",
+      "command": "git diff --cached --check",
+      "exit": 2,
+      "result": "failed_preserved",
+      "stdout": "whitespace-staged.stdout",
+      "reason": "trailing spaces only in W1's verbatim diff record workers/W1-correction/CHANGES.diff, whose blank context lines are a single space, and in this check's own output, which quotes them; preserved as recorded",
+      "stdout_sha256": "52a5b80bd39f6ad5047a852cb5ea5aa4860e3812d031ce4dd68870da7070556b"
+    },
+    {
+      "name": "whitespace, authored files",
+      "command": "git diff --cached --check -- . ':!<the verbatim diff record>' ':!<the two whitespace checks' own outputs>'",
+      "exit": 0,
+      "result": "passed",
+      "stdout": "whitespace-authored.stdout",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "privacy search of every staged file",
+      "command": "the derived private terms, the per-user temporary directory and a /var/folders pattern after the accepted contexts; the joined and squeezed string constants of every staged Python file; the application terms counted",
+      "result": "passed",
+      "files_with_a_term_left": [],
+      "accepted_classes": [
+        "python@3.12 only inside <prefix>/Cellar/... and <prefix>/opt/... interpreter paths and their relative link target, as in MH",
+        "the public repository's own name",
+        "macOS's own system paths (/System/Volumes/...), a public wheel's recorded build path (/Users/runner), a prose mention of the temporary directory's form, one reviewer's regular expression of generic path prefixes, one control author's privacy guard of the same generic prefixes, and a table of the system's own links",
+        "one joined test name, as in MH and commit B"
+      ],
+      "joined_constant_hits": [
+        {
+          "file": "docs/engineering/localized-repair-c271/derived-workspace-p37/director/scripts/declare_p37.py",
+          "term": "#10",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/derived-workspace-p37/director/scripts/declare_p37.py",
+          "term": "#10",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/derived-workspace-p37/director/scripts/declare_p37.py",
+          "term": "#20",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/derived-workspace-p37/director/scripts/declare_p37.py",
+          "term": "#20",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/derived-workspace-p37/reviews/review-001/scripts/s2_tree_scope.py",
+          "term": "#13",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/derived-workspace-p37/reviews/review-001/scripts/s2_tree_scope.py",
+          "term": "#13",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/derived-workspace-p37/workers/W2-controls/scripts/build_controls_frozen.py",
+          "term": "#0",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/derived-workspace-p37/workers/W2-controls/scripts/build_controls_frozen.py",
+          "term": "#0",
+          "in": "squeezed"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/derived-workspace-p37/workers/W2-controls/scripts/build_controls_frozen.py",
+          "term": "#2",
+          "in": "joined"
+        },
+        {
+          "file": "docs/engineering/localized-repair-c271/derived-workspace-p37/workers/W2-controls/scripts/build_controls_frozen.py",
+          "term": "#2",
+          "in": "squeezed"
+        }
+      ],
+      "joined_constant_reading": "each hit is either a machine path's generic prefix that the text search accepts in context, or a false positive formed across adjacent constants and absent in the source ('actual' + 'expected', 'equal' + 'expected', 'canonical' + 'exactly')",
+      "application_term_counts": {
+        "#34": 8,
+        "#24": 3,
+        "#8": 1646,
+        "#6": 79,
+        "#11": 8,
+        "#9": 4
+      },
+      "application_term_reading": "only the project's own workflow vocabulary (Claude, ChatGPT), generic words in test IDs and prose, and one standard-library file name in the Python inventory"
+    }
+  ],
+  "result": "passed"
+}

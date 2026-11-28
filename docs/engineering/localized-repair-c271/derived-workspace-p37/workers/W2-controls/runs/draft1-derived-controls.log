@@ -1,0 +1,95 @@
+test_c01_a_regular_file_outside_the_source_directories_is_accepted (tests.test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c01_a_regular_file_outside_the_source_directories_is_accepted)
+Label: real. The derived workspace of a tree that tracks .claude/.gitignore, which the copy leaves out. ... ok
+test_c02_a_symbolic_link_outside_the_source_directories_is_accepted (tests.test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c02_a_symbolic_link_outside_the_source_directories_is_accepted)
+Label: real. The derived workspace of a tree that tracks the link .claude/skills/alpha -> ../../.agents/skills/alpha. ... ok
+test_c03_every_other_kind_of_tracked_path_that_the_copy_leaves_out_is_accepted (tests.test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c03_every_other_kind_of_tracked_path_that_the_copy_leaves_out_is_accepted)
+Label: real. An executable file, a root file outside ROOT_FILES, nested directories, ignored directory ... ok
+test_c04_the_real_trees_seven_uncopied_entries_are_accepted (tests.test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c04_the_real_trees_seven_uncopied_entries_are_accepted)
+Label: real. FZ-01's shape: .claude/.gitignore and six links under .claude/skills/ give exactly the seven ... ok
+test_c05_the_derivation_and_the_unit_selection_accept_the_seven_entries (tests.test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c05_the_derivation_and_the_unit_selection_accept_the_seven_entries)
+Label: mocked (HOST, HOST's Git, cross bindings, dependencies and methods substituted; the provider's own ... ok
+test_c06_the_derivation_still_refuses_an_untracked_input_and_a_staged_change (tests.test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c06_the_derivation_still_refuses_an_untracked_input_and_a_staged_change)
+Label: mocked (as c05). After the copy, outside the copied set, so that the inventories stay equal: an ... ok
+test_c07_a_qualifying_run_passes_its_preparation_with_the_derived_binding (tests.test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c07_a_qualifying_run_passes_its_preparation_with_the_derived_binding)
+Label: mocked (as c05, and the plan has no step). tools.check_local.run with both selection arguments, on ... ok
+test_c10_a_modified_copied_file_is_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c10_a_modified_copied_file_is_refused)
+Label: real. docs/notes.md, a copied file outside the 0.2.0 source set, gets other bytes. ... ok
+test_c11_a_deleted_copied_file_is_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c11_a_deleted_copied_file_is_refused)
+Label: real. A copied file outside the 0.2.0 source set is deleted: docs/notes.md, README.md, and the file ... ok
+test_c12_a_same_size_change_with_the_old_modification_time_is_refused_after_the_refresh (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c12_a_same_size_change_with_the_old_modification_time_is_refused_after_the_refresh)
+Label: real. FZ-02: more than a second after the driver's refresh, docs/notes.md gets other bytes of the ... ok
+test_c13_a_retyped_copied_file_is_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c13_a_retyped_copied_file_is_refused)
+Label: real. docs/notes.md is replaced by a symbolic link. ... ok
+test_c14_a_staged_change_is_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c14_a_staged_change_is_refused)
+Label: real. Changes staged in the workspace's index, inside and outside the copied set. ... ok
+test_c15_a_rename_line_is_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c15_a_rename_line_is_refused)
+Label: real. Staged renames: of a copied file, of an uncopied path present again with the commit's bytes, ... ok
+test_c16_an_uncopied_path_whose_name_git_quotes_is_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c16_an_uncopied_path_whose_name_git_quotes_is_refused)
+Label: real. A tracked path outside the copied set whose name holds a double quote or a non-ASCII letter; ... ok
+test_c17_an_uncopied_path_that_is_present_but_changed_is_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c17_an_uncopied_path_that_is_present_but_changed_is_refused)
+Label: real. An uncopied path present in the workspace in any form other than its commit's, and an ... ok
+test_c18_an_uncopied_path_replaced_by_a_directory_holding_a_file_is_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c18_an_uncopied_path_replaced_by_a_directory_holding_a_file_is_refused)
+Label: real. Makefile is a directory holding inner.txt: its deletion line is admitted, and the untracked ... ok
+test_c19_an_untracked_input_inside_the_copied_set_is_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c19_an_untracked_input_inside_the_copied_set_is_refused)
+Label: real. An untracked file inside the copied set but outside the 0.2.0 source set's trees. ... ok
+test_c20_an_untracked_input_outside_the_copied_set_is_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c20_an_untracked_input_outside_the_copied_set_is_refused)
+Label: real. An untracked file outside the copied set, which neither the copy nor the commit supplies. ... ok
+test_c21_the_source_sets_binding_still_refuses_before_any_git_read (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c21_the_source_sets_binding_still_refuses_before_any_git_read)
+Label: real. In the derived workspace: a missing source role, a missing or an added file in a source tree, ... ok
+test_c22_another_checkout_an_unbound_git_and_another_commit_or_tree_are_refused (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c22_another_checkout_an_unbound_git_and_another_commit_or_tree_are_refused)
+Label: real. MC19's other cases on the derived route, with the record given. ... ok
+test_c23_a_symbolic_link_inside_the_copied_set_is_refused_by_the_driver (tests.test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c23_a_symbolic_link_inside_the_copied_set_is_refused_by_the_driver)
+Label: real. A tracked link tools/linked.py: the driver's inventory and copy refuse it, so no workspace ... ok
+test_c50_the_deletion_of_a_path_outside_the_copied_set_is_admitted (tests.test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c50_the_deletion_of_a_path_outside_the_copied_set_is_admitted)
+Label: simulated (Git boundary). ' D P' for P outside the copied set by the driver's definition. ... ok
+test_c51_every_other_status_form_of_an_uncopied_path_is_refused (tests.test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c51_every_other_status_form_of_an_uncopied_path_is_refused)
+Label: simulated (Git boundary). Staged, unstaged other than a deletion, unmerged, untracked or ignored forms. ... ok
+test_c52_the_deletion_of_a_path_inside_the_copied_set_is_refused (tests.test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c52_the_deletion_of_a_path_inside_the_copied_set_is_refused)
+Label: simulated (Git boundary). ' D P' for P inside the copied set, a link and a submodule path among them, ... ok
+test_c53_rename_and_copy_lines_are_refused (tests.test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c53_rename_and_copy_lines_are_refused)
+Label: simulated (Git boundary). Any line naming two paths, generated products included. ... ok
+test_c54_quoted_names_are_refused (tests.test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c54_quoted_names_are_refused)
+Label: simulated (Git boundary). Git's C-quoted names, outside the copied set and for generated products. ... ok
+test_c55_unsafe_names_are_refused (tests.test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c55_unsafe_names_are_refused)
+Label: simulated (Git boundary). An empty, '.' or '..' component, or no name. ... ok
+test_c56_a_case_variant_of_a_recorded_copied_file_is_refused (tests.test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c56_a_case_variant_of_a_recorded_copied_file_is_refused)
+Label: simulated (Git boundary). The record holds docs/notes.md, README.md, tests/control_fixture.txt and ... ok
+test_c57_a_derived_check_without_a_well_formed_record_admits_no_deletion (tests.test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c57_a_derived_check_without_a_well_formed_record_admits_no_deletion)
+Label: simulated (Git boundary). No record: the deletion refuses at its line. A malformed record refuses ... ok
+test_c58_the_original_route_refuses_every_line_with_or_without_a_record (tests.test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c58_the_original_route_refuses_every_line_with_or_without_a_record)
+Label: simulated (Git boundary). derived=False: deletions outside the copied set and generated examples. ... ok
+test_c59_generated_examples_and_untracked_names_keep_their_rules (tests.test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c59_generated_examples_and_untracked_names_keep_their_rules)
+Label: simulated (Git boundary). Rule A needs no record; untracked names refuse, inside and outside the ... ok
+test_c40_each_change_of_a_generated_example_is_accepted_beside_the_uncopied_paths (tests.test_current_host_readback_derived_controls_v02.GeneratedExampleControls.test_c40_each_change_of_a_generated_example_is_accepted_beside_the_uncopied_paths)
+Label: real. Unchanged rule A: each change, alone, in the full fixture's derived workspace. ... ok
+test_c41_all_generated_example_changes_together_are_accepted (tests.test_current_host_readback_derived_controls_v02.GeneratedExampleControls.test_c41_all_generated_example_changes_together_are_accepted)
+Label: real. The changed example, the untracked products, and the uncopied paths in one workspace. ... ok
+test_c30_an_uncopied_file_deleted_in_the_original_checkout_is_refused (tests.test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c30_an_uncopied_file_deleted_in_the_original_checkout_is_refused)
+Label: real. The original checkout of the seven-entry tree lacks .claude/.gitignore. ... ok
+test_c31_an_uncopied_link_deleted_in_the_original_checkout_is_refused (tests.test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c31_an_uncopied_link_deleted_in_the_original_checkout_is_refused)
+Label: real. The original checkout of the seven-entry tree lacks the link .claude/skills/communication. ... ok
+test_c32_an_original_checkout_without_any_uncopied_path_is_refused (tests.test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c32_an_original_checkout_without_any_uncopied_path_is_refused)
+Label: real. The original checkout of the full fixture lacks every uncopied path, as a workspace does. ... ok
+test_c33_the_derived_workspace_read_as_an_original_is_refused (tests.test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c33_the_derived_workspace_read_as_an_original_is_refused)
+Label: real. The driver's workspace of the seven-entry tree, checked with derived=False. ... ok
+test_c34_a_qualifying_run_whose_original_checkout_lacks_an_uncopied_path_fails_preparation (tests.test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c34_a_qualifying_run_whose_original_checkout_lacks_an_uncopied_path_fails_preparation)
+Label: mocked (as c05; the plan has one step, which must never start). MC21's outcome: the original ... ok
+test_c35_generated_example_changes_still_refuse_on_the_original_route (tests.test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c35_generated_example_changes_still_refuse_on_the_original_route)
+Label: real. Unchanged: in an original checkout a changed generated example and an untracked generated ... ok
+test_c60_the_preparation_makes_exactly_one_more_git_start_the_refresh (tests.test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c60_the_preparation_makes_exactly_one_more_git_start_the_refresh)
+Label: real (the comparison substitutes refresh_workspace_index with a no-op). The added start is ... ok
+test_c61_the_refresh_records_stat_data_for_the_copied_entries_only_and_changes_no_entry (tests.test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c61_the_refresh_records_stat_data_for_the_copied_entries_only_and_changes_no_entry)
+Label: real (the comparison substitutes refresh_workspace_index with a no-op). The workspace's index file, ... ok
+test_c62_status_lines_and_the_derived_outcome_are_the_same_with_and_without_the_refresh (tests.test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c62_status_lines_and_the_derived_outcome_are_the_same_with_and_without_the_refresh)
+Label: real (the comparison substitutes refresh_workspace_index with a no-op). ... ok
+test_c63_an_ordinary_runs_summary_keeps_its_fields_and_values (tests.test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c63_an_ordinary_runs_summary_keeps_its_fields_and_values)
+Label: real (the plan has no step, the platform metadata leaf is mocked, and the comparison substitutes ... ok
+test_c64_a_failed_refresh_fails_the_run_before_any_step (tests.test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c64_a_failed_refresh_fails_the_run_before_any_step)
+Label: simulated (the PATH Git's refresh start exits 128; every other start runs the real Git). An ordinary ... ok
+test_c65_a_copied_file_that_differs_from_the_commit_before_the_copy_stays_unrefreshed_and_refuses (tests.test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c65_a_copied_file_that_differs_from_the_commit_before_the_copy_stays_unrefreshed_and_refuses)
+Label: real. The original checkout has an uncommitted change of docs/notes.md when the driver copies it: the ... ok
+
+----------------------------------------------------------------------
+Ran 45 tests in 60.296s
+
+OK

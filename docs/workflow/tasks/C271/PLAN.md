@@ -721,3 +721,24 @@ Ordered steps:
 6. Run the complete ordinary routine at C once, with `PATH` fixed so that no Node can start, and list C's default inventory additions.
 7. Have a fresh reviewer, W3, review C and its evidence.
 8. Record, push without force, read the push back, comment once on PR274 and issue273, and stop.
+
+### P37 correction outcome (2026-11-28, UTC)
+
+Every step ran as planned:
+- the declaration `2f728998`;
+- the FZ-02 measurement;
+- the decision and implementation;
+- the frozen controls;
+- the focused modules;
+- the candidate C `5a3502e2`;
+- the complete ordinary routine at C;
+- the independent review;
+- these outcome records.
+
+Recorded failures and deviations:
+- the control author's finding F-01 against the decision's text, corrected by the author before C;
+- the storage module's outcome class, which differs from MI's record only by the environment;
+- the workers' recorded deviations, none of which changed a bound input;
+- the scripts behind cited evidence, copied from the session's scratchpad at S8 (RV-02).
+
+The [outcome](../../../engineering/localized-repair-c271/derived-workspace-p37/OUTCOME.json) lists each. Each push was without force and read back. The next phase, not begun here, is gate MR again at C. Then come R04 and R05, each a separate phase.

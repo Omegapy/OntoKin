@@ -1,0 +1,48 @@
+{
+  "schema": "ontokin.c271.p37-review-disposition/1",
+  "phase": "C271-P37-derived-workspace-correction",
+  "stage": "S7",
+  "director": "c271-p37-08beec34eb0a",
+  "recorded_at_utc": "2026-11-28T02:18:11Z",
+  "review": {
+    "record": "workers/W3-review-001/REVIEW-001.md",
+    "record_sha256": "db1b9b7853a3a1791dd8f5825d3746cc6d5027408fb0893064ea304453fb8cc9",
+    "json": "workers/W3-review-001/REVIEW-001.json",
+    "json_sha256": "fc3eaa65814e22fc4d9f49ffd7ecaae9479fbbcb073c3792c0e109c25598061a",
+    "sums_sha256": "dcee22445ff26ec5fed617df9b6d4e64e72ee5203c8c1695bdefcfcb34ff3ae6",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "reviewer": "W3, a Claude Code subagent in a fresh context with the session's model; it took no part in the phase"
+  },
+  "candidate": {
+    "commit": "5a3502e22d0fa4b29fbff2c867f1aab8271c4235",
+    "tree": "9249fdeb2ea3b80ac7f05c1ee3a7f0ce4d88e580",
+    "unchanged_after_review": true
+  },
+  "dispositions": [
+    {
+      "id": "RV-01",
+      "disposition": "applied in S8's records, with C's reviewed text unchanged: OUTCOME.json states both refusals of a missing source-set file, 'Complete CPU source inventory differs' for a tree or optional file and 'Bound path or ancestor is missing: <path>' for a source role (P37-C21)"
+    },
+    {
+      "id": "RV-02",
+      "disposition": "applied: the Director copied its own scripts (director/scripts/, with SHA256SUMS.txt) and W1's five scripts (workers/W1-correction/scripts/, with SHA256SUMS-COPIED-BY-DIRECTOR.txt) from the session's scratchpad beside the clone, byte-equal; checks/s5-storage-baseline/COMMAND.json records that run's command, working directory, environment names, end time, exit and log digest after the fact; W2's exploration scripts were already in its evidence; MUTATIONS.json's mutation texts stay as W1 recorded them"
+    },
+    {
+      "id": "RV-03",
+      "disposition": "applied: W2's exploration Git starts in fresh temporary directories (explore_git.py, explore_path_wrapper.py) are recorded as W2's deviation D-4 in the worker log and the outcome; no Git start touched the worktree"
+    },
+    {
+      "id": "RV-04",
+      "disposition": "applied in S8's records and carried to the next freeze's map of controls to obligations: P37-C34 counts under MC19 (the original route, at a qualifying run's preparation), not as MC21 coverage; the frozen control is unchanged"
+    },
+    {
+      "id": "RV-05",
+      "disposition": "applied by S8's copy builder: the listed raw files are copied only by digest or with every argv and environment value replaced by its label, and each portable file is searched before publication (FZ-09's rule)"
+    },
+    {
+      "id": "RV-06",
+      "disposition": "carried to the next MR attempt, item by item, in OUTCOME.json: (a) the start inventory's new starts, (b) MC28's 474 additions for the freeze to approve, (c) FZ-06 extended to P37's 67 tests, (d) FZ-02's margin stated again by the next freeze, (e) the derived checks after the source check exercised first by R1"
+    }
+  ],
+  "a7": "met: an independent review accepted C with no mandatory finding"
+}
