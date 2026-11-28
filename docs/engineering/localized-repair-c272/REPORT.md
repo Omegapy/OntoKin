@@ -62,7 +62,7 @@ not an unseen test and says nothing about authoring advantage.
 
 ## Requirements
 
-States are at the candidate given for independent review. The rows still open are completed or updated at integration and closing.
+States as of the closing commit.
 
 | Requirement | State | Evidence |
 | --- | --- | --- |
@@ -92,10 +92,10 @@ States are at the candidate given for independent review. The rows still open ar
 | REQ-024 checks for the changed scope | met for the driver at `d10c9f62`; the observer regression and record checks on the review candidate are in its check record | [CHECKS.json](evidence/CHECKS.json) |
 | REQ-025 failing check compared with main | met: one known baseline failure, none new or worsened | [CHECKS.json](evidence/CHECKS.json) |
 | REQ-026 independent review | met: the first review (`d275baa4`) required changes M1 to M3; the second review accepted `48d35db9`; later changes are the record-only edits for its optional findings | `evidence/review-1/REVIEW.md`, `evidence/review-2/REVIEW.md` |
-| REQ-027 integration and resulting main | open | the integration record |
+| REQ-027 integration and resulting main | met: PR283 merged at `30e27479` under the lease; resulting-main checks passed; branch deleted with history retained | [INTEGRATION.json](INTEGRATION.json) |
 | REQ-028 deliverables | met | this directory and `evidence/` |
 | REQ-029 readiness table | met | below |
-| REQ-030 local closing state | open | at closing |
+| REQ-030 local closing state | met: closing commit on main, task and session records, push state read back, no ZIP | task [SESSION.md](../../workflow/tasks/C272/SESSION.md) |
 | REQ-031 results within their limits | met | this report, README, PLAYBACK |
 | REQ-032 no model, no expansion | met | no model call; no change under `ontokin/`; RUN-PLAN unchanged |
 | REQ-033 failures visible | met | `evidence/runs/failed-4aff6024/`, `evidence/runs/earlier-f0e4148f/`, the driver's known failure |

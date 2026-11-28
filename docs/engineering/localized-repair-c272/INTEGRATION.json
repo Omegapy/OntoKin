@@ -1,0 +1,77 @@
+{
+  "schema": "ontokin.c272.integration/1",
+  "task": "C272",
+  "lease": {
+    "owner": "c272-4d816b3c0468",
+    "procedure": "git ls-remote observed main at the expected head; a commit whose only parent is that head was pushed without force; the remote was read back.",
+    "expected_head": "38ee8d18a6cd67245acf8b21d755e979b84153c1",
+    "acquisition_commit": "fa460dab9867a50ba7b83d09d073edfade5affe4",
+    "acquired_at": "2026-11-28T06:56:46Z",
+    "expires_at": "2026-11-28T07:26:46Z",
+    "released": "with the closing commit that carries this record, see STATUS.md"
+  },
+  "merge": {
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/283",
+    "method": "gh pr merge --merge --match-head-commit",
+    "matched_head": "6948488c7f7f29ae20546b28b1218d76ac98a7a0",
+    "merged_at": "2026-11-28T06:57:06Z",
+    "merge_commit": "30e274790e467123b1f3d782e083eef7b7081644",
+    "parents": [
+      "fa460dab9867a50ba7b83d09d073edfade5affe4",
+      "6948488c7f7f29ae20546b28b1218d76ac98a7a0"
+    ],
+    "tree": "1cbca6792f9f1555eabdd32d39f0a7878914e956",
+    "expected_tree_from_local_merge": "1cbca6792f9f1555eabdd32d39f0a7878914e956",
+    "equals_expected": true,
+    "difference_from_reviewed_candidate": "STATUS.md only, the lease lines",
+    "force_update": false
+  },
+  "review": {
+    "first": "d275baa4: changes required (M1 to M3), evidence/review-1/REVIEW.md",
+    "second": "48d35db9: accepted, evidence/review-2/REVIEW.md",
+    "confirmation": "48d35db9..a526d147 record-only, evidence/review-2/CONFIRMATION.md",
+    "after_confirmation": "6948488c: the two wording fixes the confirmation raised and the confirmation itself; records only"
+  },
+  "resulting_main_checks": {
+    "commit": "30e274790e467123b1f3d782e083eef7b7081644",
+    "where": "a clean detached worktree with its own environment, removed afterwards",
+    "doctor": "core and python-verification ready",
+    "workflow_check": "passed (14 tasks)",
+    "documentation_verifier": "passed",
+    "observer_regression_with_c272": {
+      "result": "passed",
+      "groups": 13,
+      "methods": 309,
+      "clean_before": true,
+      "clean_after": true
+    },
+    "qualification": {
+      "result": "passed",
+      "cases": [
+        "V1",
+        "V2",
+        "N1"
+      ],
+      "controls": "24 of 24",
+      "command": "qualify.py --output-dir <OntoKin-local>/c272/runs/main-30e27479"
+    },
+    "routine_driver": "not rerun: git diff d10c9f62..30e27479 is empty for ontokin/, tools/, tests/, examples/ and pyproject.toml, so the run at d10c9f62 (one known baseline unit-test failure equal to main's recorded run) applies by exact identity (PROTOCOL section 5); its documents step is the verifier run above",
+    "new_or_worsened_failures": []
+  },
+  "branch_and_worktrees": {
+    "remote_branch": "work/c272-edit-rebuild-qualification deleted automatically by GitHub at the merge; absent from git ls-remote; its head 6948488c is an ancestor of main",
+    "local_branch": "deleted with git branch -d after the main checkout reached 30e27479",
+    "stale_remote_tracking_ref": "pruned",
+    "worktrees": [
+      "../OntoKin-worktrees/c272 (clean, head 6948488c in main) removed",
+      "../OntoKin-worktrees/c272-lease (clean, fa460dab in main) removed",
+      "../OntoKin-worktrees/c272-main (clean, 30e27479) removed"
+    ],
+    "working_evidence": "retained beside the clone in OntoKin-local/c272 (runs, checks, review, state)"
+  },
+  "main_checkout": {
+    "fast_forward": "38ee8d18 to 30e27479",
+    "preserved": "every uncommitted and untracked file kept its SHA-256; the untracked copy of the C253 TRD was moved aside first and is byte-identical to the tracked one"
+  },
+  "statement": "Integration is neither release acceptance nor product qualification."
+}

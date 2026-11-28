@@ -101,3 +101,16 @@
 - **Routine driver** at `d10c9f62`: one unit-test failure, a known baseline identical to main's recorded `8e847c15` run; other steps passed ([CHECKS.json](../../../engineering/localized-repair-c272/evidence/CHECKS.json)).
 - **Retained failures:** the qualification attempt at `cad34f35` crashed before writing results; the run at `4aff6024` failed P03 and R04; the replay at `f0e4148f` was refused because the directory held untracked files.
 - **Next:** the observer regression with the c272 group and the record checks on this commit, the requirements audit, then the independent review.
+
+## Closing checkpoint 2026-11-28T07:10Z
+
+- **Integration:** C272 is integrated and closed. The main integration lease was acquired at `fa460dab`, from observed main `38ee8d18`. [PR283](https://github.com/Omegapy/OntoKin/pull/283) merged by expected-head merge at `30e274790e467123b1f3d782e083eef7b7081644`; the merge tree equals an independent local merge and differs from the reviewed candidate only in the lease lines.
+- **Resulting-main checks**, in a clean detached worktree: workflow check, documentation verifier, observer regression with the c272 group (13 groups, 309 methods) and `qualify.py` (V1, V2, N1, 24 of 24 controls) all passed. The routine driver applies by exact identity of its inputs.
+- **Branch and worktrees:** the remote branch was deleted by GitHub at the merge, the local branch was deleted, and all three worktrees were removed after being found clean; working evidence remains in `OntoKin-local/c272`. The main checkout was fast-forwarded with every uncommitted file preserved.
+- **Review:** the first independent review required changes M1 to M3, all resolved. The second review accepted, and its confirmation covered the record-only diff.
+- **Learning checkpoint:** three lessons recorded in `docs/workflow/memory.json`: the sign-equivalence control, ignored evidence logs, and the Homebrew shared-dependency effect.
+- **Owner items:**
+  - The default Node.js 25.9.0 is broken by the `simdjson` upgrade, and the owner decides on its repair.
+  - The untracked plan tracker PLAN-20261128-AC17E7E0 still says `ready`, because its skill was not invoked; it is not synchronized with this ledger.
+- **Delivery:** local closing state. The push state is read back after the closing commit, and no ZIP is made. Mode was `local` throughout.
+- **Next:** none. CURRENT awaits owner direction.
