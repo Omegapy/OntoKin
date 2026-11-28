@@ -46,7 +46,9 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: released. Previous owner: `local-migration-f58a0f3c1d5a`. Acquired at UTC `2026-11-25T21:09:13Z` by `6991745bd15e06e2dd7a6ab54518fcf2f9158b23`, expiry `2026-11-25T21:54:13Z`, for the integration of LOCAL-MIGRATION-20261124 ([record](docs/engineering/local-migration-20261124/INTEGRATION.json)); released at UTC `2026-11-25T21:33:52Z` with the closing commit, after the resulting-main checks and the branch disposition. No write is unknown.
+State: held. Owner: `c272-4d816b3c0468`. Acquired at UTC `2026-11-28T06:56:46Z` by the commit that carries this line, whose only parent is the observed main `38ee8d18a6cd67245acf8b21d755e979b84153c1`, expiry `2026-11-28T07:26:46Z`, for the integration of C272 ([PR283](https://github.com/Omegapy/OntoKin/pull/283), [scope282](https://github.com/Omegapy/OntoKin/issues/282)).
+
+Previous lease: released. Previous owner: `local-migration-f58a0f3c1d5a`. Acquired at UTC `2026-11-25T21:09:13Z` by `6991745bd15e06e2dd7a6ab54518fcf2f9158b23`, expiry `2026-11-25T21:54:13Z`, for the integration of LOCAL-MIGRATION-20261124 ([record](docs/engineering/local-migration-20261124/INTEGRATION.json)); released at UTC `2026-11-25T21:33:52Z` with the closing commit, after the resulting-main checks and the branch disposition. No write is unknown.
 
 Previous lease: released. Previous owner: `c270-finalization-a2bb67238030`.
 Release recorded at UTC: `2026-11-20T21:33:27.878111+00:00` after confirmed final delivery, independent review, published receipt, fresh receipt-checkpoint record checks, branch disposition and scope-issue closure.
