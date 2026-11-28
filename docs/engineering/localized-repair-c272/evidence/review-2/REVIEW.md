@@ -37,7 +37,7 @@ Outputs are in this directory; probes and their outputs are in `probes/`.
 | 10 | `probes/probe_poses.py` on the review-2 run | The seven hand-computed poses of review 1 still agree. C255 `pose_for` differs by 0 (5.6e-17 for one); the delivered GLB by at most 4.8e-8 m |
 | 11 | `git diff --name-only 38ee8d18 48d35db9 -- ontokin <C253, C255–C268, C210 proof, keyed-rack fixture> pyproject.toml tests tools examples .gitignore` | Empty |
 | 12 | `cmp` of committed `gltf-validation/*` and `playback/capture-3c206ac7.json` with `checks/gltf-delivered-3` and `checks/playback-delivered-3`; `shasum` of the frames; viewed `playback-paused.png` | Identical. The five stepped frames are byte-identical to the `delivered-2` frames. The paused frame shows 0.650 s with `first` at Y 0.130, as PLAYBACK.md states. Six files and two distinct GLBs; 0 errors and 0 warnings; 126 of 126 Three.js comparisons |
-| 13 | `diff` of `evidence/review-1/{REVIEW,ASSIGNMENT}.md` with the originals | REVIEW.md is unchanged. ASSIGNMENT.md differs only by replacing `<parent>` with `<parent>` |
+| 13 | `diff` of `evidence/review-1/{REVIEW,ASSIGNMENT}.md` with the originals | REVIEW.md is unchanged. ASSIGNMENT.md differs only by replacing the parent directory of the clone with `<parent>` |
 
 **Side effect.** As in review 1, the run in command 2 made the package-smoke setup tool write an
 ignored report, `build/local-environment/run-20261128T064940339207Z.json`, into the
@@ -122,3 +122,6 @@ review 1) when this review is retained.
 **accept.**
 - M1, M2 and M3 are resolved and verified by execution. The candidate passes the qualification at its exact revision, reproducing the delivered and replay evidence byte for byte.
 - The optional findings N1 to N5 are records-level or control-strength improvements. N2 to N4 are cheap and are recommended before integration. None blocks it.
+
+
+<!-- Retained copy: local paths were replaced with <home>, <parent> and <temp> labels before commit; row 13 was reworded after that replacement made it read `<parent>` with `<parent>`. -->
