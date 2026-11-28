@@ -42,14 +42,15 @@ control pass. No model is called, and no step is done by hand.
 | `delivery/cases/CASE/client/` | The scripted client's requests |
 | `delivery/cases/CASE/store/` | The service's own store |
 
-The harness builds the semantic sidecar itself with the product's `build_semantic_manifest`,
-from the program read back through the service and the GLB bytes retrieved; no Agent/0.2
-operation delivers it. The package-smoke setup tool also writes its own report into the
-checkout's ignored `build/local-environment/`.
 | `cases/CASE/score.json` | The per-property table, the 126 pose rows, the workflow checks and the C255 result |
 | `cases/CASE/rebuild.json`, `rebuild/` | The two clean rebuilds per case: workspace listings, invocation, import locations, wheel identity and logs |
 | `cases/CASE/semantic-final.json` | The delivered semantic record with its field pointers, source literals and cross-checks |
 | `controls/` | The real service runs of the two end-to-end fault controls |
+
+The harness builds the semantic sidecar itself with the product's `build_semantic_manifest`,
+from the program read back through the service and the GLB bytes retrieved; no Agent/0.2
+operation delivers it. The package-smoke setup tool also writes its own report into the
+checkout's ignored `build/local-environment/`.
 
 ## Components
 

@@ -3,7 +3,7 @@
   "id": "C272",
   "title": "C253 fresh edit, animation and clean-rebuild qualification",
   "intent": "Qualify the existing Agent/0.2 edit, recorded-animation and clean-rebuild route on the frozen C253 cases V1, V2 and N1 with a scripted client and independent checks of the actual bytes.",
-  "status": "in_progress",
+  "status": "review",
   "execution_mode": "local",
   "owner": "c272-4d816b3c0468",
   "branch": "work/c272-edit-rebuild-qualification",
@@ -277,8 +277,11 @@
       "id": "REQ-026",
       "description": "An independent reviewer checks the exact candidate and its evidence (RV R11)",
       "acceptance": "All 3 acceptance criteria of REQ-026 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c272/evidence/review-1/REVIEW.md",
+        "docs/engineering/localized-repair-c272/evidence/review-2/REVIEW.md"
+      ]
     },
     {
       "id": "REQ-027",
@@ -1031,7 +1034,7 @@
       "depends_on": [
         "TASK-031"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c272/evidence/review-1/REVIEW.md",
         "docs/engineering/localized-repair-c272/evidence/review-2/REVIEW.md"
@@ -1168,6 +1171,15 @@
       "evidence": [
         "docs/engineering/localized-repair-c272/evidence/CANDIDATE-CHECKS.json"
       ]
+    },
+    {
+      "name": "independent review",
+      "command": "separate Claude subagent with fresh context, worker template (evidence/review-1/ASSIGNMENT.md)",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c272/evidence/review-2/REVIEW.md"
+      ]
     }
   ],
   "completion": {
@@ -1177,7 +1189,7 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Observer regression and record checks on the corrected candidate, then the second independent review of the changes made for review-1's findings (TASK-032).",
+  "next_action": "PHASE-007: acquire the main integration lease against the observed head, merge PR283 with an expected-head merge, read back and check the resulting main, resolve branch and worktree, close.",
   "blockers": [],
   "owner_waivers": []
 }

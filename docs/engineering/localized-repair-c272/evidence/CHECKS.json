@@ -92,25 +92,28 @@
     "qualification": {
       "revision": "3c206ac7e97d4ac4e30a15fe597257e66f2d5504",
       "result": "passed",
-      "record": "evidence/runs/delivered-3c206ac7/RESULTS.json"
+      "record": "evidence/runs/delivered-3c206ac7/RESULTS.json",
+      "command": ".venv/bin/python docs/engineering/localized-repair-c272/qualify.py --output-dir <OntoKin-local>/c272/runs/delivered-3"
     },
     "replay": {
       "revision": "3c206ac7e97d4ac4e30a15fe597257e66f2d5504",
       "result": "passed, equal",
-      "record": "evidence/REPLAY.json"
+      "record": "evidence/REPLAY.json",
+      "command": ".venv/bin/python docs/engineering/localized-repair-c272/qualify.py --output-dir <OntoKin-local>/c272/runs/replay-3"
     },
     "gltf_validation": {
       "result": "passed",
       "record": "evidence/gltf-validation/SUMMARY.json",
-      "run": "delivered-3c206ac7"
+      "run": "delivered-3c206ac7",
+      "command": ".venv/bin/python docs/engineering/localized-repair-c272/validate_glbs.py --run <OntoKin-local>/c272/runs/delivered-3 --output-dir <OntoKin-local>/c272/checks/gltf-delivered-3 --node <node@22>"
     },
     "playback": {
       "result": "inspected",
-      "record": "evidence/PLAYBACK.md"
+      "record": "evidence/PLAYBACK.md",
+      "command": "PATH=<node@22>/bin:$PATH node docs/engineering/localized-repair-c272/inspect_playback.mjs <delivered-3>/delivery/cases/V1/record/files/retained/scene.glb <OntoKin-local>/c272/checks/playback-delivered-3"
     },
     "superseded": "The same checks at d10c9f62 passed; that candidate's code had review finding M2."
   },
-  "pending": "observer regression with the c272 group, documentation verifier and workflow check on the commit that carries this record (recorded in CANDIDATE-CHECKS.json at its successor)",
   "routine_driver_applies_to": {
     "revisions": [
       "d10c9f62",

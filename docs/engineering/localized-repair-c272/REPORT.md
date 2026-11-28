@@ -32,7 +32,7 @@ not an unseen test and says nothing about authoring advantage.
   other than the start was observed after any request.
 - **Scoring.**
   - The unchanged C255 checker accepted each case's observation of the actual bytes:
-    `componentPass` true, no fault. Each per-property table has 82 rows, all passing.
+    `componentPass` true, no fault. Each per-property table has 100 rows, all passing.
   - All 126 delivered poses agree with the independent equations; the largest errors are
     4.8e-8 m and 3.6e-8 rad, against limits of 0.001 m and 0.001 rad.
   - That is agreement at seven sampled times, not proof of continuous motion or dynamics.
@@ -91,7 +91,7 @@ States are at the candidate given for independent review. The rows still open ar
 | REQ-023 visual profile prepared | met, with a side effect reported to the owner | [VISUAL-PROFILE.json](evidence/VISUAL-PROFILE.json) |
 | REQ-024 checks for the changed scope | met for the driver at `d10c9f62`; the observer regression and record checks on the review candidate are in its check record | [CHECKS.json](evidence/CHECKS.json) |
 | REQ-025 failing check compared with main | met: one known baseline failure, none new or worsened | [CHECKS.json](evidence/CHECKS.json) |
-| REQ-026 independent review | first review: changes required (M1 to M3), resolved; the second review is in the review record | `evidence/review-1/REVIEW.md`, `evidence/review-2/REVIEW.md` |
+| REQ-026 independent review | met: the first review (`d275baa4`) required changes M1 to M3; the second review accepted `48d35db9`; later changes are the record-only edits for its optional findings | `evidence/review-1/REVIEW.md`, `evidence/review-2/REVIEW.md` |
 | REQ-027 integration and resulting main | open | the integration record |
 | REQ-028 deliverables | met | this directory and `evidence/` |
 | REQ-029 readiness table | met | below |
@@ -164,15 +164,15 @@ Criteria R01 to R12 of the review that the requirements document captures (RV):
 | R08 deliberate faults rejected | met for the seven named kinds; the listed extras that stay open are named in CONTROLS.md |
 | R09 external record, failure and retry | met |
 | R10 fresh replay, GLB validation, inspected playback | met |
-| R11 independent review; main checks classified | main checks classified (one known baseline); review open at this report |
+| R11 independent review; main checks classified | met: independent review accepted after one round of changes; main checks classified (one known baseline) |
 | R12 command, sources, GLBs, results, failures, report | met |
 
 Blocking requirements of the frozen run plan (`RUN-PLAN.json`, `executionAdmission`):
 
 | Blocking requirement | State after C272 |
 | --- | --- |
-| Qualified offline oracle with positive, boundary and adversarial controls | **Partly addressed, for the OntoKin route only.** Positive and adversarial controls run end to end here. Boundary controls exist at record level in C255. The independent oracle review of REQ-026 is pending. |
-| Qualified native artifact readers and minimal trial runner | **Partly addressed, for the OntoKin route only.** The GLB and sidecar readers and the scripted runner have been implemented and exercised on this family, with qualification subject to the independent review. A Blender reader and a model-facing trial runner do not exist. |
+| Qualified offline oracle with positive, boundary and adversarial controls | **Partly addressed, for the OntoKin route only.** Positive and adversarial controls run end to end here. Boundary controls exist at record level in C255. An independent review of the oracle, its formulas and its controls accepted the candidate (REQ-026). |
+| Qualified native artifact readers and minimal trial runner | **Partly addressed, for the OntoKin route only.** The GLB and sidecar readers and the scripted runner have been implemented and exercised on this family, and accepted by the independent review on this family. A Blender reader and a model-facing trial runner do not exist. |
 | Exact model snapshot, settings and usage semantics | unmet; the run plan's model fields stay null |
 | Qualified Blender starting seed and runtime dependency bindings | unmet |
 | Frozen route roster, equivalent task and reference-pack bindings, starting-state checks | unmet |

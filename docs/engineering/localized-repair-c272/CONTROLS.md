@@ -24,7 +24,7 @@ fixture of the frozen corpus.
 | E07b | rebuild with an undeclared input | A real rebuild in a workspace that also held `extra.ok`. |
 | E08 | changed dependency pin | The retained library differs from the bytes that `main.ok`'s digest names. |
 | P01, P02 | positive | The independently correct 0.75 m and 0.65 m states. |
-| P03 | positive | Every stored rotation keyframe of all 18 nodes negated in the actual GLB bytes, with the sidecar rebound, judged end to end. |
+| P03 | positive | Every stored rotation keyframe of all 18 nodes negated in the actual GLB bytes, with the sidecar rebound, judged end to end. Because both members of each hinge pair are negated, the signs cancel in their relative rotation, so P03 shows sign equivalence end to end but would not by itself have caught review finding M2. `test_semantic_observe.test_negated_stored_rotations_are_the_same_motion` negates single nodes and does catch it (review-2, N1). |
 | P04 | positive | A legitimate change of accepted revision, source hash and artifact hashes after the valid edit. |
 | R01 to R03 | H20 | One ownership, one follow or one motion field of a delivered GLB changed alone. The workflow must reject it, and C267's hinge records must stay as they were, so that no hinge value is inferred from that field. |
 | R04 | H20 | The actual length edit: C267's hinge records are equal across V1 apart from revision-bound digests and revision identities. |

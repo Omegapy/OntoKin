@@ -2,11 +2,13 @@
   "schema": "ontokin.c272.candidate-checks/1",
   "documentation_verifier": {
     "result": "passed",
-    "revision": "bfa9e8ff (also within the regression's documentation group)"
+    "revision": "bfa9e8ff (also within the regression's documentation group)",
+    "command": ".venv/bin/python docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
   },
   "workflow_check": {
     "result": "passed (14 tasks)",
-    "revision": "bfa9e8ff"
+    "revision": "bfa9e8ff",
+    "command": ".venv/bin/python tools/chat_workflow.py check"
   },
   "routine_driver_reuse": "The driver ran at d10c9f62. git diff d10c9f62..f955dafd changes only docs/engineering/localized-repair-c272/evidence/, REPORT.md, README.md and docs/workflow/tasks/C272/: no implementation, dependency, fixture, test or command identity changed, so its result applies to f955dafd (PROTOCOL section 5).",
   "qualification_reuse": "The qualification and its replay ran at 3c206ac7; git diff 3c206ac7..bfa9e8ff changes only evidence and record files, none of which qualify.py reads or runs.",
@@ -28,6 +30,7 @@
     "c272_methods": 27,
     "clean_before": true,
     "clean_after": true,
-    "record": "evidence/observer-candidate-bfa9e8ff.json"
+    "record": "evidence/observer-candidate-bfa9e8ff.json",
+    "command": ".venv/bin/python docs/engineering/localized-repair-c272/run_observer_regression.py --with-c272 --output-dir <OntoKin-local>/c272/checks/observer-candidate-2"
   }
 }
