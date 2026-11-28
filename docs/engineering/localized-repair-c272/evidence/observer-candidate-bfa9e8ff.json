@@ -1,0 +1,285 @@
+{
+  "schema": "ontokin.c272.observer-regression/1",
+  "revision": "bfa9e8ffe224f2b745368265e43b985d5a1900d2",
+  "tree": "05bfa65be0a3104df7a7943ad95996c17a09e511",
+  "clean_before": true,
+  "executor": {
+    "interpreter": "3.12.13",
+    "implementation": "CPython",
+    "system": "Darwin",
+    "release": "26.6.2",
+    "machine": "arm64",
+    "executable": "checkout .venv/bin/python"
+  },
+  "temporary_directory": "resolved",
+  "groups": [
+    {
+      "name": "c253-corpus",
+      "command": [
+        "python",
+        "-B",
+        "docs/engineering/localized-repair-c253/verify_manifest.py"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": null,
+      "recorded_methods": null,
+      "method_count_matches": null,
+      "unittest_summary": null,
+      "seconds": 0.21,
+      "log_sha256": "ea0741f2d05a2c72f321fe69dd20fae99055419af2c9c6ac5c8e9a2b71d23ebd"
+    },
+    {
+      "name": "c255-oracle",
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c255",
+        "-p",
+        "test_oracle.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": 31,
+      "recorded_methods": 31,
+      "method_count_matches": true,
+      "unittest_summary": "OK",
+      "seconds": 6.09,
+      "log_sha256": "1ce79b49887c2f479e09a67c5be2d6e128aaaa486c956e5b5fe3e76d8999523f"
+    },
+    {
+      "name": "c256-reader",
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c256",
+        "-p",
+        "test_reader.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": 29,
+      "recorded_methods": 29,
+      "method_count_matches": true,
+      "unittest_summary": "OK",
+      "seconds": 0.78,
+      "log_sha256": "892bac12c09e3fdc9809b210099cdea6e23266332031eb2ae568715a1e4363e7"
+    },
+    {
+      "name": "c257-ownership",
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c257",
+        "-p",
+        "test_ownership.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": 23,
+      "recorded_methods": 23,
+      "method_count_matches": true,
+      "unittest_summary": "OK",
+      "seconds": 0.34,
+      "log_sha256": "5ce5274df0fc271ef26599871679d5e67c7f6212f2bb90eb3c672e4d1aa334b7"
+    },
+    {
+      "name": "c258-follows",
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c258",
+        "-p",
+        "test_follows.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": 28,
+      "recorded_methods": 28,
+      "method_count_matches": true,
+      "unittest_summary": "OK",
+      "seconds": 0.73,
+      "log_sha256": "08e76c9a2153a510d3770c38da3e512eec2915ca5466720afbbd45201d12cb91"
+    },
+    {
+      "name": "c261-hinge_glb",
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c261",
+        "-p",
+        "test_hinge_glb.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": 28,
+      "recorded_methods": 28,
+      "method_count_matches": true,
+      "unittest_summary": "OK",
+      "seconds": 0.68,
+      "log_sha256": "086b9b8a72721366725bc46d40dd3482ebf198a0f59e253f1e8914aeceef976f"
+    },
+    {
+      "name": "c265-source_hinges",
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c265",
+        "-p",
+        "test_source_hinges.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": 49,
+      "recorded_methods": 49,
+      "method_count_matches": true,
+      "unittest_summary": "OK",
+      "seconds": 1.66,
+      "log_sha256": "49c1286b39dcf0648959a44a639230d0931ddf143c5f05645f63873176908604"
+    },
+    {
+      "name": "c266-binding",
+      "command": [
+        "python",
+        "-B",
+        "docs/engineering/localized-repair-c266/test_hinge_binding.py",
+        "--evidence-dir",
+        "OUTPUT_DIR/evidence/c266-controls"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": 34,
+      "recorded_methods": 34,
+      "method_count_matches": true,
+      "unittest_summary": "OK",
+      "seconds": 19.73,
+      "log_sha256": "5119464aee104deaadfa87cb265f7e9704024aba6f7eb11189bf255f2bd51e8f"
+    },
+    {
+      "name": "c267-comparison",
+      "command": [
+        "python",
+        "-B",
+        "docs/engineering/localized-repair-c267/test_hinge_compare.py",
+        "--evidence-dir",
+        "OUTPUT_DIR/evidence/c267-controls"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": 25,
+      "recorded_methods": 25,
+      "method_count_matches": true,
+      "unittest_summary": "OK",
+      "seconds": 4.46,
+      "log_sha256": "47f2066b9c9cb8c9940e54c42adb869c6c8c5cd68e01ee386ec5fd8e138c3ece"
+    },
+    {
+      "name": "c268-endpoint",
+      "command": [
+        "python",
+        "-B",
+        "docs/engineering/localized-repair-c268/test_endpoint_reader.py",
+        "--evidence-dir",
+        "OUTPUT_DIR/evidence/c268-controls"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": 35,
+      "recorded_methods": 35,
+      "method_count_matches": true,
+      "unittest_summary": "OK",
+      "seconds": 1.52,
+      "log_sha256": "0d59568b4c644962352dc9981012c6690fc9b78f9c2336a6c4881d6b30f59291"
+    },
+    {
+      "name": "workflow",
+      "command": [
+        "python",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": null,
+      "recorded_methods": null,
+      "method_count_matches": null,
+      "unittest_summary": null,
+      "seconds": 0.07,
+      "log_sha256": "9af40995320adcb4da3a6bb2b396ced07bb39674bc4dd4c18ffcb59ed35093f8"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": null,
+      "recorded_methods": null,
+      "method_count_matches": null,
+      "unittest_summary": null,
+      "seconds": 1.63,
+      "log_sha256": "d183a270e160d57e143e5504e58b6ad0a86e4b0b4ebaa7b7130f9be73ef0fc78"
+    },
+    {
+      "name": "c272-qualification",
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c272",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "methods": 27,
+      "recorded_methods": null,
+      "method_count_matches": null,
+      "unittest_summary": "OK",
+      "seconds": 58.29,
+      "log_sha256": "124643bc99e703b63b9b64875d6ae7ec6a781271f14c6c9301c154f854f768f3"
+    }
+  ],
+  "clean_after": true,
+  "result": "passed",
+  "methods_total": 309
+}

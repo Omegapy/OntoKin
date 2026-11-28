@@ -1,0 +1,25 @@
+{
+  "schema": "ontokin.c272.visual-profile/1",
+  "task": "C272",
+  "step": "TASK-024",
+  "authority": "DEC-008 of PLAN-20261128-AC17E7E0, approved by the owner with the plan, and the owner's instruction to execute the plan",
+  "observed_at_utc": "2026-11-28",
+  "installed_on_the_owners_machine": [
+    {"what": "node@22 22.23.5_2 (Homebrew formula, keg-only; Node.js v22.23.5, npm 10.9.9)", "mechanism": "brew install node@22", "location": "/opt/homebrew/opt/node@22 (keg-only, not linked)"},
+    {"what": "simdjson upgraded to 5.3.0 as a dependency of node@22", "mechanism": "brew install node@22 (automatic dependency upgrade)", "location": "Homebrew Cellar"},
+    {"what": "npm dependencies of tools/package-lock.json: esbuild 0.25.10, @esbuild/darwin-arm64 0.25.10, fsevents 2.3.2, gltf-validator 2.0.0-dev.3.10, playwright 1.56.1, playwright-core 1.56.1, three 0.180.0", "mechanism": "python3.12 tools/bootstrap_local.py --profile visual-verification --node <node@22> (npm ci --prefix tools --ignore-scripts)", "location": "tools/node_modules of the C272 worktree only (ignored by tools/.gitignore)"},
+    {"what": "Playwright Chromium headless shell chromium_headless_shell-1194", "mechanism": "the same setup run (playwright install chromium --only-shell)", "location": "<home>/Library/Caches/ms-playwright"}
+  ],
+  "side_effect": {
+    "observed": "After brew install node@22, the machine's existing default Node.js 25.9.0_2 (/opt/homebrew/bin/node) no longer starts: it is linked against libsimdjson.33.dylib, and the simdjson upgrade to 5.3.0 provides libsimdjson.38.dylib only. node@22 itself is linked against libsimdjson.38 and works.",
+    "not_repaired": "The repair that Homebrew offers, brew upgrade node, would move Node.js from 25.9.0 to 26.13.1 and install or upgrade eleven further packages. DEC-008 did not authorize that, so it is left to the owner.",
+    "effect_on_this_scope": "None. Every command of this scope that needs Node.js runs with node@22 first on PATH."
+  },
+  "doctor": {
+    "command": "PATH=<node@22>/bin:$PATH .venv/bin/python tools/doctor_local.py --profile visual-verification --node <node@22>/bin/node",
+    "checkout": "C272 worktree at f0e4148fbbd26659ba47597d6f6064c13a4459e3",
+    "readiness": {"core": "ready", "python-verification": "ready", "visual-verification": "ready"},
+    "visual_checks": {"node": "ready", "npm": "ready", "npm-dependencies": "ready", "chromium": "ready"}
+  },
+  "committed_files_changed": "none (git status --short empty after the setup)"
+}

@@ -1,0 +1,101 @@
+{
+  "schema": "ontokin.c272.accepted-state/1",
+  "caseId": "N1",
+  "derived_from": "the service's actual responses, its accepted pointer read after every request, and the retrieved bytes",
+  "starting_accepted_revision": "sha256:8f9d976568e2a9fa39573e3fb90f616529097241a098b21d4eb22eabe4b7032f",
+  "candidate_id": "sha256:104ad4e3ca13a1d462bdd22443bba4ba95d2d49566c33c89f8e5a7e27a51ec14",
+  "candidate_parent_revision": "sha256:8f9d976568e2a9fa39573e3fb90f616529097241a098b21d4eb22eabe4b7032f",
+  "new_accepted_revision": null,
+  "accepted_revisions_observed_after_each_request": [
+    "sha256:8f9d976568e2a9fa39573e3fb90f616529097241a098b21d4eb22eabe4b7032f"
+  ],
+  "hashes": {
+    "start.source": {
+      "main.ok": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    "start.artifacts": {
+      "scene.glb": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+      "scene.semantic.json": "6136b98ea7226ba04c8cddafc6876b277a59db4a55b2b457a24c7b1f200923f1"
+    },
+    "candidate.source": {
+      "main.ok": "3d65ef15bbf92b557b960f9bb186b6483cf76dca68737d62ba3761fe7a7be499",
+      "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    "retained.source": {
+      "main.ok": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    "retained.artifacts": {
+      "scene.glb": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+      "scene.semantic.json": "6136b98ea7226ba04c8cddafc6876b277a59db4a55b2b457a24c7b1f200923f1"
+    }
+  },
+  "diagnostic_translation": {
+    "rule": "OKL-E-UNIT with details.expected 'Length' and details.actual 'Mass', from the reference implementation's type phase, is C255's incompatible-dimension diagnostic with mechanism 'compiler'.",
+    "service_diagnostics": [
+      {
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "category": "invalid",
+        "code": "OKL-E-UNIT",
+        "details": {
+          "actual": "Mass",
+          "expected": "Length"
+        },
+        "message": "Expected Length, received Mass.",
+        "phase": "type",
+        "primary": {
+          "element_id": [
+            "keyed-rack",
+            "demo"
+          ],
+          "end_byte": 1052,
+          "file": "main.ok",
+          "source_id": "entry",
+          "source_revision": "sha256:3d65ef15bbf92b557b960f9bb186b6483cf76dca68737d62ba3761fe7a7be499",
+          "start_byte": 1044
+        },
+        "program_revision": "sha256:104ad4e3ca13a1d462bdd22443bba4ba95d2d49566c33c89f8e5a7e27a51ec14",
+        "related": [],
+        "repair": {
+          "patches": [],
+          "summary": "Use a value with the required type, dimension, and frame."
+        },
+        "rule_ids": [
+          "LANG-005"
+        ],
+        "run_id": null,
+        "schema_version": "ontokin.diagnostic/0.2",
+        "severity": "error",
+        "source_id": "entry",
+        "source_revision": "sha256:3d65ef15bbf92b557b960f9bb186b6483cf76dca68737d62ba3761fe7a7be499",
+        "time": null
+      }
+    ],
+    "translated": true
+  },
+  "tools": {
+    "implementation": {
+      "name": "ontokin-reference",
+      "version": "0.4.0",
+      "source_code_sha256": "sha256:920575745f5661c85c64cd6ff172812df82a9808fda3abb8cf55e16d66bb2d80"
+    },
+    "python": "3.12.13",
+    "platform": "Darwin arm64",
+    "runner_sha256": "b41a4ca4917fe2241659783c8a1f9070ee34df44ac02c0d524be29a2e18039f9"
+  },
+  "export_options": {
+    "helpers": false
+  },
+  "destination": "ontokin.glb/0.2",
+  "protocol": "ontokin.agent/0.2",
+  "model": "not applicable to a scripted client",
+  "model_settings": "not applicable to a scripted client",
+  "token_usage": "not applicable to a scripted client",
+  "limit": "Acceptance is observed at each response and at the accepted pointer after each request; the store keeps no history between them."
+}
