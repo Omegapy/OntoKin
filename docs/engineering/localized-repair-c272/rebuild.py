@@ -30,18 +30,24 @@ def run(command, **kwargs) -> subprocess.CompletedProcess:
     return subprocess.run([str(c) for c in command], capture_output=True, text=True, check=True, **kwargs)
 
 
+def checkouts() -> list[Path]:
+    """Every checkout of this repository: the main checkout and all its worktrees."""
+    listing = run(["git", "worktree", "list", "--porcelain"], cwd=ROOT).stdout
+    return [Path(line[len("worktree "):]).resolve() for line in listing.splitlines() if line.startswith("worktree ")]
+
+
 def inside_checkout(path: Path) -> bool:
-    """True when any ancestor holds a Git checkout marker."""
-    return any((parent / ".git").exists() for parent in [path, *path.parents])
+    """True when PATH lies inside any checkout of this repository."""
+    path = Path(path).resolve()
+    return any(path == root or path.is_relative_to(root) for root in checkouts())
 
 
 def prepare(work: Path, revision: str) -> dict:
     """Create the clean build and install environments and the wheel of REVISION."""
-    if work.exists() and any(work.iterdir()):
-        raise SystemExit("the rebuild work directory must be new or empty")
-    if inside_checkout(work.resolve()):
+    if work.exists():
+        raise SystemExit("the rebuild work directory must be new; the setup tool creates it")
+    if inside_checkout(work.resolve().parent):
         raise SystemExit("the rebuild work directory must lie outside every checkout")
-    work.mkdir(parents=True, exist_ok=True)
     python = shutil.which("python3.12") or sys.executable
     bootstrap = run([python, ROOT / "tools/bootstrap_local.py", "--profile", "package-smoke", "--work-dir", work], cwd=ROOT)
     (work / "logs").mkdir()
