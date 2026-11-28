@@ -1,0 +1,1031 @@
+{
+  "schema_version": 1,
+  "id": "C272",
+  "title": "C253 fresh edit, animation and clean-rebuild qualification",
+  "intent": "Qualify the existing Agent/0.2 edit, recorded-animation and clean-rebuild route on the frozen C253 cases V1, V2 and N1 with a scripted client and independent checks of the actual bytes.",
+  "status": "in_progress",
+  "execution_mode": "local",
+  "owner": "c272-4d816b3c0468",
+  "branch": "work/c272-edit-rebuild-qualification",
+  "base_sha": "38ee8d18a6cd67245acf8b21d755e979b84153c1",
+  "base_observation": "Observed with git ls-remote --heads origin at 2026-11-28T04:46:59Z and again at 04:49:27Z; it is the revision that the reviewed recommendation names. CURRENT.observed_main at that revision records an earlier head, 8e847c15e41c7e5970581993c465690526cd43d2, and is not a live observation.",
+  "scope_issue": "https://github.com/Omegapy/OntoKin/issues/282",
+  "sources": {
+    "requirements": {
+      "id": "TRD-20261127-7B80B30A",
+      "revision": 3,
+      "path": "TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md",
+      "sha256": "9102a137ac9cb66a20eed4f47216c048057151c9bfe9733e857bed9e867222db"
+    },
+    "plan": {
+      "id": "PLAN-20261128-AC17E7E0",
+      "approved_revision": 4,
+      "canonical_sha256": "3a1e91ea2938c7dc7cb19dd446f72e145ba70fd187c79b3ed6afce6ae4dbc374",
+      "location": "Untracked plan tracker in the owner's main checkout; not committed (DEC-004). This record is the acceptance ledger; a mismatch is reported, not synchronized."
+    },
+    "authority": "Owner instruction of 2026-11-28 UTC (2026-11-27 America/Denver) in conversation: execute Implementation_Plans/Plan_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-28_AC17E7E0/. Under DEC-003 this instruction is the selection of the scope.",
+    "decisions_after_base": [
+      "2026-11-27: the owner approved TRD-20261127-7B80B30A, revision 3 (state trd_done).",
+      "2026-11-27: the owner approved DEC-002 to DEC-013 of PLAN-20261128-AC17E7E0 as written and the plan as ready (revision 4).",
+      "2026-11-28 UTC: the owner instructed execution of that exact ready plan, which selects this scope (DEC-003)."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "description": "Work starts in local mode from the reconciled actual state",
+      "acceptance": "All 3 acceptance criteria of REQ-001 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c272/START-STATE.json",
+        "docs/workflow/tasks/C272/SESSION.md"
+      ]
+    },
+    {
+      "id": "REQ-002",
+      "description": "The scope gets its own task record only after the owner selects it",
+      "acceptance": "All 3 acceptance criteria of REQ-002 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "done",
+      "evidence": [
+        "docs/workflow/tasks/C272/task.json",
+        "docs/workflow/tasks/C272/REQUIREMENTS.md",
+        "docs/workflow/tasks/C272/PLAN.md",
+        "TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md"
+      ]
+    },
+    {
+      "id": "REQ-003",
+      "description": "C271's excluded phases are not resumed and completed evidence stays as recorded",
+      "acceptance": "All 3 acceptance criteria of REQ-003 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-004",
+      "description": "Current-status text agrees with the live branch and pull-request state",
+      "acceptance": "All 4 acceptance criteria of REQ-004 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "done",
+      "evidence": [
+        "STATUS.md",
+        "docs/engineering/localized-repair-c272/START-STATE.json"
+      ]
+    },
+    {
+      "id": "REQ-005",
+      "description": "The prepared environment is inspected and reused",
+      "acceptance": "All 4 acceptance criteria of REQ-005 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-006",
+      "description": "The frozen C253 cases, closures, historical outputs and tolerances stay frozen",
+      "acceptance": "All 3 acceptance criteria of REQ-006 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-007",
+      "description": "Existing components are reused within their recorded limits",
+      "acceptance": "All 5 acceptance criteria of REQ-007 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-008",
+      "description": "Only the missing components are implemented",
+      "acceptance": "All 3 acceptance criteria of REQ-008 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-009",
+      "description": "The C269 audit is reconciled, and the residual controls that this workflow depends on are added",
+      "acceptance": "All 4 acceptance criteria of REQ-009 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-010",
+      "description": "A scripted client drives the real service, and an independent evaluator judges the result",
+      "acceptance": "All 3 acceptance criteria of REQ-010 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-011",
+      "description": "One documented command runs the qualification",
+      "acceptance": "All 4 acceptance criteria of REQ-011 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-012",
+      "description": "A fresh store accepts each case's exact starting state (RV R01)",
+      "acceptance": "All 3 acceptance criteria of REQ-012 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-013",
+      "description": "V1 and V2 change the intended occurrence and nothing else (RV R02)",
+      "acceptance": "All 3 acceptance criteria of REQ-013 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-014",
+      "description": "N1 is refused before acceptance and the accepted state is untouched (RV R03)",
+      "acceptance": "All 4 acceptance criteria of REQ-014 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-015",
+      "description": "Delivered GLB bytes are bound to the accepted source by a record that the producer cannot assert (RV R04)",
+      "acceptance": "All 4 acceptance criteria of REQ-015 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-016",
+      "description": "Independent checks cover every property that C253 requires (RV R05)",
+      "acceptance": "All 5 acceptance criteria of REQ-016 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-017",
+      "description": "Geometry and motion are decoded independently at all 126 poses (RV R06)",
+      "acceptance": "All 5 acceptance criteria of REQ-017 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-018",
+      "description": "The delivered source rebuilds cleanly in an empty workspace (RV R07)",
+      "acceptance": "All 4 acceptance criteria of REQ-018 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-019",
+      "description": "Deliberate faults show that the checks reject wrong results (RV R08)",
+      "acceptance": "All 4 acceptance criteria of REQ-019 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-020",
+      "description": "An external record retains every outcome and exchange, with failure and retry exercised (RV R09)",
+      "acceptance": "All 4 acceptance criteria of REQ-020 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-021",
+      "description": "A fresh replay reproduces the expected results (RV R10)",
+      "acceptance": "All 3 acceptance criteria of REQ-021 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-022",
+      "description": "The regenerated GLBs are validated and an actual playback is inspected (RV R10)",
+      "acceptance": "All 4 acceptance criteria of REQ-022 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-023",
+      "description": "The visual-verification profile is prepared as a dependency of the playback check",
+      "acceptance": "All 4 acceptance criteria of REQ-023 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-024",
+      "description": "The checks that the changed scope requires are run",
+      "acceptance": "All 3 acceptance criteria of REQ-024 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-025",
+      "description": "A failing required check is compared with main on the same host",
+      "acceptance": "All 4 acceptance criteria of REQ-025 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-026",
+      "description": "An independent reviewer checks the exact candidate and its evidence (RV R11)",
+      "acceptance": "All 3 acceptance criteria of REQ-026 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-027",
+      "description": "The reviewed work is integrated, the resulting main is verified and the branch is resolved",
+      "acceptance": "All 4 acceptance criteria of REQ-027 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-028",
+      "description": "The stated deliverables are provided (RV R12)",
+      "acceptance": "All 4 acceptance criteria of REQ-028 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-029",
+      "description": "The report states the completed criteria and the remaining A1 and pilot prerequisites (RV R12)",
+      "acceptance": "All 3 acceptance criteria of REQ-029 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-030",
+      "description": "The scope closes on the local closing state",
+      "acceptance": "All 4 acceptance criteria of REQ-030 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-031",
+      "description": "Results are described within their limits",
+      "acceptance": "All 4 acceptance criteria of REQ-031 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-032",
+      "description": "No model comparison is launched and nothing is expanded",
+      "acceptance": "All 3 acceptance criteria of REQ-032 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-033",
+      "description": "Failures and unmet criteria stay visible",
+      "acceptance": "All 3 acceptance criteria of REQ-033 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "REQ-034",
+      "description": "The effort stays in proportion to the change",
+      "acceptance": "All 3 acceptance criteria of REQ-034 in TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md (revision 3), which states the requirement in full.",
+      "status": "not_done",
+      "evidence": []
+    }
+  ],
+  "plan": [
+    {
+      "id": "TASK-001",
+      "phase": "PHASE-001",
+      "title": "Reconcile the starting state and report it",
+      "requirements": [
+        "REQ-001",
+        "REQ-003"
+      ],
+      "depends_on": [],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/START-STATE.json"
+      ],
+      "verification": [
+        "Read `git ls-remote --heads origin` and `git rev-parse HEAD` a second time and compare them with the heads in the report.",
+        "Check the list of files read against the startup read list of LOCAL-START-HERE.md."
+      ]
+    },
+    {
+      "id": "TASK-002",
+      "phase": "PHASE-001",
+      "title": "Preserve the local changes and bring the main checkout up to date",
+      "requirements": [
+        "REQ-001"
+      ],
+      "depends_on": [
+        "TASK-001"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/START-STATE.json"
+      ],
+      "verification": [
+        "Compare the digests of the inventory before and after the update.",
+        "Run `git status --short --branch` and confirm that main is neither ahead of nor behind its tracking ref."
+      ]
+    },
+    {
+      "id": "TASK-003",
+      "phase": "PHASE-001",
+      "title": "Create the branch, the worktree and its environment",
+      "requirements": [
+        "REQ-002",
+        "REQ-003",
+        "REQ-005"
+      ],
+      "depends_on": [
+        "TASK-002"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/START-STATE.json"
+      ],
+      "verification": [
+        "Run `git worktree list` and `git -C ../OntoKin-worktrees/c272 rev-parse HEAD` and compare the result with the recorded head.",
+        "Run `.venv/bin/python tools/doctor_local.py --json` in the worktree and compare the readiness of each profile with the record."
+      ]
+    },
+    {
+      "id": "TASK-004",
+      "phase": "PHASE-001",
+      "title": "Create the task record on the scope's branch",
+      "requirements": [
+        "REQ-001",
+        "REQ-002",
+        "REQ-003"
+      ],
+      "depends_on": [
+        "TASK-003"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/workflow/tasks/C272/REQUIREMENTS.md",
+        "docs/workflow/tasks/C272/PLAN.md",
+        "docs/workflow/tasks/C272/task.json",
+        "docs/workflow/tasks/C272/SESSION.md",
+        "TRDs/trd_c253-fresh-edit-animation-and-clean-rebuild-qualification_2026-11-27.md"
+      ],
+      "verification": [
+        "Run `.venv/bin/python tools/chat_workflow.py check` in the worktree.",
+        "Compare the SHA-256 of the committed TRD file with the digest in this plan's source record.",
+        "Search the task's plan for the readback contracts, their preparation and gate MR, and confirm that none appears."
+      ]
+    },
+    {
+      "id": "TASK-005",
+      "phase": "PHASE-001",
+      "title": "Correct the current-status text if it is still needed",
+      "requirements": [
+        "REQ-004"
+      ],
+      "depends_on": [
+        "TASK-003"
+      ],
+      "status": "done",
+      "artifacts": [
+        "STATUS.md",
+        "docs/engineering/localized-repair-c272/START-STATE.json"
+      ],
+      "verification": [
+        "Run the documentation verifier and the workflow check on the commit that carries the correction.",
+        "Compare the SHA-256 of `docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md` and of C271's task records before and after the commit."
+      ]
+    },
+    {
+      "id": "TASK-006",
+      "phase": "PHASE-001",
+      "title": "Publish the declaration checkpoint",
+      "requirements": [
+        "REQ-002"
+      ],
+      "depends_on": [
+        "TASK-004",
+        "TASK-005"
+      ],
+      "status": "in_progress",
+      "artifacts": [
+        "docs/workflow/tasks/C272/SESSION.md"
+      ],
+      "verification": [
+        "Compare the output of `git ls-remote origin refs/heads/work/c272-edit-rebuild-qualification` with `git rev-parse HEAD` in the worktree.",
+        "Read the issue and the pull request back with the GitHub CLI and compare their fields with the task record.",
+        "Confirm with `git ls-remote --heads origin` that main still has the head observed in TASK-001."
+      ]
+    },
+    {
+      "id": "TASK-007",
+      "phase": "PHASE-002",
+      "title": "Map every required property to its observation and comparison",
+      "requirements": [
+        "REQ-007",
+        "REQ-016"
+      ],
+      "depends_on": [
+        "TASK-006"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/COVERAGE.md"
+      ],
+      "verification": [
+        "Check every key of `semantic_state` and of the observation schema in the C255 checker against the rows of the map.",
+        "Check each interface named in the map against the function it names in the observer's source and against the limits in that observer's contract."
+      ]
+    },
+    {
+      "id": "TASK-008",
+      "phase": "PHASE-002",
+      "title": "Run the existing observer regression on this host",
+      "requirements": [
+        "REQ-007",
+        "REQ-024"
+      ],
+      "depends_on": [
+        "TASK-006"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/evidence/observer-baseline/RESULTS.json"
+      ],
+      "verification": [
+        "Run each group a second time and compare exit status and method counts with the record.",
+        "Confirm that `git status --porcelain` is empty in the worktree after the runs."
+      ]
+    },
+    {
+      "id": "TASK-009",
+      "phase": "PHASE-002",
+      "title": "Reconcile the C269 audit with C270 and C271",
+      "requirements": [
+        "REQ-009"
+      ],
+      "depends_on": [
+        "TASK-007"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/RECONCILIATION.md"
+      ],
+      "verification": [
+        "Compare each cited finding with the text of the C269 audit and with the recorded results of C270 and C271.",
+        "Check each stated dependency against the coverage map of TASK-007."
+      ]
+    },
+    {
+      "id": "TASK-010",
+      "phase": "PHASE-002",
+      "title": "Record the missing components, their boundaries and effort",
+      "requirements": [
+        "REQ-008",
+        "REQ-032",
+        "REQ-034"
+      ],
+      "depends_on": [
+        "TASK-007",
+        "TASK-009"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/GAPS.md"
+      ],
+      "verification": [
+        "Check that every row of the coverage map marked as missing appears in the record with a boundary and an estimate.",
+        "Check that every planned new file is named with the requirement it serves."
+      ]
+    },
+    {
+      "id": "TASK-011",
+      "phase": "PHASE-003",
+      "title": "Verify the frozen inputs and start each case in a fresh store",
+      "requirements": [
+        "REQ-006",
+        "REQ-010",
+        "REQ-012"
+      ],
+      "depends_on": [
+        "TASK-010"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/runner.py",
+        "docs/engineering/localized-repair-c272/test_runner.py"
+      ],
+      "verification": [
+        "Run the focused tests of the runner, including one that alters one input byte and expects the run to stop.",
+        "Compare the recorded program revisions with the historical revisions that the corpus records for `start_065` and `target_075`."
+      ]
+    },
+    {
+      "id": "TASK-012",
+      "phase": "PHASE-003",
+      "title": "Apply the V1 and V2 edits and observe the accepted source",
+      "requirements": [
+        "REQ-013"
+      ],
+      "depends_on": [
+        "TASK-011"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/runner.py",
+        "docs/engineering/localized-repair-c272/test_runner.py"
+      ],
+      "verification": [
+        "Run the focused tests for both directions.",
+        "Compare the SHA-256 of the accepted entry with `443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a` for V1 and `73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123` for V2, as the corpus records them."
+      ]
+    },
+    {
+      "id": "TASK-013",
+      "phase": "PHASE-003",
+      "title": "Submit the N1 candidate and observe rejection and preservation",
+      "requirements": [
+        "REQ-014"
+      ],
+      "depends_on": [
+        "TASK-011"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/runner.py",
+        "docs/engineering/localized-repair-c272/test_runner.py"
+      ],
+      "verification": [
+        "Run the focused test of N1 and compare the retained diagnostic with the response that the C210 proof records for the same candidate.",
+        "Compare the SHA-256 of the artifact retrieved after the rejection with the baseline's."
+      ]
+    },
+    {
+      "id": "TASK-014",
+      "phase": "PHASE-003",
+      "title": "Create the accepted-state record and bind the delivered artifacts",
+      "requirements": [
+        "REQ-015"
+      ],
+      "depends_on": [
+        "TASK-012"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/runner.py",
+        "docs/engineering/localized-repair-c272/test_runner.py"
+      ],
+      "verification": [
+        "Run the focused tests of the record.",
+        "Give the record of each case to the authority check of the C255 checker and confirm that it is accepted for its own case and refused when one byte of a retained file is altered."
+      ]
+    },
+    {
+      "id": "TASK-015",
+      "phase": "PHASE-003",
+      "title": "Record every exchange and exercise failure and retry",
+      "requirements": [
+        "REQ-020",
+        "REQ-033"
+      ],
+      "depends_on": [
+        "TASK-012",
+        "TASK-013"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/runner.py",
+        "docs/engineering/localized-repair-c272/test_runner.py"
+      ],
+      "verification": [
+        "Run one case with an injected failure, for example a store location that cannot be written, and confirm that its record is kept.",
+        "Compare the retained responses of the retry cases with the behavior that the driver of the C210 proof checks for the same requests."
+      ]
+    },
+    {
+      "id": "TASK-016",
+      "phase": "PHASE-004",
+      "title": "Observe geometry, motion and declared relationships from the actual bytes",
+      "requirements": [
+        "REQ-007",
+        "REQ-016",
+        "REQ-017"
+      ],
+      "depends_on": [
+        "TASK-014"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/observe.py",
+        "docs/engineering/localized-repair-c272/test_observe.py"
+      ],
+      "verification": [
+        "Run the focused tests of the observation module.",
+        "Measure the two historical endpoints of the C210 proof through the same path and compare the result with what the C256 evidence records for them."
+      ]
+    },
+    {
+      "id": "TASK-017",
+      "phase": "PHASE-004",
+      "title": "Implement the missing observations within the recorded boundary",
+      "requirements": [
+        "REQ-008",
+        "REQ-010",
+        "REQ-016"
+      ],
+      "depends_on": [
+        "TASK-010",
+        "TASK-016"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/GAPS.md"
+      ],
+      "verification": [
+        "Run the focused tests of each new reader, including its fault control and the test of its imports.",
+        "Check the list of implemented and incomplete properties against the gap record and the owner's recorded answer."
+      ]
+    },
+    {
+      "id": "TASK-018",
+      "phase": "PHASE-004",
+      "title": "Score each case and write the per-property results",
+      "requirements": [
+        "REQ-010",
+        "REQ-016",
+        "REQ-017"
+      ],
+      "depends_on": [
+        "TASK-016",
+        "TASK-017"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/score.py",
+        "docs/engineering/localized-repair-c272/test_score.py"
+      ],
+      "verification": [
+        "Run the focused tests of the scoring step, including one in which a field of the observation is replaced by a wrong value and the case must fail.",
+        "Compute three poses of the selected blade by hand from the equations of the scoring specification and compare them with the table.",
+        "Confirm with `git diff` against the branch's starting revision that the files of C253 and C255 are unchanged."
+      ]
+    },
+    {
+      "id": "TASK-019",
+      "phase": "PHASE-004",
+      "title": "Rebuild each valid case in an empty workspace",
+      "requirements": [
+        "REQ-018"
+      ],
+      "depends_on": [
+        "TASK-014",
+        "TASK-018"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/rebuild.py"
+      ],
+      "verification": [
+        "Run the rebuild twice in two new directories and compare both results with the delivered bytes.",
+        "Inspect the recorded import locations of the rebuild and confirm that none lies inside a checkout."
+      ]
+    },
+    {
+      "id": "TASK-020",
+      "phase": "PHASE-004",
+      "title": "Add the residual controls that the workflow depends on",
+      "requirements": [
+        "REQ-009"
+      ],
+      "depends_on": [
+        "TASK-009",
+        "TASK-016"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/RECONCILIATION.md"
+      ],
+      "verification": [
+        "Run each new control, then remove its fault from the input while keeping the expectation and confirm that the outcome changes.",
+        "Compare the SHA-256 of the existing observer and control files with their values at the branch's starting revision."
+      ]
+    },
+    {
+      "id": "TASK-021",
+      "phase": "PHASE-004",
+      "title": "Run the deliberate-fault and positive controls through the workflow's own checks",
+      "requirements": [
+        "REQ-015",
+        "REQ-019"
+      ],
+      "depends_on": [
+        "TASK-018",
+        "TASK-019"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/controls.py",
+        "docs/engineering/localized-repair-c272/CONTROLS.md"
+      ],
+      "verification": [
+        "Remove the fault from one control of each kind and confirm that the workflow then accepts the input.",
+        "Check the table against the list in the scoring specification's section on required oracle controls."
+      ]
+    },
+    {
+      "id": "TASK-022",
+      "phase": "PHASE-004",
+      "title": "Assemble the one documented command",
+      "requirements": [
+        "REQ-011"
+      ],
+      "depends_on": [
+        "TASK-015",
+        "TASK-020",
+        "TASK-021"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/qualify.py",
+        "docs/engineering/localized-repair-c272/README.md"
+      ],
+      "verification": [
+        "Run the command once into a new directory and compare the files it wrote with the usage instructions.",
+        "Run it against an output directory that is not empty and confirm that it refuses to write."
+      ]
+    },
+    {
+      "id": "TASK-023",
+      "phase": "PHASE-005",
+      "title": "Run the fresh replay",
+      "requirements": [
+        "REQ-021"
+      ],
+      "depends_on": [
+        "TASK-022"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/evidence/REPLAY.json"
+      ],
+      "verification": [
+        "Compare the structured results of the two runs field by field.",
+        "Compare the SHA-256 of each GLB of the replay with the delivered one."
+      ]
+    },
+    {
+      "id": "TASK-024",
+      "phase": "PHASE-005",
+      "title": "Prepare the visual-verification profile",
+      "requirements": [
+        "REQ-005",
+        "REQ-023"
+      ],
+      "depends_on": [
+        "TASK-022"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/evidence/VISUAL-PROFILE.json"
+      ],
+      "verification": [
+        "Run `.venv/bin/python tools/doctor_local.py --profile visual-verification --node PATH_OF_NODE_22` in the worktree and compare it with the retained report.",
+        "Run `git status --short` in the worktree and confirm that no committed lock, pin or npm file changed."
+      ]
+    },
+    {
+      "id": "TASK-025",
+      "phase": "PHASE-005",
+      "title": "Validate the regenerated GLBs",
+      "requirements": [
+        "REQ-022"
+      ],
+      "depends_on": [
+        "TASK-023",
+        "TASK-024"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/evidence/gltf-validation"
+      ],
+      "verification": [
+        "Compare the validator and Three.js versions in the reports with `tools/package.json`.",
+        "Run the check on a directory that holds a deliberately truncated copy of one GLB and confirm that it is refused."
+      ]
+    },
+    {
+      "id": "TASK-026",
+      "phase": "PHASE-005",
+      "title": "Inspect the playback and record the observation",
+      "requirements": [
+        "REQ-022",
+        "REQ-031"
+      ],
+      "depends_on": [
+        "TASK-025"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/evidence/PLAYBACK.md"
+      ],
+      "verification": [
+        "Compare the SHA-256 of the file that the viewer loaded with the delivered GLB's.",
+        "Check that the captured frames are of the times that the observation names."
+      ]
+    },
+    {
+      "id": "TASK-027",
+      "phase": "PHASE-006",
+      "title": "Run the checks that the changed scope requires",
+      "requirements": [
+        "REQ-005",
+        "REQ-024",
+        "REQ-034"
+      ],
+      "depends_on": [
+        "TASK-023",
+        "TASK-026"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/evidence/CHECKS.json"
+      ],
+      "verification": [
+        "Compare the revision in every check record with the candidate's commit.",
+        "Confirm that the output directories lie outside every checkout and that `git status --porcelain` is empty in the worktree afterwards."
+      ]
+    },
+    {
+      "id": "TASK-028",
+      "phase": "PHASE-006",
+      "title": "Compare failing checks with main on the same host",
+      "requirements": [
+        "REQ-025"
+      ],
+      "depends_on": [
+        "TASK-027"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/evidence/CHECKS.json"
+      ],
+      "verification": [
+        "Compare the test IDs and reasons of the branch's failures with main's record one by one.",
+        "Confirm with `git diff --stat` against main that no changed file belongs to a test that fails on main."
+      ]
+    },
+    {
+      "id": "TASK-029",
+      "phase": "PHASE-006",
+      "title": "Publish the deliverable evidence on the scope's branch",
+      "requirements": [
+        "REQ-028",
+        "REQ-033"
+      ],
+      "depends_on": [
+        "TASK-023",
+        "TASK-025",
+        "TASK-026"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/evidence/MANIFEST.json"
+      ],
+      "verification": [
+        "Compare the committed files with the manifest and with the run output from which they were taken, by SHA-256.",
+        "Search the committed records for the home-directory prefix and the account name and confirm that neither occurs.",
+        "Run the documentation verifier on the commit."
+      ]
+    },
+    {
+      "id": "TASK-030",
+      "phase": "PHASE-006",
+      "title": "Write the report with the readiness table",
+      "requirements": [
+        "REQ-007",
+        "REQ-028",
+        "REQ-029",
+        "REQ-031",
+        "REQ-033",
+        "REQ-034"
+      ],
+      "depends_on": [
+        "TASK-028",
+        "TASK-029"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/REPORT.md"
+      ],
+      "verification": [
+        "Check each stated requirement state against the evidence it points to.",
+        "Search the report for the claims that REQ-029 and REQ-031 exclude.",
+        "Run the documentation verifier on the commit that carries the report."
+      ]
+    },
+    {
+      "id": "TASK-031",
+      "phase": "PHASE-006",
+      "title": "Audit every requirement and every changed file",
+      "requirements": [
+        "REQ-003",
+        "REQ-006",
+        "REQ-032",
+        "REQ-033"
+      ],
+      "depends_on": [
+        "TASK-030"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/REQUIREMENTS-AUDIT.md"
+      ],
+      "verification": [
+        "Run `git diff --stat` and `git diff --name-only` against the main head observed at that time and compare the list with the requirement trace.",
+        "Compare the SHA-256 of each preserved path of this plan on the branch and on main.",
+        "Run the workflow check on the commit that carries the audit."
+      ]
+    },
+    {
+      "id": "TASK-032",
+      "phase": "PHASE-006",
+      "title": "Obtain the independent review of the exact candidate",
+      "requirements": [
+        "REQ-026"
+      ],
+      "depends_on": [
+        "TASK-031"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/REVIEW.md"
+      ],
+      "verification": [
+        "Compare the commit named in the review record with the head of the branch.",
+        "Check each mandatory finding against its resolution and the record of its second review."
+      ]
+    },
+    {
+      "id": "TASK-033",
+      "phase": "PHASE-007",
+      "title": "Integrate under the lease and verify the resulting main",
+      "requirements": [
+        "REQ-025",
+        "REQ-027"
+      ],
+      "depends_on": [
+        "TASK-032"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/INTEGRATION.json"
+      ],
+      "verification": [
+        "Compare the merge commit read with `git ls-remote --heads origin` with the recorded one, and its tree with the reviewed candidate's tree.",
+        "Compare the outcomes of the resulting-main checks with the candidate's and with main's baseline."
+      ]
+    },
+    {
+      "id": "TASK-034",
+      "phase": "PHASE-007",
+      "title": "Resolve the branch and the worktree",
+      "requirements": [
+        "REQ-027"
+      ],
+      "depends_on": [
+        "TASK-033"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c272/INTEGRATION.json"
+      ],
+      "verification": [
+        "Read the remote heads and confirm the recorded state of the scope's branch.",
+        "Run `git worktree list` and confirm the recorded state of the worktree."
+      ]
+    },
+    {
+      "id": "TASK-035",
+      "phase": "PHASE-007",
+      "title": "Close the scope on the local closing state",
+      "requirements": [
+        "REQ-030",
+        "REQ-031",
+        "REQ-033"
+      ],
+      "depends_on": [
+        "TASK-034"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/workflow/tasks/C272/SESSION.md"
+      ],
+      "verification": [
+        "Run the workflow check and the documentation verifier on the closing commit.",
+        "Compare the states in `task.json` with the audit of TASK-031 and with the integration record.",
+        "Read the remote heads once more and compare them with the recorded push state."
+      ]
+    }
+  ],
+  "checks": [],
+  "completion": {
+    "implementation_commit": null,
+    "merge_commit": null,
+    "pull_request": null,
+    "branch_disposition": "active",
+    "evidence": []
+  },
+  "next_action": "Publish the declaration checkpoint (TASK-006), then write the coverage map, run the observer baseline and record the gaps (PHASE-002). Substantial missing observations wait for the owner's answer (DEC-006).",
+  "blockers": [],
+  "owner_waivers": []
+}
