@@ -80,14 +80,19 @@ def prepare(work: Path, revision: str) -> dict:
             "install_python": str(install)}
 
 
-def rebuild_case(work: Path, prepared: dict, label: str, source_files: dict) -> dict:
-    """Rebuild one delivered source closure in a new, empty workspace."""
+def rebuild_case(work: Path, prepared: dict, label: str, source_files: dict, undeclared: dict | None = None) -> dict:
+    """Rebuild one delivered source closure in a new, empty workspace.
+
+    UNDECLARED, used only by an evaluator control, places extra files in the workspace.
+    """
     workspace = work / "workspaces" / label
     workspace.mkdir()
     empty_before = not any(workspace.iterdir())
     for name in DECLARED:
         (workspace / name).write_bytes(source_files[name])
     (workspace / ENTRY.name).write_bytes(ENTRY.read_bytes())
+    for name, raw in (undeclared or {}).items():
+        (workspace / name).write_bytes(raw)
     listing = [{"name": p.name, "bytes": p.stat().st_size, "sha256": sha256(p.read_bytes())}
                for p in sorted(workspace.iterdir())]
     command = [prepared["install_python"], "-I", "-B", ENTRY.name]

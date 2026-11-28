@@ -188,13 +188,17 @@ def translate_diagnostic(diagnostics: list[dict]) -> tuple[dict | None, dict]:
              "mechanism": "compiler", "message": d["message"]}, {**rule, "translated": True})
 
 
-def run_case(case_id: str, out: Path, service_factory=None, read=None) -> dict:
-    """Run one case into OUT/CASE; the record survives every failure."""
+def run_case(case_id: str, out: Path, service_factory=None, read=None, label: str | None = None, variant=None) -> dict:
+    """Run one case into OUT/cases/LABEL; the record survives every failure.
+
+    VARIANT, used only by evaluator controls, maps (edit_patch, start_program) to the
+    patch list that the scripted client submits instead of the corpus patch.
+    """
     if str(ROOT) not in sys.path:
         sys.path.insert(0, str(ROOT))
     from ontokin.program_agent import ProgramAgentService  # the product under test
     service_factory = service_factory or (lambda store: ProgramAgentService(store, protocol=PROTOCOL))
-    base = out / "cases" / case_id
+    base = out / "cases" / (label or case_id)
     base.mkdir(parents=True)
     record = Record(base / "record")
     outcome = {"schema": "ontokin.c272.case-outcome/1", "caseId": case_id, "status": "started",
@@ -236,8 +240,10 @@ def run_case(case_id: str, out: Path, service_factory=None, read=None) -> dict:
                           "element_id": target["element_id"], "start_byte": patch["startByte"],
                           "end_byte": patch["endByteExclusive"], "expected_text": patch["expectedText"],
                           "replacement": patch["replacement"]}
+            patches = variant(edit_patch, start_program) if variant else [edit_patch]
+            outcome["variant"] = None if variant is None else patches
             edited, edit_request = client.call("edit", expected_program_revision=start_revision,
-                                               requested_level="evaluated", patches=[edit_patch])
+                                               requested_level="evaluated", patches=patches)
             candidate_revision = edited.get("program_revision")
             candidate_program = service.read_program(client.project, candidate_revision) if candidate_revision else None
             candidate_files = program_files(candidate_program) if candidate_program else {}
