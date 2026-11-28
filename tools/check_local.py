@@ -89,6 +89,18 @@ def ignored(name: str) -> bool:
     return name in IGNORED or name == ".env" or name.startswith(".env.") or name.endswith((".pyc", ".pyo"))
 
 
+def copied_source_path(name: str) -> bool:
+    """Whether a repository-relative path, in Git's "/"-separated form, lies in the copied set.
+
+    The copied set is what prepare_workspace copies and source_files inventories: each path under one
+    of SOURCE_DIRS with no component that ignored() matches, and each of ROOT_FILES. This function is
+    that set's one path-level definition. The driver's untracked-source record and the 0.2.0 provider's
+    derived source check both use it (C271-P37 DECISION-001).
+    """
+    parts = name.split("/")
+    return (parts[0] in SOURCE_DIRS or name in ROOT_FILES) and not any(ignored(part) for part in parts)
+
+
 def source_files(root: Path) -> list[Path]:
     """Inventory source and preserved evidence, including all original examples."""
     paths = [root / name for name in ROOT_FILES if (root / name).is_file()]
@@ -287,8 +299,7 @@ def git_metadata(root: Path) -> dict:
         return {"available": True, "local_head": head, "local_tree": tree,
                 "tracked_worktree_status": git_read(root, "status", "--porcelain=v1", "--untracked-files=no"),
                 "untracked_source_files": [name for name in git_read(root, "ls-files", "--others", "--exclude-standard", "-z").split("\0")
-                                           if name and (name.split("/")[0] in SOURCE_DIRS or name in ROOT_FILES)
-                                           and not any(ignored(part) for part in name.split("/"))],
+                                           if name and copied_source_path(name)],
                 "head_is_base_revision": True, "source_inventory_includes_untracked_files": True,
                 "remote_head_verified": False}
     except (OSError, subprocess.SubprocessError):
@@ -316,6 +327,20 @@ def prepare_workspace_git(root: Path, workspace: Path, source: dict) -> None:
             raise ValueError("The isolated workspace did not retain the observed source commit/tree.")
     except (OSError, subprocess.SubprocessError) as error:
         raise ValueError(f"Cannot retain exact source Git metadata in the isolated workspace: {error}") from error
+
+
+def refresh_workspace_index(workspace: Path) -> None:
+    """Record the copied files' stat data in the workspace's own index, once (C271-P37 DECISION-001, FZ-02).
+
+    read-tree leaves every entry without stat data, so each later status read would hash every copied
+    file again. A refresh records stat data only for entries whose copied bytes equal the commit's;
+    a changed, missing or retyped path stays as status reports it. Paths, modes, objects and stages
+    stay the commit's tree. Later status reads compare stat data, as in an ordinary checkout.
+    """
+    try:
+        git_read(workspace, "update-index", "-q", "--refresh", timeout=120)
+    except (OSError, subprocess.SubprocessError) as error:
+        raise ValueError(f"Cannot record the isolated workspace's index stat data: {error}") from error
 
 
 def prepare_output(root: Path, output: Path) -> None:
@@ -348,6 +373,9 @@ def prepare_workspace(root: Path, output: Path, full: bool, *, source_git: dict 
     storage = (prepare_offline_workspace(workspace, git_executable=git_executable) if source_git["available"] else
                {"lfs_files": [], "git_available": False, "network_transfers": False})
     write_json(output / "workspace-storage.json", storage)
+    if source_git["available"]:
+        # FZ-02: after storage has configured any filters, and before the first status read.
+        refresh_workspace_index(workspace)
     dependencies = root / "tools/node_modules"
     if full and dependencies.is_dir():
         # Verification commands only read these installed tools; they never install.

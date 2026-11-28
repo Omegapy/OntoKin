@@ -8,6 +8,11 @@ carry the label ``mocked``. These are development tests, not the independently f
 Starts: SourceGitTests start a /bin/sh stand-in for the bound Git implementation, which answers the
 source checks' read-only queries from files and logs every invocation; no other test starts a process.
 No test starts Node, ldd, codesign or Git itself, and no test runs the probe.
+
+C271-P37 (DECISION-001, author W1) adds the classes at the end. DerivedStatusLineTests uses the same
+kind of /bin/sh stand-in. DerivedWorkspaceTests starts real Git in temporary fixture repositories,
+through a bound /bin/sh wrapper, and runs the driver's own workspace preparation. DerivedSelectionTests
+starts no process. None of them starts Node, ldd or codesign, or runs the probe.
 """
 from __future__ import annotations
 
@@ -20,6 +25,7 @@ import os
 from pathlib import Path
 import platform
 import re
+import shutil
 import stat
 import subprocess
 import sys
@@ -1378,6 +1384,413 @@ class ProbeSegmentTests(unittest.TestCase):
         names = {row["pattern"] for row in hits}
         for forbidden in ("child_process", "cluster", "worker_threads", "process.dlopen", "eval", "Worker"):
             self.assertNotIn(forbidden, names)
+
+
+# ---------------------------------------------------------------------------
+# C271-P37 DECISION-001: the derived workspace's source check (FZ-01). Author W1.
+# ---------------------------------------------------------------------------
+
+UNCOPIED_FILE = ".claude/.gitignore"
+UNCOPIED_LINK = ".claude/skills/alpha"
+STATUS_READ = ("status", "--porcelain=v1", "--untracked-files=no")
+
+
+def recorded_inventory(*paths):
+    """A record shaped like the driver's inventory, as the derivation's source_before holds it."""
+    files = [{"path": path, "sha256": "sha256:" + hashlib.sha256(path.encode()).hexdigest(), "bytes": 1} for path in paths]
+    return {"sha256": "sha256:" + "0" * 64, "file_count": len(files), "files": files}
+
+
+class DerivedStatusLineTests(unittest.TestCase):
+    """DECISION-001's rule on exact porcelain v1 lines. Starts a /bin/sh stand-in for the bound Git, which
+    answers the source check's five reads from files and logs each start."""
+
+    def setUp(self):
+        self.base = resolved_temporary(self, "w1-lines-")
+        self.repo = self.base / "workspace"
+        for tree in v02.SOURCE_TREES:
+            write(self.repo / tree / "placeholder.txt", b"synthetic source\n", 0o644)
+        for relative in (*v02.SOURCE_FILES, v02.PROVIDER, v02.PROBE):
+            write(self.repo / relative, b"synthetic " + relative.encode() + b"\n", 0o644)
+        self.answers = self.base / "answers"
+        self.answers.mkdir()
+        self.log = self.base / "git.log"
+        self.answer(toplevel=str(self.repo), commit="3" * 40, tree="4" * 40, status="", untracked="")
+        script = ("#!/bin/sh\nprintf '%s\\n' \"$*\" >> '" + str(self.log) + "'\n"
+                  "case \"$*\" in\n"
+                  "  *'rev-parse --show-toplevel'*) cat '" + str(self.answers / "toplevel") + "' ;;\n"
+                  "  *'rev-parse --verify HEAD^{commit}'*) cat '" + str(self.answers / "commit") + "' ;;\n"
+                  "  *'^{tree}'*) cat '" + str(self.answers / "tree") + "' ;;\n"
+                  "  *'status --porcelain=v1 --untracked-files=no'*) cat '" + str(self.answers / "status") + "' ;;\n"
+                  "  *'ls-files --others --exclude-standard -z'*) cat '" + str(self.answers / "untracked") + "' ;;\n"
+                  "  *) exit 1 ;;\nesac\n")
+        self.git = write(self.base / "tools/bin/git", script.encode("ascii"), 0o755)
+        self.binding = {"path": str(self.git), "sha256": sha(self.git)}
+        inventory = write(self.base / "source-inventory.json", canonical(v02.source_inventory(self.repo)), 0o644)
+        self.source = {"root": str(self.repo), "commit": "3" * 40, "tree": "4" * 40, "inventory": descriptor(inventory)}
+        self.copied = recorded_inventory("README.md", "docs/variant.md", "tests/test_copied.py")
+        isolated = patch.object(check_local, "_GIT_STATE", None)
+        isolated.start()
+        self.addCleanup(isolated.stop)
+
+    def answer(self, **values):
+        for name, value in values.items():
+            (self.answers / name).write_bytes(value.encode("utf-8") if isinstance(value, str) else value)
+
+    def starts(self):
+        return self.log.read_text().splitlines() if self.log.exists() else []
+
+    def verdict(self, status="", *, untracked="", derived=True, copied="recorded"):
+        """accepted, or the refusal's (code, reason)."""
+        self.answer(status=status, untracked=untracked)
+        record = self.copied if copied == "recorded" else copied
+        try:
+            v02._verify_source(self.source, git=self.binding, derived=derived, own_root=False, copied=record)
+        except v02.CurrentHostBindingError as exc:
+            return exc.code, exc.reason
+        return "accepted"
+
+    def test_only_the_unstaged_deletion_of_an_uncopied_tracked_path_is_admitted(self):
+        """Rule B: X is a space and Y is D. Every other XY form refuses, staged or unstaged, merged or not."""
+        for path in (UNCOPIED_FILE, UNCOPIED_LINK):
+            self.assertEqual(self.verdict(" D " + path + "\n"), "accepted", path)
+        self.assertEqual(self.verdict(" D " + UNCOPIED_FILE + "\n D " + UNCOPIED_LINK + "\n"), "accepted")
+        for xy in ("D ", " M", "M ", "MM", " T", "T ", "A ", " A", "AD", "AM", "MD", "DD", "AU", "UD", "UA", "DU", "AA", "UU"):
+            with self.subTest(xy=xy):
+                line = xy + " " + UNCOPIED_FILE
+                self.assertEqual(self.verdict(line + "\n"), ("CH-SOURCE", "Dirty source: " + line))
+
+    def test_the_original_route_still_refuses_every_line(self):
+        """Unchanged: without a parent every status line refuses, the record notwithstanding."""
+        for line in (" D " + UNCOPIED_FILE, " D " + UNCOPIED_LINK, " M examples/visual/demo-data.js"):
+            with self.subTest(line=line):
+                self.assertEqual(self.verdict(line + "\n", derived=False), ("CH-SOURCE", "Dirty source: " + line))
+                self.assertEqual(self.verdict(line + "\n", derived=False, copied=None), ("CH-SOURCE", "Dirty source: " + line))
+
+    def test_the_copied_set_decides_by_the_drivers_own_definition(self):
+        """Outside the copied set, by check_local.copied_source_path, the deletion is admitted; inside it refuses."""
+        outside = (UNCOPIED_FILE, UNCOPIED_LINK, "Makefile", "outside/notes.txt", "tools/build/out.py",
+                   "docs/_build/page.html", "tests/__pycache__/fixture.cpython-312.pyc", "ontokin/.env",
+                   "tools/node_modules/package/index.js", "TRDs/.env.local")
+        inside = ("README.md", "pyproject.toml", ".gitignore", "tests/test_fixture.py", "tools/fixture.py",
+                  ".agents/skills/alpha/SKILL.md", "TRDs/INDEX.md", "docs/notes.md", "tests")
+        for name in outside:
+            with self.subTest(outside=name):
+                self.assertFalse(check_local.copied_source_path(name))
+                self.assertEqual(self.verdict(" D " + name + "\n"), "accepted")
+        for name in inside:
+            with self.subTest(inside=name):
+                self.assertTrue(check_local.copied_source_path(name))
+                self.assertEqual(self.verdict(" D " + name + "\n"), ("CH-SOURCE", "Dirty source:  D " + name))
+
+    def test_renames_copies_quoted_and_unsafe_names_are_refused(self):
+        """Any line with " -> ", any quoted name, and any name with an empty, "." or ".." component refuses."""
+        for line in ("R  .claude/a -> .claude/b", "C  .claude/a -> .claude/b", " R .claude/a -> .claude/b",
+                     "RD .claude/a -> .claude/b", "R  docs/a.md -> .claude/b", " D .claude/a -> b",
+                     ' D ".claude/two words"', ' D ".claude/na\\303\\257ve.txt"', ' D ".claude/quote\\"mark"',
+                     " D ../escape", " D ./outside", " D outside//notes", " D /outside/notes", " D outside/", " D "):
+            with self.subTest(line=line):
+                self.assertEqual(self.verdict(line + "\n"), ("CH-SOURCE", "Dirty source: " + line))
+
+    def test_a_case_variant_of_a_recorded_copied_file_is_refused(self):
+        """macOS: a deletion outside the copied set refuses when a recorded copied file has its name up to case."""
+        for line in (" D Docs/variant.md", " D DOCS/VARIANT.MD", " D readme.md", " D Tests/test_copied.py"):
+            with self.subTest(line=line):
+                self.assertFalse(check_local.copied_source_path(line[3:]))
+                self.assertEqual(self.verdict(line + "\n"), ("CH-SOURCE", "Dirty source: " + line))
+        self.assertEqual(self.verdict(" D Docs/variant.md\n", copied=recorded_inventory("README.md")), "accepted")
+
+    def test_a_derived_check_without_its_copied_record_admits_no_deletion(self):
+        """No record: no deletion is admitted. A malformed record refuses before any Git start."""
+        self.assertEqual(self.verdict(" D " + UNCOPIED_FILE + "\n", copied=None),
+                         ("CH-SOURCE", "Dirty source:  D " + UNCOPIED_FILE))
+        for record in ([], {"files": "README.md"}, {"files": [{"path": 1}]}, {"files": [["README.md"]]}, {"sha256": "x"}):
+            with self.subTest(record=record):
+                self.log.unlink(missing_ok=True)
+                self.assertEqual(self.verdict(" D " + UNCOPIED_FILE + "\n", copied=record),
+                                 ("CH-WORKSPACE", "The copied-source inventory record is malformed"))
+                self.assertEqual(self.starts(), [])
+
+    def test_generated_examples_and_untracked_names_keep_their_rules(self):
+        """Unchanged: a generated example's line is admitted only in a derived workspace; untracked names refuse
+        on both routes wherever they are, apart from a generated example in a derived workspace."""
+        for line in (" M examples/visual/demo-data.js", "M  examples/visual/demo-data.js", " D examples/agent/workflow.json"):
+            with self.subTest(line=line):
+                self.assertEqual(self.verdict(line + "\n", copied=None), "accepted")
+        self.assertEqual(self.verdict('R  examples/visual/a.glb -> examples/visual/b.glb\n'),
+                         ("CH-SOURCE", "Dirty source: R  examples/visual/a.glb -> examples/visual/b.glb"))
+        for name in (".claude/new_input.py", "outside/new_input.py", "tools/new_input.py", "Makefile"):
+            with self.subTest(untracked=name):
+                self.assertEqual(self.verdict(untracked=name + "\0"), ("CH-SOURCE", "Untracked source input: " + name))
+        self.assertEqual(self.verdict(untracked="examples/visual/fresh.glb\0"), "accepted")
+        self.assertEqual(self.verdict(untracked="examples/visual/fresh.glb\0", derived=False),
+                         ("CH-SOURCE", "Untracked source input: examples/visual/fresh.glb"))
+
+
+class DerivedWorkspaceTests(unittest.TestCase):
+    """DECISION-001 with real Git: the driver's own workspace preparation of a fixture checkout, then the source
+    check of the derived workspace. The checkout tracks the 0.2.0 source set, files elsewhere in the driver's
+    copied set, a generated example, and two paths outside the copied set: .claude/.gitignore and a symbolic
+    link under .claude/skills/. Starts real Git through a /bin/sh wrapper bound with check_local.bind_git,
+    which logs each start and execs the Git that PATH names at setup."""
+
+    def setUp(self):
+        self.base = resolved_temporary(self, "w1-derived-")
+        git = shutil.which("git")
+        self.assertTrue(git and os.path.isabs(git), "These tests need Git on PATH")
+        self.log = self.base / "git.log"
+        wrapper = write(self.base / "bin/git", ("#!/bin/sh\nprintf '%%s\\n' \"$*\" >> '%s'\nexec '%s' \"$@\"\n"
+                                                % (self.log, git)).encode("utf-8"), 0o755)
+        self.binding = {"path": str(wrapper), "sha256": sha(wrapper)}
+        isolated = patch.object(check_local, "_GIT_STATE", None)
+        isolated.start()
+        self.addCleanup(isolated.stop)
+        # Every driver and provider Git start of these tests runs the bound wrapper.
+        check_local.bind_git(self.binding["path"], self.binding["sha256"])
+        self.count = 0
+
+    def fresh(self, name):
+        self.count += 1
+        return self.base / ("%s-%d" % (name, self.count))
+
+    def checkout(self, *, files=(), links=()):
+        """A committed fixture checkout with old modification times; files and links add (path, value) pairs."""
+        root = self.fresh("checkout") / "source"
+        old = time.time() - 120
+        tracked = {tree + "/placeholder.txt": b"synthetic source\n" for tree in v02.SOURCE_TREES}
+        tracked.update({relative: b"synthetic " + relative.encode() + b"\n"
+                        for relative in (*v02.SOURCE_FILES, v02.PROVIDER, v02.PROBE)})
+        tracked.update({"README.md": b"synthetic readme\n", "docs/notes.md": b"inside the copied set\n",
+                        ".agents/skills/alpha/SKILL.md": b"synthetic skill\n",
+                        "examples/visual/demo-data.js": b"generated example bytes\n",
+                        UNCOPIED_FILE: b"local-only\n", **dict(files)})
+        for relative, data in tracked.items():
+            os.utime(write(root / relative, data, 0o644), (old, old))
+        for relative, target in ((UNCOPIED_LINK, "../../.agents/skills/alpha"), *links):
+            (root / relative).parent.mkdir(parents=True, exist_ok=True)
+            os.symlink(target, root / relative)
+        check_local.git_read(root, "init", "--quiet", "--template=")
+        check_local.git_read(root, "add", "-A")
+        check_local.git_read(root, "-c", "user.name=Derived workspace fixture", "-c", "user.email=fixture@example.invalid",
+                             "commit", "--quiet", "-m", "Derived workspace fixture")
+        return root
+
+    def workspace(self, root):
+        """The driver's own preparation: its copy, its workspace Git and storage steps, and its index refresh."""
+        output = self.fresh("evidence")
+        output.mkdir()
+        return check_local.prepare_workspace(root, output, False)
+
+    def status(self, root):
+        return check_local.git_read(root, *STATUS_READ).splitlines()
+
+    def check(self, root, *, copied, derived=True):
+        """The source check of root, and the Git starts it made; returns (result or refusal, starts)."""
+        inventory = write(self.fresh("inventory") / "source.json", canonical(v02.source_inventory(root)), 0o644)
+        source = {"root": str(root), "commit": check_local.git_read(root, "rev-parse", "HEAD"),
+                  "tree": check_local.git_read(root, "rev-parse", "HEAD^{tree}"), "inventory": descriptor(inventory)}
+        self.log.unlink(missing_ok=True)
+        try:
+            result = v02._verify_source(source, git=self.binding, derived=derived, own_root=False, copied=copied)
+        except v02.CurrentHostBindingError as exc:
+            result = exc
+        return result, (self.log.read_text().splitlines() if self.log.exists() else [])
+
+    def refusal(self, root, *, copied, derived=True):
+        result, _ = self.check(root, copied=copied, derived=derived)
+        self.assertIsInstance(result, v02.CurrentHostBindingError, "the source was accepted")
+        self.assertEqual(result.code, "CH-SOURCE", result.as_dict())
+        return result.reason
+
+    def test_uncopied_tracked_paths_and_a_link_are_accepted_in_the_derived_workspace(self):
+        root = self.checkout()
+        copied = check_local.inventory(root)
+        original, _ = self.check(root, copied=None, derived=False)
+        self.assertEqual(original["schema"], v02.PREFIX + "source/0.2.0", "the fixture's original checkout is not clean")
+        workspace = self.workspace(root)
+        self.assertEqual(check_local.inventory(workspace), copied)
+        self.assertFalse(os.path.lexists(workspace / UNCOPIED_FILE) or os.path.lexists(workspace / UNCOPIED_LINK))
+        self.assertEqual(self.status(workspace), [" D " + UNCOPIED_FILE, " D " + UNCOPIED_LINK])
+        result, starts = self.check(workspace, copied=copied)
+        self.assertNotIsInstance(result, v02.CurrentHostBindingError, getattr(result, "reason", None))
+        self.assertEqual(result["schema"], v02.PREFIX + "source/0.2.0")
+        self.assertEqual(len(starts), 5, starts)
+        self.assertTrue(all(row.startswith("-c core.fsmonitor=false -C " + str(workspace) + " ") for row in starts), starts)
+        self.assertEqual(check_local.git_executable(), self.binding["path"])
+        # The same workspace on the original route refuses at its first line, as before.
+        self.assertEqual(self.refusal(workspace, copied=copied, derived=False), "Dirty source:  D " + UNCOPIED_FILE)
+
+    def test_every_change_inside_the_copied_set_is_refused_in_the_derived_workspace(self):
+        root = self.checkout()
+        copied = check_local.inventory(root)
+        notes = "docs/notes.md"
+
+        def same_size(workspace):
+            path = workspace / notes
+            before = path.stat()
+            # A later second than the copy's change time, for a Git that compares whole seconds of ctime.
+            time.sleep(1.1)
+            path.write_bytes(b"x" * before.st_size)
+            os.utime(path, ns=(before.st_atime_ns, before.st_mtime_ns))
+
+        def retyped(workspace):
+            (workspace / notes).unlink()
+            os.symlink("../README.md", workspace / notes)
+        cases = {
+            "a deleted copied file": (lambda workspace: (workspace / notes).unlink(), " D " + notes),
+            "a changed copied file": (lambda workspace: (workspace / notes).write_bytes(b"changed\n"), " M " + notes),
+            "a same-size change with the old modification time": (same_size, " M " + notes),
+            "a type change": (retyped, " T " + notes),
+            "a staged deletion": (lambda workspace: check_local.git_read(workspace, "rm", "--quiet", "--cached", "--", notes),
+                                  "D  " + notes),
+            "a staged rename": (lambda workspace: check_local.git_read(workspace, "mv", notes, "docs/renamed.md"),
+                                "R  docs/notes.md -> docs/renamed.md"),
+        }
+        for label, (change, line) in cases.items():
+            with self.subTest(label):
+                workspace = self.workspace(root)
+                change(workspace)
+                self.assertIn(line, self.status(workspace))
+                self.assertEqual(self.refusal(workspace, copied=copied), "Dirty source: " + line)
+
+    def test_every_other_change_to_an_uncopied_tracked_path_is_refused(self):
+        root = self.checkout()
+        copied = check_local.inventory(root)
+        cases = {
+            "present with other bytes": (lambda workspace: write(workspace / UNCOPIED_FILE, b"other bytes\n"),
+                                         " M " + UNCOPIED_FILE),
+            "the link present as a regular file": (lambda workspace: write(workspace / UNCOPIED_LINK, b"a regular file\n"),
+                                                   " T " + UNCOPIED_LINK),
+            "a staged deletion": (lambda workspace: check_local.git_read(workspace, "rm", "--quiet", "--cached", "--",
+                                                                         UNCOPIED_FILE), "D  " + UNCOPIED_FILE),
+        }
+        for label, (change, line) in cases.items():
+            with self.subTest(label):
+                workspace = self.workspace(root)
+                change(workspace)
+                self.assertIn(line, self.status(workspace))
+                self.assertEqual(self.refusal(workspace, copied=copied), "Dirty source: " + line)
+        with self.subTest("present with the commit's bytes"):
+            workspace = self.workspace(root)
+            write(workspace / UNCOPIED_FILE, (root / UNCOPIED_FILE).read_bytes())
+            self.assertEqual(self.status(workspace), [" D " + UNCOPIED_LINK])
+            result, _ = self.check(workspace, copied=copied)
+            self.assertNotIsInstance(result, v02.CurrentHostBindingError, getattr(result, "reason", None))
+        for name in (".claude/new_input.py", "outside/new_input.py", "tools/new_input.py"):
+            with self.subTest(untracked=name):
+                workspace = self.workspace(root)
+                write(workspace / name, b"an untracked input\n")
+                self.assertEqual(self.refusal(workspace, copied=copied), "Untracked source input: " + name)
+
+    def test_an_uncopied_path_whose_name_git_quotes_is_refused(self):
+        for label, name in (("a double quote", '.claude/quote"mark.txt'), ("a non-ASCII letter", ".claude/na\u00efve.txt")):
+            with self.subTest(label):
+                root = self.checkout(files=((name, b"outside the copied set\n"),))
+                copied = check_local.inventory(root)
+                workspace = self.workspace(root)
+                quoted = [line for line in self.status(workspace) if line.startswith(' D "')]
+                self.assertEqual(len(quoted), 1, self.status(workspace))
+                self.assertEqual(self.refusal(workspace, copied=copied), "Dirty source: " + quoted[0])
+
+    def test_a_link_inside_the_copied_set_is_refused_by_the_copy_and_by_the_derived_check(self):
+        root = self.checkout(links=(("tools/linked.py", "../README.md"),))
+        output = self.fresh("evidence")
+        output.mkdir()
+        with self.assertRaisesRegex(ValueError, "Cannot copy a source symbolic link"):
+            check_local.prepare_workspace(root, output, False)
+        with self.assertRaisesRegex(ValueError, "Source file is a symbolic link"):
+            check_local.inventory(root)
+        # A workspace that leaves the link out, which no driver copy produces: its deletion still refuses.
+        workspace = self.fresh("left-out") / "workspace"
+        for name in check_local.SOURCE_DIRS:
+            if (root / name).is_dir():
+                shutil.copytree(root / name, workspace / name, ignore=lambda directory, names: [
+                    item for item in names if check_local.ignored(item) or os.path.islink(os.path.join(directory, item))])
+        for name in check_local.ROOT_FILES:
+            if (root / name).is_file():
+                shutil.copy2(root / name, workspace / name)
+        check_local.prepare_workspace_git(root, workspace, check_local.git_metadata(root))
+        check_local.refresh_workspace_index(workspace)
+        self.assertIn(" D tools/linked.py", self.status(workspace))
+        self.assertTrue(check_local.copied_source_path("tools/linked.py"))
+        self.assertEqual(self.refusal(workspace, copied=check_local.inventory(workspace)), "Dirty source:  D tools/linked.py")
+
+    def test_generated_examples_keep_their_exclusion_beside_the_uncopied_paths(self):
+        root = self.checkout()
+        copied = check_local.inventory(root)
+        workspace = self.workspace(root)
+        generated = "examples/visual/demo-data.js"
+        (workspace / generated).write_bytes(b"regenerated bytes\n")
+        write(workspace / "examples/visual/scene.glb", b"glTF regenerated product\n")
+        self.assertIn(" M " + generated, self.status(workspace))
+        result, _ = self.check(workspace, copied=copied)
+        self.assertNotIsInstance(result, v02.CurrentHostBindingError, getattr(result, "reason", None))
+        (workspace / generated).unlink()
+        self.assertIn(" D " + generated, self.status(workspace))
+        result, _ = self.check(workspace, copied=copied)
+        self.assertNotIsInstance(result, v02.CurrentHostBindingError, getattr(result, "reason", None))
+
+
+class DerivedSelectionTests(unittest.TestCase):
+    """DECISION-001's record: the parent proof returns the driver's recorded copied inventory, and the selection
+    passes it to the source check. Starts no process."""
+
+    def setUp(self):
+        self.base = resolved_temporary(self, "w1-selection-")
+        self.world = World(self.base)
+        self.evidence = self.base / "evidence"
+        self.evidence.mkdir()
+
+    def test_the_parent_proof_returns_the_drivers_recorded_copied_inventory(self):
+        original = self.world.config(self.evidence)
+        parent_config = descriptor(write(self.base / "selection/original.json", canonical(original), 0o600))
+        workspace = self.base / "workspace"
+        record = recorded_inventory("README.md", "docs/notes.md")
+        before = write(self.base / "binding/source-before.json", canonical(record), 0o600)
+        copied = write(self.base / "binding/workspace-inventory.json", canonical(record), 0o600)
+        row = {"schema": v02.PREFIX + "workspace/0.2.0", **v02._identity(), "identity": "c" * 32,
+               "parent_config": parent_config, "source_root": original["source"]["root"], "workspace_root": str(workspace),
+               "commit": original["source"]["commit"], "tree": original["source"]["tree"],
+               "source_inventory": original["source"]["inventory"], "source_before": descriptor(before),
+               "workspace_inventory": descriptor(copied),
+               "immutable_inventory_sha256": check_local.immutable_workspace_inputs(record)["sha256"],
+               "provider": str(workspace / v02.PROVIDER), "probe": str(workspace / v02.PROBE)}
+        binding_path = write(self.base / "binding/workspace-binding.json", canonical(row), 0o600)
+        derived = deepcopy(original)
+        derived["source"]["root"] = str(workspace)
+        derived["contract_source"]["path"] = str(workspace / v02.CONTRACT_PATH)
+        derived["amendment_adoption"]["path"] = str(workspace / v02.AMENDMENT_ADOPTION_PATH)
+        derived["parent"] = {"config": parent_config, "source_root": original["source"]["root"],
+                             "workspace_binding": descriptor(binding_path)}
+        self.assertEqual(v02._verify_parent(derived), record)
+        self.assertIsNone(v02._verify_parent(original))
+
+    def test_the_selection_gives_the_source_check_the_parent_proofs_record(self):
+        captured = []
+
+        def capture(source, **kwargs):
+            captured.append(kwargs)
+            raise v02.CurrentHostBindingError("SOURCE", "captured by the test")
+        proof = recorded_inventory("README.md")
+        for label, parent in (("an original selection", None), ("a derived selection", {"marker": "a derived selection"})):
+            with self.subTest(label), ExitStack() as stack:
+                config = self.world.config(self.evidence)
+                config["parent"] = parent
+                path = write(self.base / "selection" / (label.replace(" ", "-") + ".json"), canonical(config), 0o600)
+                if parent is not None:
+                    proved = stack.enter_context(patch.object(v02, "_verify_parent", return_value=proof))
+                stack.enter_context(patch.object(v02, "_host_git", return_value={"path": str(self.world.git),
+                                                                                  "sha256": sha(self.world.git)}))
+                stack.enter_context(patch.object(v02, "_verify_source", side_effect=capture))
+                with self.assertRaises(v02.CurrentHostBindingError) as caught:
+                    v02._selection(path, sha(path), ROOT)
+                self.assertEqual(caught.exception.reason, "captured by the test")
+                self.assertEqual(captured[-1]["derived"], parent is not None)
+                if parent is None:
+                    self.assertIsNone(captured[-1]["copied"])
+                else:
+                    proved.assert_called_once()
+                    self.assertIs(captured[-1]["copied"], proof)
 
 
 if __name__ == "__main__":

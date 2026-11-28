@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 
@@ -555,6 +556,179 @@ class LocalChecksTests(unittest.TestCase):
         self.assertEqual(steps["force-agent-audit"]["requires"], ["force-agent-build", "force-agent-tools"])
         self.assertIn(str(self.output / "artifacts/force-agent-workflow"), steps["force-agent-build"]["argv"])
         self.assertFalse(any("install" in s["argv"] or "ci" in s["argv"] for s in plan["steps"]))
+
+
+class CopiedSetAndWorkspaceIndexTests(unittest.TestCase):
+    """C271-P37 DECISION-001 in the driver (author W1): the copied set's one definition, and the workspace
+    index's stat data (FZ-02). Starts real Git in temporary fixture repositories, through the PATH Git
+    resolved once; the repositories track two paths outside the copied set, a symbolic link among them."""
+
+    UNCOPIED = (".claude/.gitignore", ".claude/skills/alpha")
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.directory = Path(os.path.realpath(temporary.name))
+        self.root = self.directory / "source"
+        isolated = patch.object(checks, "_GIT_STATE", None)
+        isolated.start()
+        self.addCleanup(isolated.stop)
+        self.outputs = 0
+
+    def fresh_output(self):
+        self.outputs += 1
+        output = self.directory / ("evidence-%d" % self.outputs)
+        output.mkdir()
+        return output
+
+    def write(self, name, data, *, old=None):
+        path = self.root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+        if old is not None:
+            os.utime(path, (old, old))
+        return path
+
+    def repository(self):
+        """A committed source whose files carry old modification times, so that no index entry is racy."""
+        old = time.time() - 120
+        for name in ("ontokin/__init__.py", "tests/test_fixture.py", "docs/a.md", "docs/b.md", "docs/c.md", "docs/d.md",
+                     "docs/e.md", ".agents/skills/alpha/SKILL.md", "README.md", ".claude/.gitignore"):
+            self.write(name, b"fixture bytes of " + name.encode() + b"\n", old=old)
+        (self.root / ".claude/skills").mkdir(parents=True)
+        (self.root / ".claude/skills/alpha").symlink_to("../../.agents/skills/alpha")
+        checks.git_read(self.root, "init", "--quiet", "--template=")
+        checks.git_read(self.root, "add", "-A")
+        checks.git_read(self.root, "-c", "user.name=Local check fixture", "-c", "user.email=fixture@example.invalid",
+                        "commit", "--quiet", "-m", "Copied-set fixture")
+        return checks.git_metadata(self.root)
+
+    def tracked(self, root):
+        return [name for name in checks.git_read(root, "ls-files", "-z").split("\0") if name]
+
+    def unstat(self, root):
+        """Entries whose stat data does not match, without any content check (diff-files never refreshes)."""
+        return [name for name in checks.git_read(root, "diff-files", "--name-only", "-z").split("\0") if name]
+
+    def test_copied_source_path_is_the_scope_of_the_copy_and_of_the_inventory(self):
+        """Starts no process."""
+        inside = ("ontokin/__init__.py", "tests/test_fixture.py", "tools/fixture.py", "docs/notes/a.md", ".agents/skills/a/SKILL.md",
+                  "TRDs/INDEX.md", ".github/workflows/check.yml", "README.md", "pyproject.toml", ".gitignore", "LICENSE")
+        outside = (".claude/.gitignore", ".claude/skills/alpha/SKILL.md", "outside/notes.txt", "Makefile", "tools/build/out.py",
+                   "docs/_build/page.html", "tests/__pycache__/fixture.cpython-312.pyc", "ontokin/.env", "ontokin/.env.local",
+                   "tools/node_modules/package/index.js", "examples/stale.pyc", "TRDs/dist/archive.txt")
+        for name in (*inside, *outside):
+            self.write(name, b"scope fixture\n")
+        self.assertEqual([name for name in inside if not checks.copied_source_path(name)], [])
+        self.assertEqual([name for name in outside if checks.copied_source_path(name)], [])
+        recorded = {item["path"] for item in checks.inventory(self.root)["files"]}
+        self.assertEqual(recorded, set(inside))
+        workspace = checks.prepare_workspace(self.root, self.fresh_output(), False,
+                                             source_git={"available": False, "reason": "no Git in this fixture"})
+        copied = {path.relative_to(workspace).as_posix() for path in workspace.rglob("*") if path.is_file()}
+        self.assertEqual(copied, set(inside))
+        for name, expected in (("tests", True), ("README.md", True), ("docs/README.md", True), ("Tests/x.py", False),
+                               ("readme.md", False), ("tools/Build/x.py", True), (".claude", False)):
+            with self.subTest(name=name):
+                self.assertIs(checks.copied_source_path(name), expected)
+
+    def test_untracked_source_record_lists_exactly_the_copied_set_names(self):
+        """The summary's untracked_source_files is the same definition as before, now named once."""
+        self.repository()
+        untracked = (".agents/new.md", ".claude/new.txt", "Makefile", "README-new.txt", "docs/new.md", "outside/new.txt",
+                     "tools/build/new.py", "tools/new.py")
+        for name in untracked:
+            self.write(name, b"untracked fixture\n")
+        metadata = checks.git_metadata(self.root)
+        self.assertEqual(metadata["untracked_source_files"], [".agents/new.md", "docs/new.md", "tools/new.py"])
+        self.assertEqual(metadata["untracked_source_files"], [name for name in sorted(untracked) if checks.copied_source_path(name)])
+
+    def test_workspace_index_records_stat_data_once_and_status_reports_the_same_lines(self):
+        """FZ-02: one update-index -q --refresh in the workspace; afterwards only the uncopied paths lack stat
+        data, while the entries, the status lines and the summary's workspace_git values stay as without it."""
+        original = self.repository()
+        reads, real = [], checks.git_read
+
+        def recording(root, *args, **kwargs):
+            reads.append((root, args, kwargs.get("timeout")))
+            return real(root, *args, **kwargs)
+        with patch.object(checks, "git_read", side_effect=recording):
+            workspace = checks.prepare_workspace(self.root, self.fresh_output(), False, source_git=original)
+        refreshes = [read for read in reads if "update-index" in read[1]]
+        self.assertEqual(refreshes, [(workspace, ("update-index", "-q", "--refresh"), 120)])
+        self.assertEqual(reads[-1], refreshes[0], "the refresh is the preparation's last Git start")
+        self.assertEqual(self.unstat(workspace), list(self.UNCOPIED))
+        with patch.object(checks, "refresh_workspace_index") as disabled:
+            unrefreshed = checks.prepare_workspace(self.root, self.fresh_output(), False, source_git=original)
+        disabled.assert_called_once_with(unrefreshed)
+        self.assertEqual(set(self.unstat(unrefreshed)), set(self.tracked(self.root)))
+        self.assertEqual(checks.git_read(workspace, "ls-files", "--stage", "-z"),
+                         checks.git_read(unrefreshed, "ls-files", "--stage", "-z"))
+        refreshed, plain = checks.git_metadata(workspace), checks.git_metadata(unrefreshed)
+        self.assertEqual(refreshed, plain)
+        self.assertEqual(refreshed["tracked_worktree_status"], "\n".join(" D " + name for name in self.UNCOPIED))
+        self.assertEqual((refreshed["local_head"], refreshed["local_tree"]), (original["local_head"], original["local_tree"]))
+
+    def test_refreshed_index_still_reports_every_change_of_a_copied_file(self):
+        """The refresh records stat data only for unchanged copies; later changes, a same-size change with the old
+        modification time among them, and a change copied from the source all stay visible."""
+        original = self.repository()
+        (self.root / "docs/e.md").write_bytes(b"changed in the source before the copy\n")
+        workspace = checks.prepare_workspace(self.root, self.fresh_output(), False, source_git=original)
+        self.assertIn(" M docs/e.md", checks.git_metadata(workspace)["tracked_worktree_status"].splitlines())
+        (workspace / "docs/a.md").write_bytes(b"appended\n" * 3)
+        before = (workspace / "docs/b.md").stat()
+        # A later second than the copy's change time, for a Git that compares whole seconds of ctime.
+        time.sleep(1.1)
+        (workspace / "docs/b.md").write_bytes(b"x" * before.st_size)
+        os.utime(workspace / "docs/b.md", ns=(before.st_atime_ns, before.st_mtime_ns))
+        (workspace / "docs/c.md").unlink()
+        (workspace / "docs/d.md").unlink()
+        (workspace / "docs/d.md").symlink_to("a.md")
+        self.assertEqual(checks.git_metadata(workspace)["tracked_worktree_status"].splitlines(),
+                         [" D .claude/.gitignore", " D .claude/skills/alpha", " M docs/a.md", " M docs/b.md", " D docs/c.md",
+                          " T docs/d.md", " M docs/e.md"])
+
+    def test_failed_index_refresh_fails_the_run_before_any_step(self):
+        self.repository()
+        output, real = self.directory / "evidence-refresh-failure", checks.git_read
+
+        def fail_refresh(root, *args, **kwargs):
+            if root == output / "workspace" and "update-index" in args:
+                raise subprocess.CalledProcessError(128, ["git", "update-index"], stderr="index.lock exists")
+            return real(root, *args, **kwargs)
+        step = checks.Step("unexpected", (sys.executable, "-c", "raise RuntimeError('must not run')"))
+        with patch.object(checks, "git_read", side_effect=fail_refresh), patch.object(checks, "build_plan", return_value=[step]), \
+                redirect_stdout(io.StringIO()):
+            code = checks.run(self.root, output, False, 30)
+        summary = json.loads((output / "summary.json").read_text(encoding="utf-8"))
+        self.assertEqual(code, 1)
+        self.assertEqual(summary["steps"], [])
+        self.assertIn("Cannot record the isolated workspace's index stat data", summary["error"])
+        self.assertEqual(summary["not_executed_steps"], ["unexpected"])
+
+    def test_ordinary_run_records_the_uncopied_tracked_paths_with_unchanged_fields(self):
+        """An ordinary run of a source that tracks paths outside the copied set: the outcome and workspace_git
+        carry the fields and values that main's baseline summaries record for its seven .claude/ entries."""
+        original = self.repository()
+        output = self.directory / "evidence-ordinary"
+        with patch.object(checks, "build_plan", return_value=[]), redirect_stdout(io.StringIO()):
+            code = checks.run(self.root, output, False, 30)
+        summary = json.loads((output / "summary.json").read_text(encoding="utf-8"))
+        self.assertEqual(code, 0, summary)
+        self.assertEqual(summary["readback_selection"], {"status": "absent", "run_kind": "ordinary"})
+        self.assertTrue(summary["source_unchanged"])
+        workspace_git = summary["workspace_git"]
+        self.assertEqual(set(workspace_git), {"available", "local_head", "local_tree", "tracked_worktree_status",
+                                              "untracked_source_files", "head_is_base_revision",
+                                              "source_inventory_includes_untracked_files", "remote_head_verified",
+                                              "index_basis", "copied_worktree_changes_preserved", "source_staging_preserved"})
+        self.assertEqual(workspace_git["tracked_worktree_status"], " D .claude/.gitignore\n D .claude/skills/alpha")
+        self.assertEqual(workspace_git["untracked_source_files"], [])
+        self.assertEqual((workspace_git["local_head"], workspace_git["local_tree"]), (original["local_head"], original["local_tree"]))
+        self.assertEqual((workspace_git["index_basis"], workspace_git["copied_worktree_changes_preserved"],
+                          workspace_git["source_staging_preserved"]), ("source_commit_tree", True, False))
+        self.assertEqual(summary["git"]["tracked_worktree_status"], "")
 
 
 if __name__ == "__main__":

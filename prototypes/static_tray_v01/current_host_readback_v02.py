@@ -18,6 +18,10 @@ contract keeps and changes only what the contract changes:
 * the process adapter delegates once to supervisor_darwin_v01.run_process (S4);
 * results and refusals carry the labels of contract section 10 and the design revision.
 
+C271-P37 DECISION-001 corrects one check within the contract: in a derived workspace, the source
+check also admits the unstaged deletion of a tracked path that lies outside the driver's copied
+set, by the driver's own definition of that set.
+
 An expected configuration digest is an input supplied by the independently reviewed execution
 plan. This module never manufactures approval from a file's observed digest. No validation
 function starts Node; the only starts are the bound Git reads of the source check and the
@@ -434,7 +438,15 @@ def _bind_git(git):
     return record
 
 
-def _verify_source(source, *, git, derived=False, own_root=True, check=lambda: None):
+def _copied_names(copied):
+    """The driver's recorded copied-source inventory (the derivation's source_before), as case-folded names."""
+    _require(type(copied) is dict and type(copied.get("files")) is list
+             and all(type(item) is dict and type(item.get("path")) is str for item in copied["files"]),
+             "WORKSPACE", "The copied-source inventory record is malformed")
+    return {item["path"].casefold() for item in copied["files"]}
+
+
+def _verify_source(source, *, git, derived=False, own_root=True, check=lambda: None, copied=None):
     _keys(source, ("root", "commit", "tree", "inventory"))
     root = _absolute(source["root"], category="SOURCE")
     _require(not own_root or root == ROOT, "SOURCE", "Provider belongs to another source checkout")
@@ -450,9 +462,12 @@ def _verify_source(source, *, git, derived=False, own_root=True, check=lambda: N
     for relative, binding in expected["files"].items():
         _relative(relative)
         _bound(root / relative, binding, check=check, category="SOURCE")
-    # The driver owns its broader immutable copied-input definition. Do not
-    # introduce a second set of generated exceptions here.
-    from tools.check_local import git_read, immutable_workspace_inputs
+    # The driver owns its broader immutable copied-input definition and its copied set. Do not
+    # introduce a second set of generated exceptions, or of copied paths, here.
+    from tools.check_local import copied_source_path, git_read, immutable_workspace_inputs
+    # A derived check reads the driver's recorded copied inventory before its Git reads; without it,
+    # no deletion is admitted.
+    recorded = _copied_names(copied) if derived and copied is not None else None
     def git_call(*args):
         _tick(check)
         remaining = getattr(check, "deadline", float("inf")) - time.monotonic()
@@ -468,10 +483,19 @@ def _verify_source(source, *, git, derived=False, own_root=True, check=lambda: N
              and git_call("rev-parse", "--verify", "HEAD^{commit}") == source["commit"]
              and git_call("rev-parse", "--verify", source["commit"] + "^{tree}") == source["tree"],
              "SOURCE", "Source commit/tree differs or is unavailable")
+    # C271-P37 DECISION-001 (FZ-01): the driver copies only its copied set into a derived workspace,
+    # while read-tree gives the workspace's index the commit's whole tree. Beyond the generated
+    # examples, the one line admitted there is the unstaged deletion " D " of a tracked path outside
+    # the copied set, unless a file of the driver's recorded copied inventory has that name up to case.
+    # Every other line, and every line of the original route, refuses.
     for line in git_call("status", "--porcelain=v1", "--untracked-files=no").splitlines():
         name = line[3:]
-        allowed = derived and not immutable_workspace_inputs({"files": [{"path": name}]})["files"]
-        _require(allowed and " -> " not in name and not name.startswith('"'), "SOURCE", "Dirty source: " + line)
+        generated = derived and not immutable_workspace_inputs({"files": [{"path": name}]})["files"]
+        uncopied = (recorded is not None and line[:3] == " D "
+                    and all(part not in ("", ".", "..") for part in name.split("/"))
+                    and not copied_source_path(name) and name.casefold() not in recorded)
+        _require((generated or uncopied) and " -> " not in name and not name.startswith('"'), "SOURCE",
+                 "Dirty source: " + line)
     untracked = git_call("ls-files", "--others", "--exclude-standard", "-z").split("\0")
     for name in filter(None, untracked):
         allowed = derived and not immutable_workspace_inputs({"files": [{"path": name}]})["files"]
@@ -809,9 +833,10 @@ def _verify_methods(config, *, check=lambda: None):
 # ---------------------------------------------------------------------------
 
 def _verify_parent(config, *, check=lambda: None):
+    """Prove a derived selection's parent; return the driver's recorded copied inventory, or None for an original."""
     parent = config["parent"]
     if parent is None:
-        return
+        return None
     _keys(parent, ("config", "source_root", "workspace_binding"), "WORKSPACE")
     original = _document(parent["config"], 1024 * 1024, check=check, category="WORKSPACE")
     _schema(original, "config", CONFIG_KEYS)
@@ -839,6 +864,7 @@ def _verify_parent(config, *, check=lambda: None):
     copied = _document(binding["workspace_inventory"], 32 * 1024 * 1024, check=check, category="WORKSPACE")
     _require(before == copied and immutable_workspace_inputs(before)["sha256"] == binding["immutable_inventory_sha256"],
              "WORKSPACE", "Complete copied immutable-source proof differs")
+    return before
 
 
 def _selection(config_path, config_sha256, source_root, *, check=lambda: None, own_root=True):
@@ -861,9 +887,10 @@ def _selection(config_path, config_sha256, source_root, *, check=lambda: None, o
     _bound(root / AMENDMENT_ADOPTION_PATH, _plain(config["amendment_adoption"]), check=check, category="SOURCE")
     evidence = _absolute(config["evidence_root"], category="EVIDENCE")
     _require(evidence.is_dir() and not evidence.is_relative_to(root), "EVIDENCE", "An external predeclared evidence parent is required")
-    _verify_parent(config, check=check)
+    copied = _verify_parent(config, check=check)
     git = _host_git(config, check=check)
-    source = _verify_source(config["source"], git=git, derived=config["parent"] is not None, own_root=own_root, check=check)
+    source = _verify_source(config["source"], git=git, derived=config["parent"] is not None, own_root=own_root,
+                            check=check, copied=copied)
     host = _verify_host(config, check=check)
     _cross_bindings(config, host, source)
     dependencies = _verify_dependencies(config, check=check)

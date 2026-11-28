@@ -1,0 +1,2547 @@
+{
+ "schema": "ontokin.c271.p37-controls-frozen/1",
+ "task": "C271",
+ "phase": "C271-P37-derived-workspace-correction",
+ "stage": "S4",
+ "acceptance": "A4",
+ "status": "FROZEN",
+ "author": "W2, the independent control author: a subagent in a fresh context with the session's model; it wrote none of the implementation (W1's correction, or MI's), the contracts or the decision; launched by the Director c271-p37-08beec34eb0a",
+ "frozen_at_utc": "2026-11-28T01:02:35Z",
+ "executed_by_author": true,
+ "author_checks": [
+  "the module run alone, W1's two focused modules alone, and the three together, each with the prescribed command from the worktree root (author_runs; logs and digests beside the clone)",
+  "this generator's static cross-check of every test method against this table (ast only; the module is not imported here): the same methods, the docstring's label kind, and the control number"
+ ],
+ "author_runs": [
+  {
+   "label": "draft1-derived-controls",
+   "command": "/usr/bin/env -i HOME=<home> LOGNAME=<logname> USER=<user> PATH=/usr/bin:/bin TMPDIR=<resolved tmp>/ .venv/bin/python -B -m unittest tests.test_current_host_readback_derived_controls_v02 -v",
+   "cwd": "<worktree>",
+   "started_at_utc": "2026-11-28T00:47:30Z",
+   "ended_at_utc": "2026-11-28T00:48:30Z",
+   "exit": 0,
+   "result": "Ran 45 tests in 60.296s OK",
+   "log": "runs/draft1-derived-controls.log",
+   "log_sha256": "49ae2e1eb07a2c20358a1ae9380ab8904e2a86b33902307933d5e7160605710e"
+  },
+  {
+   "label": "draft2-derived-controls",
+   "command": "/usr/bin/env -i HOME=<home> LOGNAME=<logname> USER=<user> PATH=/usr/bin:/bin TMPDIR=<resolved tmp>/ .venv/bin/python -B -m unittest tests.test_current_host_readback_derived_controls_v02 -v",
+   "cwd": "<worktree>",
+   "started_at_utc": "2026-11-28T00:51:02Z",
+   "ended_at_utc": "2026-11-28T00:52:06Z",
+   "exit": 0,
+   "result": "Ran 46 tests in 64.207s OK",
+   "log": "runs/draft2-derived-controls.log",
+   "log_sha256": "19345879686e71d438f2cfd5529b3cfd0aa89f22c3e0de1feaf0a4461c96c4df"
+  },
+  {
+   "label": "final-derived-controls",
+   "command": "/usr/bin/env -i HOME=<home> LOGNAME=<logname> USER=<user> PATH=/usr/bin:/bin TMPDIR=<resolved tmp>/ .venv/bin/python -B -m unittest tests.test_current_host_readback_derived_controls_v02 -v",
+   "cwd": "<worktree>",
+   "started_at_utc": "2026-11-28T00:54:14Z",
+   "ended_at_utc": "2026-11-28T00:55:19Z",
+   "exit": 0,
+   "result": "Ran 46 tests in 64.925s OK",
+   "log": "runs/final-derived-controls.log",
+   "log_sha256": "6c92a26e78315be16e590fc120c3fa4cd4d3f7fccda4656759b1196a58f48c10"
+  },
+  {
+   "label": "final-local-checks",
+   "command": "/usr/bin/env -i HOME=<home> LOGNAME=<logname> USER=<user> PATH=/usr/bin:/bin TMPDIR=<resolved tmp>/ .venv/bin/python -B -m unittest tests.test_local_checks -v",
+   "cwd": "<worktree>",
+   "started_at_utc": "2026-11-28T00:55:19Z",
+   "ended_at_utc": "2026-11-28T00:55:28Z",
+   "exit": 0,
+   "result": "Ran 39 tests in 9.204s OK",
+   "log": "runs/final-local-checks.log",
+   "log_sha256": "78efb1a32cde8cdae1c443c63e5eae88b328f0d8f8a5c3e5c93d00ffc9fe4c2c"
+  },
+  {
+   "label": "final-provider-v02",
+   "command": "/usr/bin/env -i HOME=<home> LOGNAME=<logname> USER=<user> PATH=/usr/bin:/bin TMPDIR=<resolved tmp>/ .venv/bin/python -B -m unittest tests.test_current_host_readback_provider_v02 -v",
+   "cwd": "<worktree>",
+   "started_at_utc": "2026-11-28T00:55:28Z",
+   "ended_at_utc": "2026-11-28T00:55:46Z",
+   "exit": 0,
+   "result": "Ran 64 tests in 17.805s OK",
+   "log": "runs/final-provider-v02.log",
+   "log_sha256": "f2f1a2b3019b725152071a87cce975fe0a36adb6ea1b37078dafe5d34c30b834"
+  },
+  {
+   "label": "final-combined",
+   "command": "/usr/bin/env -i HOME=<home> LOGNAME=<logname> USER=<user> PATH=/usr/bin:/bin TMPDIR=<resolved tmp>/ .venv/bin/python -B -m unittest tests.test_local_checks tests.test_current_host_readback_provider_v02 tests.test_current_host_readback_derived_controls_v02 -v",
+   "cwd": "<worktree>",
+   "started_at_utc": "2026-11-28T00:55:55Z",
+   "ended_at_utc": "2026-11-28T00:55:55Z",
+   "exit": 1,
+   "result": "Ran 1 test in 0.000s FAILED (errors=1)",
+   "log": "runs/final-combined.log",
+   "log_sha256": "e3ae58661e1164d19e51c8caae0a72b1da7ba686bf63b74cd1d8c0ee40b4c93c"
+  },
+  {
+   "label": "final-combined-2",
+   "command": "/usr/bin/env -i HOME=<home> LOGNAME=<logname> USER=<user> PATH=/usr/bin:/bin TMPDIR=<resolved tmp>/ .venv/bin/python -B -m unittest tests.test_local_checks tests.test_current_host_readback_provider_v02 tests.test_current_host_readback_derived_controls_v02 -v",
+   "cwd": "<worktree>",
+   "started_at_utc": "2026-11-28T00:56:12Z",
+   "ended_at_utc": "2026-11-28T00:57:36Z",
+   "exit": 0,
+   "result": "Ran 149 tests in 83.292s OK",
+   "log": "runs/final-combined-2.log",
+   "log_sha256": "75c2395c92990fb3c8bfebdeadad02ac677c24b35af0c81b236baea1d8206dc2"
+  }
+ ],
+ "author_run_notes": {
+  "draft1-derived-controls": "an earlier version of the module: 45 methods, before P37-C24 and the evidence lines were added; every test passed",
+  "draft2-derived-controls": "the final bytes: no edit of the module followed it, and its log equals the final run's apart from the timing line",
+  "final-combined": "an invocation error of the author, not a test result: the shell (zsh) did not split an unquoted variable, so unittest received the three module names as one name and reported one import error; no test ran; rerun as final-combined-2",
+  "final-combined-2": "the three modules in one process: 39 + 64 + 46 = 149 tests, OK"
+ },
+ "rules": [
+  "Expectations come from P05 section 3 and the 0.2.0 contract's sections 1, 8 and 9 (MC19, MC21); the rule on status lines, which the contract leaves to the implementation, from DECISION-001 where it stays within them.",
+  "An implementation defect is corrected in the implementation, never in a frozen expectation; a defect in a frozen control is recorded and refrozen by W2, and the original is kept (CORRECTION-PLAN.md section 7).",
+  "Reasons quoted here are exact strings unless a placeholder in angle brackets names a part the control computes (a path in the temporary directory, the line, the name)."
+ ],
+ "contract": {
+  "id": "ontokin.current-host-readback/0.2.0",
+  "profile": "darwin-arm64-v1",
+  "design_revision": 4,
+  "amendments": [
+   "P33-AMENDMENT-001"
+  ]
+ },
+ "sources": {
+  "docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.md": {
+   "sha256": "32af491828bcfcb384f7e811da36165a74c8e38cd974d977275331155bf021c2",
+   "size_bytes": 26139
+  },
+  "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md": {
+   "sha256": "42db98dc6099ee605b0963f3734f7bff2d68c019ff6c00a0ee97bd753c03fdc9",
+   "size_bytes": 42769
+  },
+  "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.json": {
+   "sha256": "c843fc96f19b36b3ea141c5be0fb08c8260565188e8f5f199ff5b0bc08ca3920",
+   "size_bytes": 43340
+  },
+  "docs/engineering/localized-repair-c271/derived-workspace-p37/CORRECTION-PLAN.md": {
+   "sha256": "7b56cfc18af58d74ea35daed6c451cf60cacbacdd8d1de4f8521e34839d0dccc",
+   "size_bytes": 11522
+  },
+  "docs/engineering/localized-repair-c271/derived-workspace-p37/PHASE.json": {
+   "sha256": "29d3e1955aed2fcd1e1413b1b4af5380336ffb278ff1b2abfc12bc4448839463",
+   "size_bytes": 6109
+  },
+  "docs/engineering/localized-repair-c271/derived-workspace-p37/DECISION-001.md": {
+   "sha256": "f0af6f395d83f96cdd217a11b1e43609474143120939be332cf5aa6f05688121",
+   "size_bytes": 27134
+  },
+  "docs/engineering/localized-repair-c271/derived-workspace-p37/interfaces/W1-CORRECTION.md": {
+   "sha256": "ce434b54e4b1de5d899bfc5ff4b41398bad5e3efcf1d6d79c088bed3be13abf5",
+   "size_bytes": 20576
+  },
+  "docs/engineering/localized-repair-c271/macos-routine-p36/reviews/freeze-review-001/FREEZE-REVIEW-001.md": {
+   "sha256": "b71e1e589ab44c06cbdea3f86c236a808986ace0f445b0214b80e18d7c22981b",
+   "size_bytes": 21655
+  },
+  "docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-FROZEN.json": {
+   "sha256": "cd7ae80f93cc28b0a9fa69994a77672611eee2c3127b460a595d745c13230594",
+   "size_bytes": 292673
+  }
+ },
+ "measurement": {
+  "path": "<local>/c271-p37/measure/MEASURE-001.json",
+  "sha256": "753415b5e390303ad060d433c01365742bce1419f37e91b70b42307c98660c69"
+ },
+ "checkout": {
+  "branch": "work/c271-missing-import-digest-control",
+  "head": "2f728998456c829f3cdc13bbf72d6dd805fefa36",
+  "state": "W1's correction uncommitted in the working tree; this record and the module are also uncommitted; the author made no Git command in the worktree and compared W1's files with the declaration commit's copy at <local>/c271-p37/measure/prep-001/workspace by reading files",
+  "implementation_read_at_freeze": {
+   "tools/check_local.py": {
+    "sha256": "3136f52cef8ca4492e06f6c12898ea9f6e9f101eb5b34e4fed5c61b8b9be5ab8",
+    "size_bytes": 52020
+   },
+   "prototypes/static_tray_v01/current_host_readback_v02.py": {
+    "sha256": "bab89614c9ceeeaae56e9e264937cae482feda5bf08bda13c5972ad7412f902b",
+    "size_bytes": 83145
+   },
+   "prototypes/static_tray_v01/current_host_readback_v01.py": {
+    "sha256": "cb3f0c7f247331c79171a9e1ac71141d93205392ff426382046cfa61999d1126",
+    "size_bytes": 74144
+   },
+   "prototypes/static_tray_v01/current_host_observation_v02.py": {
+    "sha256": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+    "size_bytes": 162557
+   },
+   "tools/storage_identity.py": {
+    "sha256": "c8a88e9ead1e52f6e1b5d545fc3950cab14100f04366604a9ebee6ee215fe93c",
+    "size_bytes": 15639
+   }
+  },
+  "w1_tests_read_not_frozen": {
+   "tests/test_local_checks.py": {
+    "sha256": "0ceb6b8342178322d3253e7e1c733add498564a43f521b6ec8653ee56f7e6125",
+    "size_bytes": 47088
+   },
+   "tests/test_current_host_readback_provider_v02.py": {
+    "sha256": "95e04a46ad8a3a0691b40e7a2809154040a7a272c0a25c60e86c48540dbafc83",
+    "size_bytes": 112238
+   }
+  }
+ },
+ "test_module": {
+  "path": "tests/test_current_host_readback_derived_controls_v02.py",
+  "sha256": "c0eebef7796cecda2725f717aebd1f912947ee67feda690e8ac03ce9d564199a",
+  "size_bytes": 85712,
+  "test_methods": 46,
+  "standard_library_only": true,
+  "default_discovery_ids": [
+   "test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c01_a_regular_file_outside_the_source_directories_is_accepted",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c02_a_symbolic_link_outside_the_source_directories_is_accepted",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c03_every_other_kind_of_tracked_path_that_the_copy_leaves_out_is_accepted",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c04_the_real_trees_seven_uncopied_entries_are_accepted",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c05_the_derivation_and_the_unit_selection_accept_the_seven_entries",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c06_the_derivation_still_refuses_an_untracked_input_and_a_staged_change",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteAcceptanceControls.test_c07_a_qualifying_run_passes_its_preparation_with_the_derived_binding",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c10_a_modified_copied_file_is_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c11_a_deleted_copied_file_is_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c12_a_same_size_change_with_the_old_modification_time_is_refused_after_the_refresh",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c13_a_retyped_copied_file_is_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c14_a_staged_change_is_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c15_a_rename_line_is_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c16_an_uncopied_path_whose_name_git_quotes_is_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c17_an_uncopied_path_that_is_present_but_changed_is_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c18_an_uncopied_path_replaced_by_a_directory_holding_a_file_is_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c19_an_untracked_input_inside_the_copied_set_is_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c20_an_untracked_input_outside_the_copied_set_is_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c21_the_source_sets_binding_still_refuses_before_any_git_read",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c22_another_checkout_an_unbound_git_and_another_commit_or_tree_are_refused",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c23_a_symbolic_link_inside_the_copied_set_is_refused_by_the_driver",
+   "test_current_host_readback_derived_controls_v02.DerivedRouteRefusalControls.test_c24_a_source_tree_file_that_the_copy_leaves_out_is_refused_as_missing_source",
+   "test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c50_the_deletion_of_a_path_outside_the_copied_set_is_admitted",
+   "test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c51_every_other_status_form_of_an_uncopied_path_is_refused",
+   "test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c52_the_deletion_of_a_path_inside_the_copied_set_is_refused",
+   "test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c53_rename_and_copy_lines_are_refused",
+   "test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c54_quoted_names_are_refused",
+   "test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c55_unsafe_names_are_refused",
+   "test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c56_a_case_variant_of_a_recorded_copied_file_is_refused",
+   "test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c57_a_derived_check_without_a_well_formed_record_admits_no_deletion",
+   "test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c58_the_original_route_refuses_every_line_with_or_without_a_record",
+   "test_current_host_readback_derived_controls_v02.ExactStatusLineControls.test_c59_generated_examples_and_untracked_names_keep_their_rules",
+   "test_current_host_readback_derived_controls_v02.GeneratedExampleControls.test_c40_each_change_of_a_generated_example_is_accepted_beside_the_uncopied_paths",
+   "test_current_host_readback_derived_controls_v02.GeneratedExampleControls.test_c41_all_generated_example_changes_together_are_accepted",
+   "test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c30_an_uncopied_file_deleted_in_the_original_checkout_is_refused",
+   "test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c31_an_uncopied_link_deleted_in_the_original_checkout_is_refused",
+   "test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c32_an_original_checkout_without_any_uncopied_path_is_refused",
+   "test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c33_the_derived_workspace_read_as_an_original_is_refused",
+   "test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c34_a_qualifying_run_whose_original_checkout_lacks_an_uncopied_path_fails_preparation",
+   "test_current_host_readback_derived_controls_v02.OriginalRouteControls.test_c35_generated_example_changes_still_refuse_on_the_original_route",
+   "test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c60_the_preparation_makes_exactly_one_more_git_start_the_refresh",
+   "test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c61_the_refresh_records_stat_data_for_the_copied_entries_only_and_changes_no_entry",
+   "test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c62_status_lines_and_the_derived_outcome_are_the_same_with_and_without_the_refresh",
+   "test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c63_an_ordinary_runs_summary_keeps_its_fields_and_values",
+   "test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c64_a_failed_refresh_fails_the_run_before_any_step",
+   "test_current_host_readback_derived_controls_v02.WorkspaceIndexControls.test_c65_a_copied_file_that_differs_from_the_commit_before_the_copy_stays_unrefreshed_and_refuses"
+  ],
+  "default_inventory_note": "the 46 IDs add to the default inventory; the next MR attempt's MC28 must approve them",
+  "run_time_note": "about 65 s alone on this host, mostly fixture and wrapper Git starts"
+ },
+ "execution": {
+  "by": "the Director at S5",
+  "cwd": "<worktree>",
+  "command": "/usr/bin/env -i HOME=<home> LOGNAME=<logname> USER=<user> PATH=/usr/bin:/bin TMPDIR=<resolved tmp>/ .venv/bin/python -B -m unittest tests.test_current_host_readback_derived_controls_v02 -v",
+  "notes": [
+   "the temporary directory must be resolved; each control asserts it",
+   "Git must be on PATH (shutil.which); without it every control errors, none skips",
+   "CONTROL-EVIDENCE lines on stderr record each check's observed status lines, untracked names, outcome and Git start count, with the temporary directory written as <tmp>"
+  ]
+ },
+ "conventions": {
+  "labels": {
+   "real": "the code under test runs with no boundary substituted; fixtures are synthetic; Git runs through the logging wrapper, which execs the real Git; a substituted plan or platform metadata leaf is an input, named in the boundary",
+   "simulated": "one named boundary produces the case's condition",
+   "mocked": "named components are replaced by stand-ins, and the 0.2.0 provider labels its records 'mocked'"
+  },
+  "starts": "node and other count Node and other bounded starts, as the contract's columns do; code_under_test names the Git starts the code under test makes inside the recorded window; the fixtures' own Git starts run outside it",
+  "fixture_isolation": "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+  "privacy": "no machine path, user or personal name in the module or this record; temporary paths are computed"
+ },
+ "fixtures": {
+  "base": "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+  "records": "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+  "workspace": "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+  "full": "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+  "uncopied_by_kind": {
+   ".claude/.gitignore": "a regular file in a top-level directory outside SOURCE_DIRS",
+   ".claude/skills/alpha": "a symbolic link there, to a copied directory",
+   ".claude/hooks/check.sh": "an executable file (100755) outside SOURCE_DIRS",
+   "Makefile": "a root file outside ROOT_FILES",
+   "outside/nested/deep/notes.txt": "nested directories outside SOURCE_DIRS",
+   "tools/build/generated.py": "an ignored directory component (build) inside a SOURCE_DIR",
+   "docs/_build/page.html": "an ignored directory component (_build)",
+   "tools/node_modules/package/index.js": "an ignored directory component (node_modules)",
+   "tools/node_modules/.bin/tool": "a symbolic link inside an ignored directory",
+   "docs/.env": "an ignored file name (.env)",
+   "TRDs/.env.local": "an ignored file name (.env.*)",
+   "docs/.env.example": "a symbolic link with an ignored name",
+   "fixtures/__pycache__/cached.cpython-312.pyc": "bytecode under __pycache__",
+   "tools/stale.pyo": "an ignored suffix (.pyo)"
+  }
+ },
+ "controls": [
+  {
+   "id": "P37-C01",
+   "method": "DerivedRouteAcceptanceControls.test_c01_a_regular_file_outside_the_source_directories_is_accepted",
+   "title": "a regular file outside SOURCE_DIRS, as .claude/.gitignore is",
+   "group": "derived route: accepted",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean; the only uncopied path: .claude/.gitignore",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "premises: copied_source_path('.claude/.gitignore') is false; the record lists no uncopied path; the copy left it out; workspace status exactly [' D .claude/.gitignore']; no untracked name"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "accepted",
+    "detail": "returns the 0.2.0 source inventory document unchanged"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 1 (keeps P05's isolated-workspace derivation)",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 rule B",
+    "FZ-01"
+   ]
+  },
+  {
+   "id": "P37-C02",
+   "method": "DerivedRouteAcceptanceControls.test_c02_a_symbolic_link_outside_the_source_directories_is_accepted",
+   "title": "a symbolic link outside SOURCE_DIRS, as .claude/skills/* are",
+   "group": "derived route: accepted",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean; the only uncopied path: the link .claude/skills/alpha -> ../../.agents/skills/alpha",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "premises as c01; workspace status exactly [' D .claude/skills/alpha']"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "accepted",
+    "detail": "returns the 0.2.0 source inventory document unchanged"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 1 (keeps P05's isolated-workspace derivation)",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 rule B",
+    "FZ-01"
+   ]
+  },
+  {
+   "id": "P37-C03",
+   "method": "DerivedRouteAcceptanceControls.test_c03_every_other_kind_of_tracked_path_that_the_copy_leaves_out_is_accepted",
+   "title": "every other kind of tracked path that the copy leaves out, by the decision's definition of the copied set",
+   "group": "derived route: accepted",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean; uncopied: .claude/.gitignore, the link .claude/skills/alpha, an executable .claude/hooks/check.sh (100755), a root file outside ROOT_FILES (Makefile), nested directories (outside/nested/deep/notes.txt), ignored directory components inside SOURCE_DIRS (tools/build/generated.py, docs/_build/page.html, tools/node_modules/package/index.js), a link inside an ignored directory (tools/node_modules/.bin/tool -> ../package/index.js), ignored file names (docs/.env, TRDs/.env.local), a link with an ignored name (docs/.env.example -> ../README.md), bytecode (fixtures/__pycache__/cached.cpython-312.pyc, tools/stale.pyo); and the copied generated product examples/visual/a.glb",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "premises: copied_source_path is false for each; the copy left each out; status exactly their fourteen ' D' lines"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "accepted",
+    "detail": "returns the 0.2.0 source inventory document unchanged"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 1 (keeps P05's isolated-workspace derivation)",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 rule B",
+    "DECISION-001 sections 3 and 6"
+   ]
+  },
+  {
+   "id": "P37-C04",
+   "method": "DerivedRouteAcceptanceControls.test_c04_the_real_trees_seven_uncopied_entries_are_accepted",
+   "title": "FZ-01's shape: the real tree's seven uncopied entries",
+   "group": "derived route: accepted",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean; uncopied: .claude/.gitignore and the six links .claude/skills/<name> -> ../../.agents/skills/<name> for communication, ontokin-delivery, ontokin-learning, ontokin-session, to-implementation-plan and to-trd, with .agents/skills/<name>/SKILL.md copied",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "premise: status exactly the seven lines of S2's measurement (MEASURE-001), in that order"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "accepted",
+    "detail": "returns the 0.2.0 source inventory document unchanged"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 1 (keeps P05's isolated-workspace derivation)",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 rule B",
+    "FZ-01",
+    "<local>/c271-p37/measure/MEASURE-001.json"
+   ]
+  },
+  {
+   "id": "P37-C05",
+   "method": "DerivedRouteAcceptanceControls.test_c05_the_derivation_and_the_unit_selection_accept_the_seven_entries",
+   "title": "the derivation entry and the unit process's selection check accept the seven entries",
+   "group": "derived route: accepted",
+   "label": {
+    "kind": "mocked",
+    "boundary": "the provider's _host_git (returns the wrapper's binding), _verify_host (a synthetic HOST with labels, a Python digest and the Git binding), _cross_bindings, _verify_dependencies and _verify_methods; the provider's ROOT is the fixture's original checkout, as when the provider runs from it; the provider then labels its records 'mocked'"
+   },
+   "inputs": [
+    "c04's fixture",
+    "a config/0.2.0 outside the checkout (mode 0600) with real descriptors of the fixture's CONTRACT.md and ADOPTION-AMENDMENT-001.json, source = the original checkout, an existing evidence root outside it, parent null, and placeholder host, dependencies, runtime and methods members that the substituted functions never read; the driver's output directory beneath the evidence root",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record (output beneath the evidence root)",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git"
+   ],
+   "entry_point": "tools.check_local.bind_readback_workspace(selection, root, workspace, output, source_before=<record>, workspace_inventory=inventory(<workspace>)), which reaches the 0.2.0 derive_workspace_binding through the 0.1.0 facade; then current_host_readback_v02._selection(<derived config>, <digest>, <workspace>) with the provider's ROOT = the workspace, as the unit process checks it",
+   "expected": {
+    "outcome": "accepted",
+    "detail": "returns config_path (<output>/readback-binding/selection.json, whose SHA-256 is config_sha256), config_sha256, parent_config_sha256 (the original's), workspace_binding_path and workspace_binding_sha256; source-before.json holds the record; the derived config's source root is the workspace and its parent's source_root the original; the unit selection returns the derived config"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "15 for the derivation, then 5 for the unit selection",
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "the five reads at <original> (original selection)",
+      "the five reads at <workspace> (git_metadata of the workspace)",
+      "the five reads at <workspace> (derived selection)",
+      "unit selection: the five reads at <workspace>"
+     ]
+    },
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 1 (keeps P05's isolated-workspace derivation)",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 sections 1.1 and 3",
+    "FZ-01"
+   ]
+  },
+  {
+   "id": "P37-C06",
+   "method": "DerivedRouteAcceptanceControls.test_c06_the_derivation_still_refuses_an_untracked_input_and_a_staged_change",
+   "title": "the derivation's own source check still refuses an untracked input and a staged change",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "mocked",
+    "boundary": "the provider's _host_git (returns the wrapper's binding), _verify_host (a synthetic HOST with labels, a Python digest and the Git binding), _cross_bindings, _verify_dependencies and _verify_methods; the provider's ROOT is the fixture's original checkout, as when the provider runs from it; the provider then labels its records 'mocked'"
+   },
+   "inputs": [
+    "c05's inputs, a fresh world per subtest; after the copy, outside the copied set, so that the inventories stay equal: (a) an untracked .claude/new_control_input.txt; (b) git rm --cached .claude/.gitignore in the workspace"
+   ],
+   "entry_point": "tools.check_local.bind_readback_workspace, as c05",
+   "expected": {
+    "(a) untracked input": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Untracked source input: .claude/new_control_input.txt"
+    },
+    "(b) staged deletion": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Dirty source: D  .claude/.gitignore"
+    },
+    "detail": "current_host_readback_v02.CurrentHostBindingError propagates out of bind_readback_workspace"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "(a) 15; (b) 14",
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "as c05, ending after the derived check's fifth read (a) or fourth read (b)"
+     ]
+    }
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 sections 1.2 and 1.3"
+   ]
+  },
+  {
+   "id": "P37-C07",
+   "method": "DerivedRouteAcceptanceControls.test_c07_a_qualifying_run_passes_its_preparation_with_the_derived_binding",
+   "title": "a qualifying run passes its preparation with the derived binding (the path R1 refused at)",
+   "group": "derived route: accepted",
+   "label": {
+    "kind": "mocked",
+    "boundary": "the provider's _host_git (returns the wrapper's binding), _verify_host (a synthetic HOST with labels, a Python digest and the Git binding), _cross_bindings, _verify_dependencies and _verify_methods; the provider's ROOT is the fixture's original checkout, as when the provider runs from it; the provider then labels its records 'mocked'; the plan has no step; platform.platform is a stand-in leaf"
+   },
+   "inputs": [
+    "c04's fixture",
+    "a config/0.2.0 outside the checkout (mode 0600) with real descriptors of the fixture's CONTRACT.md and ADOPTION-AMENDMENT-001.json, source = the original checkout, an existing evidence root outside it, parent null, and placeholder host, dependencies, runtime and methods members that the substituted functions never read; the driver's output directory beneath the evidence root; the run's output is a fresh absent directory beneath the evidence root",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "check_local._GIT_STATE None at the start, so the run binds the wrapper from the selection (S9)"
+   ],
+   "entry_point": "tools.check_local.run(<original>, <output>, False, 60, readback_config=<config>, readback_config_sha256=<digest>)",
+   "expected": {
+    "outcome": "accepted",
+    "detail": "exit 0, status passed; readback_selection status workspace_bound with run_kind qualifying, a derived member of five keys and no preparation_or_execution_error; git_binding = the wrapper, bound, source selection; workspace_git.tracked_worktree_status = the seven lines; steps []; source_unchanged true"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "Git only (46 observed at freeze; the count is not frozen)",
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "exactly one update-index -q --refresh in <output>/workspace",
+      "the derived check's five reads at <output>/workspace, consecutively"
+     ]
+    }
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 1 (keeps P05's isolated-workspace derivation)",
+    "0.2.0 CONTRACT.md section 8 (qualifying run) and section 9, MC21",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 sections 1.1 and 4.4",
+    "FZ-01"
+   ]
+  },
+  {
+   "id": "P37-C10",
+   "method": "DerivedRouteRefusalControls.test_c10_a_modified_copied_file_is_refused",
+   "title": "a modified copied file",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: docs/notes.md (copied, outside the 0.2.0 source set) gets other bytes"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source:  M docs/notes.md"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2"
+   ]
+  },
+  {
+   "id": "P37-C11",
+   "method": "DerivedRouteRefusalControls.test_c11_a_deleted_copied_file_is_refused",
+   "title": "a deleted copied file",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: one subtest each: docs/notes.md, README.md, .agents/skills/alpha/SKILL.md deleted"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source:  D <path>",
+    "detail": "<path> is the deleted file"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 condition 4"
+   ]
+  },
+  {
+   "id": "P37-C12",
+   "method": "DerivedRouteRefusalControls.test_c12_a_same_size_change_with_the_old_modification_time_is_refused_after_the_refresh",
+   "title": "a same-size change with the old modification time, after the refresh (FZ-02)",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: 1.2 s after the preparation, docs/notes.md gets other bytes of the same size; its access and modification times are set back (premise: size and mtime equal the copy's)"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source:  M docs/notes.md"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 sections 4.4 and 6"
+   ]
+  },
+  {
+   "id": "P37-C13",
+   "method": "DerivedRouteRefusalControls.test_c13_a_retyped_copied_file_is_refused",
+   "title": "a retyped copied file",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: docs/notes.md replaced by a link to ../README.md"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source:  T docs/notes.md"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2"
+   ]
+  },
+  {
+   "id": "P37-C14",
+   "method": "DerivedRouteRefusalControls.test_c14_a_staged_change_is_refused",
+   "title": "a staged change",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: one subtest each, staged with real Git in the workspace: git rm --cached .claude/.gitignore; git rm --cached docs/notes.md; docs/notes.md changed and added; changed, added and changed again; a new tools/staged_input.py added; a new outside/staged_input.txt added"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source: <line>",
+    "detail": "the lines: 'D  .claude/.gitignore', 'D  docs/notes.md', 'M  docs/notes.md', 'MM docs/notes.md', 'A  tools/staged_input.py', 'A  outside/staged_input.txt'"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 condition 1"
+   ]
+  },
+  {
+   "id": "P37-C15",
+   "method": "DerivedRouteRefusalControls.test_c15_a_rename_line_is_refused",
+   "title": "a rename line",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: one subtest each, with real Git: git mv docs/notes.md docs/renamed.md; .claude/.gitignore restored with the commit's bytes, then git mv to .claude/moved.txt; git mv examples/visual/a.glb examples/visual/b.glb"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source: <line>",
+    "detail": "the lines: 'R  docs/notes.md -> docs/renamed.md', 'R  .claude/.gitignore -> .claude/moved.txt', 'R  examples/visual/a.glb -> examples/visual/b.glb' (rule A still requires no ' -> ')"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 rules A and B condition 2"
+   ]
+  },
+  {
+   "id": "P37-C16",
+   "method": "DerivedRouteRefusalControls.test_c16_an_uncopied_path_whose_name_git_quotes_is_refused",
+   "title": "a quoted name",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: none; the fixture also tracks, outside the copied set, .claude/quote\"mark.txt (one subtest) or .claude/na\\u00efve.txt (the other)"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source: <line>",
+    "detail": "the lines Git prints: ' D \".claude/quote\\\"mark.txt\"' and ' D \".claude/na\\303\\257ve.txt\"'"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "DECISION-001 section 1.2 condition 2",
+    "DECISION-001 section 6"
+   ]
+  },
+  {
+   "id": "P37-C17",
+   "method": "DerivedRouteRefusalControls.test_c17_an_uncopied_path_that_is_present_but_changed_is_refused",
+   "title": "an uncopied path that is present but changed",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: one subtest each: .claude/.gitignore with other bytes; a regular file at the link's path; the link with another target; .claude/hooks/check.sh with the commit's bytes and mode 0644; Makefile with other bytes; tools/build/generated.py with other bytes; an intent-to-add entry outside/intent_to_add.txt"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source: <line>",
+    "detail": "the lines: ' M .claude/.gitignore', ' T .claude/skills/alpha', ' M .claude/skills/alpha', ' M .claude/hooks/check.sh', ' M Makefile', ' M tools/build/generated.py', ' A outside/intent_to_add.txt'"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3 (extra executable inputs)",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 condition 1"
+   ]
+  },
+  {
+   "id": "P37-C18",
+   "method": "DerivedRouteRefusalControls.test_c18_an_uncopied_path_replaced_by_a_directory_holding_a_file_is_refused",
+   "title": "an uncopied path replaced by a directory holding a file",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: Makefile becomes a directory holding inner.txt (premise: ' D Makefile' in the status)"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Untracked source input: Makefile/inner.txt",
+    "detail": "the deletion line is admitted; the untracked file in its place refuses"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3 (extra executable inputs)",
+    "DECISION-001 section 1.3"
+   ]
+  },
+  {
+   "id": "P37-C19",
+   "method": "DerivedRouteRefusalControls.test_c19_an_untracked_input_inside_the_copied_set_is_refused",
+   "title": "an untracked input inside the copied set",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: one subtest each, an untracked file: tools/new_control_input.py, docs/new_control_input.md, .agents/new_control_input.md, .lfsconfig (a ROOT_FILES name); premise: copied_source_path is true"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Untracked source input: <name>"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.3"
+   ]
+  },
+  {
+   "id": "P37-C20",
+   "method": "DerivedRouteRefusalControls.test_c20_an_untracked_input_outside_the_copied_set_is_refused",
+   "title": "an untracked input outside the copied set (the decision keeps it)",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: one subtest each, an untracked file: .claude/new_control_input.txt, outside/new_control_input.txt, Makefile.local, tools/build/new_control_input.py; premise: copied_source_path is false"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Untracked source input: <name>"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3 (extra executable inputs)",
+    "DECISION-001 section 1.3"
+   ]
+  },
+  {
+   "id": "P37-C21",
+   "method": "DerivedRouteRefusalControls.test_c21_the_source_sets_binding_still_refuses_before_any_git_read",
+   "title": "the source set's binding: missing source, an added source-tree file, a changed provider or probe",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: one subtest each, a fresh workspace: pyproject.toml (a source role) deleted; ontokin/control_fixture.txt deleted; an added tests/new_control_input.py; the provider changed; the probe changed"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "a missing source role": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Bound path or ancestor is missing: <workspace>/pyproject.toml",
+     "detail": "the observer's path check, which the source set's walk applies first"
+    },
+    "a missing or an added source-tree file": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Complete CPU source inventory differs"
+    },
+    "a changed provider or probe": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Locked file identity differs: <workspace>/<file>"
+    },
+    "basis of the reasons": "the unchanged binding's reasons at the declaration commit"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 0,
+     "program": "none",
+     "argv_after_the_program": []
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3 (missing source, changes after the inventory was frozen)",
+    "0.2.0 CONTRACT.md section 9, MC19"
+   ]
+  },
+  {
+   "id": "P37-C22",
+   "method": "DerivedRouteRefusalControls.test_c22_another_checkout_an_unbound_git_and_another_commit_or_tree_are_refused",
+   "title": "MC19's other cases on the derived route",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "one subtest each, with the record given: own_root=True (the workspace is not the provider's checkout); git=None; source.commit 000...0; source.tree 000...0"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}; own_root and git as each subtest says",
+   "expected": {
+    "another checkout": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Provider belongs to another source checkout"
+    },
+    "no Git binding": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Source reads require the selection's bound Git executable"
+    },
+    "another commit or tree": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Source commit/tree differs or is unavailable"
+    }
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "0, 0, 2 and 3",
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "the first reads of the source check, in order"
+     ]
+    }
+   },
+   "sources": [
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "S9"
+   ]
+  },
+  {
+   "id": "P37-C23",
+   "method": "DerivedRouteRefusalControls.test_c23_a_symbolic_link_inside_the_copied_set_is_refused_by_the_driver",
+   "title": "a symbolic link inside the copied set",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture plus a tracked link tools/linked.py -> ../README.md (copied_source_path true), committed and clean; source_git = git_metadata(<original>) taken before the window",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git"
+   ],
+   "entry_point": "tools.check_local.inventory(<original>); tools.check_local.prepare_workspace(<original>, <output>, False, source_git=...)",
+   "expected": {
+    "inventory": {
+     "outcome": "refused",
+     "code": "ValueError",
+     "reason": "Source file is a symbolic link: <original>/tools/linked.py"
+    },
+    "copy": {
+     "outcome": "refused",
+     "code": "ValueError",
+     "reason": "Cannot copy a source symbolic link: <original>/tools/linked.py"
+    },
+    "side_effects": "no workspace .git; no derived workspace reaches the provider"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 0,
+     "program": "none",
+     "argv_after_the_program": []
+    }
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "DECISION-001 section 3"
+   ]
+  },
+  {
+   "id": "P37-C24",
+   "method": "DerivedRouteRefusalControls.test_c24_a_source_tree_file_that_the_copy_leaves_out_is_refused_as_missing_source",
+   "title": "a tracked file of a 0.2.0 source tree that the copy leaves out (finding F-01)",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "change in the workspace after the preparation: none; the fixture also tracks, inside a source tree but with an ignored() component, ontokin/.env (one subtest) or prototypes/static_tray_v01/build/helper.py (the other); premises: it is in the source inventory, copied_source_path is false, the original route accepts the clean checkout (five reads), the copy leaves it out and its ' D' line is in the workspace's status"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Complete CPU source inventory differs",
+    "detail": "rule B alone would admit its deletion line; the source set's binding refuses first"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 0,
+     "program": "none",
+     "argv_after_the_program": []
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3 (missing source)",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 2 ('Not missing source')"
+   ]
+  },
+  {
+   "id": "P37-C30",
+   "method": "OriginalRouteControls.test_c30_an_uncopied_file_deleted_in_the_original_checkout_is_refused",
+   "title": "the original route: an uncopied file deleted",
+   "group": "original route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "c04's fixture, .claude/.gitignore deleted in the original checkout",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=False, own_root=False, copied=<record>), with source = {root: <original checkout>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}; one subtest with the record, one with copied=None",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source:  D .claude/.gitignore"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.4"
+   ]
+  },
+  {
+   "id": "P37-C31",
+   "method": "OriginalRouteControls.test_c31_an_uncopied_link_deleted_in_the_original_checkout_is_refused",
+   "title": "the original route: an uncopied link deleted",
+   "group": "original route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "c04's fixture, the link .claude/skills/communication deleted in the original checkout",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=False, own_root=False, copied=<record>), with source = {root: <original checkout>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}; with the record and with copied=None",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source:  D .claude/skills/communication"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.4"
+   ]
+  },
+  {
+   "id": "P37-C32",
+   "method": "OriginalRouteControls.test_c32_an_original_checkout_without_any_uncopied_path_is_refused",
+   "title": "the original route: every uncopied path deleted, as a workspace lacks them",
+   "group": "original route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture with all fourteen uncopied paths deleted in the original checkout",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=False, own_root=False, copied=<record>), with source = {root: <original checkout>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}; with the record and with copied=None",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source:  D .claude/.gitignore",
+    "detail": "the first line"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.4"
+   ]
+  },
+  {
+   "id": "P37-C33",
+   "method": "OriginalRouteControls.test_c33_the_derived_workspace_read_as_an_original_is_refused",
+   "title": "the driver's workspace checked with derived=False",
+   "group": "original route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "c04's fixture and its workspace",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=False, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}; with the record and with copied=None",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source:  D .claude/.gitignore"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.4"
+   ]
+  },
+  {
+   "id": "P37-C34",
+   "method": "OriginalRouteControls.test_c34_a_qualifying_run_whose_original_checkout_lacks_an_uncopied_path_fails_preparation",
+   "title": "a qualifying run whose original checkout lacks an uncopied path fails preparation",
+   "group": "original route: refused",
+   "label": {
+    "kind": "mocked",
+    "boundary": "the provider's _host_git (returns the wrapper's binding), _verify_host (a synthetic HOST with labels, a Python digest and the Git binding), _cross_bindings, _verify_dependencies and _verify_methods; the provider's ROOT is the fixture's original checkout, as when the provider runs from it; the provider then labels its records 'mocked'; the plan has one step; platform.platform is a stand-in leaf"
+   },
+   "inputs": [
+    "c04's fixture",
+    "a config/0.2.0 outside the checkout (mode 0600) with real descriptors of the fixture's CONTRACT.md and ADOPTION-AMENDMENT-001.json, source = the original checkout, an existing evidence root outside it, parent null, and placeholder host, dependencies, runtime and methods members that the substituted functions never read; the driver's output directory beneath the evidence root",
+    ".claude/.gitignore deleted in the original checkout after the configuration was written",
+    "one planned step sys.executable -I -S -B -c 'raise SystemExit(7)', which must never start",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control"
+   ],
+   "entry_point": "tools.check_local.run(<original>, <output>, False, 60, readback_config=<config>, readback_config_sha256=<digest>)",
+   "expected": {
+    "outcome": "refused",
+    "code": "failed preparation",
+    "reason": "Dirty source:  D .claude/.gitignore",
+    "detail": "exit 1, status failed, error = the reason; readback_selection status preparation_pending, run_kind qualifying, preparation_or_execution_error = the reason; steps [], not_executed_steps ['control-unit']; no workspace_git and no workspace"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <original> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <original> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <original> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <original> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "step_starts": 0
+   },
+   "sources": [
+    "0.2.0 CONTRACT.md section 8 (qualifying run) and section 9, MC21",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.4"
+   ]
+  },
+  {
+   "id": "P37-C35",
+   "method": "OriginalRouteControls.test_c35_generated_example_changes_still_refuse_on_the_original_route",
+   "title": "unchanged: generated examples refuse on the original route",
+   "group": "original route: refused",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture; (a) examples/visual/demo-data.js changed in the original checkout; (b) a fresh fixture with an untracked examples/visual/scene.glb",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=False, own_root=False, copied=<record>), with source = {root: <original checkout>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}; (a) with the record and with copied=None; (b) copied=None",
+   "expected": {
+    "(a)": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Dirty source:  M examples/visual/demo-data.js"
+    },
+    "(b)": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Untracked source input: examples/visual/scene.glb"
+    }
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "(a) 4, (b) 5",
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    }
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "DECISION-001 sections 1.4 and 5"
+   ]
+  },
+  {
+   "id": "P37-C40",
+   "method": "GeneratedExampleControls.test_c40_each_change_of_a_generated_example_is_accepted_beside_the_uncopied_paths",
+   "title": "unchanged rule A: each generated-example change is accepted beside the uncopied paths",
+   "group": "derived route: accepted",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "one subtest each, in the workspace: examples/visual/demo-data.js changed (' M'); deleted (' D'); changed and staged ('M  '); untracked generated products examples/visual/scene.glb, examples/agent/workflow.json and examples/construction/program.bundle.json"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "accepted",
+    "detail": "returns the 0.2.0 source inventory document unchanged"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3 (the driver's existing generated exclusion)",
+    "DECISION-001 section 1.2 rule A",
+    "DECISION-001 section 5"
+   ]
+  },
+  {
+   "id": "P37-C41",
+   "method": "GeneratedExampleControls.test_c41_all_generated_example_changes_together_are_accepted",
+   "title": "unchanged rule A: the changed example and the untracked products together",
+   "group": "derived route: accepted",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "the workspace = tools.check_local.prepare_workspace(<original>, <fresh output>, False): the driver's own copy of SOURCE_DIRS and ROOT_FILES, its workspace Git (init, fetch, update-ref, read-tree), storage step and index refresh, every Git start through the logging wrapper, bound with tools.check_local.bind_git before the first driver Git start; premise: tools.check_local.inventory(<workspace>) equals the copied record",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "examples/visual/demo-data.js changed and the three untracked products, in one workspace"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "accepted",
+    "detail": "returns the 0.2.0 source inventory document unchanged"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "DECISION-001 section 1.2 rule A"
+   ]
+  },
+  {
+   "id": "P37-C50",
+   "method": "ExactStatusLineControls.test_c50_the_deletion_of_a_path_outside_the_copied_set_is_admitted",
+   "title": "' D P' admitted for P outside the copied set",
+   "group": "derived route: accepted",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the Git boundary: the stand-in answers the five reads with the exact lines"
+   },
+   "inputs": [
+    "a /bin/sh stand-in for the bound Git, bound through the provider's _bind_git, that answers exactly the source check's five reads (after -c core.fsmonitor=false -C <root>) from files, exits 97 or 98 on anything else, and logs each start; the root holds the 0.2.0 source set and the other copied files of the base tree, without Git; the record = tools.check_local.inventory(<root>); commit a1a1...a1, tree b2b2...b2",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "one subtest each, the status ' D P' for P in: .claude/.gitignore, .claude/skills/alpha, the twelve other uncopied paths of c03, ontokin/.env, tests/__pycache__/cached.cpython-312.pyc, LICENSE/inner.txt, '.claude/two words.txt' unquoted, Docs/other.md; and the seven lines of the real tree together; premise: copied_source_path(P) is false"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <stand-in root>, commit, tree, inventory: <the root's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "accepted",
+    "detail": "returns the 0.2.0 source inventory document unchanged"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the stand-in",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "none"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "DECISION-001 section 1.2 rule B",
+    "DECISION-001 section 6"
+   ]
+  },
+  {
+   "id": "P37-C51",
+   "method": "ExactStatusLineControls.test_c51_every_other_status_form_of_an_uncopied_path_is_refused",
+   "title": "every other status form of an uncopied path",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the Git boundary: the stand-in answers the five reads with the exact lines"
+   },
+   "inputs": [
+    "a /bin/sh stand-in for the bound Git, bound through the provider's _bind_git, that answers exactly the source check's five reads (after -c core.fsmonitor=false -C <root>) from files, exits 97 or 98 on anything else, and logs each start; the root holds the 0.2.0 source set and the other copied files of the base tree, without Git; the record = tools.check_local.inventory(<root>); commit a1a1...a1, tree b2b2...b2",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "one subtest each, the status 'XY .claude/.gitignore' for XY in 'D ', ' M', 'M ', 'MM', 'MD', ' T', 'T ', 'TM', 'A ', ' A', 'AM', 'AD', 'DD', 'AU', 'UD', 'UA', 'DU', 'AA', 'UU', '??', '!!'"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <stand-in root>, commit, tree, inventory: <the root's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source: <line>"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the stand-in",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "none"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 condition 1"
+   ]
+  },
+  {
+   "id": "P37-C52",
+   "method": "ExactStatusLineControls.test_c52_the_deletion_of_a_path_inside_the_copied_set_is_refused",
+   "title": "' D P' refused for P inside the copied set",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the Git boundary: the stand-in answers the five reads with the exact lines"
+   },
+   "inputs": [
+    "a /bin/sh stand-in for the bound Git, bound through the provider's _bind_git, that answers exactly the source check's five reads (after -c core.fsmonitor=false -C <root>) from files, exits 97 or 98 on anything else, and logs each start; the root holds the 0.2.0 source set and the other copied files of the base tree, without Git; the record = tools.check_local.inventory(<root>); commit a1a1...a1, tree b2b2...b2",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "one subtest each, ' D P' for P in: README.md, pyproject.toml, .gitignore, .gitattributes, .lfsconfig, docs/notes.md, tests/control_fixture.txt, tools/linked.py (a link inside), tools/sub (a submodule path inside), .agents/skills/alpha/SKILL.md, TRDs/INDEX.md, .github/workflows/check.yml, tools/Build/x.py (a case variant of an ignored name, which ignored() does not match), tests, prototypes/static_tray_v01/current_host_readback_v02.py; premise: copied_source_path(P) is true"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <stand-in root>, commit, tree, inventory: <the root's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source:  D <P>"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the stand-in",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "none"
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3 (complete copied immutable-source inventory)",
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 condition 4",
+    "DECISION-001 section 3"
+   ]
+  },
+  {
+   "id": "P37-C53",
+   "method": "ExactStatusLineControls.test_c53_rename_and_copy_lines_are_refused",
+   "title": "rename and copy lines",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the Git boundary: the stand-in answers the five reads with the exact lines"
+   },
+   "inputs": [
+    "a /bin/sh stand-in for the bound Git, bound through the provider's _bind_git, that answers exactly the source check's five reads (after -c core.fsmonitor=false -C <root>) from files, exits 97 or 98 on anything else, and logs each start; the root holds the 0.2.0 source set and the other copied files of the base tree, without Git; the record = tools.check_local.inventory(<root>); commit a1a1...a1, tree b2b2...b2",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "one subtest each: 'R  .claude/a -> .claude/b', 'C  .claude/a -> .claude/b', 'RM .claude/a -> .claude/b', 'CM .claude/a -> .claude/b', ' R .claude/a -> .claude/b', 'R  docs/notes.md -> .claude/b', 'R  .claude/a -> docs/b.md', ' D .claude/a -> b', 'R  examples/visual/a.glb -> examples/visual/b.glb', ' D examples/visual/a.glb -> examples/visual/b.glb'"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <stand-in root>, commit, tree, inventory: <the root's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source: <line>"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the stand-in",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "none"
+   },
+   "sources": [
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.2 rules A and B condition 2"
+   ]
+  },
+  {
+   "id": "P37-C54",
+   "method": "ExactStatusLineControls.test_c54_quoted_names_are_refused",
+   "title": "quoted names",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the Git boundary: the stand-in answers the five reads with the exact lines"
+   },
+   "inputs": [
+    "a /bin/sh stand-in for the bound Git, bound through the provider's _bind_git, that answers exactly the source check's five reads (after -c core.fsmonitor=false -C <root>) from files, exits 97 or 98 on anything else, and logs each start; the root holds the 0.2.0 source set and the other copied files of the base tree, without Git; the record = tools.check_local.inventory(<root>); commit a1a1...a1, tree b2b2...b2",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "one subtest each: ' D \".claude/two words.txt\"', ' D \".claude/na\\303\\257ve.txt\"', ' D \".claude/quote\\\"mark.txt\"', ' M \"examples/visual/two words.glb\"', ' D \"examples/visual/two words.glb\"'"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <stand-in root>, commit, tree, inventory: <the root's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source: <line>"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the stand-in",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "none"
+   },
+   "sources": [
+    "DECISION-001 section 1.2 rules A and B condition 2",
+    "DECISION-001 section 6"
+   ]
+  },
+  {
+   "id": "P37-C55",
+   "method": "ExactStatusLineControls.test_c55_unsafe_names_are_refused",
+   "title": "unsafe names",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the Git boundary: the stand-in answers the five reads with the exact lines"
+   },
+   "inputs": [
+    "a /bin/sh stand-in for the bound Git, bound through the provider's _bind_git, that answers exactly the source check's five reads (after -c core.fsmonitor=false -C <root>) from files, exits 97 or 98 on anything else, and logs each start; the root holds the 0.2.0 source set and the other copied files of the base tree, without Git; the record = tools.check_local.inventory(<root>); commit a1a1...a1, tree b2b2...b2",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "one subtest each: ' D ../escape', ' D ./outside', ' D outside//notes', ' D /outside/notes', ' D outside/', ' D ' (no name), ' D .claude/../README.md' (names a copied file through '..'), ' D .claude/./x', ' D .'"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <stand-in root>, commit, tree, inventory: <the root's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source: <line>"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the stand-in",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "none"
+   },
+   "sources": [
+    "DECISION-001 section 1.2 condition 3"
+   ]
+  },
+  {
+   "id": "P37-C56",
+   "method": "ExactStatusLineControls.test_c56_a_case_variant_of_a_recorded_copied_file_is_refused",
+   "title": "a case variant of a recorded copied file",
+   "group": "derived route: refused, and one accepted",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the Git boundary: the stand-in answers the five reads with the exact lines"
+   },
+   "inputs": [
+    "a /bin/sh stand-in for the bound Git, bound through the provider's _bind_git, that answers exactly the source check's five reads (after -c core.fsmonitor=false -C <root>) from files, exits 97 or 98 on anything else, and logs each start; the root holds the 0.2.0 source set and the other copied files of the base tree, without Git; the record = tools.check_local.inventory(<root>); commit a1a1...a1, tree b2b2...b2",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "premise: the record holds docs/notes.md, README.md, tests/control_fixture.txt and .agents/skills/alpha/SKILL.md; one subtest each: ' D Docs/notes.md', ' D DOCS/NOTES.MD', ' D readme.md', ' D README.MD', ' D Tests/control_fixture.txt', ' D .AGENTS/skills/alpha/SKILL.md' (copied_source_path false for each); and ' D Docs/other.md'"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <stand-in root>, commit, tree, inventory: <the root's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "case variants": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Dirty source: <line>"
+    },
+    "' D Docs/other.md'": {
+     "outcome": "accepted",
+     "detail": "returns the 0.2.0 source inventory document unchanged"
+    }
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "4 for each refusal, 5 for the acceptance",
+     "program": "the stand-in",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    }
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3 (complete copied immutable-source inventory)",
+    "DECISION-001 section 1.2 condition 6",
+    "DECISION-001 section 6"
+   ]
+  },
+  {
+   "id": "P37-C57",
+   "method": "ExactStatusLineControls.test_c57_a_derived_check_without_a_well_formed_record_admits_no_deletion",
+   "title": "no record, or a malformed record",
+   "group": "derived route: refused",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the Git boundary: the stand-in answers the five reads with the exact lines"
+   },
+   "inputs": [
+    "a /bin/sh stand-in for the bound Git, bound through the provider's _bind_git, that answers exactly the source check's five reads (after -c core.fsmonitor=false -C <root>) from files, exits 97 or 98 on anything else, and logs each start; the root holds the 0.2.0 source set and the other copied files of the base tree, without Git; the record = tools.check_local.inventory(<root>); commit a1a1...a1, tree b2b2...b2",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "status ' D .claude/.gitignore'; copied=None; then one subtest each with copied = [], {}, {'files': None}, {'files': 'README.md'}, {'files': [{'path': 1}]}, {'files': [['README.md']]}, {'files': [{}]}, 'text', {'files': [{'path': 'README.md'}, 3]}"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<as each case says>), with source = {root: <stand-in root>, commit, tree, inventory: <the root's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "copied=None": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Dirty source:  D .claude/.gitignore"
+    },
+    "malformed": {
+     "outcome": "refused",
+     "code": "CH-WORKSPACE",
+     "reason": "The copied-source inventory record is malformed",
+     "detail": "before any Git start"
+    }
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "4 without a record; 0 with a malformed record",
+     "program": "the stand-in",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    }
+   },
+   "sources": [
+    "DECISION-001 section 1.2 condition 5 and the malformed record"
+   ]
+  },
+  {
+   "id": "P37-C58",
+   "method": "ExactStatusLineControls.test_c58_the_original_route_refuses_every_line_with_or_without_a_record",
+   "title": "the original route refuses every line",
+   "group": "original route: refused",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the Git boundary: the stand-in answers the five reads with the exact lines"
+   },
+   "inputs": [
+    "a /bin/sh stand-in for the bound Git, bound through the provider's _bind_git, that answers exactly the source check's five reads (after -c core.fsmonitor=false -C <root>) from files, exits 97 or 98 on anything else, and logs each start; the root holds the 0.2.0 source set and the other copied files of the base tree, without Git; the record = tools.check_local.inventory(<root>); commit a1a1...a1, tree b2b2...b2",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "derived=False; one subtest each, with the record and with copied=None: ' D .claude/.gitignore', ' D .claude/skills/alpha', ' D Makefile', ' D tools/build/generated.py', ' M examples/visual/demo-data.js', ' D examples/visual/demo-data.js'"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=False, own_root=False, copied=<record>), with source = {root: <stand-in root>, commit, tree, inventory: <the root's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "outcome": "refused",
+    "code": "CH-SOURCE",
+    "reason": "Dirty source: <line>"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the stand-in",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "none"
+   },
+   "sources": [
+    "0.2.0 CONTRACT.md section 9, MC19",
+    "DECISION-001 section 1.4"
+   ]
+  },
+  {
+   "id": "P37-C59",
+   "method": "ExactStatusLineControls.test_c59_generated_examples_and_untracked_names_keep_their_rules",
+   "title": "unchanged: generated examples and untracked names",
+   "group": "derived and original routes",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the Git boundary: the stand-in answers the five reads with the exact lines"
+   },
+   "inputs": [
+    "a /bin/sh stand-in for the bound Git, bound through the provider's _bind_git, that answers exactly the source check's five reads (after -c core.fsmonitor=false -C <root>) from files, exits 97 or 98 on anything else, and logs each start; the root holds the 0.2.0 source set and the other copied files of the base tree, without Git; the record = tools.check_local.inventory(<root>); commit a1a1...a1, tree b2b2...b2",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "(a) copied=None and the status ' M examples/visual/demo-data.js', 'M  examples/visual/demo-data.js', ' D examples/agent/workflow.json', 'MM examples/construction/main.ok', ' D examples/visual/scene.glb'; (b) the untracked names tools/new_control_input.py, docs/new_control_input.md, .claude/new_control_input.txt, outside/new_control_input.txt, Makefile.local, .lfsconfig; (c) the untracked generated products examples/visual/fresh.glb, examples/agent/fresh.export.json, on both routes"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<as each case says>), with source = {root: <stand-in root>, commit, tree, inventory: <the root's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "(a)": {
+     "outcome": "accepted",
+     "detail": "returns the 0.2.0 source inventory document unchanged"
+    },
+    "(b)": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Untracked source input: <name>"
+    },
+    "(c) derived": {
+     "outcome": "accepted",
+     "detail": "returns the 0.2.0 source inventory document unchanged"
+    },
+    "(c) original": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Untracked source input: <name>"
+    }
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 5,
+     "program": "the stand-in",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    }
+   },
+   "sources": [
+    "P05 CONTRACT.md section 3 (generated exclusion)",
+    "DECISION-001 sections 1.2 (rule A), 1.3 and 5"
+   ]
+  },
+  {
+   "id": "P37-C60",
+   "method": "WorkspaceIndexControls.test_c60_the_preparation_makes_exactly_one_more_git_start_the_refresh",
+   "title": "FZ-02: the preparation makes exactly one more Git start, the refresh",
+   "group": "FZ-02",
+   "label": {
+    "kind": "real",
+    "boundary": "the comparison baseline substitutes tools.check_local.refresh_workspace_index with a no-op"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "two preparations of the same original, with and without the refresh, each in a fresh output; every start recorded, with each run's timeout"
+   ],
+   "entry_point": "tools.check_local.prepare_workspace(<original>, <output>, False)",
+   "expected": {
+    "outcome": "accepted (prepared)",
+    "detail": "with the paths labelled, the refreshed sequence equals the baseline sequence plus one last start, [<git>, -c, core.fsmonitor=false, -C, <output>/workspace, update-index, -q, --refresh], whose allowance is 120 s; no status read of the workspace precedes it; the baseline makes no refresh"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "the baseline's starts plus one",
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <output>/workspace update-index -q --refresh (the last)"
+     ]
+    }
+   },
+   "sources": [
+    "DECISION-001 sections 4.4 and 4.5",
+    "interfaces/W1-CORRECTION.md section 2.1",
+    "FZ-02"
+   ]
+  },
+  {
+   "id": "P37-C61",
+   "method": "WorkspaceIndexControls.test_c61_the_refresh_records_stat_data_for_the_copied_entries_only_and_changes_no_entry",
+   "title": "FZ-02: stat data for the copied entries only; no entry changed",
+   "group": "FZ-02",
+   "label": {
+    "kind": "real",
+    "boundary": "the comparison baseline substitutes tools.check_local.refresh_workspace_index with a no-op"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "two workspaces of the same original, with and without the refresh; each workspace's .git/index read by the control without Git (versions 2 to 4); the commit's tree from ls-tree -r -z in the original (harness)"
+   ],
+   "entry_point": "tools.check_local.prepare_workspace, then the index files",
+   "expected": {
+    "outcome": "accepted (prepared)",
+    "detail": "both indexes hold exactly the commit's paths, each with the commit's mode and object and stage 0; without the refresh every entry's stat data is zero; with it, every copied entry has a nonzero ctime and the workspace file's mtime seconds, inode and size (32-bit), and every uncopied entry keeps zero stat data"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "as c60",
+     "program": "the bound wrapper",
+     "argv_after_the_program": []
+    }
+   },
+   "sources": [
+    "DECISION-001 section 4.4 ('records stat data only for entries whose copied bytes hash to the commit's objects'; 'changes no entry's path, mode, object or stage')",
+    "FZ-02"
+   ]
+  },
+  {
+   "id": "P37-C62",
+   "method": "WorkspaceIndexControls.test_c62_status_lines_and_the_derived_outcome_are_the_same_with_and_without_the_refresh",
+   "title": "FZ-02: the same status lines and outcomes with and without the refresh",
+   "group": "FZ-02",
+   "label": {
+    "kind": "real",
+    "boundary": "the comparison baseline substitutes tools.check_local.refresh_workspace_index with a no-op"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "the 0.2.0 source inventory document, computed by the control from the fixture's own files, outside the checkout; the copied record = tools.check_local.inventory(<original checkout>), which the derivation keeps as source_before",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "one subtest with and one without the refresh; then docs/notes.md changed in each workspace"
+   ],
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "before the change": {
+     "outcome": "accepted",
+     "detail": "returns the 0.2.0 source inventory document unchanged"
+    },
+    "after the change": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Dirty source:  M docs/notes.md"
+    }
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "5, then 4",
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no",
+      "-c core.fsmonitor=false -C <root> ls-files --others --exclude-standard -z"
+     ]
+    }
+   },
+   "sources": [
+    "DECISION-001 section 4.4",
+    "0.2.0 CONTRACT.md section 9, MC19"
+   ]
+  },
+  {
+   "id": "P37-C63",
+   "method": "WorkspaceIndexControls.test_c63_an_ordinary_runs_summary_keeps_its_fields_and_values",
+   "title": "FZ-02: an ordinary run's summary keeps its fields and values",
+   "group": "FZ-02",
+   "label": {
+    "kind": "real",
+    "boundary": "the plan has no step (an input); platform.platform is a stand-in metadata leaf (on its first call it starts uname and file); the comparison baseline substitutes tools.check_local.refresh_workspace_index with a no-op"
+   },
+   "inputs": [
+    "c04's fixture: (a) clean; (b) with an uncommitted change of docs/notes.md and a staged new docs/staged.md in the original checkout",
+    "the PATH Git is the logging wrapper, named git, first on PATH; check_local._GIT_STATE None",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "two runs each, with and without the refresh, each into a fresh absent output"
+   ],
+   "entry_point": "tools.check_local.run(<original>, <output>, False, 60)",
+   "expected": {
+    "outcome": "accepted (exit 0, status passed)",
+    "detail": "the summary's keys are exactly the 28 of the declaration commit's run(); readback_selection {'status': 'absent', 'run_kind': 'ordinary'}; git = {available true, local_head, local_tree, tracked_worktree_status (a) '' (b) ' M docs/notes.md\\nA  docs/staged.md', untracked_source_files [], head_is_base_revision true, source_inventory_includes_untracked_files true, remote_head_verified false}; workspace_git = the same members with tracked_worktree_status (a) the seven lines (b) the seven lines and ' M docs/notes.md', untracked_source_files (a) [] (b) ['docs/staged.md'], plus index_basis 'source_commit_tree', copied_worktree_changes_preserved true, source_staging_preserved false, and exactly these 11 keys; workspace_storage lfs_files [] and network_transfers false; source_unchanged and git_revision_unchanged true; steps, not_executed_steps and pending_external_cases []; git_binding = the PATH wrapper, unbound, source PATH; every member other than started_at, finished_at and duration_seconds equal with and without the refresh"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "the baseline's plus one",
+     "program": "the PATH wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <output>/workspace update-index -q --refresh, right after the storage step's ls-tree -r -z and before the workspace's first read"
+     ]
+    }
+   },
+   "sources": [
+    "DECISION-001 section 4.5",
+    "CORRECTION-PLAN.md section 1 ('its summary fields and their meanings')",
+    "0.2.0 CONTRACT.md section 8 (ordinary run)",
+    "FZ-02"
+   ]
+  },
+  {
+   "id": "P37-C64",
+   "method": "WorkspaceIndexControls.test_c64_a_failed_refresh_fails_the_run_before_any_step",
+   "title": "FZ-02: a failed refresh fails the run before any step",
+   "group": "FZ-02",
+   "label": {
+    "kind": "simulated",
+    "boundary": "the PATH Git's update-index -q --refresh start exits 128 (the wrapper); every other start runs the real Git; platform.platform is a stand-in leaf"
+   },
+   "inputs": [
+    "c04's fixture",
+    "the failing wrapper named git first on PATH",
+    "one planned step sys.executable -I -S -B -c 'raise SystemExit(7)', which must never start",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control"
+   ],
+   "entry_point": "tools.check_local.run(<original>, <output>, False, 60)",
+   "expected": {
+    "outcome": "refused",
+    "code": "failed preparation",
+    "reason": "Cannot record the isolated workspace's index stat data: <error>",
+    "detail": "exit 1, status failed; the error starts with the reason's prefix and contains 'returned non-zero exit status 128'; readback_selection ordinary; steps [], not_executed_steps ['control-unit']; no workspace_git"
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": "Git only (16 observed at freeze)",
+     "program": "the PATH wrapper",
+     "argv_after_the_program": [
+      "the last start: -c core.fsmonitor=false -C <output>/workspace update-index -q --refresh"
+     ]
+    },
+    "step_starts": 0
+   },
+   "sources": [
+    "DECISION-001 section 4.4 ('On failure')",
+    "interfaces/W1-CORRECTION.md section 2.1"
+   ]
+  },
+  {
+   "id": "P37-C65",
+   "method": "WorkspaceIndexControls.test_c65_a_copied_file_that_differs_from_the_commit_before_the_copy_stays_unrefreshed_and_refuses",
+   "title": "FZ-02: a copied file that differs from the commit before the copy stays unrefreshed",
+   "group": "FZ-02",
+   "label": {
+    "kind": "real",
+    "boundary": "none"
+   },
+   "inputs": [
+    "the full fixture: the base tree plus .claude/.gitignore, the link .claude/skills/alpha -> ../../.agents/skills/alpha, the twelve other uncopied paths of control c03 and the copied generated product examples/visual/a.glb; premises: without a change the workspace's status is exactly the fourteen ' D' lines of the uncopied paths (c03, c40 and c62 assert it), and after a change it holds the change's line (each refusal control asserts it)",
+    "a synthetic Git checkout in the resolved temporary directory holding the provider's 0.2.0 source set (every current_host_readback_v02.SOURCE_FILES path and a file in each SOURCE_TREES tree, synthetic bytes) and, elsewhere in the copied set, README.md, a .gitignore with no patterns, docs/notes.md, .agents/skills/alpha/SKILL.md, the generated example examples/visual/demo-data.js and a synthetic ADOPTION-AMENDMENT-001.json; every file's modification time 600 s in the past; committed with real Git (init --template=, add --all --force, commit; GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, a placeholder identity); premise: the checkout tracks exactly its tree and is clean",
+    "XDG_CONFIG_HOME names an empty directory (the account's global ignore and attributes files stay out); tools.check_local._GIT_STATE isolated per control",
+    "a /bin/sh wrapper that logs \"$*\" and execs the Git that shutil.which('git') finds under the test's PATH; bound by tools.check_local.bind_git",
+    "docs/notes.md changed in the original checkout before the copy; the record = inventory(<original>) after that change"
+   ],
+   "entry_point": "tools.check_local.prepare_workspace, the workspace's .git/index (read without Git), then prototypes.static_tray_v01.current_host_readback_v02._verify_source(source, git={path, sha256}, derived=True, own_root=False, copied=<record>), with source = {root: <workspace>, commit, tree, inventory: <the original's 0.2.0 source inventory descriptor>}",
+   "expected": {
+    "index": "docs/notes.md keeps zero stat data; README.md has stat data",
+    "check": {
+     "outcome": "refused",
+     "code": "CH-SOURCE",
+     "reason": "Dirty source:  M docs/notes.md"
+    }
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "code_under_test": {
+     "git_starts": 4,
+     "program": "the bound wrapper",
+     "argv_after_the_program": [
+      "-c core.fsmonitor=false -C <root> rev-parse --show-toplevel",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify HEAD^{commit}",
+      "-c core.fsmonitor=false -C <root> rev-parse --verify <commit>^{tree}",
+      "-c core.fsmonitor=false -C <root> status --porcelain=v1 --untracked-files=no"
+     ]
+    },
+    "recorded_window": "every subprocess start is recorded; an os-level spawn fails the control; no Node, ldd, codesign or otool",
+    "harness": "real Git started by the fixture outside the recorded window"
+   },
+   "sources": [
+    "DECISION-001 section 4.4",
+    "P05 CONTRACT.md section 3",
+    "0.2.0 CONTRACT.md section 9, MC19"
+   ]
+  }
+ ],
+ "coverage": {
+  "1. accepted on the derived route with real Git and the driver's preparation": {
+   "a regular file outside SOURCE_DIRS": [
+    "P37-C01",
+    "P37-C04"
+   ],
+   "a symbolic link there": [
+    "P37-C02",
+    "P37-C04"
+   ],
+   "every other kind the copy leaves out": [
+    "P37-C03"
+   ],
+   "through the derivation and a qualifying run's preparation": [
+    "P37-C05",
+    "P37-C07"
+   ]
+  },
+  "2. refused on the derived route": {
+   "a copied file modified or deleted": [
+    "P37-C10",
+    "P37-C11",
+    "P37-C12",
+    "P37-C13",
+    "P37-C62",
+    "P37-C65"
+   ],
+   "a staged change": [
+    "P37-C14",
+    "P37-C06",
+    "P37-C51"
+   ],
+   "a rename or copy line": [
+    "P37-C15",
+    "P37-C53"
+   ],
+   "a quoted name": [
+    "P37-C16",
+    "P37-C54"
+   ],
+   "an uncopied path present but changed": [
+    "P37-C17",
+    "P37-C18",
+    "P37-C51"
+   ],
+   "an untracked input inside the copied set": [
+    "P37-C19",
+    "P37-C59"
+   ],
+   "anything else the contract refuses and the decision keeps": [
+    "P37-C20",
+    "P37-C06",
+    "P37-C21",
+    "P37-C22",
+    "P37-C23",
+    "P37-C24",
+    "P37-C52",
+    "P37-C55",
+    "P37-C56",
+    "P37-C57"
+   ]
+  },
+  "2. refused on the original route": [
+   "P37-C30",
+   "P37-C31",
+   "P37-C32",
+   "P37-C33",
+   "P37-C34",
+   "P37-C35",
+   "P37-C58"
+  ],
+  "3. unchanged generated-example exclusion": [
+   "P37-C40",
+   "P37-C41",
+   "P37-C59"
+  ],
+  "4. FZ-02": [
+   "P37-C60",
+   "P37-C61",
+   "P37-C62",
+   "P37-C63",
+   "P37-C64",
+   "P37-C65",
+   "P37-C12"
+  ]
+ },
+ "mutation_cross_check": {
+  "basis": "W1's ten mutation classes (MUTATIONS.json beside the clone); the author may not change W1's files, so this is a reading of which frozen controls each mutation would fail, not an executed mutation run",
+  "MP1 no case-folded record guard": [
+   "P37-C56"
+  ],
+  "MP2 any XY form admitted for an uncopied path": [
+   "P37-C51",
+   "P37-C14",
+   "P37-C17",
+   "P37-C06"
+  ],
+  "MP3 the driver's copied set not consulted": [
+   "P37-C11",
+   "P37-C52"
+  ],
+  "MP4 a deletion admitted without the record": [
+   "P37-C57"
+  ],
+  "MP5 the selection drops the parent proof's record": [
+   "P37-C05",
+   "P37-C07"
+  ],
+  "MP6 no check of empty, current or parent components": [
+   "P37-C55"
+  ],
+  "MP7 quoted names admitted": [
+   "P37-C16",
+   "P37-C54"
+  ],
+  "MD1 no index refresh": [
+   "P37-C60",
+   "P37-C61",
+   "P37-C63"
+  ],
+  "MD2 refresh without -q": [
+   "P37-C60",
+   "every real-Git control (the preparation fails)"
+  ],
+  "MD3 copied set without the ignored() exclusion": [
+   "P37-C03",
+   "P37-C50",
+   "P37-C20"
+  ]
+ },
+ "findings": [
+  {
+   "id": "F-01",
+   "kind": "decision text, nonmandatory",
+   "controls": [
+    "P37-C24"
+   ],
+   "basis": "DECISION-001 section 2, 'Not missing source'",
+   "text": "The decision says that the whole 0.2.0 source set lies inside the copied set, so that its absence 'refuses twice: through that binding, and through rule B's condition 4'. The 0.2.0 source set is every regular file under SOURCE_TREES (the observer's source_paths), and a tracked file there whose path has an ignored() component, such as ontokin/.env or prototypes/static_tray_v01/build/helper.py, lies in the source set but outside the copied set. The copy leaves it out, and rule B alone would admit its deletion line; only the binding refuses it ('Complete CPU source inventory differs'). The outcome is fail-closed and the decision's conclusion (no amendment) stands; P37-C24 freezes that refusal. At the declaration commit no tracked path has an ignored() component (W1's index reading). Recommendation: correct the sentence in a later record; no code change."
+  }
+ ],
+ "observations": [
+  {
+   "id": "O-01",
+   "text": "The plan lists the driver's ordinary behaviour as unchanged, and its item 4 admits a correction of FZ-02 with its own controls. The decision names the one added Git start as the exception; P37-C60 and P37-C63 freeze it. The next MR attempt's start inventory must count it."
+  },
+  {
+   "id": "O-02",
+   "text": "The controls keep the account's global Git files out (XDG_CONFIG_HOME). In a real run, where such files exist, Git's default global ignore file applies to the provider's ls-files --others --exclude-standard (Q-10 of MR's freeze review), and Git's default global attributes file applies to the driver's and provider's Git reads, which set no core.attributesFile (only the storage step's starts set it to /dev/null). Unchanged by W1; for the next MR freeze."
+  },
+  {
+   "id": "O-03",
+   "text": "This host's Git (2.50.1, the developer tools' build) quotes a name with a space in porcelain v1, so such an uncopied path refuses here; the decision notes that some versions do not. The real-Git quoted controls use a double quote and a non-ASCII letter, which Git quotes under the default core.quotePath; the space case is frozen at the exact-line level in both forms (P37-C50 unquoted, P37-C54 quoted)."
+  }
+ ],
+ "not_frozen": [
+  {
+   "item": "a qualifying run with a real HOST, dependencies and methods",
+   "reason": "the next MR attempt; P37-C05 to P37-C07 and P37-C34 substitute those boundaries"
+  },
+  {
+   "item": "case variants at the file system's level",
+   "reason": "their outcome differs between case-sensitive and case-insensitive volumes, and a control must not skip (W1's Q2); P37-C56 freezes the rule at the exact-line level"
+  },
+  {
+   "item": "the refresh with Git LFS clean filters",
+   "reason": "no LFS file in the tree and no client on the host"
+  },
+  {
+   "item": "FZ-02's margin at the real tree's scale",
+   "reason": "MEASURE-001 is its record; P37-C60 to P37-C65 freeze the mechanism, not the timing"
+  },
+  {
+   "item": "the 0.1.0 provider (Linux route)",
+   "reason": "a recorded follow-up outside local mode (P30-EXECUTOR-001)"
+  }
+ ],
+ "counts": {
+  "controls": 46,
+  "test_methods": 46,
+  "by_label": {
+   "real": 31,
+   "simulated": 11,
+   "mocked": 4
+  },
+  "by_group": {
+   "FZ-02": 6,
+   "derived and original routes": 1,
+   "derived route: accepted": 9,
+   "derived route: refused": 22,
+   "derived route: refused, and one accepted": 1,
+   "original route: refused": 7
+  }
+ }
+}
