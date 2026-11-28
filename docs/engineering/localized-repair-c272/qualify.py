@@ -117,7 +117,7 @@ def main() -> int:
                 {**checks, **{name: None for name in ("rebuild", "scoring", "controls")}}), "error": o.get("error")}
             continue
         record = out / "delivery/cases" / case / "record"
-        authority = score.ORACLE.decode_authority(json.loads((record / "authority.json").read_text()))
+        authority = score.decode_record(json.loads((record / "authority.json").read_text()))
         sources = authority["retained"]["sourceFiles"]
         rebuilds = [rebuild.rebuild_case(out / "rebuild", prepared, f"{case}-{k}", sources) for k in (1, 2)]
         first = rebuilds[0]
@@ -165,7 +165,7 @@ def main() -> int:
         for label, function in variants().items():
             o = runner.run_case("V1", out / "controls", label=label, variant=function)
             path = out / "controls/cases" / label / "record/authority.json"
-            found[label] = {"outcome": o, "authority": score.ORACLE.decode_authority(json.loads(path.read_text())) if path.exists() else None}
+            found[label] = {"outcome": o, "authority": score.decode_record(json.loads(path.read_text())) if path.exists() else None}
         extras = {"undeclared-input rebuild": rebuild.rebuild_case(out / "rebuild", prepared, "control-undeclared",
                                                                     materials["V1"]["authority"]["retained"]["sourceFiles"],
                                                                     undeclared={"extra.ok": b"// undeclared input\n"})}

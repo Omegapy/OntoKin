@@ -31,6 +31,18 @@ def sha256(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+def decode_record(document: dict) -> dict:
+    """Decode the runner's hex transport with C255's own decoder; the rebuild state is added later."""
+    document = copy.deepcopy(document)
+    placeholder = "rebuild" not in document
+    if placeholder:
+        document["rebuild"] = {"sourceFiles": {}, "artifacts": {}}
+    decoded = ORACLE.decode_authority(document)
+    if placeholder:
+        del decoded["rebuild"]
+    return decoded
+
+
 def observe_artifacts(source_files: dict, artifacts: dict) -> dict:
     """Decode one delivered state: C256/C257/C258/C267 on the GLB, then G3 on GLB and sidecar."""
     delivery = observe.observe_delivery(source_files, artifacts[GLB], GLB)
