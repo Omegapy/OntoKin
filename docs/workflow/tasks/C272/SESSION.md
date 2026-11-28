@@ -87,3 +87,9 @@
 - Durable evidence references: START-STATE.json.
 - Integration state separate from saved-delivery state: not integrated; no browser ZIP applies.
 - Published checkpoint revision and readback result: recorded in the next checkpoint.
+
+## Checkpoint 2026-11-28T05:40Z: declaration published, PHASE-002 records
+
+- Declaration commit `871701ba82bfb98be7cf7bb93383f0f979307110` was pushed. `git ls-remote` read the branch head back as the same commit; main stayed at `38ee8d18`. [Issue 282](https://github.com/Omegapy/OntoKin/issues/282) and draft [PR283](https://github.com/Omegapy/OntoKin/pull/283) are open. No hosted check ran.
+- TASK-007 to TASK-009 are done: [COVERAGE.md](../../../engineering/localized-repair-c272/COVERAGE.md), [RECONCILIATION.md](../../../engineering/localized-repair-c272/RECONCILIATION.md), and the observer baseline on this host. That baseline ran at `539cbfe1`: 12 groups, 282 methods, all passed twice, worktree clean before and after.
+- TASK-010: [GAPS.md](../../../engineering/localized-repair-c272/GAPS.md) is written and reported to the owner. G3's option waits for the owner's answer (DEC-006). Work that does not depend on G3 continues.

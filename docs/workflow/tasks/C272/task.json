@@ -397,7 +397,7 @@
         "TASK-004",
         "TASK-005"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/workflow/tasks/C272/SESSION.md"
       ],
@@ -418,7 +418,7 @@
       "depends_on": [
         "TASK-006"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c272/COVERAGE.md"
       ],
@@ -438,9 +438,11 @@
       "depends_on": [
         "TASK-006"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
-        "docs/engineering/localized-repair-c272/evidence/observer-baseline/RESULTS.json"
+        "docs/engineering/localized-repair-c272/evidence/observer-baseline/RESULTS.json",
+        "docs/engineering/localized-repair-c272/evidence/observer-baseline/RESULTS-repeat.json",
+        "docs/engineering/localized-repair-c272/run_observer_regression.py"
       ],
       "verification": [
         "Run each group a second time and compare exit status and method counts with the record.",
@@ -457,7 +459,7 @@
       "depends_on": [
         "TASK-007"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c272/RECONCILIATION.md"
       ],
@@ -479,7 +481,7 @@
         "TASK-007",
         "TASK-009"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c272/GAPS.md"
       ],
@@ -1017,15 +1019,26 @@
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "observer regression baseline (12 groups) at 539cbfe1",
+      "command": ".venv/bin/python docs/engineering/localized-repair-c272/run_observer_regression.py --output-dir ../../OntoKin-local/c272/checks/observer-baseline-1 (and -2)",
+      "result": "passed",
+      "required": false,
+      "evidence": [
+        "docs/engineering/localized-repair-c272/evidence/observer-baseline/RESULTS.json",
+        "docs/engineering/localized-repair-c272/evidence/observer-baseline/RESULTS-repeat.json"
+      ]
+    }
+  ],
   "completion": {
     "implementation_commit": null,
     "merge_commit": null,
-    "pull_request": null,
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/283",
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Publish the declaration checkpoint (TASK-006), then write the coverage map, run the observer baseline and record the gaps (PHASE-002). Substantial missing observations wait for the owner's answer (DEC-006).",
+  "next_action": "G3 waits for the owner's choice of option A, B or C in docs/engineering/localized-repair-c272/GAPS.md (DEC-006). Meanwhile PHASE-003 (runner, accepted-state record, exchange record) and the parts of PHASE-004 that do not depend on G3 continue.",
   "blockers": [],
   "owner_waivers": []
 }
