@@ -80,3 +80,14 @@ A superseded PR may be closed once its final head is preserved and its dispositi
 Close unadopted or rejected proposals with that status. Close consolidated evidence PRs as superseded when appropriate. Use merged status only when an actual merge occurred. Do not infer release acceptance from either closure or integration.
 
 Keep current STATUS short: released capability, integrated development capability, current owner/scope, exact latest evidence, known blockers and the next unmet goal. Detailed history belongs in linked records and the reconciliation manifest. Deferred domains from GOAL remain visible; no finite reach milestone completes OntoKin.
+
+## Amendment 2026-11-28: main's known failures
+
+By the owner's direction of 2026-11-28, items 2 and 4 of section 3 are read with this rule. Everything else in them stays.
+
+- **The baseline.** When a required check also fails on current main, the branch's run is compared with main's run on the same host. That is main's recorded run, or one run of main if none is recorded.
+- **What does not block.** A failure, error or skip that main shows too, with the same test ID and reason, is a known baseline. It is recorded and does not block integration.
+- **What blocks.** A new or worsened failure.
+- **Fixing main.** Fixing main's known failures is separate work. It is never a precondition of another branch's integration.
+
+The rule exists because C271's documentation-only result waited eight days on checks that failed on main for reasons unrelated to it ([decision](localized-repair-c271/OWNER-DECISION-20261128.md)).

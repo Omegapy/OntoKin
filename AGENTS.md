@@ -67,6 +67,8 @@ Do not wait for hosted CI, retry blocked jobs or enable paid execution. Inspect 
 
 Select checks for actual scope; documentation-only changes require documentation and applicable workflow checks below. Local command forms, with macOS's resolved temporary directory: [LOCAL-SETUP](docs/development/LOCAL-SETUP.md#run-the-checks).
 
+**Main's known failures never block a branch** (owner direction, 2026-11-28; [OK-ENG-009 amendment](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md#amendment-2026-11-28-mains-known-failures)). When a required check also fails on current main, compare the branch's run with main's run on the same host. Use main's recorded run, or run main once if none is recorded. Keep both results. A failure, error or skip that main shows too, with the same test ID and reason, is a known baseline: record it and merge. Only a new or worsened failure blocks. Fixing main's known failures is separate work, never a precondition of another branch. When checking would cost far more than the change it checks, tell the owner plainly before going on.
+
 | Scope | Required check |
 | --- | --- |
 | Routine development, except documentation-only | `python3 tools/check_local.py`; `--full` adds existing visual job after pinned-tool preparation. |
