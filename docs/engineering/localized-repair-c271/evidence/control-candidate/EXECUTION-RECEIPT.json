@@ -1,0 +1,34 @@
+{
+  "schema": "ontokin.c271.execution-receipt/1",
+  "recorded_at_utc": "2026-11-20T22:00:35.473235+00:00",
+  "source": {
+    "commit": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+    "dirty_before": "",
+    "tree": "21ab07914931495d6bee70591a70ff2d8bcabb84"
+  },
+  "resolved_interpreter": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+  "exact_invocation": "python3 -B docs/engineering/localized-repair-c271/run_h22_control.py --output /workspace/scratch/cce28e2b3ca4/c271-run-01 --phase C271-P01-control-candidate > /workspace/scratch/cce28e2b3ca4/c271-run-01-driver.log 2>&1",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "docs/engineering/localized-repair-c271/run_h22_control.py",
+    "--output",
+    "/workspace/scratch/cce28e2b3ca4/c271-run-01",
+    "--phase",
+    "C271-P01-control-candidate"
+  ],
+  "cwd": "/workspace/scratch/cce28e2b3ca4/OntoKin",
+  "exit_code": 0,
+  "process_completion": "Observed terminal tool completed with exit_code0; no active job remained",
+  "driver_log": {
+    "path": "driver.log",
+    "bytes": 107,
+    "sha256": "5b0d53400b2dbe44390f77e364eabb8024a514e9f53f877724c2e59bd6fe526a"
+  },
+  "results": {
+    "path": "RESULTS.json",
+    "bytes": 15891,
+    "sha256": "ea516696267931321ab1d63f4fb420f31f6de28addb537dd9b7479329bdd6eb7"
+  },
+  "review_correction": "RESULTS.command uses sys.argv and therefore lacks interpreter -B. This separate receipt preserves the actual invocation without changing the original report. No behavioral rerun."
+}

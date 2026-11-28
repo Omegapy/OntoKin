@@ -1,0 +1,97 @@
+{
+  "schema": "ontokin.c271.control-static-checks/0.1",
+  "passed": true,
+  "scope": "fixture reconstruction, exact bytes and independently authored oracle only",
+  "command": "python3 docs/engineering/localized-repair-c271/control/construct.py --check --report docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "input_identities": [
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "bytes": 1708,
+      "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "bytes": 1708,
+      "sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "bytes": 1911,
+      "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "bytes": 185276,
+      "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "bytes": 185236,
+      "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    }
+  ],
+  "output_identities": [
+    {
+      "path": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+      "bytes": 1628,
+      "sha256": "11fcba0b5b54bb981b16d4bad9aaeceb7bc4899b5695c92963db630068f578b5"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+      "bytes": 1635,
+      "sha256": "0dc807d0b5998eefb4cf87a443700132433d41a971c71d35c3f95d9e7ccba690"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+      "bytes": 1628,
+      "sha256": "cc8e875fd33f175b09acbbb39daa9b77bb0ae699b314f198354514876dc2fade"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+      "bytes": 1635,
+      "sha256": "2d597b7706af825103298ad718efdfdf5c1a9b012dd7db385dcac3355ec8facf"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/control/EXPECTED.json",
+      "bytes": 27400,
+      "sha256": "0b8da6eab52323e8092c348fabad0d8d77247552e4eb5e3a1ffdc17266d12522"
+    }
+  ],
+  "reconstruction_checks": [
+    {
+      "case_id": "before__missing_digest_clause",
+      "exact_unique_target": true,
+      "unchanged_prefix_and_suffix": true,
+      "inverse_deletion_matches_original": true,
+      "semicolon_and_surrounding_whitespace_preserved": true
+    },
+    {
+      "case_id": "before__missing_digest_value",
+      "exact_unique_target": true,
+      "unchanged_prefix_and_suffix": true,
+      "inverse_deletion_matches_original": true,
+      "semicolon_and_surrounding_whitespace_preserved": true
+    },
+    {
+      "case_id": "after__missing_digest_clause",
+      "exact_unique_target": true,
+      "unchanged_prefix_and_suffix": true,
+      "inverse_deletion_matches_original": true,
+      "semicolon_and_surrounding_whitespace_preserved": true
+    },
+    {
+      "case_id": "after__missing_digest_value",
+      "exact_unique_target": true,
+      "unchanged_prefix_and_suffix": true,
+      "inverse_deletion_matches_original": true,
+      "semicolon_and_surrounding_whitespace_preserved": true
+    }
+  ],
+  "case_count": 6,
+  "baseline_cases": 2,
+  "missing_digest_cases": 4,
+  "observer_invocations": 0,
+  "product_parser_evaluator_exporter_invocations": 0
+}

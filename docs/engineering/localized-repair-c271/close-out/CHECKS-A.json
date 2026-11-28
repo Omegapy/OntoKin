@@ -1,0 +1,47 @@
+{
+  "schema": "ontokin.c271.close-out-checks/1",
+  "stage": "close-out PR A",
+  "recorded_at_utc": "2026-11-28T02:55:02Z",
+  "branch": "work/c271-h22-result",
+  "base": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "interpreter_rule": "every start of the framework interpreter with -B",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": ".venv/bin/python -B tools/chat_workflow.py check",
+      "exit": 0,
+      "result": "passed",
+      "observed": "Workflow structure passed (13 tasks).",
+      "output_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+    },
+    {
+      "name": "documentation",
+      "command": ".venv/bin/python -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "exit": 0,
+      "result": "passed",
+      "links": {
+        "documents": 1362,
+        "local_links": 6205,
+        "anchors": 165,
+        "external_skipped": 985
+      },
+      "failures": [],
+      "output_sha256": "e52a533d73d513ef45ee2b6882376f8b67bdeb5e71b2fe3af6d501ad98be8ae0",
+      "note": "run while this record was a placeholder, so that its path resolves"
+    },
+    {
+      "name": "whitespace, every staged file",
+      "command": "git diff --cached --check",
+      "exit": 0,
+      "result": "passed"
+    },
+    {
+      "name": "privacy search of the added lines",
+      "command": "the derived private terms over every added line, after the public repository and GitHub account name",
+      "result": "passed",
+      "note": "the owner's name and email in two GitHub API snapshots are replaced by labels (OWNER-DECISION-20261128.md); the remaining hits are the public GitHub login of the repository's owner"
+    }
+  ],
+  "code_or_test_changes": "none: the merge changes only docs/ and STATUS.md",
+  "result": "passed"
+}

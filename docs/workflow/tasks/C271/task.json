@@ -1,0 +1,309 @@
+{
+  "schema_version": 1,
+  "id": "C271",
+  "title": "H22 isolated missing source import-digest control",
+  "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
+  "status": "review",
+  "owner": "c271-close-6b644749c2d0",
+  "branch": "work/c271-h22-result",
+  "base_sha": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
+  "requirements": [
+    {
+      "id": "R01",
+      "description": "Independently frozen missing-digest control",
+      "acceptance": "Author isolated actual source import-digest removal from the unchanged historical input, with unchanged companion source and GLB, predeclared exact refusal expectation from adopted rules, input hashes and an independent construction explanation before invoking the observers.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/control/EXPECTED.json",
+        "docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+        "docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json"
+      ]
+    },
+    {
+      "id": "R02",
+      "description": "Observed isolated refusal and propagation",
+      "acceptance": "Execute positive baseline and isolated missing-digest variants through applicable source observation, binding and comparison interfaces. Preserve complete actual responses, input identities and reasons. Require the independently frozen typed refusal and no qualified partial result; preserve contradictions without repairing runtime or changing the oracle.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json",
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RAW-EVIDENCE.zip"
+      ]
+    },
+    {
+      "id": "R03",
+      "description": "Required checks and independent review",
+      "acceptance": "Independently review the exact candidate and evidence; resolve mandatory findings. Before integration execute the complete affected regression inventory, required local driver and applicable documentation/workflow checks, retaining all failures, interruptions and environment limits.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md",
+        "docs/engineering/localized-repair-c271/close-out/CHECKS-A.json",
+        "docs/engineering/localized-repair-c271/RESULTS.md"
+      ],
+      "owner_decision": "2026-11-28: the merged result is documentation-only, so the documentation verifier and the workflow check are the required checks; the independent candidate review passed on 2026-11-20; the complete routine driver and the complete affected observer regression are not required for this merge"
+    },
+    {
+      "id": "R04",
+      "description": "Reviewed integration and actual-main verification",
+      "acceptance": "In a later phase acquire verified expected-head ownership, conditionally integrate the reviewed candidate, verify actual main and observe branch disposition with retained history.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R05",
+      "description": "Verified phase delivery and truthful closure",
+      "acceptance": "Confirm early recovery before substantial work. Verify and save each phase handoff and matching prompts; publish its separate receipt. Keep parent and scope issue open until every requirement, integration and final delivery gate passes.",
+      "status": "not_done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "id": "P01",
+      "title": "Freeze, execute and independently review one isolated control candidate; save partial handoff",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R05"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/workflow/tasks/C271/SESSION.md",
+        "docs/engineering/localized-repair-c271/control/EXPECTED.json",
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json",
+        "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
+      ],
+      "verification": [
+        "Confirmed early recovery; independent expectation before observation; exact input/response evidence; focused independent candidate review; documentation/workflow checks; published retained branch and verified saved partial handoff"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "Close C271 by merging its documentation-only result into main (the owner's decision of 2026-11-28)",
+      "requirements": [
+        "R03",
+        "R04",
+        "R05"
+      ],
+      "status": "in_progress",
+      "artifacts": [
+        "docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md",
+        "docs/engineering/localized-repair-c271/close-out/CLOSE-OUT.json"
+      ],
+      "verification": [
+        "documentation verifier and workflow check on the close-out branch",
+        "normal pull-request merge into main",
+        "documentation verifier and workflow check on main after the merge"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "isolated H22 control",
+      "command": "python3 -B docs/engineering/localized-repair-c271/run_h22_control.py --output NEW_OUTPUT --phase C271-P01",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json"
+      ]
+    },
+    {
+      "name": "required routine local driver before integration",
+      "command": "python3 -B tools/check_local.py --output-dir NEW_OUTPUT",
+      "result": "not_run",
+      "required": false,
+      "evidence": [],
+      "waived": "by the owner's decision of 2026-11-28 (docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md): the merged result is documentation-only and changes no code or test"
+    },
+    {
+      "name": "complete affected observer regression before integration",
+      "command": "python3 -B docs/engineering/localized-repair-c268/evidence/run_checks.py --repo IDENTIFIED_REPO --phase C271-integration --output NEW_OUTPUT --c268-methods 35",
+      "result": "not_run",
+      "required": false,
+      "evidence": [],
+      "waived": "by the owner's decision of 2026-11-28 (docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md): the merged result is documentation-only and changes no code or test"
+    },
+    {
+      "name": "clean published-candidate documentation and workflow records",
+      "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/delivery/record-checks/CHECKS.json"
+      ]
+    },
+    {
+      "name": "independent candidate review",
+      "command": "Actual independent subagent review; commands and exact identities recorded in report",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-AUDIT.json",
+        "docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.json"
+      ]
+    },
+    {
+      "name": "P01 partial handoff archive and independent package review",
+      "command": "Recorded builder and independent archive audits; no behavioral replay",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/delivery/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/delivery/package-review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
+      ]
+    },
+    {
+      "name": "close-out documentation and workflow checks",
+      "command": ".venv/bin/python -B tools/chat_workflow.py check; .venv/bin/python -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py; git diff --cached --check",
+      "result": "passed",
+      "required": true,
+      "scope": "the close-out branch's records",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/close-out/CHECKS-A.json"
+      ]
+    }
+  ],
+  "completion": {
+    "implementation_commit": null,
+    "merge_commit": null,
+    "pull_request": null,
+    "branch_disposition": "active",
+    "evidence": [
+      "docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md"
+    ]
+  },
+  "next_action": "Merge C271's documentation-only result into main with a normal pull request (the owner's decision of 2026-11-28), check main with the documentation verifier and the workflow check, then record completion in a second small pull request that closes issue 273. Phases P02 to P38 stay unmerged on work/c271-missing-import-digest-control.",
+  "session_phase": {
+    "phase": "C271-close-out-20261128",
+    "owner": "c271-close-6b644749c2d0",
+    "declared_at_utc": "2026-11-28T02:52:10Z",
+    "execution_mode": "local",
+    "status": "merge_pending",
+    "decision": "docs/engineering/localized-repair-c271/OWNER-DECISION-20261128.md",
+    "unmerged_history": {
+      "branch": "work/c271-missing-import-digest-control",
+      "pull_request": "https://github.com/Omegapy/OntoKin/pull/274",
+      "phases": "P02 to P38",
+      "note": "retained unchanged for history; not merged"
+    }
+  },
+  "delivery": {
+    "required": true,
+    "kind": "browser-session",
+    "status": "saved",
+    "folder": "OntoKin",
+    "partial": true,
+    "receipt": "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+    "archive": {
+      "file_name": "OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+      "library_file_id": "libfile_fde3_f-6fa4862a8b2c8191957e4b0760c32705_2ab2a24d43748191957f9bcc356b59de",
+      "file_id": "file_0000000015dc81f6ad1374c44bf4c809",
+      "version": 0,
+      "path": "/OntoKin/OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+      "bytes": 12003931,
+      "sha256": "9bdb8ec134fbf8facc1b1f52aa9b7171de16f35593ddf7ad61930e521f4495df",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-6fa4862a8b2c8191957e4b0760c32705_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "local_metadata_applied": true
+    },
+    "prompts": [
+      {
+        "file_name": "OntoKin_C271_Prompt_1_Continue_2026-11-20.md",
+        "library_file_id": "libfile_fde3_f-69176d668244819184ba6b3c5af8c5fe_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_00000000ea6c81f69fa8f633f8194c78",
+        "version": 0,
+        "path": "/OntoKin/OntoKin_C271_Prompt_1_Continue_2026-11-20.md",
+        "bytes": 3559,
+        "sha256": "60252a3177831711fdbc34c60d735b16cf31162bd89efa250269d9275bab893d",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-69176d668244819184ba6b3c5af8c5fe_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true
+      },
+      {
+        "file_name": "OntoKin_C271_Prompt_2_Recover_2026-11-20.md",
+        "library_file_id": "libfile_fde3_f-43686d2798448191bbef891b19ef0499_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_000000005eb881f687684fef85db6c42",
+        "version": 0,
+        "path": "/OntoKin/OntoKin_C271_Prompt_2_Recover_2026-11-20.md",
+        "bytes": 3785,
+        "sha256": "09192571ddcaae69ad91fbb51872cc18087a973bd4fd551075fde43f62b93c89",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-43686d2798448191bbef891b19ef0499_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true
+      }
+    ],
+    "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524"
+  },
+  "authorization": {
+    "source": "Current fresh Prompt 1 continuation request",
+    "rule": "PROTOCOL section 8 permits one next step when no scope is active; prior C270 stop text is historical and does not override newer owner direction.",
+    "selection": "H22.02 is a concrete missing control in the adopted C260 qualification plan and C269 coverage audit. It is independent of larger H20/H24 work."
+  },
+  "historical_checks": [
+    {
+      "name": "working-tree documentation/workflow preflight",
+      "result": "passed",
+      "required": false,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/working-record-checks/CHECKS.json"
+      ],
+      "limit": "Preliminary working-tree record checks, not final clean-candidate acceptance evidence."
+    }
+  ],
+  "p01_session_phase": {
+    "id": "C271-P01-control-candidate",
+    "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+    "declared_at_utc": "2026-11-20T21:49:53.235938+00:00",
+    "owner": "c271-control-cce28e2b3ca4",
+    "scope": "Only independent isolated missing import-digest control construction, execution, scoped review, recoverable candidate publication and saved partial handoff",
+    "acceptance": "R01/R02 evidence, focused candidate review, applicable record checks and confirmed partial delivery; integration requirements remain open",
+    "stopping_point": "Verified saved partial handoff and separate receipt; or first unplanned runtime/contract repair",
+    "integration_allowed_this_phase": false,
+    "status": "complete_partial_delivery",
+    "early_save_confirmed": true,
+    "early_receipt": "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
+    "executed_source_revision": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+    "controls": {
+      "input_cases": 6,
+      "interface_calls": 18,
+      "positive_calls": 6,
+      "typed_refusals": 12,
+      "assertion_checks": 1042,
+      "failed_assertions": 0,
+      "environment": "CPython 3.12.14 / Linux x86-64"
+    },
+    "focused_review": {
+      "reviewer": "/root/github_reconciliation",
+      "execution_candidate": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+      "publication_candidate": "2633cc1ffabfebe3233a76e164b9e80f91960faf",
+      "candidate_checks": 425,
+      "publication_checks": 30,
+      "failed_checks": 0,
+      "mandatory_findings": [],
+      "resolved_finding": "C271-RV-001 exact command provenance",
+      "integration_approved": false,
+      "final_source_candidate": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+      "final_state_checks": 58,
+      "final_source_review": "docs/engineering/localized-repair-c271/delivery/FINAL-STATE-REVIEW.json"
+    },
+    "branch_disposition": "retained_unmerged",
+    "delivery_confirmed": true,
+    "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+    "source_tree": "9ab0d4dfcb21735fed4c019f85f8f450ebfaa7b4",
+    "delivery_receipt": "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+    "completed_at_utc": "2026-11-20T22:19:47.359915+00:00",
+    "record_checks": {
+      "result": "passed",
+      "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+      "report": "docs/engineering/localized-repair-c271/delivery/record-checks/CHECKS.json"
+    },
+    "package_review": {
+      "result": "passed",
+      "report": "docs/engineering/localized-repair-c271/delivery/package-review/AUDIT.json"
+    }
+  },
+  "p01_next_action": "Stop this chat. In a fresh parent chat reconcile live state and resume C271 P02 at R03: required routine driver, complete affected regression cohort and independent integration review.",
+  "execution_mode": "local"
+}

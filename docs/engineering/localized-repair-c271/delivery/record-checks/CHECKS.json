@@ -1,0 +1,54 @@
+{
+  "schema": "ontokin.c271.clean-record-checks/1",
+  "source": {
+    "commit": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+    "tree": "9ab0d4dfcb21735fed4c019f85f8f450ebfaa7b4",
+    "dirty_before": "",
+    "dirty_after": ""
+  },
+  "checked_at_utc": "2026-11-20T22:07:16.323294+00:00",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/cce28e2b3ca4/OntoKin",
+      "exit_code": 0,
+      "passed": true,
+      "log": "workflow.log",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/cce28e2b3ca4/OntoKin",
+      "exit_code": 0,
+      "passed": true,
+      "log": "documentation.log",
+      "bytes": 6608,
+      "sha256": "16c892ed867cbbde7cc809d38ae21218b6cf041f14c45bb8361ff43829963f0e"
+    }
+  ],
+  "passed": true,
+  "scope": "Fresh documentation/workflow checks on the exact clean published candidate; no behavioral rerun or actual-main check",
+  "not_run": [
+    "routine local driver",
+    "complete affected integration cohort",
+    "actual-main verification",
+    "native/model trial"
+  ]
+}

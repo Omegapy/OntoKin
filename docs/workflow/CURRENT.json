@@ -5,10 +5,10 @@
   "active_task": null,
   "execution_mode": null,
   "observed_main": "8e847c15e41c7e5970581993c465690526cd43d2",
-  "snapshot_date": "2026-11-25T21:33:52Z",
+  "snapshot_date": "2026-11-28T02:52:10Z",
   "next_action": {
     "status": "awaiting_user_direction",
-    "summary": "LOCAL-MIGRATION-20261124 is complete and integrated. No scope is selected; the owner chooses the next one. C271 is the queued unfinished scope, recorded for browser mode: a local session resumes it only on explicit owner direction.",
+    "summary": "C271 is closing by the owner's decision of 2026-11-28: its documentation-only result, the H22.02 isolated missing-digest control, merges into main with a normal pull request, then a completion record. Its later readback-qualification work (P02 to P38) stays unmerged on its old branch. No other scope is selected.",
     "suggested_task": "C271",
     "sources": [
       "docs/engineering/local-migration-20261124/RESULTS.md",
@@ -23,21 +23,16 @@
   "unfinished": [
     {
       "task": "C271",
-      "status": "blocked",
-      "mode": "browser",
-      "branch": "work/c271-missing-import-digest-control",
-      "observed_head": "bef6790291d0cddc8c6d7de9dc0a92fb5a98c448",
-      "observed_at": "2026-11-25T06:52:26Z",
-      "pull_request": "https://github.com/Omegapy/OntoKin/pull/274",
+      "status": "review",
+      "mode": "local",
+      "branch": "work/c271-h22-result",
+      "observed_head": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "observed_at": "2026-11-28T02:52:10Z",
+      "pull_request": null,
       "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
       "open_gates": [
-        "exact publication of the accepted P29 candidate",
-        "operational-plan review",
-        "H0",
-        "H1",
-        "required regression",
-        "reviewed integration and actual-main verification",
-        "parent completion and final delivery"
+        "merge of the documentation-only result into main",
+        "completion record"
       ],
       "record": "docs/engineering/local-migration-20261124/RECONCILIATION.md",
       "note": "A separately selected scope. Its own branch holds its task record and evidence; nothing here completes, waives or relabels one of its gates."

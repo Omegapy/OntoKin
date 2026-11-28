@@ -1,0 +1,222 @@
+{
+  "schema": "ontokin.c271.final-focused-review/1",
+  "reviewer": "/root/github_reconciliation",
+  "reviewed_at_utc": "2026-11-20T22:04:01.310902+00:00",
+  "verdict": "approved_control_and_evidence_publication",
+  "code_candidate": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+  "code_tree": "21ab07914931495d6bee70591a70ff2d8bcabb84",
+  "publication_candidate": "2633cc1ffabfebe3233a76e164b9e80f91960faf",
+  "publication_tree": "b247eec79b46110bd09c14a074441b8dc95f7c9c",
+  "base_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "oracle_sha256": "0b8da6eab52323e8092c348fabad0d8d77247552e4eb5e3a1ffdc17266d12522",
+  "runner_sha256": "358c3a50a5b437d0b765ff9547cc1c4611bcbdbbff95c31a22cccae7050c2480",
+  "results_sha256": "ea516696267931321ab1d63f4fb420f31f6de28addb537dd9b7479329bdd6eb7",
+  "raw_evidence_sha256": "24f8b99ca5682dbc23f93f7f4c856e211c98eb82124fe93475848196b41376b4",
+  "candidate_audit": {
+    "path": "CANDIDATE-AUDIT.json",
+    "sha256": "a9b6a51d42f4aea73fad6f66fc157bfd2c0817e2746dfecbcdb6819f31236ed0",
+    "check_count": 425,
+    "passed": true
+  },
+  "publication_audit": {
+    "check_count": 30,
+    "passed": true,
+    "failed": [],
+    "checks": [
+      {
+        "name": "published_commit_tree_parent",
+        "passed": true
+      },
+      {
+        "name": "exact_publication_paths",
+        "passed": true,
+        "paths": [
+          "A\tdocs/engineering/localized-repair-c271/LEARNING.md",
+          "A\tdocs/engineering/localized-repair-c271/NEXT-TASK.md",
+          "A\tdocs/engineering/localized-repair-c271/RESULTS.md",
+          "A\tdocs/engineering/localized-repair-c271/evidence/control-candidate/EXECUTION-RECEIPT.json",
+          "A\tdocs/engineering/localized-repair-c271/evidence/control-candidate/RAW-EVIDENCE.zip",
+          "A\tdocs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json",
+          "A\tdocs/engineering/localized-repair-c271/evidence/control-candidate/driver.log",
+          "A\tdocs/engineering/localized-repair-c271/evidence/working-record-checks/CHECKS.json",
+          "A\tdocs/engineering/localized-repair-c271/evidence/working-record-checks/documentation.log",
+          "A\tdocs/engineering/localized-repair-c271/evidence/working-record-checks/workflow.log",
+          "M\tdocs/workflow/tasks/C271/SESSION.md",
+          "M\tdocs/workflow/tasks/C271/task.json"
+        ]
+      },
+      {
+        "name": "no_runtime_or_oracle_change",
+        "passed": true
+      },
+      {
+        "name": "frozen_oracle_preserved",
+        "passed": true
+      },
+      {
+        "name": "frozen_runner_preserved",
+        "passed": true
+      },
+      {
+        "name": "published_authentic_bytes:RESULTS.json",
+        "passed": true
+      },
+      {
+        "name": "published_authentic_bytes:RAW-EVIDENCE.zip",
+        "passed": true
+      },
+      {
+        "name": "published_authentic_driver_log",
+        "passed": true
+      },
+      {
+        "name": "receipt_exact_shell_invocation",
+        "passed": true
+      },
+      {
+        "name": "receipt_interpreter_flag_and_arguments",
+        "passed": true
+      },
+      {
+        "name": "receipt_source_and_interpreter",
+        "passed": true
+      },
+      {
+        "name": "receipt_observed_exit",
+        "passed": true
+      },
+      {
+        "name": "receipt_driver_binding",
+        "passed": true
+      },
+      {
+        "name": "receipt_results_binding",
+        "passed": true
+      },
+      {
+        "name": "receipt_preserves_original_limitation",
+        "passed": true
+      },
+      {
+        "name": "parent_open",
+        "passed": true
+      },
+      {
+        "name": "R01_R02_done_only",
+        "passed": true
+      },
+      {
+        "name": "P01_in_progress_P02_not_done",
+        "passed": true
+      },
+      {
+        "name": "integration_not_claimed",
+        "passed": true
+      },
+      {
+        "name": "delivery_pending_partial",
+        "passed": true
+      },
+      {
+        "name": "actual_execution_summary",
+        "passed": true
+      },
+      {
+        "name": "required_broad_gates_still_unrun",
+        "passed": true
+      },
+      {
+        "name": "working_checks_not_clean_final_evidence",
+        "passed": true
+      },
+      {
+        "name": "working_log_identity:workflow",
+        "passed": true
+      },
+      {
+        "name": "working_log_identity:documentation",
+        "passed": true
+      },
+      {
+        "name": "live_main_unchanged",
+        "passed": true
+      },
+      {
+        "name": "live_scope_issue_open",
+        "passed": true
+      },
+      {
+        "name": "claims_match_scope",
+        "passed": true
+      },
+      {
+        "name": "remaining_required_gates_explicit",
+        "passed": true
+      },
+      {
+        "name": "learning_remains_scoped",
+        "passed": true
+      }
+    ]
+  },
+  "total_independent_review_checks": 455,
+  "resolved_findings": [
+    {
+      "id": "C271-RV-001",
+      "status": "resolved",
+      "finding": "RESULTS.command omitted actual interpreter flag -B.",
+      "resolution": "Original result and runner preserved; exact observed invocation and provenance are retained in the published external execution receipt.",
+      "publication": "2633cc1ffabfebe3233a76e164b9e80f91960faf",
+      "path": "docs/engineering/localized-repair-c271/evidence/control-candidate/EXECUTION-RECEIPT.json",
+      "bytes": 1571,
+      "sha256": "1a4949b89b670a7752a5edd59f06ee4daf8742c0d4f63a69756321a82c52d817",
+      "behavioral_rerun": false,
+      "oracle_modified": false
+    }
+  ],
+  "mandatory_findings": [],
+  "observed_execution": {
+    "root_executed_calls": 18,
+    "baseline_successes": 6,
+    "typed_MALFORMED_refusals": 12,
+    "root_assertion_checks": 1042,
+    "root_failed_checks": 0,
+    "environment": {
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+    },
+    "source": {
+      "commit": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+      "dirty_before": "",
+      "tree": "21ab07914931495d6bee70591a70ff2d8bcabb84"
+    }
+  },
+  "independent_observer_rerun": false,
+  "integration_approved": false,
+  "parent_completion_approved": false,
+  "P01_delivery_complete": false,
+  "remaining_director_P01_gates": [
+    "Clean exact published candidate documentation/workflow checks",
+    "Retained draft PR",
+    "Verified saved partial handoff and matching prompts",
+    "Separate delivery receipt and phase stopping records"
+  ],
+  "P02_gates": [
+    "Required local driver",
+    "Complete affected regression inventory",
+    "Independent integration approval against current main",
+    "Verified expected-head ownership and conditional integration",
+    "Fresh actual-main checks",
+    "Retained history and branch lifecycle",
+    "Verified final saved handoff and truthful parent closure"
+  ],
+  "limits": [
+    "Independent review inspects retained authentic execution without replay; no observer invoked by this reviewer.",
+    "Author independence is supported by actual separate assignment, read-set, construction code and frozen-before-execution commit; no claim of exhaustive external-process telemetry.",
+    "Six finite input cases do not complete H22/C260, historical endpoint admission, source evaluation, accepted revisions or product qualification.",
+    "Documentation/workflow publication checks, draft PR, retained branch and verified partial delivery remain Director gates.",
+    "Routine driver, complete affected cohort, independent integration review, actual-main verification, branch disposal and parent closure remain P02 gates.",
+    "Historical broad-driver completion from earlier C270 remains unknown."
+  ]
+}
