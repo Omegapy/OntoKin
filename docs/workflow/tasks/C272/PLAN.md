@@ -71,5 +71,8 @@ reports and changes nothing (DEC-011).
 
 ## Deviations from the approved plan
 
-None so far. A deviation is recorded here with the step, what the plan says, what was done
-and the reason.
+| Step | Plan | What was done | Reason |
+| --- | --- | --- | --- |
+| TASK-020, TASK-021 | Residual control files beside the fault controls | One module, `controls.py`, holds both groups; `CONTROLS.md` maps them | The file names were proposals (DEC-002); one module shares the judging and mutation helpers |
+| TASK-017 | G3 waits for the owner's answer | The owner chose option A on 2026-11-28; recorded in GAPS.md | DEC-006 |
+| TASK-008 | Run the groups at the branch's starting revision | Run at `539cbfe1`, whose observer files equal `38ee8d18`'s | The runner script itself had to be committed first, so that the worktree stayed clean |
