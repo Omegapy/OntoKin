@@ -1,0 +1,75 @@
+{
+  "schema": "ontokin.c271.p37-closing/1",
+  "task": "C271",
+  "phase": "C271-P37-derived-workspace-correction",
+  "owner": "c271-p37-08beec34eb0a",
+  "purpose": "The phase's closing record: the push of its outcome records commit, the checks of that commit's tree, the checkpoint comments, what stays retained, and the release of ownership. It completes acceptance A8. Git reveals the commit that carries this record; its own push is observed in the final report.",
+  "outcome_records_commit": {
+    "commit": "276fd1694801fc925f5cd4468ec1322a698b06b0",
+    "tree": "823fb3adda3f4880f2f733d2de8b655093732d95",
+    "parent": "5a3502e22d0fa4b29fbff2c867f1aab8271c4235"
+  },
+  "candidate_commit": "5a3502e22d0fa4b29fbff2c867f1aab8271c4235",
+  "result": "the correction of FZ-01 and FZ-02, reviewed and accepted (ACCEPT_WITH_NONMANDATORY_FINDINGS); gate MR not run; R03 stays not_done",
+  "push_observation": {
+    "command": "git push origin work/c271-missing-import-digest-control (no force), then git ls-remote --heads origin and the GitHub API's commit tree",
+    "observed_at_utc": "2026-11-28T02:27:53Z",
+    "update": "5a3502e2..276fd169, fast-forward",
+    "remote_heads": {
+      "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "refs/heads/work/c271-missing-import-digest-control": "276fd1694801fc925f5cd4468ec1322a698b06b0"
+    },
+    "remote_tree": "823fb3adda3f4880f2f733d2de8b655093732d95, equal to the local tree"
+  },
+  "checks_of_final_tree": {
+    "started_at_utc": "2026-11-28T02:28:43Z",
+    "ended_at_utc": "2026-11-28T02:28:45Z",
+    "tree": "the clean checkout at 276fd169",
+    "workflow": {
+      "result": "passed",
+      "observed": "Workflow structure passed (13 tasks).",
+      "output_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+    },
+    "documentation": {
+      "result": "passed",
+      "documents": 1781,
+      "local_links": 7083,
+      "failures": 0,
+      "output_sha256": "7edd8e9c1af1811ce84ee34be210d2ec5344722463ecfd37c205154266154e12"
+    },
+    "whitespace": "git diff --check 5a3502e2 HEAD passes with the verbatim diff record and the two whitespace checks' own outputs excluded; with them it reports only their preserved trailing spaces"
+  },
+  "recorded_failures": [
+    "the records checks before the commit first failed on one local link: the review's report links to an output whose bytes equal another output, which the copy builder had listed once; the copy was written and the manifest updated",
+    "the authored whitespace check twice flagged the whitespace checks' own outputs, which quote the verbatim diff's trailing spaces; both outputs are excluded, as commit B's checks did",
+    "the copy builder refused its own copy, as memory-c271-privacy-scan-scripts-stay-local says such a script should stay local; it is recorded by digest"
+  ],
+  "checkpoint_comments": {
+    "pull_request_274": {
+      "id": 7232383954,
+      "created_at_utc": "2026-11-28T02:28:17Z",
+      "url": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7232383954"
+    },
+    "issue_273": {
+      "id": 7232384147,
+      "created_at_utc": "2026-11-28T02:28:19Z",
+      "url": "https://github.com/Omegapy/OntoKin/issues/273#issuecomment-7232384147"
+    },
+    "body_sha256": "732613cef4742dcae8ab8ba7bc5ab248d228f30047f086becb4997fa9d81ab7a",
+    "readback": "both posted bodies read back byte-identical to the body"
+  },
+  "github_state_after": {
+    "pull_request_274": "open, draft, head 276fd169, MERGEABLE and CLEAN",
+    "issue_273": "open",
+    "observed_at_utc": "2026-11-28T02:28:30Z"
+  },
+  "retained": [
+    "the exact records beside the clone under ../OntoKin-local/c271-p37/ (workers, Director's records and scripts, the measurement with its workspace copy, S5, the routine run with its isolated workspace), unchanged, with EXACT-RECORDS.json's digests",
+    "the Director's S8 scripts, copied beside the clone under ../OntoKin-local/c271-p37/director/scripts/ after the records commit, listed in its SHA256SUMS.txt (58aeb4b1a60af2ce8283177ecdb0ecec7bc131ba4cf1aaf3ce0dcd834b7cd6ee)",
+    "MP's prepared inputs and MH's and MR's records beside the clone, unchanged at their paths and modes"
+  ],
+  "processes": "no process started by the phase remains (a process listing at 02:28:45Z, context only, showed no driver, unittest or observer process)",
+  "ownership": "Owner c271-p37-08beec34eb0a is released with the push of this record. It makes no further write. The next phase declares its own owner.",
+  "unknown_operations": [],
+  "next_action": "The owner selects the next phase. Recommended: gate MR again at C, with a new observation plan, HOST and operational freeze and their reviews, then R1, R2, the audit and the R03 review, carrying OUTCOME.json's items. R04 and R05 stay separate phases."
+}
