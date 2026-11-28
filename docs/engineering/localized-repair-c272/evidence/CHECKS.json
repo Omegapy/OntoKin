@@ -1,0 +1,113 @@
+{
+  "schema": "ontokin.c272.checks/1",
+  "task": "C272",
+  "changed_files_against_base": "git diff --name-only 38ee8d18 HEAD: TRDs/, STATUS.md, docs/workflow/CURRENT.json, docs/workflow/tasks/C272/, docs/engineering/localized-repair-c272/ only; nothing under ontokin/, tools/, tests/, examples/ or pyproject.toml",
+  "check_table_rows": [
+    "Routine development (new Python code and tests in the scope directory)",
+    "Agent interface (actual protocol cases, including failure and retry)",
+    "Exporter/viewer (fresh source-to-GLB builds, Khronos/Three.js checks, visual inspection; the scope changes neither exporter nor viewer)",
+    "Documentation/navigation",
+    "Workflow records"
+  ],
+  "routine_driver": {
+    "command": "TMPDIR=<resolved>/ .venv/bin/python tools/check_local.py --timeout 14400 --output-dir <OntoKin-local>/c272/checks/driver-d10c9f62",
+    "revision": "d10c9f624c3247852242c19e83d69a1f90d67cc4",
+    "tree": "b4be90074e817d58cfacbeae9e0e83231c84f107",
+    "tracked_status_at_start": "M docs/workflow/tasks/C272/task.json",
+    "executor": "macOS-26.6.2-arm64-arm-64bit, CPython 3.12.13, worktree .venv",
+    "temporary_directory": "resolved",
+    "started_at": "2026-11-28T05:52:57.871352+00:00",
+    "duration_seconds": 1212.175,
+    "status": "failed",
+    "steps": [
+      {
+        "id": "unit-tests",
+        "status": "failed"
+      },
+      {
+        "id": "source",
+        "status": "passed"
+      },
+      {
+        "id": "agent",
+        "status": "passed"
+      },
+      {
+        "id": "construction",
+        "status": "passed"
+      },
+      {
+        "id": "surface",
+        "status": "passed"
+      },
+      {
+        "id": "impulse",
+        "status": "passed"
+      },
+      {
+        "id": "documents",
+        "status": "passed"
+      }
+    ],
+    "unit_tests": {
+      "ran": 4989,
+      "failures": 1,
+      "skipped": 3,
+      "failing": [
+        "test_force_contract.ForceContractReviewTests.test_original_corpus_and_author_remain_byte_identical"
+      ],
+      "reason": "AssertionError: b'...' != b'...' : acceptance.json (a last-digit difference in one regenerated value)"
+    },
+    "summary_sha256": "1c6046d42c44974ff4d949938c71239d193de81daa7f63c763e5f3830eadd7ff",
+    "unit_log_sha256": "eca561ff6f68e8a0fed274f21640abdf9547a4a5b7242d5850994d2beb9e1007",
+    "pending_external_cases": 16,
+    "full_visual_job": "not run (DEC-012: the scope changes neither exporter nor viewer; REQ-022's own validation and playback were run)"
+  },
+  "classification_against_main": {
+    "rule": "AGENTS 2026-11-28 and OK-ENG-009 amendment; DEC-012",
+    "main_run": {
+      "commit": "8e847c15e41c7e5970581993c465690526cd43d2",
+      "record": "docs/engineering/local-migration-20261124/INTEGRATION.json (resulting_main_checks.routine_driver, run resolved-tmpdir)",
+      "unit_log_sha256": "85e372a1074d968fe6a4034067247bf09287445ba0d6e8107797170051cae5f8",
+      "host": "the same Mac, macOS 26.6.2 arm64, CPython 3.12.13",
+      "temporary_directory": "resolved",
+      "ran": 4989,
+      "failures": 1,
+      "skipped": 3
+    },
+    "identity_equality": "git diff 8e847c15..candidate is empty for ontokin/, tools/, tests/, examples/ and pyproject.toml; current main 38ee8d18 differs from 8e847c15 only in documentation and records, so main's recorded run applies to current main (DEC-012)",
+    "comparison": {
+      "same_test_ids": true,
+      "same_reason_text": true,
+      "same_skip_set": true,
+      "same_test_count": true
+    },
+    "known_baseline": [
+      "test_force_contract.ForceContractReviewTests.test_original_corpus_and_author_remain_byte_identical"
+    ],
+    "new_or_worsened": [],
+    "other_steps": "source, agent, construction, surface, impulse and documents passed on both"
+  },
+  "scope_checks": {
+    "qualification": {
+      "command": "qualify.py --output-dir <OntoKin-local>/c272/runs/delivered-2",
+      "revision": "d10c9f624c3247852242c19e83d69a1f90d67cc4",
+      "result": "passed",
+      "record": "evidence/runs/delivered-d10c9f62/RESULTS.json"
+    },
+    "replay": {
+      "revision": "d10c9f624c3247852242c19e83d69a1f90d67cc4",
+      "result": "passed, equal",
+      "record": "evidence/REPLAY.json"
+    },
+    "gltf_validation": {
+      "result": "passed",
+      "record": "evidence/gltf-validation/SUMMARY.json"
+    },
+    "playback": {
+      "result": "inspected",
+      "record": "evidence/PLAYBACK.md"
+    }
+  },
+  "pending": "observer regression with the c272 group, documentation verifier and workflow check on the candidate commit that carries this record (recorded in its successor)"
+}

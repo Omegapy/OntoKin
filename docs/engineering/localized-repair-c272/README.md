@@ -12,7 +12,7 @@ source and GLB bytes.
 
 Requirements: [task C272](../../workflow/tasks/C272/REQUIREMENTS.md). Records:
 [coverage](COVERAGE.md), [reconciliation](RECONCILIATION.md), [gaps and the owner's choice](GAPS.md),
-[controls](CONTROLS.md).
+[controls](CONTROLS.md), [report](REPORT.md).
 
 ## Run it
 

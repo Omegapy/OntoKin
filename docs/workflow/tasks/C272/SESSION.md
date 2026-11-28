@@ -93,3 +93,11 @@
 - Declaration commit `871701ba82bfb98be7cf7bb93383f0f979307110` was pushed. `git ls-remote` read the branch head back as the same commit; main stayed at `38ee8d18`. [Issue 282](https://github.com/Omegapy/OntoKin/issues/282) and draft [PR283](https://github.com/Omegapy/OntoKin/pull/283) are open. No hosted check ran.
 - TASK-007 to TASK-009 are done: [COVERAGE.md](../../../engineering/localized-repair-c272/COVERAGE.md), [RECONCILIATION.md](../../../engineering/localized-repair-c272/RECONCILIATION.md), and the observer baseline on this host. That baseline ran at `539cbfe1`: 12 groups, 282 methods, all passed twice, worktree clean before and after.
 - TASK-010: [GAPS.md](../../../engineering/localized-repair-c272/GAPS.md) is written and reported to the owner. G3's option waits for the owner's answer (DEC-006). Work that does not depend on G3 continues.
+
+## Checkpoint 2026-11-28T06:30Z: candidate with evidence
+
+- Implementation complete through PHASE-005. The command `qualify.py` passed all three cases and all 24 controls at `d10c9f62`; a fresh replay at the same revision gave identical results and bytes. All six delivered GLBs passed Khronos and Three.js validation, and V1's playback was inspected ([REPORT.md](../../../engineering/localized-repair-c272/REPORT.md)).
+- **Owner's answer:** option A for G3 (2026-11-28). **Side effect:** installing `node@22` upgraded Homebrew's `simdjson`, and the owner's default Node.js 25.9.0 no longer starts. It is not repaired, because the repair would move Node.js to 26.13.1 ([VISUAL-PROFILE.json](../../../engineering/localized-repair-c272/evidence/VISUAL-PROFILE.json)). The owner decides.
+- **Routine driver** at `d10c9f62`: one unit-test failure, a known baseline identical to main's recorded `8e847c15` run; other steps passed ([CHECKS.json](../../../engineering/localized-repair-c272/evidence/CHECKS.json)).
+- **Retained failures:** the qualification attempt at `cad34f35` crashed before writing results; the run at `4aff6024` failed P03 and R04; the replay at `f0e4148f` was refused because the directory held untracked files.
+- **Next:** the observer regression with the c272 group and the record checks on this commit, the requirements audit, then the independent review.
