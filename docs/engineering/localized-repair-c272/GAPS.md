@@ -73,3 +73,12 @@ No narrower study is proposed instead of the frozen C253 qualification.
 - No change under `ontokin/`.
 - No model takes part in any run, and no record is an attempt in the sense of the frozen run plan.
 - The null model and route fields of `RUN-PLAN.json` stay untouched.
+
+## The owner's answer
+
+On 2026-11-28 UTC the owner chose **option A** in answer to the question asked under DEC-006.
+G3 is therefore built as a reader of the delivered GLB and sidecar. It compares every field
+with C255's independent expectations and cross-checks the fields that decoded geometry and
+motion determine. It reads four literals from the accepted source by fixed pattern and
+records zero mass as rule-derived. Its limit, stated above, goes with every result. Options
+B and C are not pursued.

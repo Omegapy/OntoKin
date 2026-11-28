@@ -481,7 +481,7 @@
         "TASK-007",
         "TASK-009"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c272/GAPS.md"
       ],
@@ -606,10 +606,11 @@
       "depends_on": [
         "TASK-014"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c272/observe.py",
-        "docs/engineering/localized-repair-c272/test_observe.py"
+        "docs/engineering/localized-repair-c272/test_observe.py",
+        "docs/engineering/localized-repair-c272/glb_edit.py"
       ],
       "verification": [
         "Run the focused tests of the observation module.",
@@ -629,9 +630,11 @@
         "TASK-010",
         "TASK-016"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
-        "docs/engineering/localized-repair-c272/GAPS.md"
+        "docs/engineering/localized-repair-c272/GAPS.md",
+        "docs/engineering/localized-repair-c272/semantic_observe.py",
+        "docs/engineering/localized-repair-c272/test_semantic_observe.py"
       ],
       "verification": [
         "Run the focused tests of each new reader, including its fault control and the test of its imports.",
@@ -675,7 +678,8 @@
       ],
       "status": "not_done",
       "artifacts": [
-        "docs/engineering/localized-repair-c272/rebuild.py"
+        "docs/engineering/localized-repair-c272/rebuild.py",
+        "docs/engineering/localized-repair-c272/rebuild_entry.py"
       ],
       "verification": [
         "Run the rebuild twice in two new directories and compare both results with the delivered bytes.",
@@ -1038,7 +1042,7 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "G3 waits for the owner's choice of option A, B or C in docs/engineering/localized-repair-c272/GAPS.md (DEC-006). Meanwhile PHASE-003 (runner, accepted-state record, exchange record) and the parts of PHASE-004 that do not depend on G3 continue.",
+  "next_action": "Implement G3 under option A (owner's answer of 2026-11-28), then scoring (TASK-018), residual and fault controls (TASK-020, TASK-021) and the one command (TASK-022).",
   "blockers": [],
   "owner_waivers": []
 }
